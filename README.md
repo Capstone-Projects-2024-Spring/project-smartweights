@@ -46,12 +46,20 @@ Discuss what you need to develop this project. This includes background informat
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/leighflagg">
-            <img src="https://avatars.githubusercontent.com/u/77810293?v=4" width="100;" alt="leighflagg"/>
+        <a href="https://github.com/leekd99">
+            <img src="https://avatars.githubusercontent.com/u/32583417?v=4" width="100;" alt="leekd99"/>
             <br />
-            <sub><b>Null</b></sub>
+            <sub><b>Kyle Dragon Lee</b></sub>
         </a>
-    </td></tr>
+    </td>
+    <td align="center">
+        <a href="https://github.com/thanhnguyen46">
+            <img src="https://avatars.githubusercontent.com/u/60533187?v=4" width="100;" alt="thanhnguyen46"/>
+            <br />
+            <sub><b>Thanh Nguyen</b></sub>
+        </a>
+    </td>
+   </tr>
 </table>
 
 [//]: # ( readme: collaborators -end )
