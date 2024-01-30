@@ -102,8 +102,8 @@ Discuss what you need to develop this project. This includes background informat
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/tup09776">
-            <img src="https://github.com/tup09776.png" width="100;" alt="tup09776"/>
+        <a href="https://github.com/dillon09776">
+            <img src="https://github.com/dillon09776.png" width="100;" alt="tup09776"/>
             <br />
             <sub><b>Dillon Shi</b></sub>
         </a>
