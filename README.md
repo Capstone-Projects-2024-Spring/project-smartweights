@@ -61,7 +61,7 @@ Discuss what you need to develop this project. This includes background informat
     </td>
     <td align="center">
         <a href="https://github.com/parchea">
-            <img src="https://github.com/<parchea>.png" width="100;" alt="parchea"/>
+            <img src="https://github.com/parchea.png" width="100;" alt="parchea"/>
             <br />
             <sub><b>Par Chea</b></sub>
         </a>
