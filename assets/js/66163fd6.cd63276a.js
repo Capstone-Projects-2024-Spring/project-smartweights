@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcreate_project_docs=self.webpackChunkcreate_project_docs||[]).push([[7967],{73454:e=>{e.exports=JSON.parse('{"name":"docusaurus-plugin-redoc","id":"using-single-yaml"}')}}]);
