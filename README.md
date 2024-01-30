@@ -94,6 +94,13 @@ Discuss what you need to develop this project. This includes background informat
             <sub><b>Tu Ha</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/tun38646">
+            <img src="https://github.com/tun38646.png" width="100;" alt="tun38646"/>
+            <br />
+            <sub><b>Timothy Bui</b></sub>
+        </a>
+    </td>
    </tr>
 </table>
 
