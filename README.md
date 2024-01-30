@@ -80,6 +80,13 @@ Discuss what you need to develop this project. This includes background informat
             <sub><b>Jonathan Stanczak</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/AdamRa97">
+            <img src="https://github.com/AdamRa97.png" width="100;" alt="AdamRa97"/>
+            <br />
+            <sub><b>Adam Ra</b></sub>
+        </a>
+    </td>
    </tr>
 </table>
 
