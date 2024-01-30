@@ -63,7 +63,7 @@ Discuss what you need to develop this project. This includes background informat
         <a href="https://github.com/parchea">
             <img src="https://avatars.githubusercontent.com/u/9451941?v=4" width="100;" alt="parchea"/>
             <br />
-            <sub><b>Ian Tyler Applebaum</b></sub>
+            <sub><b>Par Chea</b></sub>
         </a>
     </td>
    </tr>
