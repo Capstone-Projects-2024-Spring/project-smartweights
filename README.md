@@ -87,6 +87,13 @@ Discuss what you need to develop this project. This includes background informat
             <sub><b>Adam Ra</b></sub>
         </a>
     </td>
+     <td align="center">
+        <a href="https://github.com/SlowMiata">
+            <img src="https://github.com/SlowMiata.png" width="100;" alt="SlowMiata"/>
+            <br />
+            <sub><b>Tu Ha</b></sub>
+        </a>
+    </td>
    </tr>
 </table>
 
