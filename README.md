@@ -66,6 +66,13 @@ Discuss what you need to develop this project. This includes background informat
             <sub><b>Par Chea</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/DanielEap">
+            <img src="https://github.com/DanielEap.png" width="100;" alt="DanielEap"/>
+            <br />
+            <sub><b>Daniel Eap</b></sub>
+        </a>
+    </td>
    </tr>
 </table>
 
