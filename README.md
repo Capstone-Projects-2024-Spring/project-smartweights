@@ -73,6 +73,13 @@ Discuss what you need to develop this project. This includes background informat
             <sub><b>Daniel Eap</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/jtstanczak7">
+            <img src="https://github.com/jtstanczak7.png" width="100;" alt="jtstanczak7"/>
+            <br />
+            <sub><b>Jonathan Stanczak</b></sub>
+        </a>
+    </td>
    </tr>
 </table>
 
