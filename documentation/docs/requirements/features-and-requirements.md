@@ -24,6 +24,12 @@ sidebar_position: 4
 ## Nonfunctional Requirements
 - The mobile app will start up relatively quick
 - App generates data in a timely fashion post-workout.
+    - The data is easily understandable by the user. It is accompanied by visual graphs and text to help explain it.     
 - The data that is generated to the user needs to be stored safely to ensure unauthorized access to the data.
 - To ensure ease of use and learning, the app needs a user-friendly interface that allows users to navigate through all features independently without requiring assistance.
 - The app generates notifications to remind and encourage users to work out and use the app.
+- The hardware components must be secure and contained and easily attachable.
+- The hardware components must have easy access to being charged.
+- Hardware should effectively communicate with mobile device through bluetooth.
+- The database and machine learning processes will be handled locally on the user’s device.
+
