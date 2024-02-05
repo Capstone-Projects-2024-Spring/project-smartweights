@@ -9,6 +9,7 @@ sidebar_position: 3
 - 3D printer
 - Sensors (IMUs)
 - Raspberry Pi Pico
+- batteries
 - Mobile Application Development Environment
 - IDE/text editor
 - Kinesiology consultant
