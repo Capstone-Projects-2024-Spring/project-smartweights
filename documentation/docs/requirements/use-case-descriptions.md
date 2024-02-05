@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Use-case descriptions
 
-## Use Case 1
+## Use Case 1 - Account Registration
 A user wants to create an account on the SmartWeights’ mobile  app and use the app for the first time
 
 1. The user is presented with the registration page 
@@ -16,7 +16,7 @@ A user wants to create an account on the SmartWeights’ mobile  app and use the
 
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/dcb3c1e2-3f28-4d71-84ce-e6717b426a93)
 
-## Use Case 2
+## Use Case 2 - Virtual Pet Customization
 A user wants to customize their virtual pet
 
 1. The user opens the app.
@@ -28,7 +28,7 @@ A user wants to customize their virtual pet
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/645dbe50-8855-486f-acc1-4d6e78d08432)
 
 
-## Use Case 3
+## Use Case 3 - Syncing Sensors
 A user wants to sync their SmartWeights sensor with the mobile app
 
 1. The user securely attaches the SmartWeight sensor to their dumbbell following the instructions provided via the mobile app.
@@ -40,7 +40,7 @@ A user wants to sync their SmartWeights sensor with the mobile app
    
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/9308dc34-2cf6-42ef-804b-385fa0e895a0)
 
-## Use Case 4
+## Use Case 4 - Performing Workout
 A user wants to complete a workout with the assistance of a virtual pet.
 
 1. The user receives a notification reminding them to work out.
@@ -52,7 +52,7 @@ A user wants to complete a workout with the assistance of a virtual pet.
 
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/11fed36d-0449-4280-989e-4141e243c93e)
 
-## Use Case 5
+## Use Case 5 - Purchasing Pet Cosmetics
 A user wants to purchase cosmetics for their virtual pet.
 
 1. The user opens the SmartWeights app.
@@ -64,7 +64,7 @@ A user wants to purchase cosmetics for their virtual pet.
 
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/72ca8cbe-c48d-49ad-8618-8e1f7ac32207)
 
-## Use Case 6
+## Use Case 6 - View Workout Feedback
 A user wants to view feedback post-workout
 
 1. After completing a workout, the user selects the Workout tab in the mobile application
@@ -73,7 +73,7 @@ A user wants to view feedback post-workout
 
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/64b02a10-e7bc-479c-b5ab-275aa6f6a0d7)
 
-## Use Case 7
+## Use Case 7 - Share with Friends
 A user wants to share their pet/achievements with their friends
 
 1. The user opens the app
@@ -85,7 +85,7 @@ A user wants to share their pet/achievements with their friends
 
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/5bd74988-c566-4eb4-aa40-4c190996f15e)
 
-## Use Case 8
+## Use Case 8 - Profile Management
 A user wants to change their profile settings, nutrition, or workout goals
 
 1. The user opens the app
