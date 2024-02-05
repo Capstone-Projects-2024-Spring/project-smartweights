@@ -22,6 +22,7 @@ sidebar_position: 4
     - Challenge tab - a weekly and monthly challenge that users can do to earn free pet items or in-game currency.
 
 ## Nonfunctional Requirements
+- The mobile app will start up relatively quick
 - App generates data in a timely fashion post-workout.
 - The data that is generated to the user needs to be stored safely to ensure unauthorized access to the data.
 - To ensure ease of use and learning, the app needs a user-friendly interface that allows users to navigate through all features independently without requiring assistance.
