@@ -8,10 +8,12 @@ sidebar_position: 4
 - SmartWeights will give users feedback and information about their weightlifting form after each workout.
 - SmartWeights will require registration using a Google Account or Apple Account.
 - The main page of the app will appear first and have a tutorial prompt for new users
+    - The user will be able revisit the tutorial prompt.
 - The tutorial will be demonstrated by SmartWeights' generic pet.
 - The app will recognize voice commands to initiate a workout starting
 - After each workout the system generates personalized reports and analytics for users.
 - During the process of the user workout it will provide real-time feedback on the user's action such as correcting posture, velocity, or speed.
+- The user will be able to revisit the reports at any given time post-workout.
 - The app will award the users with digital currency based on their workout achievement
     - There will be a tab for a shop dedicated to buying costumes/accessories for your Virtual Pet with in-game currency
 - The pet will have a level up system and a health system
@@ -20,6 +22,14 @@ sidebar_position: 4
 - Users can click on a button to share an image of their virtual pet along with other accolades to share with friends.
 - To keep users more engaged
     - Challenge tab - a weekly and monthly challenge that users can do to earn free pet items or in-game currency.
+- The user must be able to recalibrate the sensors by pressing a button in the application.
+- The user must be able to calibrate their start position and informing the application through voice commands
+- The user must be able to enter the weight of their dumbbell through a text entry.
+- The user must be able to customize their in-app settings, in a separate settings tab through toggles and buttons.
+    - notifications, apple health
+- The user must be able to go to a user information page and set their nutrition goals and their body measurements. The user will be able to create a workout plan.
+
+
 
 ## Nonfunctional Requirements
 - The mobile app will start up relatively quick
