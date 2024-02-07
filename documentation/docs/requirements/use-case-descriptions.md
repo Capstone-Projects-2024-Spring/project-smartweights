@@ -5,18 +5,37 @@ sidebar_position: 5
 # Use-case descriptions
 
 ## Use Case 1 - Account Registration
-A user wants to create an account on the SmartWeights’ mobile  app and use the app for the first time
+A user is using the SmartWeights app for the first time and wants to create a new SmartWeights account
 
-1. The user is presented with the registration page 
-2. The user enters information to create an account
-3. The user is then shown a generic virtual pet that will guide them through the application
-4. The user is shown around the application by the virtual pet who highlights key features of the application
-5. The user finishes the guide and is then prompted to add personal goals and create their own virtual pet
-6. The user finishes the pet creation process and is ready to start working out
+1. The app displays the welcome screen with an option to register a new account
+2. The user taps the "Register" button
+3. The app presents a registration form, prompting the user to enter required information (full name, email address, password, etc.)
+4. The user fills out the registration form with valid information
+5. The app validates the entered information (email format, password strength, etc.)
+6. If the information is valid, the app proceeds to create a new account
+7. The apps confirms successful registration and guides the user to the login screen
+
+## Use Case 2 - Account Login
+A user has already created a SmartWeights account and wants to login into their SmartWeights account
+
+1. The app displays the login screen
+2. The user enters their login credentials (email address & password)
+3. The app validates the entered credentials against stored information in the database
+4. If the credentials are correct, the apps grants access to the user and navigates to the main application screen
+
+## Use Case 3 - Tutorial
+A user has already created a SmartWeights account and has logged in for the first time 
+
+1. The user logs into their SmartWeights account for the first time
+2. The app displays a generic virtual pet that will guide the user through the application
+3. The virtual pet highlights key features of the application
+4. The user finishes the tutorial
+5. The user is prompted to create their own virtual pet
+6. The user finishes the virtual pet creation process and is returned to the main navigation screen
 
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/dcb3c1e2-3f28-4d71-84ce-e6717b426a93)
 
-## Use Case 2 - Virtual Pet Customization
+## Use Case 4 - Virtual Pet Customization
 A user wants to customize their virtual pet
 
 1. The user opens the app.
@@ -28,7 +47,7 @@ A user wants to customize their virtual pet
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/645dbe50-8855-486f-acc1-4d6e78d08432)
 
 
-## Use Case 3 - Syncing Sensors
+## Use Case 5 - Syncing Sensors
 A user wants to sync their SmartWeights sensor with the mobile app
 
 1. The user securely attaches the SmartWeight sensor to their dumbbell following the instructions provided via the mobile app.
@@ -40,7 +59,7 @@ A user wants to sync their SmartWeights sensor with the mobile app
    
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/9308dc34-2cf6-42ef-804b-385fa0e895a0)
 
-## Use Case 4 - Performing Workout
+## Use Case 6 - Performing Workout
 A user wants to complete a workout with the assistance of a virtual pet.
 
 1. The user receives a notification reminding them to work out.
@@ -52,7 +71,7 @@ A user wants to complete a workout with the assistance of a virtual pet.
 
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/11fed36d-0449-4280-989e-4141e243c93e)
 
-## Use Case 5 - Purchasing Pet Cosmetics
+## Use Case 7 - Purchasing Pet Cosmetics
 A user wants to purchase cosmetics for their virtual pet.
 
 1. The user opens the SmartWeights app.
@@ -64,7 +83,7 @@ A user wants to purchase cosmetics for their virtual pet.
 
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/72ca8cbe-c48d-49ad-8618-8e1f7ac32207)
 
-## Use Case 6 - View Workout Feedback
+## Use Case 8 - View Workout Feedback
 A user wants to view feedback post-workout
 
 1. After completing a workout, the user selects the Workout tab in the mobile application
@@ -73,7 +92,7 @@ A user wants to view feedback post-workout
 
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/64b02a10-e7bc-479c-b5ab-275aa6f6a0d7)
 
-## Use Case 7 - Share with Friends
+## Use Case 9 - Share with Friends
 A user wants to share their pet/achievements with their friends
 
 1. The user opens the app
@@ -85,7 +104,7 @@ A user wants to share their pet/achievements with their friends
 
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/5bd74988-c566-4eb4-aa40-4c190996f15e)
 
-## Use Case 8 - Profile Management
+## Use Case 10 - Profile Management
 A user wants to change their profile settings, nutrition, or workout goals
 
 1. The user opens the app
