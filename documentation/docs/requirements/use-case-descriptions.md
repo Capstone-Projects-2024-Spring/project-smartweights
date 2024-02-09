@@ -9,19 +9,16 @@ A user is using the SmartWeights app for the first time and wants to create a ne
 
 1. The app displays the welcome screen with an option to register a new account
 2. The user taps the "Register" button
-3. The app presents a registration form, prompting the user to enter required information (full name, email address, password, etc.)
-4. The user fills out the registration form with valid information
-5. The app validates the entered information (email format, password strength, etc.)
-6. If the information is valid, the app proceeds to create a new account
-7. The apps confirms successful registration and guides the user to the login screen
+3. The app presents the user with the option to create a SmartWeights account using either their Google account or Apple account
+5. The user enters in their Google account or Apple account information
+6. The apps confirms successful registration and guides the user to the login screen
 
 ## Use Case 2 - Account Login
 A user has already created a SmartWeights account and wants to login into their SmartWeights account
 
 1. The app displays the login screen
-2. The user enters their login credentials (email address & password)
-3. The app validates the entered credentials against stored information in the database
-4. If the credentials are correct, the apps grants access to the user and navigates to the main application screen
+2. The user either selects to login through their Google account or Apple account
+3. The apps grants access to the user and navigates to the main application screen
 
 ## Use Case 3 - Tutorial
 A user has already created a SmartWeights account and has logged in for the first time 
