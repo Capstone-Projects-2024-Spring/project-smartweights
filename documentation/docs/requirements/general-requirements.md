@@ -7,10 +7,13 @@ sidebar_position: 3
 - Dumbbells
 - Workout Bench
 - 3D printer
-- Sensors (IMUs)
-- Raspberry Pi Pico
-- batteries
+- Sensors (IMUs, Barometers)
+- Raspberry Pi Pico W
 - Mobile Application Development Environment
 - IDE/text editor
 - Kinesiology consultant
+- Project management (Jira)
+- Version Control management (GitHub/Git)
+- Database (Firebase & NoSQL)
+
 
