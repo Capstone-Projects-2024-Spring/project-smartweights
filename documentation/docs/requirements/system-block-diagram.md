@@ -3,7 +3,8 @@ sidebar_position: 2
 ---
 
 # System Block Diagram
-![Block Diagram](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/114025055/41295185-47e8-4376-8f3d-9db9abd9d196)
+
+![BlockDiagram](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/114025055/4d1bad1f-cdf1-45e2-a370-775240dd9767)
 
 ## Figure 1. High-level design of the SmartWeights application.
 
