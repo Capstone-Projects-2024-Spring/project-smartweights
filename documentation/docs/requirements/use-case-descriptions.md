@@ -14,7 +14,7 @@ A user wants to create an account on the SmartWeights’ mobile app.
 
 
 ## Use Case 2 - Tutorial
-A user has already created a SmartWeights account and has logged in for the first time .
+A user has already created a SmartWeights account and has logged in for the first time.
 
 1. The user logs into their SmartWeights account for the first time.
 2. The app displays a generic virtual pet that will guide the user through the application.
@@ -32,7 +32,7 @@ A user wants to change their profile settings, nutrition, or workout goals.
 4. The user edits the desired setting.
 
 ## Use Case 4 - Importing Data From Apple Health to SmartWeight App
-User decides to integrate their SmartWeight app with Apple Health to import fitness and health data for a comprehensive overview of their wellness journey
+User decides to integrate their SmartWeight app with Apple Health to import fitness and health data for a comprehensive overview of their wellness journey.
 
 1. User navigates to the settings.
 2. User selects the option to link the SmartWeight app with Apple Health.
@@ -43,7 +43,7 @@ User decides to integrate their SmartWeight app with Apple Health to import fitn
 
 
 ## Use Case 5 - Syncing Sensors
-A user wants to sync their SmartWeights sensor with the mobile app
+A user wants to sync their SmartWeights sensor with the mobile app.
 
 1. The user securely attaches the SmartWeight sensor to their dumbbell following the instructions provided via the mobile app.
 2. The user navigates to the Devices section on the app to initiate the addition of a new sensor.
@@ -52,7 +52,7 @@ A user wants to sync their SmartWeights sensor with the mobile app
 5. Once the user selects their sensor, the app establishes a connection via Bluetooth. A confirmation message is displayed to the user indicating that the sensor is successfully synced.
 
 ## Use Case 6 - Attaching Sensors 
-A user wants to prepare for a workout by attaching sensors appropriately
+A user wants to prepare for a workout by attaching sensors appropriately.
 
 1. The user gets the dumbbells and elbow sleeve they want to use.
 2. The user attaches the sensors to the heads of the dumbbell, locking it in securely.
@@ -65,7 +65,7 @@ A user wants to prepare for a workout by attaching sensors appropriately
 User wants to log the weights of dumbbells used during a workout for tracking progress over time, independent of immediate feedback on form or technique.
 
 1. After selecting a workout type, the user is prompted to input the weight of the dumbbells they will use.
-2. User enters the weights of the dumbbells into the app before starting the workout
+2. User enters the weights of the dumbbells into the app before starting the workout.
    - The app presents a simple interface where the user can input the weight.
 3. The user begins their workout session without further interaction with the app, focusing on their exercise routine.
 
@@ -86,7 +86,7 @@ A user wants to complete a workout with the assistance of the virtual pet.
 4. Once finished, the user ends the workout and the SmartWeights application generates a personalized report and summary of the workout for the user. 
 
 ## Use Case 10 - View Workout Feedback
-A user wants to view feedback post-workout
+A user wants to view feedback post-workout.
 
 1. After completing a workout, the user selects the Workout tab in the mobile application.
 2. Once in, the user selects the Post-Workout tab from a sub-menu.
@@ -110,7 +110,7 @@ A user wants to customize their virtual pet.
 4. The user will see their pet change according to the costumes/accessories they picked.
 
 ## Use Case 13 - Participating in Weekly Challenge
-The SmartWeight app introduces a weekly challenge feature to engage users in varied fitness activities, encouraging consistency and community interaction
+The SmartWeight app introduces a weekly challenge feature to engage users in varied fitness activities, encouraging consistency and community interaction.
 
 1. The user navigates to the challenges section within the app and opts into the weekly challenge.
 2. Once opted in, the user can view detailed information about the challenge, which includes details of the challenge (e.g. total weight lifted, number of workouts completed) and potential reward (e.g. digital currency, virtual pet accessories).
