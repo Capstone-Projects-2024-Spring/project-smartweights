@@ -12,7 +12,8 @@ SmartWeights removes the need for a personal trainer through the integration of 
 
 # Conceptual Design
 
-SmartWeights will consist of attachable/wearable sensors sending data to an iOS application through Bluetooth. The sensors combine Raspberry Pi Pico microcontrollers and ADXL345 accelerometers. These devices are then placed on dumbbells and the user’s elbows and chest to track changes in position during a workout. Using the built-in Bluetooth shield on the Pico, we can then relay the sensors’ coordinates to the paired iOS app. 
+SmartWeights will consist of attachable/wearable sensors sending data to an iOS application through Bluetooth. The sensors combine Raspberry Pi Pico microcontrollers and ADXL345 accelerometers. These devices are then placed on dumbbells and the user’s elbows and chest to track changes in position during a workout. Using the built-in Bluetooth shield on the Pico, we can then relay the sensors’ coordinates to the paired iOS app.
+
 Designed with Swift using SwiftUI, the app will process the data and display feedback on the user’s weightlifting form. Users will be able to create accounts and have the option to log in with their Apple accounts using Apple’s Sign-In SDK and OAuth. They will also have the option to connect the app to their Apple Health with HealthKit. User accounts will be tracked and stored with Firebase’s NoSQL database hosting service. Users can start their workouts using SiriKit’s voice activation feature. The feedback displayed will be a generated response based on a trained machine learning (ML) model. The ML model will be trained and its data will be stored on a local Core Data NoSQL database. The training and processing of data will be done in Python using the TensorFlow library.
 
 
