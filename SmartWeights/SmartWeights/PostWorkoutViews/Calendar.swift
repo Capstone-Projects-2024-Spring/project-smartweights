@@ -23,7 +23,7 @@ import SwiftUI
 //    Calendar()
 //}
 struct Calendar: View {
-    @State private var selectedDate = Date()
+    @State public var selectedDate = Date()
     var body: some View {
         HStack {
             Text("Date") // Title

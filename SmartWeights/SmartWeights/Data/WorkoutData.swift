@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct dataPoints{
+struct DataPoints: Identifiable {
     
-    var day: String
+    var id = UUID().uuidString
+    var date: String
     var form: Int
 }

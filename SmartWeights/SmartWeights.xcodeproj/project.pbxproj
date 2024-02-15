@@ -19,6 +19,7 @@
 		91065FD62B7E746300BC62E6 /* PostWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FD52B7E746300BC62E6 /* PostWorkout.swift */; };
 		91065FD92B7E861900BC62E6 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FD82B7E861900BC62E6 /* Calendar.swift */; };
 		91065FDB2B7EA17D00BC62E6 /* WorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FDA2B7EA17D00BC62E6 /* WorkoutData.swift */; };
+		91065FDE2B7EC62300BC62E6 /* WorkoutGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FDD2B7EC62300BC62E6 /* WorkoutGraph.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		91065FD52B7E746300BC62E6 /* PostWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWorkout.swift; sourceTree = "<group>"; };
 		91065FD82B7E861900BC62E6 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		91065FDA2B7EA17D00BC62E6 /* WorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutData.swift; sourceTree = "<group>"; };
+		91065FDD2B7EC62300BC62E6 /* WorkoutGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutGraph.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 			children = (
 				91065FD52B7E746300BC62E6 /* PostWorkout.swift */,
 				91065FD82B7E861900BC62E6 /* Calendar.swift */,
+				91065FDD2B7EC62300BC62E6 /* WorkoutGraph.swift */,
 			);
 			path = PostWorkoutViews;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 			files = (
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
 				91065FD92B7E861900BC62E6 /* Calendar.swift in Sources */,
+				91065FDE2B7EC62300BC62E6 /* WorkoutGraph.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				91065FD62B7E746300BC62E6 /* PostWorkout.swift in Sources */,
 				91065FDB2B7EA17D00BC62E6 /* WorkoutData.swift in Sources */,

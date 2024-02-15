@@ -14,14 +14,14 @@ struct PostWorkout: View {
     var body: some View {
         ZStack{
             VStack{
+                //back arrow for future implementation
                 HStack{
                     Image(systemName: "arrow.backward")
                         .padding(.trailing, 350)
                 }
                     
-                
+                //Title of the page
                 HStack(alignment: .firstTextBaseline){
-                    
                     
                     Text("Workout Summary")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
@@ -32,9 +32,12 @@ struct PostWorkout: View {
                  
                 }
                 
-        
+                //calender component
+                //need to export date to get data the correct day
+                
                 Calendar()
                 
+                //display data for that day
                 ZStack(alignment: .leading){
                     Rectangle()
                         .frame(width:350,height: 200)
@@ -42,13 +45,14 @@ struct PostWorkout: View {
                         .foregroundColor(.gray)
                     
                     VStack(alignment: .leading){
-                        Text("Form")
+                        Text("Form - 50%")
                             .padding(.bottom, 20)
-                        Text("Velocity")
+                        Text("Velocity - 90%")
                             .padding(.bottom,30)
-                        Text("Achivements earned")
+                        Text("Achivements earned - 2")
                             .padding(.bottom, 20)
-                        Text("Currency Earned")
+                        Text("Currency Earned - 50 coins")
+                    
                         
                     }
                     .padding(.leading, 20)
@@ -58,15 +62,15 @@ struct PostWorkout: View {
                     Text("Overall Progress")
                         .font(.title2)
                         .bold()
+                        
                     ZStack{
                         Rectangle()
                             .frame(width: 350, height: 300)
-                            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                        Text("Graph")
+                            .foregroundColor(.white)
+                        
+                        WorkoutGraph()
                     }
                 }
-                
-            
                     
                 Spacer()
                 HStack{
@@ -74,6 +78,7 @@ struct PostWorkout: View {
                         Text("Overall Form - 80%")
                         Text("Overall Velocity - 70%")
                     }
+                    .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                     .padding(.leading,20)
                     Spacer()
                     Image("VirtualPet")
