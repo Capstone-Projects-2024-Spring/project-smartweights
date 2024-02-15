@@ -16,6 +16,9 @@
 		91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */; };
 		91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */; };
 		91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */; };
+		91065FD62B7E746300BC62E6 /* PostWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FD52B7E746300BC62E6 /* PostWorkout.swift */; };
+		91065FD92B7E861900BC62E6 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FD82B7E861900BC62E6 /* Calendar.swift */; };
+		91065FDB2B7EA17D00BC62E6 /* WorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FDA2B7EA17D00BC62E6 /* WorkoutData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,9 @@
 		91065F9A2B7A7E4900BC62E6 /* SmartWeightsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartWeightsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITests.swift; sourceTree = "<group>"; };
 		91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		91065FD52B7E746300BC62E6 /* PostWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWorkout.swift; sourceTree = "<group>"; };
+		91065FD82B7E861900BC62E6 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		91065FDA2B7EA17D00BC62E6 /* WorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +110,10 @@
 				91065F7E2B7A7E4700BC62E6 /* ContentView.swift */,
 				91065F802B7A7E4900BC62E6 /* Assets.xcassets */,
 				91065F852B7A7E4900BC62E6 /* Persistence.swift */,
+				91065FDC2B7EA1A500BC62E6 /* Data */,
 				91065F8A2B7A7E4900BC62E6 /* SmartWeights.entitlements */,
 				91065F8B2B7A7E4900BC62E6 /* Info.plist */,
+				91065FD72B7E758F00BC62E6 /* PostWorkoutViews */,
 				91065F872B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld */,
 				91065F822B7A7E4900BC62E6 /* Preview Content */,
 			);
@@ -135,6 +143,23 @@
 				91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */,
 			);
 			path = SmartWeightsUITests;
+			sourceTree = "<group>";
+		};
+		91065FD72B7E758F00BC62E6 /* PostWorkoutViews */ = {
+			isa = PBXGroup;
+			children = (
+				91065FD52B7E746300BC62E6 /* PostWorkout.swift */,
+				91065FD82B7E861900BC62E6 /* Calendar.swift */,
+			);
+			path = PostWorkoutViews;
+			sourceTree = "<group>";
+		};
+		91065FDC2B7EA1A500BC62E6 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				91065FDA2B7EA17D00BC62E6 /* WorkoutData.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,7 +293,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
+				91065FD92B7E861900BC62E6 /* Calendar.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
+				91065FD62B7E746300BC62E6 /* PostWorkout.swift in Sources */,
+				91065FDB2B7EA17D00BC62E6 /* WorkoutData.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
 			);
