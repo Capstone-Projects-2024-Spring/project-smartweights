@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
 		91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7E2B7A7E4700BC62E6 /* ContentView.swift */; };
 		91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91065F802B7A7E4900BC62E6 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesTab.swift; sourceTree = "<group>"; };
 		91065F792B7A7E4700BC62E6 /* SmartWeights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWeights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsApp.swift; sourceTree = "<group>"; };
 		91065F7E2B7A7E4700BC62E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				91065F8B2B7A7E4900BC62E6 /* Info.plist */,
 				91065F872B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld */,
 				91065F822B7A7E4900BC62E6 /* Preview Content */,
+				01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */,
 			);
 			path = SmartWeights;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
+				01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
