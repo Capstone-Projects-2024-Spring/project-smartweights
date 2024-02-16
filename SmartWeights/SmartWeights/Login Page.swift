@@ -24,7 +24,7 @@ struct LoginView: View {
                 
                 // App title
                 Text("Smart Weight")
-                    .font(.system(size: 50))
+                    .font(.system(size: 55))
                     .foregroundStyle(.white)
                     .italic()
                     .fontWeight(.bold)
