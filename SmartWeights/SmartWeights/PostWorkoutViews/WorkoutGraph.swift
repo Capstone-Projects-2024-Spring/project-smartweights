@@ -25,28 +25,38 @@ struct WorkoutGraph: View {
            
                     
                 
-                Chart{
-                    ForEach(data){ d in
-                        LineMark(x: PlottableValue.value("date", d.date),
-                                 y: .value("form", d.form))
-                        
-                    }
-                    
-                    
-                }
-                //.chartYAxisLabel(position: .trailing, alignment: .center)
-                .chartXAxisLabel(position: .bottom, alignment: .center) {
-                    Text("date")
-                        .bold()
-                }
-                .chartYAxisLabel(position: .leading, alignment: .center) {
-                    Text("Form  accuracy (%)")
-                        .bold()
-                        
-                }
+            ZStack {
                 
-                .padding()
-                .frame(width: 350, height: 300)
+                        Chart{
+                                ForEach(data){ d in
+                                    LineMark(x: PlottableValue.value("date", d.date),
+                                             y: .value("form", d.form))
+                                    
+                                }
+                                
+                                
+                            }
+                           
+                            .chartXAxisLabel(position: .bottom, alignment: .center) {
+                                Text("date")
+                                    .bold()
+                            }
+                            .chartYAxisLabel(position: .leading, alignment: .center) {
+                                Text("Form  accuracy (%)")
+                                    .bold()
+                                    
+                            }
+                            
+                            .padding()
+                            .frame(width: 350, height: 300)
+                            .chartScrollableAxes(.horizontal)
+                        .chartXVisibleDomain(length: 6)
+                        
+                
+                        
+                    
+            }
+            
             
 
         }
