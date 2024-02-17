@@ -8,7 +8,7 @@ sidebar_position: 5
 A user wants to login into their account
 
 1. The user is presented with the login page.
-2. The user clicks the login with Apple Account button.
+2. The user clicks the 'Login with Apple Account' button.
 3. The user enters their account info.
 4. The server verified the account.
 5. The user is able to continue into the app.
@@ -25,10 +25,10 @@ A user has already created a SmartWeights account and has logged in for the firs
 6. The user finishes the virtual pet creation process and is returned to the main navigation screen.
 
 ## Use Case 3 - Profile Management
-A user wants to change their profile settings, nutrition, or workout goals.
+A user wants to change their profile settings and workout goals.
 
 1. The user selects the Profile tab.
-2. From there, the user can see all their settings, nutrition, or workout goals.
+2. From there, the user can see all their settings and workout goals.
 3. The user selects the pencil icon next to the setting.
 4. The user edits the desired setting.
 
@@ -37,13 +37,22 @@ User decides to integrate their SmartWeight app with Apple Health to import fitn
 
 1. User navigates to the settings.
 2. User selects the option to link the SmartWeight app with Apple Health.
-3. The system will prompt the user to authorize access to the required data from Apple Health.
+3. iOS will prompt the user to authorize access to the required data from Apple Health.
 4. User grants permission for the SmartWeight app to access the specified data from Apple Health.
-5. The system automatically begins importing the user’s health and fitness data from Apple Health into the SmartWeight app.
+5. iOS automatically begins importing the user’s health and fitness data from Apple Health into the SmartWeight app.
+
+## Use Case 5 - Attaching Sensors 
+A user wants to prepare for a workout by attaching sensors appropriately.
+
+1. The user gets the dumbbells and elbow sleeve they want to use.
+2. The user attaches the sensors to the heads of the dumbbell, locking it in securely.
+3. The user puts on the elbow sleeve.
+4. The user attaches the sensor to the elbow sleeve.
+5. The user attaches another sensor to their chest.
 
 
 
-## Use Case 5 - Syncing Sensors
+## Use Case 6 - Syncing Sensors
 A user wants to sync their SmartWeights sensor with the mobile app.
 
 1. The user securely attaches the SmartWeight sensor to their dumbbell following the instructions provided via the mobile app.
@@ -52,14 +61,6 @@ A user wants to sync their SmartWeights sensor with the mobile app.
 4. The app will search for available sensors. The user selects their sensor from the list of available devices to start the pairing process.
 5. Once the user selects their sensor, the app establishes a connection via Bluetooth. A confirmation message is displayed to the user indicating that the sensor is successfully synced.
 
-## Use Case 6 - Attaching Sensors 
-A user wants to prepare for a workout by attaching sensors appropriately.
-
-1. The user gets the dumbbells and elbow sleeve they want to use.
-2. The user attaches the sensors to the heads of the dumbbell, locking it in securely.
-3. The user puts on the elbow sleeve.
-4. The user attaches the sensor to the elbow sleeve.
-5. The user attaches another sensor to their chest.
 
 
 ## Use Case 7 - Logging Dumbbell Weight
