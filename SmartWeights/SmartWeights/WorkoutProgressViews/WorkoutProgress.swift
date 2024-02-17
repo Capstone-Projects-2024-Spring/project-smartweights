@@ -23,7 +23,7 @@ struct PostWorkout: View {
                 //Title of the page
                 HStack(alignment: .firstTextBaseline){
                     
-                    Text("Workout Summary")
+                    Text("Workout Progress")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .bold()
                         .fontDesign(.monospaced)
