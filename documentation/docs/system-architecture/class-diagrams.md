@@ -20,9 +20,6 @@ classDiagram
    class SmartWeightsApp{
     + ContentView()
    }
-%%    class MainApp{
-
-%%    }
    class LoginPage{
     logoImage
     loginButton
