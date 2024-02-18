@@ -19,7 +19,7 @@ classDiagram
    class SmartWeightsApp{
     + ContentView()
    }
-  %%    class MainApp{
+%%    class MainApp{
 
 %%    }
    class LoginPage{
@@ -27,13 +27,7 @@ classDiagram
     loginButton
     loginButtonPressed()
    }
-    class NavBar{
-    HomeButton
-    Achievementbutton
-    PetButton
-    MiscButton
-    navButtonPressed(button)
-   }
+   
    class VirtualPet{
     backgroundImage
     PetImage
@@ -76,7 +70,7 @@ classDiagram
     TabButtons
     ItemButtons
     PurchaseButton
-    CancelButton
+    %% CancelButton
     + sort()
     + tabPressed()
     + itemPressed()
@@ -161,6 +155,7 @@ classDiagram
         insightDisplay
         videoCarousel
     }
+    
     class WorkoutPageSetTracker{
         header
         setTrackerDisplay
@@ -181,6 +176,13 @@ classDiagram
         +video3Pressed()
 
     }
+     class NavBar{
+    HomeButton
+    Achievementbutton
+    PetButton
+    MiscButton
+    navButtonPressed(button)
+   }
     class WorkoutProgress{
         BackButton
         WorkoutSummaryHeader
@@ -203,25 +205,33 @@ classDiagram
         ChangeGraphPressed()
 
     }
-   
+    
+  
+
+    SmartWeightsApp <-- Profile
+    SmartWeightsApp <-- VirtualPet
+    SmartWeightsApp <-- ChallengesList
+    SmartWeightsApp <-- PetStore
+    SmartWeightsApp <-- HomePage
+    SmartWeightsApp <-- WorkoutPage
+     
     SmartWeightsApp <-- LoginPage
-
-    %% SmartWeightsApp <-- Profile
-    %% SmartWeightsApp <-- VirtualPet
-    %% SmartWeightsApp <-- ChallengesList
-    %% SmartWeightsApp <-- PetStore
-    %% SmartWeightsApp <-- HomePage
-    %% SmartWeightsApp <-- WorkoutPage
     %% MainApp *-- NavBar
-    SmartWeightsApp <-- NavBar
-    NavBar *-- Profile
-    NavBar *-- VirtualPet
-    NavBar *-- ChallengesList
-    NavBar *-- PetStore
-    NavBar *-- HomePage
-    NavBar *-- WorkoutPage
-    NavBar *-- WorkoutProgress
-
+    
+    %% NavBar --* Profile
+    %% NavBar --* VirtualPet
+    %% NavBar --* ChallengesList
+    %% NavBar --* PetStore
+    %% NavBar --* HomePage
+    %% NavBar --* WorkoutPage
+    %% NavBar --* WorkoutProgress
+        Profile *-- NavBar
+        VirtualPet *-- NavBar
+        ChallengesList *-- NavBar
+        PetStore *-- NavBar
+        HomePage *-- NavBar
+        WorkoutPage *-- NavBar
+        WorkoutProgress *-- NavBar
     
     %% NavBar --o Profile
     %% NavBar --o VirtualPet
@@ -245,9 +255,8 @@ classDiagram
     
    
     ChallengesList *-- ChallengeRow
-    ChallengesList --* ChallengesTab
+    ChallengesList *-- ChallengesTab
     
-
 ```
 
 ## Backend
