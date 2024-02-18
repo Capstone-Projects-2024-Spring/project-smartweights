@@ -243,6 +243,10 @@ classDiagram
 title: Backend
 ---
 
+---
+title: Backend
+---
+
 classDiagram 
     class LoginPageVM{
         login()
@@ -451,8 +455,11 @@ classDiagram
     WorkoutVM <-- FirebaseAPIConnector
     WorkoutM o-- PIData
     WorkoutVM <-- HealthKitConnector 
+
+    SettingsVM <-- SettingsM
     PIAPI <-- PI
     PI "1" o-- "*" PIData
 
+   
    
 ```
