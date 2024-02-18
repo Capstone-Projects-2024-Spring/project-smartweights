@@ -12,6 +12,14 @@ classDiagram
    class SmartWeightsApp{
     + ContentView()
    }
+   class NavBar{
+        HomeButton
+        Achievementbutton
+        PetButton
+        MiscButton
+        navButtonPressed(button)
+   
+   }
    class LoginPage{
     logoImage
     loginButton
