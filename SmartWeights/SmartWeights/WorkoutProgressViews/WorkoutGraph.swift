@@ -17,7 +17,18 @@ struct WorkoutGraph: View {
         DataPoints(date: "2/5/24", form: 98),
         DataPoints(date: "2/6/24", form: 56),
         DataPoints(date: "2/7/24", form: 88),
-        DataPoints(date: "2/10/24", form: 90)
+        DataPoints(date: "2/10/24", form: 90),
+        DataPoints(date: "2/22/24", form: 90),
+        DataPoints(date: "3/5/24", form: 98),
+        DataPoints(date: "3/6/24", form: 56),
+        DataPoints(date: "3/7/24", form: 88),
+        DataPoints(date: "3/10/24", form: 90),
+        DataPoints(date: "4/10/24", form: 90),
+        DataPoints(date: "4/22/24", form: 90),
+        DataPoints(date: "5/5/24", form: 98),
+        DataPoints(date: "5/6/24", form: 56),
+        DataPoints(date: "5/7/24", form: 88),
+        DataPoints(date: "5/10/24", form: 90)
         
     ]
         
@@ -31,7 +42,6 @@ struct WorkoutGraph: View {
                                 ForEach(data){ d in
                                     LineMark(x: PlottableValue.value("date", d.date),
                                              y: .value("form", d.form))
-                                    
                                 }
                                 
                                 

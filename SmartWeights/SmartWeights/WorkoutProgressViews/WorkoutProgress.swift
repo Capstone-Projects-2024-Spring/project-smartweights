@@ -51,7 +51,7 @@ struct PostWorkout: View {
                             .padding(.bottom,30)
                         Text("Achivements earned - 2")
                             .padding(.bottom, 20)
-                        Text("Currency Earned - 50 coins")
+                        Text("Currency Earned - 50")
                     
                         
                     }
@@ -87,7 +87,6 @@ struct PostWorkout: View {
                         .cornerRadius(50)
                         .padding(.trailing, 20)
                 }
-                
                 
                 
             }
