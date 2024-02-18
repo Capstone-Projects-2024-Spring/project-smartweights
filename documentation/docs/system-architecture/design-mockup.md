@@ -17,7 +17,7 @@ sidebar_position: 6
 ![Screenshot 2024-02-18 111743](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/f96433dc-fd48-4e7d-8e27-520f7b54efbd)
 
 ## Pet Page
-![Screenshot 2024-02-18 122109](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/430e49e3-59c7-4f89-926a-8e642fb48cef)
+![Screenshot 2024-02-18 123930](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/f83a7f98-81c2-41a2-8322-db6af390291b)
 
 ## More ...
 ![Screenshot 2024-02-18 111851](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/d7871696-6bc9-42d8-8046-d9e4c732f57a)
