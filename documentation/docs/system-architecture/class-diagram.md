@@ -197,8 +197,8 @@ classDiagram
     SmartWeightsApp <-- ChallengesList
     SmartWeightsApp <-- PetStore
     SmartWeightsApp <-- HomePage
+    SmartWeightsApp <-- WorkoutProgress
     SmartWeightsApp <-- WorkoutPage
-     
     SmartWeightsApp <-- LoginPage
    
 
