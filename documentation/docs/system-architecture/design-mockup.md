@@ -7,6 +7,8 @@ sidebar_position: 6
 ## Login Page
 ![Screenshot 2024-02-18 111427](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/6b6c8ab1-e913-4a76-8226-13b0e433f095)
 
+This page is a login page where users are required to sign in with their Apple ID.
+
 ## Home/Excercise Page
 ![Screenshot 2024-02-18 111708](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/a425f148-cbb6-41f5-b29e-30c8f0a63e77)
 
