@@ -256,6 +256,9 @@ classDiagram
 ```
 ## Backend 
 The backend represents the ViewModel and Model portion of the architecture.
+
+Talk about External APIS
+Talk about connection with PI
 ```mermaid 
 ---
 title: Backend
