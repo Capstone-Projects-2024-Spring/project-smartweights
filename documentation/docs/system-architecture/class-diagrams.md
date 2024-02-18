@@ -11,10 +11,6 @@ Our frontend is made with SwiftUI and the visual elements are made through its v
 
 ```mermaid
 
----
-title: FrontEnd
----
-
 
 classDiagram 
    class SmartWeightsApp{
