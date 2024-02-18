@@ -222,6 +222,14 @@ classDiagram
     WorkoutPageFormDisplay *-- WorkoutPageVideoCarousel
     
     Profile *-- Settings
+
+    Profile o-- NavBar
+    VirtualPet o-- NavBar
+    ChallengesList o-- NavBar
+    PetStore o-- NavBar
+    HomePage o-- NavBar
+    WorkoutPage o-- NavBar
+    WorkoutProgress o-- NavBar
     
    
     ChallengesList *-- ChallengeRow
