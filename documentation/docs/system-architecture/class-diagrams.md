@@ -1,6 +1,12 @@
 ---
 sidebar_position: 7
 ---
+# Class Diagram
+
+SmartWeights uses an MVVM architecture and the class diagrams reflect as such. The frontend represents the views and the backend represents the viewmodels and models. The following is separated in this manner. Every view has its own respective viewmodel.
+
+## Front End
+
 
 ```mermaid
 ---
@@ -241,6 +247,8 @@ classDiagram
     
 
 ```
+
+## Backend
 
 ```mermaid 
 ---
