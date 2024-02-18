@@ -256,8 +256,9 @@ classDiagram
    
     ChallengesList *-- ChallengeRow
     ChallengesList *-- ChallengesTab
-    
+
 ```
+
 
 ## Backend
 
