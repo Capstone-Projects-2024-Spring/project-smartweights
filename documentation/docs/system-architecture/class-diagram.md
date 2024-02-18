@@ -254,7 +254,8 @@ classDiagram
 
     
 ```
-
+## Backend 
+The backend represents the ViewModel and Model portion of the architecture.
 ```mermaid 
 ---
 title: Backend
