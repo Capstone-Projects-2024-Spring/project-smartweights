@@ -253,11 +253,11 @@ classDiagram
    
     ChallengesList *-- ChallengeRow
     ChallengesList *-- ChallengesTab
-    
 ```
 
 ## Backend
 
+backend text
 ```mermaid
 ---
 title: Backend
@@ -475,6 +475,4 @@ classDiagram
     SettingsVM <-- SettingsM
     PIAPI <-- PI
     PI "1" o-- "*" PIData
-
-   
 ```
