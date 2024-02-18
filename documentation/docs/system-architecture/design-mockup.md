@@ -12,6 +12,9 @@ This page is a login page where users are required to sign in with their Apple I
 ## Home/Excercise Page
 ![Screenshot 2024-02-18 111708](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/a425f148-cbb6-41f5-b29e-30c8f0a63e77)
 
+The Home page is the entry point after logging in. Users can start their workout, navigate to all other pages, and view videos on how to use the application.
+The Exercise page appears after the user selects the *Start Exercise* button. Here the user can track their sets and reps and view feedback on their form and velocity.
+
 ## Pet Store Page
 ![Screenshot 2024-02-18 121813](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/b5a45d6d-1051-444c-9aae-6852f5c103df)
 
