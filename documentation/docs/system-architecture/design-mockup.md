@@ -19,8 +19,10 @@ sidebar_position: 6
 ## Pet Page
 ![Screenshot 2024-02-18 122109](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/430e49e3-59c7-4f89-926a-8e642fb48cef)
 
-## Profile
+## More ...
 ![Screenshot 2024-02-18 111851](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/d7871696-6bc9-42d8-8046-d9e4c732f57a)
+
+This page is designed to show the user's profile summary of almost everything in regards to level, exp, achievement showcase, and your virtual pet. Users will also have the ability to click on a "Cogswheel" button to open up settings/more to change personal data, notifications, syncing sensors, connecting apple health to the app, and etc.
 
 ## Workout summaries
 ![Screenshot 2024-02-18 122235](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/55c663a6-55f7-41c5-a613-c9fe6b77bb84)
