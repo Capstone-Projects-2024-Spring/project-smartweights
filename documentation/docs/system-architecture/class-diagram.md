@@ -243,10 +243,6 @@ classDiagram
 title: Backend
 ---
 
----
-title: Backend
----
-
 classDiagram 
     class LoginPageVM{
         login()
