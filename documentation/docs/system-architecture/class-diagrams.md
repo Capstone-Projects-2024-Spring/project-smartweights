@@ -5,8 +5,9 @@ sidebar_position: 7
 
 SmartWeights uses an MVVM architecture and the class diagrams reflect as such. The frontend represents the views and the backend represents the viewmodels and models. The following is separated in this manner. Every view has its own respective viewmodel.
 
-## Front End
+## Frontend
 
+Our frontend is made with SwiftUI and the visual elements are made through its views. Views come from SwiftUI's View struct. The entry point into the application is through the SmartWeightsApp class.
 
 ```mermaid
 ---
@@ -18,9 +19,9 @@ classDiagram
    class SmartWeightsApp{
     + ContentView()
    }
-   class MainApp{
+  %%    class MainApp{
 
-   }
+%%    }
    class LoginPage{
     logoImage
     loginButton
@@ -204,21 +205,22 @@ classDiagram
     }
    
     SmartWeightsApp <-- LoginPage
-    SmartWeightsApp <-- MainApp
+
     %% SmartWeightsApp <-- Profile
     %% SmartWeightsApp <-- VirtualPet
     %% SmartWeightsApp <-- ChallengesList
     %% SmartWeightsApp <-- PetStore
     %% SmartWeightsApp <-- HomePage
     %% SmartWeightsApp <-- WorkoutPage
-    MainApp *-- NavBar
-    MainApp <-- Profile
-    MainApp <-- VirtualPet
-    MainApp <-- ChallengesList
-    MainApp <-- PetStore
-    MainApp <-- HomePage
-    MainApp <-- WorkoutPage
-    MainApp <-- WorkoutProgress
+    %% MainApp *-- NavBar
+    SmartWeightsApp <-- NavBar
+    NavBar *-- Profile
+    NavBar *-- VirtualPet
+    NavBar *-- ChallengesList
+    NavBar *-- PetStore
+    NavBar *-- HomePage
+    NavBar *-- WorkoutPage
+    NavBar *-- WorkoutProgress
 
     
     %% NavBar --o Profile
