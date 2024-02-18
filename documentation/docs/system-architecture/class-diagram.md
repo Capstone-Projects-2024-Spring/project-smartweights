@@ -207,28 +207,16 @@ classDiagram
      
     SmartWeightsApp <-- LoginPage
     %% MainApp *-- NavBar
+   
+    Profile *-- NavBar
+    VirtualPet *-- NavBar
+    ChallengesList *-- NavBar
+    PetStore *-- NavBar
+    HomePage *-- NavBar
+    WorkoutPage *-- NavBar
+    WorkoutProgress *-- NavBar
     
-    %% NavBar --* Profile
-    %% NavBar --* VirtualPet
-    %% NavBar --* ChallengesList
-    %% NavBar --* PetStore
-    %% NavBar --* HomePage
-    %% NavBar --* WorkoutPage
-    %% NavBar --* WorkoutProgress
-        Profile *-- NavBar
-        VirtualPet *-- NavBar
-        ChallengesList *-- NavBar
-        PetStore *-- NavBar
-        HomePage *-- NavBar
-        WorkoutPage *-- NavBar
-        WorkoutProgress *-- NavBar
-    
-    %% NavBar --o Profile
-    %% NavBar --o VirtualPet
-    %% NavBar --o ChallengesList
-    %% NavBar --o PetStore
-    %% NavBar --o HomePage
-    %% NavBar --o WorkoutPage
+  
 
     HomePage *-- HomePageButtonCarousel
     HomePage *-- HomePageVideoCarousel
@@ -246,6 +234,7 @@ classDiagram
    
     ChallengesList *-- ChallengeRow
     ChallengesList *-- ChallengesTab
+    
     
 ```
 
