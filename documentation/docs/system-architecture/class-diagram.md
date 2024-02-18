@@ -208,13 +208,6 @@ classDiagram
     SmartWeightsApp <-- LoginPage
     %% MainApp *-- NavBar
    
-    Profile o-- NavBar
-    VirtualPet o-- NavBar
-    ChallengesList o-- NavBar
-    PetStore o-- NavBar
-    HomePage o-- NavBar
-    WorkoutPage o-- NavBar
-    WorkoutProgress o-- NavBar
     
     %% NavBar --o Profile
     %% NavBar --o VirtualPet
