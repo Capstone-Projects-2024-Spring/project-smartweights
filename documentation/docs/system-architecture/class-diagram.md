@@ -166,13 +166,7 @@ classDiagram
         +video3Pressed()
 
     }
-     class NavBar{
-    HomeButton
-    Achievementbutton
-    PetButton
-    MiscButton
-    navButtonPressed(button)
-   }
+     
     class WorkoutProgress{
         BackButton
         WorkoutSummaryHeader
@@ -206,15 +200,7 @@ classDiagram
     SmartWeightsApp <-- WorkoutPage
      
     SmartWeightsApp <-- LoginPage
-    %% MainApp *-- NavBar
    
-    
-    %% NavBar --o Profile
-    %% NavBar --o VirtualPet
-    %% NavBar --o ChallengesList
-    %% NavBar --o PetStore
-    %% NavBar --o HomePage
-    %% NavBar --o WorkoutPage
 
     HomePage *-- HomePageButtonCarousel
     HomePage *-- HomePageVideoCarousel
