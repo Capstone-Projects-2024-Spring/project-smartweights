@@ -2,6 +2,9 @@
 sidebar_position: 9
 ---
 
+# Database Diagrams
+
+```mermaid
 ---
 title: NoSQL ERD (Cloud base, user)
 ---
@@ -108,5 +111,5 @@ erDiagram
         string achievement_name
         int reward
     }
-
+```
 
