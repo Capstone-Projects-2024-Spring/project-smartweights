@@ -26,6 +26,8 @@ An alternative mockup shows how the pet store may function if there was a sale i
 ## Achievement Page
 ![Screenshot 2024-02-18 111743](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/f96433dc-fd48-4e7d-8e27-520f7b54efbd)
 
+The achievement page allows users to collect and view any earned or unearned achievements that also reward the user with rewards, like exp or in-game currency. 
+
 ## Pet Page
 ![image](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/50151203/caccd4f3-46d9-4679-b482-fb7860dfedfd)
 
