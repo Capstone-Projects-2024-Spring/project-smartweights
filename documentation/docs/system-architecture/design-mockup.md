@@ -15,6 +15,10 @@ This page is a login page where users are required to sign in with their Apple I
 ## Pet Store Page
 ![Screenshot 2024-02-18 121813](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/b5a45d6d-1051-444c-9aae-6852f5c103df)
 
+The pet store is designed to present a collection of items that users can buy using the pet coins they earn. Users have the ability to click on different item tabs, such as "Pets" or
+"Backgrounds", and can also sort items based on name or price. Users can preview store items with their current pet outfit by clicking on the item. This also allows users to buy the item or return back to the store page.
+An alternative mockup shows how the pet store may function if there was a sale item(s).
+
 ## Achievement Page
 ![Screenshot 2024-02-18 111743](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/f96433dc-fd48-4e7d-8e27-520f7b54efbd)
 
