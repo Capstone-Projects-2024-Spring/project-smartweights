@@ -456,7 +456,8 @@ classDiagram
     Item <|-- Background
     Item <|-- Accessory
     Item <|-- Food
-
+    
+    SettingsVM <-- SettingsM
     WorkoutVM <-- PIAPI
     WorkoutVM <-- WorkoutM
     WorkoutVM <-- SiriKitConnector
