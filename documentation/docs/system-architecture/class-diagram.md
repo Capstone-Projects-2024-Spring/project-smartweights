@@ -205,7 +205,14 @@ classDiagram
         ChangeGraphPressed()
 
     }
-    
+    class Calendar {
+        Title
+        Date 
+
+    }
+    class WorkoutGraph{
+        Chart
+    }
   
 
     SmartWeightsApp <-- Profile
@@ -228,7 +235,9 @@ classDiagram
     WorkoutPageSetsDisplay *-- WorkoutPageInsightDisplay
     WorkoutPageFormDisplay *-- WorkoutPageInsightDisplay
     WorkoutPageFormDisplay *-- WorkoutPageVideoCarousel
-    
+    WorkoutProgress *-- WorkoutGraph
+    WorkoutProgress *-- Calendar
+
     Profile *-- Settings
 
     Profile o-- NavBar
