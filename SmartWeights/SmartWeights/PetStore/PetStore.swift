@@ -3,7 +3,7 @@
 //  SmartWeights
 //
 //  Created by Jonathan Stanczak on 2/16/24.
-//
+//  Last modified: 2/18/24 12:25 PM
 
 import Foundation
 import SwiftUI
@@ -38,98 +38,158 @@ struct PetStore: View {
     @State private var userCur = 550 // Default currency
     
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: { // Back Arrow
-                    print("Button tapped (temp)")
-                }) {
-                    Image(systemName: "arrow.left")
-                        .imageScale(.large)
-                        .foregroundColor(.black)
-                }
-                Spacer() // Move "Pet Store" away from back arrow
-                Text("Pet Store")
-                    .font(.system(size: 50))
-                    .fontWeight(.bold)
-                Spacer()
+        NavigationView {
+            VStack {
                 HStack {
-                    Image(systemName: "dollarsign.circle")
-                        .imageScale(.large)
-                        .foregroundColor(.green)
-                    Text("\(userCur)") // amount of money
-                        .font(.title2)
+                    Button(action: { // Back Arrow
+                        print("Button tapped (temp)")
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .imageScale(.large)
+                            .foregroundColor(.black)
+                    }
+                    Spacer() // Move "Pet Store" away from back arrow
+                    Text("Pet Store")
+                        .font(.system(size: 50))
                         .fontWeight(.bold)
-                        .foregroundColor(.green)
-                }
-            }
-            .padding() // Add padding to the HStack
-            
-            HStack {
-                Button(action: {
-                    sortByPrice.toggle()
-                }) {
-                    Text(sortByPrice ? "Sort by Price" : "Sort by Name")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(25)
-                }
-                .padding(.bottom, -10)
-                .padding(.top, -15)
-                Spacer() // Moves sort button to far left
-            }
-            .padding(.horizontal) // Moves sorting button off the "wall"
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(categories, id: \.self) { category in
-                        Button(action: {
-                            // Here you would filter items based on the category
-                            self.selectedCategory = category
-                        }) {
-                            Text(category)
-                                .padding()
-                                .background(self.selectedCategory == category ? Color.blue : Color.gray)
-                                .foregroundColor(.white)
-                                .cornerRadius(25)
-                                .font(.system(size: 15))
-                        }
+                    Spacer()
+                    HStack {
+                        Image(systemName: "dollarsign.circle")
+                            .imageScale(.large)
+                            .foregroundColor(.green)
+                        Text("\(userCur)") // amount of money
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(.green)
                     }
                 }
-                .padding()
-            }
-            
-            ScrollView {
-                LazyVGrid(columns: gridLayout, spacing: 10) {
-                    // Assuming you add filtering logic based on `selectedCategory`
-                    ForEach(sortItems(items: items.filter { $0.category == selectedCategory }, sortByPrice: sortByPrice), id: \.id) { item in
-                        VStack {
-                            Image(item.imageName)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 100)
-                                .frame(width: 130)
-                            Text(item.name)
-                            
-                            if sortByPrice {
-                                Text("\(item.price)") // Displaying price
-                                    .font(.headline)
-                                    .foregroundColor(.green)
-                            } else {
-                                Text("\(item.price)") // Displaying price
-                                    .font(.headline)
-                                    .foregroundColor(.green)
+                .padding() // Add padding to the HStack
+                
+                HStack {
+                    Button(action: {
+                        sortByPrice.toggle()
+                    }) {
+                        Text(sortByPrice ? "Sort by Price" : "Sort by Name")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(25)
+                    }
+                    .padding(.bottom, -10)
+                    .padding(.top, -15)
+                    Spacer() // Moves sort button to far left
+                }
+                .padding(.horizontal) // Moves sorting button off the "wall"
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(categories, id: \.self) { category in
+                            Button(action: {
+                                // Here you would filter items based on the category
+                                self.selectedCategory = category
+                            }) {
+                                Text(category)
+                                    .padding()
+                                    .background(self.selectedCategory == category ? Color.blue : Color.gray)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(25)
+                                    .font(.system(size: 15))
                             }
                         }
-                        .padding()
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(10)
                     }
+                    .padding()
                 }
-                .padding([.leading, .trailing, .bottom])
+                
+                ScrollView {
+                    LazyVGrid(columns: gridLayout, spacing: 10) {
+                        // Assuming you add filtering logic based on `selectedCategory`
+                        ForEach(sortItems(items: items.filter { $0.category == selectedCategory }, sortByPrice: sortByPrice), id: \.id) { item in
+                            NavigationLink(destination: ItemDetailView(item: item, userCur: userCur)) {
+                                VStack {
+                                    Image(item.imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 100)
+                                        .frame(width: 130)
+                                    Text(item.name)
+                                    
+                                    if sortByPrice {
+                                        Text("\(item.price)") // Displaying price
+                                            .font(.headline)
+                                            .foregroundColor(.green)
+                                    } else {
+                                        Text("\(item.price)") // Displaying price
+                                            .font(.headline)
+                                            .foregroundColor(.green)
+                                    }
+                                }
+                                .padding()
+                                .background(Color.gray.opacity(0.2))
+                                .cornerRadius(10)
+                            }
+                        }
+                    }
+                    .padding([.leading, .trailing, .bottom])
+                }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .navigationBarHidden(true) // Hide the navigation bar
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+    }
+}
+
+// Item Detail View - screen for users to preview and purchase
+struct ItemDetailView: View {
+    let item: SellingItem
+    @State private var canPurchase = false
+    let userCur: Int // Add user currency variable
+    
+    var body: some View {
+        VStack {
+            // Text("\(userCur)") // display userCur
+            Image(item.imageName)
+                .resizable()
+                .scaledToFit()
+                .padding(.bottom, 50)
+            
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.gray.opacity(0.2))
+                .frame(height: 300)
+                .frame(width: 300)
+                .padding(.horizontal)
+                .padding(.top, -350)
+            
+            // Item Name
+            Text(item.name)
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.bottom, -5)
+            
+            // Item Price
+            Text("\(item.price)")
+            //.padding(.bottom, -50)
+                .font(.system(size: 30))
+                .foregroundColor(.green)
+            //.padding()
+            
+            Spacer()
+            
+            // Purchase Button
+            Button(action: {
+                // Handle purchase action
+                print("Purchase \(item.name)")
+            }) {
+                Text("Purchase")
+                    .padding()
+                    .background(userCur >= Int(item.price) ?? 0 ? Color.blue : Color.gray)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .font(.system(size: 20))
+            }
+            .padding()
+            .padding(.top, -150) // Add top padding to move the button higher up
+            .disabled(userCur < Int(item.price) ?? 0) // Disable button if userCur is less than item price
+        }
     }
 }
 
