@@ -2,10 +2,6 @@
 sidebar_position: 7
 ---
 
-# Class Diagram
-
-## Frontend
-
 ```mermaid
 ---
 title: FrontEnd
@@ -16,12 +12,21 @@ classDiagram
    class SmartWeightsApp{
     + ContentView()
    }
+   class MainApp{
+
+   }
    class LoginPage{
     logoImage
     loginButton
     loginButtonPressed()
    }
-   
+    class NavBar{
+    HomeButton
+    Achievementbutton
+    PetButton
+    MiscButton
+    navButtonPressed(button)
+   }
    class VirtualPet{
     backgroundImage
     PetImage
@@ -64,7 +69,7 @@ classDiagram
     TabButtons
     ItemButtons
     PurchaseButton
-    %% CancelButton
+    CancelButton
     + sort()
     + tabPressed()
     + itemPressed()
@@ -149,7 +154,6 @@ classDiagram
         insightDisplay
         videoCarousel
     }
-    
     class WorkoutPageSetTracker{
         header
         setTrackerDisplay
@@ -170,13 +174,6 @@ classDiagram
         +video3Pressed()
 
     }
-     class NavBar{
-    HomeButton
-    Achievementbutton
-    PetButton
-    MiscButton
-    navButtonPressed(button)
-   }
     class WorkoutProgress{
         BackButton
         WorkoutSummaryHeader
@@ -199,33 +196,24 @@ classDiagram
         ChangeGraphPressed()
 
     }
-    
-  
-
-    SmartWeightsApp <-- Profile
-    SmartWeightsApp <-- VirtualPet
-    SmartWeightsApp <-- ChallengesList
-    SmartWeightsApp <-- PetStore
-    SmartWeightsApp <-- HomePage
-    SmartWeightsApp <-- WorkoutPage
-     
+   
     SmartWeightsApp <-- LoginPage
-    %% MainApp *-- NavBar
-    
-    %% NavBar --* Profile
-    %% NavBar --* VirtualPet
-    %% NavBar --* ChallengesList
-    %% NavBar --* PetStore
-    %% NavBar --* HomePage
-    %% NavBar --* WorkoutPage
-    %% NavBar --* WorkoutProgress
-        Profile *-- NavBar
-        VirtualPet *-- NavBar
-        ChallengesList *-- NavBar
-        PetStore *-- NavBar
-        HomePage *-- NavBar
-        WorkoutPage *-- NavBar
-        WorkoutProgress *-- NavBar
+    SmartWeightsApp <-- MainApp
+    %% SmartWeightsApp <-- Profile
+    %% SmartWeightsApp <-- VirtualPet
+    %% SmartWeightsApp <-- ChallengesList
+    %% SmartWeightsApp <-- PetStore
+    %% SmartWeightsApp <-- HomePage
+    %% SmartWeightsApp <-- WorkoutPage
+    MainApp *-- NavBar
+    MainApp <-- Profile
+    MainApp <-- VirtualPet
+    MainApp <-- ChallengesList
+    MainApp <-- PetStore
+    MainApp <-- HomePage
+    MainApp <-- WorkoutPage
+    MainApp <-- WorkoutProgress
+
     
     %% NavBar --o Profile
     %% NavBar --o VirtualPet
@@ -249,7 +237,226 @@ classDiagram
     
    
     ChallengesList *-- ChallengeRow
-    ChallengesList *-- ChallengesTab
+    ChallengesList --* ChallengesTab
+    
 
+```
 
+```mermaid 
+---
+title: Backend
+---
+
+classDiagram 
+    class LoginPageVM{
+        login()
+    }
+    class LoginPageM{
+        LoginStatus: boolean
+    }
+    class NavBarVM{
+        viewChange()
+    }
+    class VirtualPetVM{
+        UpdatePet()
+        InventoryShow()
+        CustomizeShow()
+        RedirectToShop()
+    }
+    class VirtualPetM{
+        PetHealth : int
+        PetLevel : int 
+        Inventory : List [Item]
+    }
+    class ChallengesVM{
+        fetchChallenges()
+        onChallengesFetched()
+        onError()
+    }
+    class ChallengesM{
+        title: String
+        description: String
+        img: Image
+        currentProgress: Int
+        progressGoal: Int
+        reward: String
+        status: Bool
+        progressPercent: Double
+    }
+    class ProfileVM{
+        changeAchievments()
+        editName()
+        editHeight()
+        editWeight()
+        shareProfile()
+    }
+    class ProfileM{
+        displayName: String
+        lvl: int
+        height: int
+        weight: int
+        pet: virtualPet
+        challenges: Challenges
+
+    }
+    class PetStoreVM{
+        purchase()
+    }
+    class PetStoreM{
+        currency: int
+        userPet: Pet
+        pets: Array[Pet]
+        backgrounds: Array[Background]
+        accessories: Array[Accessories]
+        food: Array[Food]   
+    }
+    class Item{
+        name: String
+        description: String
+        price: int
+        itemType: int
+        imageName: String
+    }
+    class Pet{
+
+    }
+    class Background{
+
+    }
+    class Accessory{
+
+    }
+    class Food{
+
+    }
+    class ProgressVM{
+        getForm()
+        getVelocity()
+        getAchievementsEarned()
+        getCurrencyEarned()
+        getFeedback()
+    }
+    class ProgressM{
+        form:int
+        velocity:int
+        achievementsEarned:int
+        currencyEarned:int
+    }
+
+    class CalendarVM{
+        updateDate()
+    }
+    class CalendarM{
+        SelectedDate
+    }
+    class WorkoutVM{
+        StartPI()
+        StartSiri()
+        PostData()
+    }
+    class WorkoutM{
+
+    }
+    class SettingsVM{
+        toggleNotifications()
+        toggleHealthKit()
+    }
+    class SettingsM{
+        notificationsAllowed: boolean
+        healthKitAllowed: boolean
+    }
+    class HomePageButtonCarouselVM{
+        redirect(view)
+    }
+    class WorkoutGraphVM{
+        getFormData()
+        getSpeedData()
+    }
+    class WorkoutGraphM{
+        
+    }
+    class WorkoutData{
+        Speed : int
+        Form : int
+    }
+    
+    class HomePageVideoCarouselVM{
+        getVideo()
+    }
+    class HomePageVideoCarouselM{
+        video : string
+    }
+    
+    class HomePageVideoCarouselVMDBConnector{
+        dbConnect()
+        FetchData()
+        PostData()
+        DeleteData()
+    }
+    %% class APIConnector {
+    %%     <<Interface>>
+    %%     dbConnect()
+    %%     FetchData()
+    %%     PostData()
+    %%     DeleteData()
+    %% }
+    class FirebaseAPIConnector{
+        FetchData()
+        DeleteData()
+        PostData()
+    }
+    class HealthKitConnector{
+        FetchData()
+        DeleteData()
+        PostData()
+    }
+    class SiriKitConnector{
+        FetchData()
+        DeleteData()
+        PostData()
+    }
+    class PIAPI{
+        connect()
+        getData()
+    }
+    class PI{
+        sendData()
+    }
+    class PIData{
+        Position
+        Speed
+        Angle
+        Elevation
+    }
+    LoginPageVM <-- LoginPageM
+    VirtualPetVM <-- VirtualPetM
+    VirtualPetM "1" o-- "*" Item
+    ChallengesVM <-- ChallengesM
+    ProfileVM <-- ProfileM
+    ProfileM o-- VirtualPetM
+    ChallengesM --o ProfileM
+    PetStoreVM <-- PetStoreM
+    PetStoreM "1" o-- "*" Item
+    WorkoutGraphVM <-- WorkoutGraphM
+    WorkoutGraphM o-- WorkoutData
+    WorkoutGraphVM .. ProgressVM
+    HomePageVideoCarouselVM <-- HomePageVideoCarouselM
+    HomePageVideoCarouselVM <-- HomePageVideoCarouselVMDBConnector
+    ProgressVM <-- ProgressM
+    CalendarVM <-- CalendarM
+    Item <|-- Pet
+    Item <|-- Background
+    Item <|-- Accessory
+    Item <|-- Food
+
+    WorkoutVM <-- PIAPI
+    WorkoutVM <-- WorkoutM
+    WorkoutVM <-- SiriKitConnector
+    WorkoutVM <-- FirebaseAPIConnector
+    WorkoutM o-- PIData
+    WorkoutVM <-- HealthKitConnector 
+    PIAPI <-- PI
+    PI "1" o-- "*" PIData
+
+   
 ```
