@@ -3,10 +3,19 @@ sidebar_position: 9
 ---
 
 # Database Diagrams
+SmartWeights uses a NoSQL approach to the database design. It combines usage of both cloud based database (Firebase) and local storage database (CoreData). 
+
+
+## Firebase Database Design, User 
+This section of the database shows the data the user themselves have and can manipulate. This is somewhat representative of a "snowflake schema". It represents data relevant to the user's:
+- Profile
+- Achievements
+- Pet
+- Fitness Data
 
 ```mermaid
 ---
-title: NoSQL ERD (Cloud base, user)
+title: NoSQL ERD (Cloud base, User)
 ---
 erDiagram 
     User ||--o{ UserProfile : has
@@ -94,9 +103,6 @@ erDiagram
         int price 
         string pet_clothing_image
     }
-    %% Shop{
-
-    %% }
     Achievement_List{
         int achievement_list_id
 
@@ -112,4 +118,16 @@ erDiagram
         int reward
     }
 ```
+As this is a NoSQL approach, there are some relations to where there are a one-to-many. This can be seen through something such as inventory. A user has one inventory, but an inventory can store multiple Food. 
 
+```mermaid
+ Inventory{
+        int inventory_id
+    }
+    Food{
+        int food_id
+        string food_name
+        string food_image_url
+    }
+ Inventory ||--|{ Food: has 
+```
