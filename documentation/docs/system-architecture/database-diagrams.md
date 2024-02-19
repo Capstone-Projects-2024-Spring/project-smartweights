@@ -179,6 +179,9 @@ erDiagram
     User {
         user_id INT
     }
+    Sensor{
+        sensor_ID INT
+    }
     Measurement {
         measurement_id INT
         user_id INT
@@ -197,7 +200,8 @@ erDiagram
         exercise_id INT
         technique VARCHAR
     }
-    User ||--o{ Measurement : has
+    User ||--o{ Sensor : has
+    Sensor ||--o{ Measurement: has
     Measurement }|--|| Exercise : has
     Exercise ||--|| Form : has
 
