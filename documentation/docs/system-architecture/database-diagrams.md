@@ -118,10 +118,15 @@ erDiagram
         int reward
     }
 ```
-As this is a NoSQL approach, there are some relations to where there are a one-to-many. This can be seen through something such as inventory. A user has one inventory, but an inventory can store multiple Food. 
+As this is a NoSQL approach, there are some relations to where there are a one-to-many. This can be seen through something such as inventory. A user has one pet, which has one inventory, but an inventory can store multiple Food. 
 
 ```mermaid
 erDiagram
+ Pet{
+        int pet_id
+        int level
+        int health
+    }
  Inventory{
         int inventory_id
     }
@@ -130,5 +135,6 @@ erDiagram
         string food_name
         string food_image_url
     }
+ User ||--||Pet:has
  Inventory ||--|{ Food: has 
 ```
