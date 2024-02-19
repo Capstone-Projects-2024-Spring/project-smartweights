@@ -168,7 +168,7 @@ erDiagram
 
 ## CoreData Database Design
 
-The purpose of the CoreData database design is to be lightweight and to contain the information relevant to the machine learning that will take place to help provide relevant feedback for the user's workout.
+The purpose of the CoreData database design is to be lightweight and to contain the information relevant to the machine learning that will take place to help provide relevant feedback for the user's workout. There are multiple sensor systems that will get measurement data.
 
 ```mermaid
 ---
@@ -176,10 +176,7 @@ title: CoreData Machine Learning
 ---
 
 erDiagram
-    User {
-        user_id INT
-    }
-    Sensor{
+    SensorSystem{
         sensor_ID INT
     }
     Measurement {
@@ -200,7 +197,7 @@ erDiagram
         exercise_id INT
         technique VARCHAR
     }
-    User ||--|{ Sensor : has
+    
     Sensor ||--o{ Measurement: has
     Measurement }|--|| Exercise : has
     Exercise ||--|| Form : has
