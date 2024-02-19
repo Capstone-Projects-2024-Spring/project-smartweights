@@ -121,6 +121,7 @@ erDiagram
 As this is a NoSQL approach, there are some relations to where there are a one-to-many. This can be seen through something such as inventory. A user has one inventory, but an inventory can store multiple Food. 
 
 ```mermaid
+erDiagram
  Inventory{
         int inventory_id
     }
