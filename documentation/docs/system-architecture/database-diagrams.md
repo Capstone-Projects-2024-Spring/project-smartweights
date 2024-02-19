@@ -200,7 +200,7 @@ erDiagram
         exercise_id INT
         technique VARCHAR
     }
-    User ||--o{ Sensor : has
+    User ||--|{ Sensor : has
     Sensor ||--o{ Measurement: has
     Measurement }|--|| Exercise : has
     Exercise ||--|| Form : has
