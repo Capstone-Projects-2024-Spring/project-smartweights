@@ -256,9 +256,10 @@ classDiagram
 ```
 ## Backend 
 The backend represents the ViewModel and Model portion of the architecture.
+The ViewModels's tasks are to handle any type of logic related to the application. Some are simple such as changing which view to redirect to, or update the current view with new data relevant to their reliant variables. The models are the classes that hold the data elements these views rely on.
+Additionally, there are classes to connect to external APIs these including: Firebase, SiriKit, AppleHealthKit. These classes establish the connection between the application and API and allow the transfer of data between the two.
+There is also an API that connects to our hardware (Raspberry Pi Pico W). This API class establishes the connection and requests data from the PI. The PI has its own classes of data that it is sending to the application.
 
-Talk about External APIS
-Talk about connection with PI
 ```mermaid 
 ---
 title: Backend
