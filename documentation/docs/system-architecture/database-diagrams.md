@@ -138,3 +138,67 @@ erDiagram
   Pet ||--||Inventory: has
  Inventory ||--|{ Food: has 
 ```
+
+## Firebase Database Design, Shop
+
+This is a small section of the database. It is representative of the shop part of the application. The user does not manipulate this relevant data. It is used for the application to retrieve assets needed for the shop and to make loading assets with relevant values easier for development. The shop contains multiple *Assets* and assets can contain 0 or more KeywordTags to help for easier searching functionality in the application.
+
+```
+---
+title: Shop
+---
+
+erDiagram
+    
+ 
+    Asset {
+        asset_id INT 
+        name STRING
+        category STRING
+        price INT
+        image_URL STRING
+        date DATE
+    }
+    KeywordTag{
+        keyword_tag_id INT
+        keyword STRING
+    }
+    Asset ||--o{ KeywordTag: has
+```
+
+## CoreData Database Design
+
+The purpose of the CoreData database design is to be lightweight and to contain the information relevant to the machine learning that will take place to help provide relevant feedback for the user's workout.
+
+```mermaid
+---
+title: CoreData Machine Learning 
+---
+
+erDiagram
+    User {
+        user_id INT
+    }
+    Measurement {
+        measurement_id INT
+        user_id INT
+        speed FLOAT
+        velocity FLOAT
+        angle FLOAT
+        dateTime DATETIME
+    }
+    Exercise {
+        exercise_id INT
+        name VARCHAR
+        description VARCHAR
+    }
+    Form {
+        form_id INT
+        exercise_id INT
+        technique VARCHAR
+    }
+    User ||--o{ Measurement : has
+    Measurement }|--|| Exercise : has
+    Exercise ||--|| Form : has
+
+```
