@@ -143,7 +143,7 @@ erDiagram
 
 This is a small section of the database. It is representative of the shop part of the application. The user does not manipulate this relevant data. It is used for the application to retrieve assets needed for the shop and to make loading assets with relevant values easier for development. The shop contains multiple *Assets* and assets can contain 0 or more KeywordTags to help for easier searching functionality in the application.
 
-```
+```mermaid
 ---
 title: Shop
 ---
