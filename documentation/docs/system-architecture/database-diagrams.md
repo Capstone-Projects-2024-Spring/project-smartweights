@@ -135,6 +135,6 @@ erDiagram
         string food_name
         string food_image_url
     }
- User ||--||Pet:has
+  Pet ||--||Inventory: has
  Inventory ||--|{ Food: has 
 ```
