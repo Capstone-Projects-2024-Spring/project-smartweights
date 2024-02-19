@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # Neural Network Paradigm
 
 ### What is an Artificial Neural Network (ANN)?
