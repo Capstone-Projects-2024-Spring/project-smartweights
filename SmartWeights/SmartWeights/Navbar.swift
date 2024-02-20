@@ -27,6 +27,14 @@ struct Navbar: View {
                 ForEach(Tab.allCases, id: \.rawValue) { tab in
                     Spacer()
                     Image(systemName: selectedTab == tab ? fillImage : tab.rawValue)
+                        .scaleEffect(selectedTab == tab ? 1.25 : 1.0)
+                        .foregroundColor(selectedTab == tab ? .purple : .gray)
+                        .font(.system(size: 22))
+                        .onTapGesture {
+                            withAnimation(.easeIn(duration: 0.1)) {
+                                selectedTab = tab
+                            }
+                        }
                     Spacer()
                 }
             }
