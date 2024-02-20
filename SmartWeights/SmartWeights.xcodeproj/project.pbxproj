@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321EF0442B83AAFA000A2D02 /* LoginPage.swift */; };
 		32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E288592B83CD2800458FB1 /* Calendar.swift */; };
 		32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */; };
 		32E2885E2B83CD6E00458FB1 /* PostWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		321EF0442B83AAFA000A2D02 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
 		32E288592B83CD2800458FB1 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutGraph.swift; sourceTree = "<group>"; };
 		32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWorkout.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				321EF0442B83AAFA000A2D02 /* LoginPage.swift */,
 				32E288582B83CD0900458FB1 /* post-workout */,
 				91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */,
 				91065F7E2B7A7E4700BC62E6 /* ContentView.swift */,
@@ -289,6 +292,7 @@
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
+				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
 				32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */,
 			);
