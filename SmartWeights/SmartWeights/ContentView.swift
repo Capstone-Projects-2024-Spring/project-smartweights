@@ -9,6 +9,8 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @State private var selectedTab: Tab = .house
+    
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
@@ -40,6 +42,7 @@ struct ContentView: View {
             }
             Text("Select an item")
         }
+        Navbar(selectedTab: $selectedTab)
     }
 
     private func addItem() {

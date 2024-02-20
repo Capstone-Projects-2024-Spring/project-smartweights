@@ -16,6 +16,7 @@
 		91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */; };
 		91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */; };
 		91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */; };
+		E5D609832B84640000826FED /* Navbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D609822B84640000826FED /* Navbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		91065F9A2B7A7E4900BC62E6 /* SmartWeightsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartWeightsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITests.swift; sourceTree = "<group>"; };
 		91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E5D609822B84640000826FED /* Navbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Navbar.swift; path = SmartWeights/Navbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 		91065F702B7A7E4700BC62E6 = {
 			isa = PBXGroup;
 			children = (
+				E5D609822B84640000826FED /* Navbar.swift */,
 				91065F7B2B7A7E4700BC62E6 /* SmartWeights */,
 				91065F932B7A7E4900BC62E6 /* SmartWeightsTests */,
 				91065F9D2B7A7E4900BC62E6 /* SmartWeightsUITests */,
@@ -270,6 +273,7 @@
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
+				E5D609832B84640000826FED /* Navbar.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
