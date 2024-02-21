@@ -27,7 +27,7 @@ extension Color {
 struct Navbar: View {
     @Binding var selectedTab: Tab // Paired with @State var in ContentView
     private var fillImage: String {
-        selectedTab.rawValue + ".fill"
+        selectedTab.rawValue //+ ".fill"
     }
     
     var body: some View {
@@ -37,12 +37,16 @@ struct Navbar: View {
             ForEach(Tab.allCases, id: \.rawValue) { tab in
                 Spacer()
                 Image(systemName: selectedTab == tab ? fillImage : tab.rawValue)
-                    .foregroundStyle(selectedTab == tab ? Color.africanViolet : Color.hexA6A6A6)
+                    .foregroundStyle(selectedTab == tab ? Color.hex212121 : Color.hexA6A6A6)
                     .font(.system(size: 22))
                     .scaleEffect(selectedTab == tab ? 1.25 : 1.0)
                     .offset(y: selectedTab == tab ? -30 : 10) // Anyway to not hard-code values?
+                    .background(Circle().opacity(selectedTab == tab ? 1.0 : 0.0)
+                        .offset(y: selectedTab == tab ? -30: 0)
+                        .frame(width: 65, height: 65)
+                        .foregroundStyle(Color.africanViolet))
                     .onTapGesture {
-                        withAnimation(.easeIn(duration: 0.2)) {
+                        withAnimation(.easeIn(duration: 0.1)) {
                             selectedTab = tab
                         }
                     }
