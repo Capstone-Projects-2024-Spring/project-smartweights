@@ -22,6 +22,7 @@
 		91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */; };
 		91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */; };
 		91065FE12B843F1B00BC62E6 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FE02B843F1B00BC62E6 /* Workout.swift */; };
+		91065FE32B8501E700BC62E6 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FE22B8501E700BC62E6 /* Feedback.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITests.swift; sourceTree = "<group>"; };
 		91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		91065FE02B843F1B00BC62E6 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		91065FE22B8501E700BC62E6 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				91065FE02B843F1B00BC62E6 /* Workout.swift */,
+				91065FE22B8501E700BC62E6 /* Feedback.swift */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 			files = (
 				B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */,
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
+				91065FE32B8501E700BC62E6 /* Feedback.swift in Sources */,
 				32E2885E2B83CD6E00458FB1 /* PostWorkout.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */,

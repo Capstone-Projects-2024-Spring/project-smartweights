@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PostWorkout: View {
     
+    
 
     
     var body: some View {
@@ -16,8 +17,15 @@ struct PostWorkout: View {
             VStack{
                 //back arrow for future implementation
                 HStack{
-                    Image(systemName: "arrow.backward")
-                        .padding(.trailing, 350)
+                    Button(action: { // Back Arrow
+                        print("Button tapped (temp)")
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .imageScale(.large)
+                            .foregroundColor(.black)
+                            .padding(.leading)
+                        Spacer()
+                    }
                 }
                     
                 //Title of the page
