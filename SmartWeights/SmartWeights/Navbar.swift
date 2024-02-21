@@ -32,6 +32,7 @@ struct Navbar: View {
     
     var body: some View {
         VStack {
+            Spacer()
             HStack {
                 Spacer()
                 ForEach(Tab.allCases, id: \.rawValue) { tab in
@@ -39,7 +40,7 @@ struct Navbar: View {
                     Image(systemName: selectedTab == tab ? fillImage : tab.rawValue)
                         .scaleEffect(selectedTab == tab ? 1.25 : 1.0)
                         .foregroundStyle(selectedTab == tab ? Color.africanViolet : Color.hexA6A6A6)
-                        .font(.system(size: 20))
+                        .font(.system(size: 22))
                         .onTapGesture {
                             withAnimation(.easeIn(duration: 0.1)) {
                                 selectedTab = tab
@@ -51,8 +52,6 @@ struct Navbar: View {
             }
             .frame(width: nil, height: 60)
             .background(Color.hex212121)
-            .cornerRadius(10)
-            .padding()
         }
     }
 }
