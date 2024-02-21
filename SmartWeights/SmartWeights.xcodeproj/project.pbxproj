@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */; };
+		321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321EF0442B83AAFA000A2D02 /* LoginPage.swift */; };
+		32D8E1722B862B02000C62CA /* Homepage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D8E1712B862B02000C62CA /* Homepage.swift */; };
+		32D8E1742B862B38000C62CA /* Navbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D8E1732B862B38000C62CA /* Navbar.swift */; };
+		32D8E1762B863C13000C62CA /* BarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D8E1752B863C13000C62CA /* BarNavigation.swift */; };
+		32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E288592B83CD2800458FB1 /* Calendar.swift */; };
+		32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */; };
+		32E2885E2B83CD6E00458FB1 /* PostWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
 		91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7E2B7A7E4700BC62E6 /* ContentView.swift */; };
 		91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91065F802B7A7E4900BC62E6 /* Assets.xcassets */; };
@@ -17,6 +25,7 @@
 		91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */; };
 		91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */; };
 		E5D609832B84640000826FED /* Navbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D609822B84640000826FED /* Navbar.swift */; };
+		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +46,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesTab.swift; sourceTree = "<group>"; };
+		321EF0442B83AAFA000A2D02 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
+		32D8E1712B862B02000C62CA /* Homepage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homepage.swift; sourceTree = "<group>"; };
+		32D8E1732B862B38000C62CA /* Navbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navbar.swift; sourceTree = "<group>"; };
+		32D8E1752B863C13000C62CA /* BarNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarNavigation.swift; sourceTree = "<group>"; };
+		32E288592B83CD2800458FB1 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutGraph.swift; sourceTree = "<group>"; };
+		32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWorkout.swift; sourceTree = "<group>"; };
 		91065F792B7A7E4700BC62E6 /* SmartWeights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWeights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsApp.swift; sourceTree = "<group>"; };
 		91065F7E2B7A7E4700BC62E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,6 +69,7 @@
 		91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITests.swift; sourceTree = "<group>"; };
 		91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E5D609822B84640000826FED /* Navbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navbar.swift; sourceTree = "<group>"; };
+		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +97,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32E288582B83CD0900458FB1 /* post-workout */ = {
+			isa = PBXGroup;
+			children = (
+				32E288592B83CD2800458FB1 /* Calendar.swift */,
+				32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */,
+				32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */,
+			);
+			path = "post-workout";
+			sourceTree = "<group>";
+		};
 		91065F702B7A7E4700BC62E6 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +130,12 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				32D8E1752B863C13000C62CA /* BarNavigation.swift */,
+				32D8E1732B862B38000C62CA /* Navbar.swift */,
+				32D8E1712B862B02000C62CA /* Homepage.swift */,
+				321EF0442B83AAFA000A2D02 /* LoginPage.swift */,
+				32E288582B83CD0900458FB1 /* post-workout */,
+				B90B6FD82B7FACE2009866FD /* PetStore */,
 				91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */,
 				91065F7E2B7A7E4700BC62E6 /* ContentView.swift */,
 				E5D609822B84640000826FED /* Navbar.swift */,
@@ -111,6 +145,7 @@
 				91065F8B2B7A7E4900BC62E6 /* Info.plist */,
 				91065F872B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld */,
 				91065F822B7A7E4900BC62E6 /* Preview Content */,
+				01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */,
 			);
 			path = SmartWeights;
 			sourceTree = "<group>";
@@ -138,6 +173,14 @@
 				91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */,
 			);
 			path = SmartWeightsUITests;
+			sourceTree = "<group>";
+		};
+		B90B6FD82B7FACE2009866FD /* PetStore */ = {
+			isa = PBXGroup;
+			children = (
+				B90B6FD92B7FAD1C009866FD /* PetStore.swift */,
+			);
+			path = PetStore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,11 +313,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */,
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
+				32E2885E2B83CD6E00458FB1 /* PostWorkout.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
+				32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
 				E5D609832B84640000826FED /* Navbar.swift in Sources */,
+				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
+				32D8E1722B862B02000C62CA /* Homepage.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
+				32D8E1742B862B38000C62CA /* Navbar.swift in Sources */,
+				01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */,
+				32D8E1762B863C13000C62CA /* BarNavigation.swift in Sources */,
+				32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
