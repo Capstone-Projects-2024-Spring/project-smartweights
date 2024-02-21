@@ -15,6 +15,7 @@ class WorkoutViewModel: ObservableObject {
     @Published var minutes: Int = 0
     @Published var seconds: Int = 0
     @Published var timer: Timer? = nil
+    @Published var progressInterval = 2.0
     
     
     
@@ -60,6 +61,13 @@ class WorkoutViewModel: ObservableObject {
         timer?.invalidate()
         timer = nil
     }
+    
+    
+    func generateRandomNumber() -> Double {
+        return Double.random(in: 0..<1)
+    }
+    
+    
 }
 struct CircularProgressView: View {
     // 1
@@ -183,6 +191,8 @@ struct StartWorkout: View {
                         .font(.title3)
                         .bold()
                         .padding(.bottom, 100)
+                    Text("\(viewModel.inputtedSets)")
+                        .bold()
                     
                 }
                 
@@ -219,13 +229,14 @@ struct StartWorkout: View {
                     viewModel.resetProgress()
                     viewModel.restartTimer()
                     viewModel.stopTimer()
+                    
                 })
                 {
                     ZStack{
                         RoundedRectangle(cornerRadius:  25)
                             .frame(width: 300, height: 80)
                             .foregroundColor(.green)
-                        Text("Finish workout")
+                        Text("New workout")
                             .bold()
                             .foregroundStyle(.black)
                     }
