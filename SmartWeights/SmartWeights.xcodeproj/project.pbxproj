@@ -17,6 +17,8 @@
 		6B9E32E42B86526300CA7868 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32E32B86526300CA7868 /* FirebasePerformance */; };
 		6B9E32E62B86526300CA7868 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32E52B86526300CA7868 /* FirebaseRemoteConfigSwift */; };
 		6B9E32E82B86526300CA7868 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32E72B86526300CA7868 /* FirebaseStorage */; };
+		6B9E32EC2B865AF300CA7868 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9E32EA2B865AF300CA7868 /* FirestoreManager.swift */; };
+		6B9E32EE2B865FD000CA7868 /* FirebaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9E32ED2B865FD000CA7868 /* FirebaseTests.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
 		91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7E2B7A7E4700BC62E6 /* ContentView.swift */; };
 		91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91065F802B7A7E4900BC62E6 /* Assets.xcassets */; };
@@ -47,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6B9E32EA2B865AF300CA7868 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		6B9E32ED2B865FD000CA7868 /* FirebaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTests.swift; sourceTree = "<group>"; };
 		91065F792B7A7E4700BC62E6 /* SmartWeights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWeights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsApp.swift; sourceTree = "<group>"; };
 		91065F7E2B7A7E4700BC62E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -97,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B9E32E92B865A4C00CA7868 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6B9E32EA2B865AF300CA7868 /* FirestoreManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		91065F702B7A7E4700BC62E6 = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +132,7 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				6B9E32E92B865A4C00CA7868 /* Services */,
 				6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */,
 				91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */,
 				91065F7E2B7A7E4700BC62E6 /* ContentView.swift */,
@@ -145,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */,
+				6B9E32ED2B865FD000CA7868 /* FirebaseTests.swift */,
 			);
 			path = SmartWeightsTests;
 			sourceTree = "<group>";
@@ -314,7 +328,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B9E32EE2B865FD000CA7868 /* FirebaseTests.swift in Sources */,
 				91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */,
+				6B9E32EC2B865AF300CA7868 /* FirestoreManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
