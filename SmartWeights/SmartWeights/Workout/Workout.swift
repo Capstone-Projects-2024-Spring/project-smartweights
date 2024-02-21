@@ -8,7 +8,40 @@
 import SwiftUI
 import Combine
 
+
+
+struct CircularProgressView: View {
+    // 1
+    let progress: Double
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(
+                    Color.pink.opacity(0.5),
+                    lineWidth: 10
+                )
+            Circle()
+            // 2
+                .trim(from: 0, to: progress)
+                .stroke(
+                    Color.pink,
+                    style: StrokeStyle(
+                        lineWidth: 10,
+                        lineCap: .round
+                    )
+                )
+                .rotationEffect(.degrees(-90))
+                .animation(.easeOut, value: progress)
+        }
+    }
+}
+
+
 struct Workout: View {
+    
+    @State public var progress: Double = 0
+    
     @State private var selectedTab = 0
     @State private var inputtedSets = ""
     @State private var inputtedReps = ""
@@ -22,29 +55,38 @@ struct Workout: View {
     
     
     
-    
-    
-    
     var body: some View {
         VStack {
-            HStack{
+            HStack { //Title
                 Button(action: { // Back Arrow
-                    print("Button tapped (temp)")
+                    
                 }) {
                     Image(systemName: "arrow.left")
                         .imageScale(.large)
                         .foregroundColor(.black)
                         .padding(.leading)
                 }
+                .padding(.trailing, 40)
                 Spacer()
                 
-            }
-            HStack { //Title
                 Text("Workout")
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .bold()
                 
+                    .padding(.trailing, 60)
+                Button(action :{
+                    print("start workout")
+//                    addProgress(data: 0.75)
+                    progress = 0.75
+                }){
+                    Image(systemName: "mic.circle")
+                        .resizable()
+                        .frame(width: 30,height: 30)
+                }
+                .padding(.trailing, 42)
+                
             }
+            
             //Selecting the workout tab or the feedback tab
             Picker(selection: $selectedTab, label: Text("Select a tab")) {
                 Text("Sets").tag(0)
@@ -54,13 +96,16 @@ struct Workout: View {
         }
         
         //user inputting their desired weights, reps and sets
-        Text("BenchPress: \(inputtedSets) x \(inputtedReps)")
-        Text("Dumbell Weights: \(inputtedWeights) lbs")
+        Text((inputtedReps.isEmpty || inputtedSets.isEmpty) ? "BenchPress:" : "BenchPress: \(inputtedSets) x \(inputtedReps)")
+            .bold()
         
-        VStack{
-            HStack{
-                Spacer()
-                Text("Set Amount")
+        Text(inputtedWeights.isEmpty ? "Dumbell Weights: 0 lbs":"Dumbell Weights: \(inputtedWeights) lbs")
+            .bold()
+        
+        HStack{
+            VStack{
+                Text("Sets")
+                    .bold()
                 TextField("", text: $inputtedSets)
                     .keyboardType(.numberPad)
                     .onReceive(Just(inputtedSets)) { newValue in
@@ -74,9 +119,10 @@ struct Workout: View {
                     .font(.system(size: 14))
                 
             }
-            HStack{
-                Spacer()
-                Text("Repition Amount")
+            
+            VStack{
+                Text("Repitions")
+                    .bold()
                 TextField("", text: $inputtedReps)
                     .keyboardType(.numberPad)
                     .onReceive(Just(inputtedReps)) { newValue in
@@ -90,9 +136,9 @@ struct Workout: View {
                     .font(.system(size: 14))
                 
             }
-            HStack{
-                Spacer()
-                Text("Weights (lbs)")
+            VStack{
+                Text("Pounds")
+                    .bold()
                 TextField("", text: $inputtedWeights)
                     .keyboardType(.numberPad)
                     .onReceive(Just(inputtedWeights)) { newValue in
@@ -107,30 +153,88 @@ struct Workout: View {
                 
             }
         }
-        .padding(.trailing, 50)
+        .padding(.top)
+        .padding(.bottom,45)
         
-        HStack {
-            
-            ForEach(0..<(5)) { index in
+        
+        VStack{
+            HStack{
                 ZStack{
-                    Circle()
-                        .foregroundColor(.blue)
-                        .frame(width: 50, height: 50)
-                        .padding()
-                    Text("\(inputtedReps)")
+                    RoundedRectangle(cornerRadius:  25)
+                        .frame(width: 150, height: 150)
+                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                    Text("Time")
+                        .font(.title3)
+                        .bold()
+                        .padding(.bottom,100)
+                    
+                }
+                ZStack{
+                    RoundedRectangle(cornerRadius:  25)
+                        .frame(width: 150, height: 150)
+                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                    Text("Remaining Sets")
+                        .font(.title3)
+                        .bold()
+                        .padding(.bottom, 100)
+                    
                 }
                 
+            }
+            HStack{
+                ZStack{
+                    RoundedRectangle(cornerRadius:  25)
+                        .frame(width: 150, height: 150)
+                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                    Text("Form")
+                        .font(.title3)
+                        .bold()
+                    CircularProgressView(progress: progress)
+                        .frame(width: 100, height: 100)
+                    
+                }
+                ZStack{
+                    RoundedRectangle(cornerRadius:  25)
+                        .frame(width: 150, height: 150)
+                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                    Text("Velocity")
+                        .font(.title3)
+                        .bold()
+                    CircularProgressView(progress: progress)
+                        .frame(width: 100, height: 100)
+                }
                 
             }
         }
+        ZStack{
+            ZStack{
+                Button(action: { // Back Arrow
+                    print("Button tapped (temp)")
+                    resetProgress()
+                })
+                {
+                    ZStack{
+                        RoundedRectangle(cornerRadius:  25)
+                            .frame(width: 300, height: 80)
+                            .foregroundColor(.green)
+                        Text("Finish workout")
+                            .bold()
+                            .foregroundStyle(.black)
+                    }
+                }
+                
+            }
+            
+        }
         
-        
-        
-        
-        
-        
-        
+    
         Spacer()
+    }
+    func resetProgress() {
+        progress = 0
+    }
+    func addProgress(data: Double) {
+        progress = data
     }
 }
 
