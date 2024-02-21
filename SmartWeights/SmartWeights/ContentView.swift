@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @State private var selectedTab: Tab = .house
+    @State private var selectedTab: Tab = .house // Default selected tab in navbar
     
     @Environment(\.managedObjectContext) private var viewContext
 
