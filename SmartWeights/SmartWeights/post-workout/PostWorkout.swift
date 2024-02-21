@@ -17,17 +17,21 @@ struct PostWorkout: View {
                 //back arrow for future implementation
                 HStack{
                     Image(systemName: "arrow.backward")
-                        .padding(.trailing, 350)
+                        .foregroundStyle(.white)
+                        .padding()
+                    
+                    Text("Workout Progress")
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        .font(.system(size: 50))
+                        .fontWeight(.bold)
+                        .foregroundStyle(.white)
+                        .fontDesign(.monospaced)
                 }
                     
                 //Title of the page
                 HStack(alignment: .firstTextBaseline){
                     
-                    Text("Workout Progress")
-                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                        .bold()
-                        .fontDesign(.monospaced)
-                        .multilineTextAlignment(.center)
+                    
 
                  
                 }
@@ -60,6 +64,7 @@ struct PostWorkout: View {
                 }
                 VStack{
                     Text("Overall Progress")
+                        .foregroundStyle(.white)
                         .font(.title2)
                         .bold()
                         
@@ -87,9 +92,8 @@ struct PostWorkout: View {
                         .cornerRadius(50)
                         .padding(.trailing, 20)
                 }
-                
-                
             }
+            .background(Color.black) // Apply color as background
         }
     }
 }

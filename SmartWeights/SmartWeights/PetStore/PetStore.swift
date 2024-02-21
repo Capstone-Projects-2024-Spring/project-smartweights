@@ -46,12 +46,13 @@ struct PetStore: View {
                     }) {
                         Image(systemName: "arrow.left")
                             .imageScale(.large)
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                     }
                     Spacer() // Move "Pet Store" away from back arrow
                     Text("Pet Store")
                         .font(.system(size: 50))
                         .fontWeight(.bold)
+                        .foregroundStyle(.white)
                     Spacer()
                     HStack {
                         Image(systemName: "dollarsign.circle")
@@ -129,9 +130,10 @@ struct PetStore: View {
                             }
                         }
                     }
-                    .padding([.leading, .trailing, .bottom])
+                    //.padding([.leading, .trailing, .bottom])
                 }
             }
+            .background(Color.black)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .navigationBarHidden(true) // Hide the navigation bar
         }
