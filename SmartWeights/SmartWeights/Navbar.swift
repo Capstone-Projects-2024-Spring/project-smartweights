@@ -31,28 +31,27 @@ struct Navbar: View {
     }
     
     var body: some View {
-        VStack {
+        Spacer()
+        HStack {
             Spacer()
-            HStack {
+            ForEach(Tab.allCases, id: \.rawValue) { tab in
                 Spacer()
-                ForEach(Tab.allCases, id: \.rawValue) { tab in
-                    Spacer()
-                    Image(systemName: selectedTab == tab ? fillImage : tab.rawValue)
-                        .scaleEffect(selectedTab == tab ? 1.25 : 1.0)
-                        .foregroundStyle(selectedTab == tab ? Color.africanViolet : Color.hexA6A6A6)
-                        .font(.system(size: 22))
-                        .onTapGesture {
-                            withAnimation(.easeIn(duration: 0.1)) {
-                                selectedTab = tab
-                            }
+                Image(systemName: selectedTab == tab ? fillImage : tab.rawValue)
+                    .foregroundStyle(selectedTab == tab ? Color.africanViolet : Color.hexA6A6A6)
+                    .font(.system(size: 22))
+                    .scaleEffect(selectedTab == tab ? 1.25 : 1.0)
+                    .offset(y: selectedTab == tab ? -30 : 10) // Anyway to not hard-code values?
+                    .onTapGesture {
+                        withAnimation(.easeIn(duration: 0.2)) {
+                            selectedTab = tab
                         }
-                    Spacer()
-                }
+                    }
                 Spacer()
             }
-            .frame(width: nil, height: 60)
-            .background(Color.hex212121)
+            Spacer()
         }
+        .frame(width: nil, height: 60)
+        .background(Color.hex212121)
     }
 }
 
