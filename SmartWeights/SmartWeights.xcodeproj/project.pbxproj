@@ -23,6 +23,7 @@
 		91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */; };
 		91065FE12B843F1B00BC62E6 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FE02B843F1B00BC62E6 /* Workout.swift */; };
 		91065FE32B8501E700BC62E6 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FE22B8501E700BC62E6 /* Feedback.swift */; };
+		91BE1D692B8674A900B165F9 /* StartWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BE1D682B8674A900B165F9 /* StartWorkout.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		91065FE02B843F1B00BC62E6 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		91065FE22B8501E700BC62E6 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
+		91BE1D682B8674A900B165F9 /* StartWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkout.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,6 +175,7 @@
 			children = (
 				91065FE02B843F1B00BC62E6 /* Workout.swift */,
 				91065FE22B8501E700BC62E6 /* Feedback.swift */,
+				91BE1D682B8674A900B165F9 /* StartWorkout.swift */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
 				01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */,
+				91BE1D692B8674A900B165F9 /* StartWorkout.swift in Sources */,
 				32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
