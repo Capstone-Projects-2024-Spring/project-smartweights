@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ChallengesTab: View {
     let challenges = [
-        Challenge(title: "Challenge 1", description: "Description for Challenge 1.", currentProgress: 7, progressGoal: 10, reward: "+ 1000 XP"),
-        Challenge(title: "Challenge 2", description: "Description for Challenge 2.", currentProgress: 3, progressGoal: 10, reward: "+ 200 SP"),
-        Challenge(title: "Challenge 3", description: "Description for Challenge 3.", currentProgress: 5, progressGoal: 10, reward: "+ 100 XP"),
-        Challenge(title: "Challenge 4", description: "Description for Challenge 4.", currentProgress: 2, progressGoal: 10, reward: "+ 500 XP"),
-        Challenge(title: "Challenge 5", description: "Description for Challenge 5.", currentProgress: 8, progressGoal: 10, reward: "+ 500 SP"),
-        Challenge(title: "Challenge 6", description: "Description for Challenge 6.", currentProgress: 1, progressGoal: 10, reward: "+ 100 XP")
+        Challenge(title: "Challenge 1", description: "Description for Challenge 1.", currentProgress: 7, progressGoal: 10, reward: "+ 1000 XP", status: false),
+        Challenge(title: "Challenge 2", description: "Description for Challenge 2.", currentProgress: 3, progressGoal: 10, reward: "+ 200 SP", status: false),
+        Challenge(title: "Challenge 3", description: "Description for Challenge 3.", currentProgress: 5, progressGoal: 10, reward: "+ 100 XP", status: false),
+        Challenge(title: "Challenge 4", description: "Description for Challenge 4.", currentProgress: 2, progressGoal: 10, reward: "+ 500 XP", status: false),
+        Challenge(title: "Challenge 5", description: "Description for Challenge 5.", currentProgress: 8, progressGoal: 10, reward: "+ 500 SP", status: false),
+        Challenge(title: "Challenge 6", description: "Description for Challenge 6.", currentProgress: 1, progressGoal: 10, reward: "+ 100 XP", status: false)
     ]
     
     var body: some View {
@@ -32,6 +32,7 @@ struct Challenge: Identifiable {
     var currentProgress: Int
     var progressGoal: Int
     var reward: String
+    var status: Bool
     
     var progressPercent: Double {
         return Double(currentProgress) / Double(progressGoal)
