@@ -123,7 +123,7 @@
 				6B9E32EA2B865AF300CA7868 /* FirestoreManager.swift */,
 			);
 			path = Services;
-
+		};
 		32E288582B83CD0900458FB1 /* post-workout */ = {
 			isa = PBXGroup;
 			children = (
