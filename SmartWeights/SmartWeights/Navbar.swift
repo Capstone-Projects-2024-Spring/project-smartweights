@@ -30,32 +30,29 @@ struct Navbar: View {
     
     var body: some View {
         // Need to add some frame to VStack
-        VStack {
+        HStack {
             Spacer()
-            HStack {
+            ForEach(Tab.allCases, id: \.rawValue) { tab in
                 Spacer()
-                ForEach(Tab.allCases, id: \.rawValue) { tab in
-                    Spacer()
-                    Image(systemName: tab.rawValue)
-                        .foregroundStyle(selectedTab == tab ? Color.hex212121 : Color.hexA6A6A6)
-                        .font(.system(size: 22))
-                        .scaleEffect(selectedTab == tab ? 1.25 : 1.0)
-                        .offset(y: selectedTab == tab ? -40 : 0) // Anyway to not hard-code values?
-                        .background(Circle().opacity(selectedTab == tab ? 1.0 : 0.0)
-                            .offset(y: selectedTab == tab ? -40: 0)
-                            .frame(width: 65, height: 65)
-                            .foregroundStyle(Color.africanViolet))
-                        .onTapGesture {
-                            withAnimation(.easeIn(duration: 0.1)) {
-                                selectedTab = tab
-                            }
+                Image(systemName: tab.rawValue)
+                    .foregroundStyle(selectedTab == tab ? Color.hex212121 : Color.hexA6A6A6)
+                    .font(.system(size: 22))
+                    .scaleEffect(selectedTab == tab ? 1.25 : 1.0)
+                    .offset(y: selectedTab == tab ? -40 : 0) // Anyway to not hard-code values?
+                    .background(Circle().opacity(selectedTab == tab ? 1.0 : 0.0)
+                        .offset(y: selectedTab == tab ? -40: 0)
+                        .frame(width: 65, height: 65)
+                        .foregroundStyle(Color.africanViolet))
+                    .onTapGesture {
+                        withAnimation(.easeIn(duration: 0.1)) {
+                            selectedTab = tab
                         }
-                    Spacer()
-                }
+                    }
+                Spacer()
             }
-            .frame(width: nil, height: 80)
-            .background(Color.hex212121)
         }
+        .frame(width: nil, height: 80)
+        .background(Color.hex212121)
     }
 }
 
