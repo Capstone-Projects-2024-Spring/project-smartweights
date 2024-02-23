@@ -7,7 +7,7 @@
 
 import SwiftUI
 import AuthenticationServices
-
+/// This is the view for login page
 struct LoginView: View {
     @State private var showingAlert = false // For testing the sign in button
     @State private var alertMessage = ""
