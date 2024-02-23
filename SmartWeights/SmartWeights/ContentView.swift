@@ -46,7 +46,8 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 Navbar(selectedTab: $selectedTab)
-            }        }
+            }
+        }
     }
 
     private func addItem() {
