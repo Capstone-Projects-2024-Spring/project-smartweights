@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BarNavigation: View {
+struct NavController: View {
     @State private var selectedTab: Tab = .house
 
     var body: some View {
@@ -40,5 +40,5 @@ struct BarNavigation: View {
 }
 
 #Preview {
-    BarNavigation()
+    NavController()
 }

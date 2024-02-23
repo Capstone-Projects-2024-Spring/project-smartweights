@@ -87,7 +87,7 @@ struct LoginView: View {
                     
                     Spacer()
                     
-                    NavigationLink(destination: BarNavigation().navigationBarBackButtonHidden(true), isActive: $navigateToNextPage) {
+                    NavigationLink(destination: NavController().navigationBarBackButtonHidden(true), isActive: $navigateToNextPage) {
                         EmptyView()
                     }
                 }
