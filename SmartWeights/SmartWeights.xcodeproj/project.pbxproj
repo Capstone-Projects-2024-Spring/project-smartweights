@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */; };
+		3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202761D2B892D2C001A86B8 /* CustomProgressView.swift */; };
+		320276202B892D43001A86B8 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202761F2B892D43001A86B8 /* HamburgerMenu.swift */; };
+		320276222B892D55001A86B8 /* Pet_page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320276212B892D55001A86B8 /* Pet_page.swift */; };
 		321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321EF0442B83AAFA000A2D02 /* LoginPage.swift */; };
 		32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E288592B83CD2800458FB1 /* Calendar.swift */; };
 		32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */; };
@@ -54,6 +57,9 @@
 
 /* Begin PBXFileReference section */
 		01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesTab.swift; sourceTree = "<group>"; };
+		3202761D2B892D2C001A86B8 /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
+		3202761F2B892D43001A86B8 /* HamburgerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenu.swift; sourceTree = "<group>"; };
+		320276212B892D55001A86B8 /* Pet_page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet_page.swift; sourceTree = "<group>"; };
 		321EF0442B83AAFA000A2D02 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
 		32E288592B83CD2800458FB1 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutGraph.swift; sourceTree = "<group>"; };
@@ -111,6 +117,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3202761C2B892D04001A86B8 /* pet-customize-page */ = {
+			isa = PBXGroup;
+			children = (
+				3202761D2B892D2C001A86B8 /* CustomProgressView.swift */,
+				3202761F2B892D43001A86B8 /* HamburgerMenu.swift */,
+				320276212B892D55001A86B8 /* Pet_page.swift */,
+			);
+			path = "pet-customize-page";
+			sourceTree = "<group>";
+		};
 		32E288582B83CD0900458FB1 /* post-workout */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +160,7 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				3202761C2B892D04001A86B8 /* pet-customize-page */,
 				6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */,
 				321EF0442B83AAFA000A2D02 /* LoginPage.swift */,
 				32E288582B83CD0900458FB1 /* post-workout */,
@@ -343,12 +360,15 @@
 				B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */,
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
 				32E2885E2B83CD6E00458FB1 /* PostWorkout.swift in Sources */,
+				3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
+				320276202B892D43001A86B8 /* HamburgerMenu.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
 				01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */,
+				320276222B892D55001A86B8 /* Pet_page.swift in Sources */,
 				32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
