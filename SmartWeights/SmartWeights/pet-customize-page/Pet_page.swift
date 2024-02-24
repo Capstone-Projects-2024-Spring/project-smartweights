@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view that represents the pet page.
 struct Pet_page: View {
     
     @State private var showShop = false
@@ -69,16 +70,14 @@ struct Pet_page: View {
     }
 }
 
-
-
-// Testing Purpose for the Hamburger menu
+// Testing Purpose Inventory page for the Hamburger menu
 struct InventoryView: View {
     var body: some View {
         Text("Inventory")
             .font(.title)
     }
 }
-
+// Testing Purpose CustomizeView for the Hamburger menu
 struct CustomizeView: View {
     var body: some View {
         Text("Customize")
@@ -86,16 +85,8 @@ struct CustomizeView: View {
     }
 }
 
-
-
-
 struct Pet_page_Previews: PreviewProvider {
     static var previews: some View {
         Pet_page()
     }
 }
-
-
-
-
-

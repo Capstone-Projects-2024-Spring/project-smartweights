@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A custom progress view that displays the progress value and label.
 struct CustomProgressView: View {
     var value: Float // Current progress value
     var maxValue: Float // Maximum progress value to calculate the percentage
@@ -15,11 +16,13 @@ struct CustomProgressView: View {
     var foregroundColor: Color
     var backgroundColor: Color
     
+    /// The display mode for the progress value and health bar.
     enum DisplayMode {
         case percentage
         case rawValue
     }
     
+    /// The formatted display value based on the display mode.
     private var displayValue: String {
         switch displayMode {
         case .percentage:
@@ -31,7 +34,7 @@ struct CustomProgressView: View {
         }
     }
     
-    // Dynamic color based on health value
+    /// The text color based on value for health bar.
     private var textColor: Color {
         if label.lowercased() == "health" && value <= (0.25 * maxValue) {
             return .red
@@ -61,4 +64,3 @@ struct CustomProgressView: View {
         }
     }
 }
-

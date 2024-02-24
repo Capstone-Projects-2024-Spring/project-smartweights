@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view representing a hamburger menu with options to navigate to different pages.
 struct HamburgerMenu: View {
     var navigateToShop: () -> Void
     var navigateToInventory: () -> Void
