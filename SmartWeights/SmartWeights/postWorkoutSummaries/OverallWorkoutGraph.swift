@@ -16,6 +16,7 @@ struct DataPoints: Identifiable {
     var form: Int
 }
 
+
 ///structure to display the graph of overall progress
 
 //view to show the graph of overall progress
