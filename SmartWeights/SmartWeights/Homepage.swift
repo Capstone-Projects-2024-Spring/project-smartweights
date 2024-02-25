@@ -17,7 +17,6 @@ struct Homepage: View {
 
     var body: some View {
         VStack {
-            Spacer()
             // Welcome Message
             HStack {
                 Text("Welcome")
@@ -81,29 +80,40 @@ struct Homepage: View {
             .foregroundStyle(.white)
             
             // Video Carousel
-            Spacer()
             VStack {
                 HStack {
                     Text("Videos")
-                        .padding()
+                        .font(.title3)
+                        .padding(.top)
+                        .padding(.horizontal)
                     Spacer()
-                    Image(systemName: "arrow.right")
-                        .padding()
+                    HStack {
+                        Text("See more")
+                        Image(systemName: "arrow.right")
+                            .foregroundColor(Color.africanViolet)
+                    }
+                    .padding()
                 }
                 ScrollView (.horizontal) {
                     HStack {
                         let count = 1...4
                         ForEach(count, id: \.self) { number in
-                            VStack {
+                            VStack (alignment: .leading){
                                 Image(systemName: "photo")
                                 Text("Video \(number)")
+                                    .font(.title3)
                                 Text("Video Description")
+                                    .font(.subheadline)
                             }
+                            .frame(width: 200, height: 250)
+                            .background(Color.hex2E2E2E)
+                            .cornerRadius(12)
                             .padding()
                         }
                     }
                 }
             }
+            .foregroundStyle(.white)
             
             Spacer()
         }
