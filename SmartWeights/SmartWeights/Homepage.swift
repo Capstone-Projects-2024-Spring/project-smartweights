@@ -9,6 +9,10 @@ import SwiftUI
 
 var currentWorkout = "Dumbbell Press"
 
+extension Color {
+    static let hex2E2E2E = Color(red: 46/255, green: 46/255, blue: 46/255)
+}
+
 struct Homepage: View {
 
     var body: some View {
@@ -17,27 +21,35 @@ struct Homepage: View {
             // Welcome Message
             HStack {
                 Text("Welcome")
+                    .foregroundStyle(.white)
                     .padding()
                 Spacer()
             }
             
-            Spacer()
             // Start Workout Button
+            Spacer()
             ZStack {
                 HStack {
-                    VStack {
+                    VStack (alignment: .leading) {
                         HStack {
                             Text("Start Workout")
+                                .font(.title2)
                             Image(systemName: "arrow.right")
+                                .foregroundStyle(Color.africanViolet)
                         }
                         Text(currentWorkout)
+                            .font(.subheadline)
                     }
                     .padding()
                     Spacer()
                     Image(systemName: "photo")
                         .padding()
                 }
+                .foregroundStyle(.white)
             }
+            .background(Color.hex2E2E2E)
+            .cornerRadius(12)
+            .padding()
             
             Spacer()
             // Navigation Carousel
