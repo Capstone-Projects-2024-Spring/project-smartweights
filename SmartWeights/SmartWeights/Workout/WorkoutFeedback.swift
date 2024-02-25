@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+///View to display data from each of the set in the workout
 //to create each of the boxes for each set
 struct PostWorkoutData: View {
     @StateObject var viewModel = WorkoutViewModel()
@@ -45,7 +45,7 @@ struct PostWorkoutData: View {
 }
 
 
-
+///View to show all data collected from the most recent workout
 struct Feedback: View {
     @StateObject var viewModel = WorkoutViewModel()
     
