@@ -1,5 +1,5 @@
 `Structure`
-#Feedback
+# Feedback
 View to show all data collected from most recent workout
 ```swift
 struct Feedback
