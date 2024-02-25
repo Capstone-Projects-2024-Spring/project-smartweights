@@ -51,21 +51,32 @@ struct Homepage: View {
             .cornerRadius(12)
             .padding()
             
-            Spacer()
             // Navigation Carousel
-            VStack {
-                Text("Button Carousel")
-                ScrollView (.horizontal) {
+            VStack (alignment: .leading) {
+                Text("App Features")
+                    .font(.title3)
+                    .padding(.top)
+                    .padding(.horizontal)
+                ScrollView (.horizontal, showsIndicators: false) {
                     HStack {
-                        let count = 1...4
-                        ForEach(count, id: \.self) { _ in
-                            Image(systemName: "photo")
-                                .background(Circle())
-                                .padding()
+                        let count = 1...6
+                        ForEach(count, id: \.self) { number in
+                            VStack {
+                                Image(systemName: "photo")
+                                    .background(Circle()
+                                        .frame(width: 60, height: 60)
+                                        .foregroundStyle(Color.hex2E2E2E)
+                                    )
+                                    .padding()
+                                Text("Page \(number)")
+                                    .font(.subheadline)
+                            }
+                            .padding()
                         }
                     }
                 }
             }
+            .foregroundStyle(.white)
             
             Spacer()
             // Video Carousel
@@ -94,6 +105,7 @@ struct Homepage: View {
             
             Spacer()
         }
+        .background(Color.hex121212)
     }
 }
 
