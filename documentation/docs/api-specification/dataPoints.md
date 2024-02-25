@@ -1,7 +1,7 @@
 ```Structure```
 # DataPoints
 structure to provide the template data points for the graph
-```
+```swift
 struct DataPoints
 ```
 
