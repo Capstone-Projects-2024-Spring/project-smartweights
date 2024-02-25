@@ -103,7 +103,7 @@ struct Homepage: View {
                     }
                     .padding()
                 }
-                ScrollView (.horizontal) {
+                ScrollView (.horizontal, showsIndicators: false) {
                     HStack {
                         let count = 1...4
                         ForEach(count, id: \.self) { number in
