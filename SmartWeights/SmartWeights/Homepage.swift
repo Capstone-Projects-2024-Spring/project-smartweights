@@ -29,30 +29,34 @@ struct Homepage: View {
             }
             
             // Start Workout Button
-            ZStack {
-                HStack {
-                    VStack (alignment: .leading) {
-                        HStack {
-                            Text("Start Workout")
-                                .font(.title2)
-                            Image(systemName: "arrow.right")
-                                .foregroundStyle(Color.africanViolet)
+            Button(action: {
+                // Link to WorkoutGraph
+            }) {
+                ZStack {
+                    HStack {
+                        VStack (alignment: .leading) {
+                            HStack {
+                                Text("Start Workout")
+                                    .font(.title2)
+                                Image(systemName: "arrow.right")
+                                    .foregroundStyle(Color.africanViolet)
+                            }
+                            Text(currentWorkout)
+                                .foregroundStyle(Color.hexF2F2F2)
+                                .font(.subheadline)
                         }
-                        Text(currentWorkout)
-                            .foregroundStyle(Color.hexF2F2F2)
-                            .font(.subheadline)
-                    }
-                    .padding()
-                    Spacer()
-                    Image(systemName: "photo")
-                        .foregroundStyle(Color.hexF2F2F2)
                         .padding()
+                        Spacer()
+                        Image(systemName: "photo")
+                            .foregroundStyle(Color.hexF2F2F2)
+                            .padding()
+                    }
+                    .foregroundStyle(.white)
                 }
-                .foregroundStyle(.white)
+                .background(Color.hex2E2E2E)
+                .cornerRadius(12)
+                .padding()
             }
-            .background(Color.hex2E2E2E)
-            .cornerRadius(12)
-            .padding()
             
             
             // Navigation Carousel
@@ -130,7 +134,7 @@ struct Homepage: View {
             Spacer()
         }
         .background(Color.hex121212)
-        .padding(.bottom, 80) // Padding for Navbar
+        //.padding(.bottom, 80) // Padding for Navbar
     }
 }
 
