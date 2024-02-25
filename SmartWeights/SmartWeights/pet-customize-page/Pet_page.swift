@@ -70,14 +70,14 @@ struct Pet_page: View {
     }
 }
 
-// Testing Purpose Inventory page for the Hamburger menu
+/// Testing Purpose Inventory page for the Hamburger menu
 struct InventoryView: View {
     var body: some View {
         Text("Inventory")
             .font(.title)
     }
 }
-// Testing Purpose CustomizeView for the Hamburger menu
+/// Testing Purpose CustomizeView for the Hamburger menu
 struct CustomizeView: View {
     var body: some View {
         Text("Customize")
