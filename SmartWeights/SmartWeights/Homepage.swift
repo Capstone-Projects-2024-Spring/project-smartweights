@@ -21,13 +21,14 @@ struct Homepage: View {
             // Welcome Message
             HStack {
                 Text("Welcome")
+                    .font(.title)
                     .foregroundStyle(.white)
-                    .padding()
+                    .padding(.top)
+                    .padding(.horizontal)
                 Spacer()
             }
             
             // Start Workout Button
-            Spacer()
             ZStack {
                 HStack {
                     VStack (alignment: .leading) {
@@ -50,6 +51,7 @@ struct Homepage: View {
             .background(Color.hex2E2E2E)
             .cornerRadius(12)
             .padding()
+            
             
             // Navigation Carousel
             VStack (alignment: .leading) {
@@ -78,8 +80,8 @@ struct Homepage: View {
             }
             .foregroundStyle(.white)
             
-            Spacer()
             // Video Carousel
+            Spacer()
             VStack {
                 HStack {
                     Text("Videos")
