@@ -66,6 +66,7 @@
 		91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		91065FE02B843F1B00BC62E6 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		91065FE22B8501E700BC62E6 /* WorkoutFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedback.swift; sourceTree = "<group>"; };
+		911899372B8BEE9A0071232A /* Package */ = {isa = PBXFileReference; lastKnownFileType = text; path = Package; sourceTree = SOURCE_ROOT; };
 		91BE1D682B8674A900B165F9 /* StartWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkout.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +129,7 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				911899372B8BEE9A0071232A /* Package */,
 				321EF0442B83AAFA000A2D02 /* LoginPage.swift */,
 				91065FDF2B843EF500BC62E6 /* Workout */,
 				32E288582B83CD0900458FB1 /* postWorkoutSummaries */,

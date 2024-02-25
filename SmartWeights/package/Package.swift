@@ -4,5 +4,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "package"
+    name: "Package",
+    dependencies: [
+            // other dependencies
+            .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
+        ]
 )
