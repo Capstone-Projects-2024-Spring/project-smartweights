@@ -1,7 +1,7 @@
 ```Structure```
 # CircularProgressView
 view to show the progress bar
-```
+```swift
 struct CircularProgressView
 ```
 
