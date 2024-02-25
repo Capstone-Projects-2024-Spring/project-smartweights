@@ -4,7 +4,7 @@
 
 structure to display a calendar selectedDate: the date selected by the user
 
-```
+```swift
 struct Calendar
 ```
 
