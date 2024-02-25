@@ -3,33 +3,41 @@
 //  SmartWeights
 //
 //  Created by Jonathan Stanczak on 2/16/24.
-//  Last modified: 2/18/24 12:25 PM
+//  Last modified: 2/25/24 11:50 AM
 
 import Foundation
 import SwiftUI
 
-// Item struct
+/// SellingItem struct that contains essential item attributes.
 struct SellingItem: Identifiable {
-    var id = UUID() // universal identifier for item number
+    var id = Int() // universal identifier for item number
     var name: String
-    var imageName: String
     var category: String
     var price: String
+    var image: Image //  property for the image itself
+    var description: String
 }
 
 // Will need to change or implement in backend but for now example:
+/// Items available in store.
 private let items = [
-    SellingItem(name: "Pet 1", imageName: "icon1", category: "Pets", price: "600"),
-    SellingItem(name: "Pet 2", imageName: "icon1", category: "Pets", price: "500"),
-    SellingItem(name: "Pet 3", imageName: "icon1", category: "Pets", price: "700"),
-    SellingItem(name: "Food 1", imageName: "icon2", category: "Foods", price: "10"),
-    SellingItem(name: "Background 1", imageName: "icon3", category: "Backgrounds", price: "65"),
-    SellingItem(name: "Outfit 1", imageName: "icon4", category: "Outfits", price: "80"),
+    SellingItem(id: 1, name: "Dog", category: "Pets", price: "600", image: Image("dog"), description: "The best companion!"),
+    SellingItem(id: 2, name: "Cat", category: "Pets", price: "500", image: Image("cat"), description: "Has 9 lives!"),
+    SellingItem(id: 3, name: "Dinosaur", category: "Pets", price: "750", image: Image("dinosaur"), description: "Only 250 million years old!"),
+    SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("orange"), description: "Gives X health."),
+    SellingItem(id: 5, name: "Apple", category: "Foods", price: "20", image: Image("apple"), description: "Gives X health."),
+    SellingItem(id: 6, name: "Juice", category: "Foods", price: "15", image: Image("juice"), description: "Gives X health."),
+    SellingItem(id: 7, name: "Jetpack", category: "Backgrounds", price: "170", image: Image("jetpack"), description: "Walking is overrated."),
+    SellingItem(id: 8, name: "Flag", category: "Backgrounds", price: "50", image: Image("flag"), description: "Works great in the wind!"),
+    SellingItem(id: 9, name: "Sand Castle", category: "Backgrounds", price: "65", image: Image("sandcastle"), description: "Watch out for waves!"),
+    SellingItem(id: 10, name: "Floral Glasses", category: "Outfits", price: "80", image: Image("glasses"), description: "100% UV Protection."),
+    SellingItem(id: 11, name: "Pet Chain", category: "Outfits", price: "100", image: Image("chain"), description: "Fashionably tasteful.")
 ]
 
-// grid for displaying items
+/// Grid for displaying items.
 private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
 
+/// Display view for the Pet Store depending on available items and prices.
 struct PetStore: View {
     @State private var showAlert = false
     @State private var sortByPrice = false // used for sorting
@@ -50,16 +58,17 @@ struct PetStore: View {
                     }
                     Spacer() // Move "Pet Store" away from back arrow
                     Text("Pet Store")
-                        .font(.system(size: 50))
+                        .font(.system(size: 45))
                         .fontWeight(.bold)
                     Spacer()
                     HStack {
-                        Image(systemName: "dollarsign.circle")
-                            .imageScale(.large)
-                            .foregroundColor(.green)
+                        Image( "petcoin")
+                        //Image(systemName: "dollarsign.circle")
+                            .resizable()
+                            .frame(width: 40, height: 40)
                         Text("\(userCur)") // amount of money
-                            .font(.title2)
                             .fontWeight(.bold)
+                            .font(.system(size: 20))
                             .foregroundColor(.green)
                     }
                 }
@@ -106,11 +115,11 @@ struct PetStore: View {
                         ForEach(sortItems(items: items.filter { $0.category == selectedCategory }, sortByPrice: sortByPrice), id: \.id) { item in
                             NavigationLink(destination: ItemDetailView(item: item, userCur: userCur)) {
                                 VStack {
-                                    Image(item.imageName)
+                                    item.image
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(height: 100)
-                                        .frame(width: 130)
+                                        .frame(width: 100, height: 100)
+                            
                                     Text(item.name)
                                     
                                     if sortByPrice {
@@ -123,6 +132,7 @@ struct PetStore: View {
                                             .foregroundColor(.green)
                                     }
                                 }
+                                .frame(width: 130, height: 175)
                                 .padding()
                                 .background(Color.gray.opacity(0.2))
                                 .cornerRadius(10)
@@ -138,7 +148,7 @@ struct PetStore: View {
     }
 }
 
-// Item Detail View - screen for users to preview and purchase
+/// Display view for previewing and purchasing and item.
 struct ItemDetailView: View {
     let item: SellingItem
     @State private var canPurchase = false
@@ -146,28 +156,41 @@ struct ItemDetailView: View {
     
     var body: some View {
         VStack {
-            // Text("\(userCur)") // display userCur
-            Image(item.imageName)
-                .resizable()
-                .scaledToFit()
-                .padding(.bottom, 50)
-            
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.gray.opacity(0.2))
-                .frame(height: 300)
-                .frame(width: 300)
-                .padding(.horizontal)
-                .padding(.top, -350)
+            VStack {
+                ZStack { // stack item with current pet
+                    item.image
+                        .resizable()
+                        .scaledToFit()
+                        .padding(.bottom, 50)
+                    
+                    // Example stacking items
+                    /*
+                     let image2 = Image("glasses")
+                     image2
+                     .resizable()
+                     .scaledToFit()
+                     //.frame(width: 100, height: 100) // Adjust size as needed
+                     .padding(.bottom, 50) // Adjust position as needed
+                    */
+                    
+                }
+                .padding(.bottom, -5)
+            }
             
             // Item Name
             Text(item.name)
                 .font(.title)
                 .fontWeight(.bold)
-                .padding(.bottom, -5)
+                .padding(.bottom, 1)
+            
+            // Item Description
+            Text(item.description)
+                .font(.title)
+                .padding(.bottom, 1)
             
             // Item Price
             Text("\(item.price)")
-            //.padding(.bottom, -50)
+                .padding(.bottom, 10)
                 .font(.system(size: 30))
                 .foregroundColor(.green)
             //.padding()
@@ -187,14 +210,14 @@ struct ItemDetailView: View {
                     .font(.system(size: 20))
             }
             .padding()
-            .padding(.top, -150) // Add top padding to move the button higher up
+            .padding(.top, -120) // Add top padding to move the button higher up
             .disabled(userCur < Int(item.price) ?? 0) // Disable button if userCur is less than item price
+            .padding(.top, -30) // Move purchase button higher, can adjust to fit nav bar
         }
     }
 }
 
-// sortItems used to display items based on sorting
-// lines 139-140 handle prices over 1000
+/// Display items based on selected sorting method.
 private func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem] {
     if sortByPrice {
         return items.sorted { (item1, item2) in
@@ -207,7 +230,7 @@ private func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem]
     }
 }
 
-// Preview
+/// Preview Pet Store page.
 #Preview {
     PetStore()
 }
