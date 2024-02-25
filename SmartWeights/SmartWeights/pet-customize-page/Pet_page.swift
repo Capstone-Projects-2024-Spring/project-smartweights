@@ -8,6 +8,8 @@
 import SwiftUI
 
 /// A view that represents the pet page.
+/// This view displays the pet's name, a hamburger menu for navigation, a custom image of the pet,
+/// health and level progress bars, and navigation links to the pet store, inventory, and customization views.
 struct Pet_page: View {
     
     @State private var showShop = false
@@ -70,14 +72,14 @@ struct Pet_page: View {
     }
 }
 
-/// Testing Purpose Inventory page for the Hamburger menu
+// Testing Purpose Inventory page for the Hamburger menu
 struct InventoryView: View {
     var body: some View {
         Text("Inventory")
             .font(.title)
     }
 }
-/// Testing Purpose CustomizeView for the Hamburger menu
+// Testing Purpose CustomizeView for the Hamburger menu
 struct CustomizeView: View {
     var body: some View {
         Text("Customize")
