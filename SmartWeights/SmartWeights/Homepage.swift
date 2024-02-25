@@ -11,6 +11,7 @@ var currentWorkout = "Dumbbell Press"
 
 extension Color {
     static let hex2E2E2E = Color(red: 46/255, green: 46/255, blue: 46/255)
+    static let hexF2F2F2 = Color(red: 150/255, green: 150/255, blue: 150/255)
 }
 
 struct Homepage: View {
@@ -38,11 +39,13 @@ struct Homepage: View {
                                 .foregroundStyle(Color.africanViolet)
                         }
                         Text(currentWorkout)
+                            .foregroundStyle(Color.hexF2F2F2)
                             .font(.subheadline)
                     }
                     .padding()
                     Spacer()
                     Image(systemName: "photo")
+                        .foregroundStyle(Color.hexF2F2F2)
                         .padding()
                 }
                 .foregroundStyle(.white)
@@ -64,12 +67,14 @@ struct Homepage: View {
                         ForEach(count, id: \.self) { number in
                             VStack {
                                 Image(systemName: "photo")
+                                    .foregroundStyle(Color.hexF2F2F2)
                                     .background(Circle()
                                         .frame(width: 60, height: 60)
                                         .foregroundStyle(Color.hex2E2E2E)
                                     )
                                     .padding()
                                 Text("Page \(number)")
+                                    .foregroundStyle(Color.hexF2F2F2)
                                     .font(.subheadline)
                             }
                             .padding()
@@ -100,9 +105,11 @@ struct Homepage: View {
                         ForEach(count, id: \.self) { number in
                             VStack (alignment: .leading){
                                 Image(systemName: "photo")
+                                    .foregroundStyle(Color.hexF2F2F2)
                                 Text("Video \(number)")
                                     .font(.title3)
                                 Text("Video Description")
+                                    .foregroundStyle(Color.hexF2F2F2)
                                     .font(.subheadline)
                             }
                             .frame(width: 200, height: 250)
