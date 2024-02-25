@@ -103,14 +103,19 @@ struct Homepage: View {
                     HStack {
                         let count = 1...4
                         ForEach(count, id: \.self) { number in
-                            VStack (alignment: .leading){
+                            VStack {
+                                Spacer()
                                 Image(systemName: "photo")
                                     .foregroundStyle(Color.hexF2F2F2)
-                                Text("Video \(number)")
-                                    .font(.title3)
-                                Text("Video Description")
-                                    .foregroundStyle(Color.hexF2F2F2)
-                                    .font(.subheadline)
+                                Spacer()
+                                VStack (alignment: .leading){
+                                    Text("Video \(number)")
+                                        .font(.title3)
+                                    Text("Video Description")
+                                        .foregroundStyle(Color.hexF2F2F2)
+                                        .font(.subheadline)
+                                }
+                                .padding(.bottom)
                             }
                             .frame(width: 200, height: 250)
                             .background(Color.hex2E2E2E)
@@ -125,6 +130,7 @@ struct Homepage: View {
             Spacer()
         }
         .background(Color.hex121212)
+        .padding(.bottom, 80) // Padding for Navbar
     }
 }
 
