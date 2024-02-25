@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-
-//a basic calendar
-//will need to change to add a view model 
-
-///structure to display a calendar
-///selectedDate: the date selected by the user
-
-
-
 struct Calendar: View {
     @State public var selectedDate = Date()
     var body: some View {
@@ -31,4 +22,8 @@ struct Calendar: View {
 #Preview {
     Calendar()
 }
-
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Calendar()
+//    }
+//}
