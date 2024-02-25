@@ -29,6 +29,8 @@ class WorkoutViewModel: ObservableObject {
     
     
     /// Function to add progress
+    /// - Parameters:
+    ///   - data: double
     
     func addProgress(data: Double) {
         progress = data
