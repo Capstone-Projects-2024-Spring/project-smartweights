@@ -3,7 +3,7 @@
 
 # WorkoutViewModel
 
-```
+```swift
 class WorkoutViewModel
 ```
 
