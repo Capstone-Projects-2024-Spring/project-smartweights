@@ -39,8 +39,8 @@ struct PersistenceController {
     /// The persistent container for the application. This implementation creates and returns a container, having loaded the store for the application to it.
     let container: NSPersistentCloudKitContainer
 
-    // Initializes a new PersistenceController.
-    // The inMemory flag determines whether the persistent store is stored in memory or on disk.
+    /// Initializes a new PersistenceController.
+    /// The inMemory flag determines whether the persistent store is stored in memory or on disk.
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "SmartWeights")
         
