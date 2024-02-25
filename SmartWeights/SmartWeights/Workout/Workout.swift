@@ -1,8 +1,7 @@
 import SwiftUI
-
+///structure to display the main workout page
 struct Workout: View {
-    
-    // Create an instance of the view model
+    ///created an instance of the view model
     @StateObject var viewModel = WorkoutViewModel()
     
     //workout/feedback nav on top of app
@@ -12,6 +11,7 @@ struct Workout: View {
     
     var body: some View {
         ZStack{
+            //temp for starting and ending workout until we implement Siri
             VStack{
                 if(isExpanded && selectedTab == 0){
                     ZStack{
@@ -44,6 +44,7 @@ struct Workout: View {
             }
             .padding(.bottom,500)
             .padding(.leading, 280)
+            
             
             
             VStack {
@@ -93,13 +94,16 @@ struct Workout: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 
+                
                 if(selectedTab == 0){
                     // Pass the view model instance to StartWorkout view
                     StartWorkout(viewModel: viewModel)
                     
                     Spacer()
                 }
+                    //Passing the view model instance to the FeedBack
                 else if (selectedTab == 1){
+                    Feedback(viewModel: viewModel)
                     Spacer()
                 }
                 

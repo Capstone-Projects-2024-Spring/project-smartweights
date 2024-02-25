@@ -1,6 +1,7 @@
 import SwiftUI
 import Combine
 
+///view model to handle the workout data
 // Define ViewModel
 class WorkoutViewModel: ObservableObject {
     @Published var progress: Double = 0
@@ -18,21 +19,23 @@ class WorkoutViewModel: ObservableObject {
     @Published var progressInterval = 2.0
     
     
+    /// Function to reset progress
+
     
-    // Function to reset progress
     func resetProgress() {
         progress = 0
     }
     
     
     
-    // Function to add progress
+    /// Function to add progress
+    
     func addProgress(data: Double) {
         progress = data
     }
     
+    /// Function to start timer
     
-    // Function to start timer
     func startTimer(){
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
             if self.seconds == 59 {
@@ -49,28 +52,31 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
-    // Function to restart timer
+    /// Function to restart timer
     func restartTimer(){
         hours = 0
         minutes = 0
         seconds = 0
     }
     
-    // Function to stop timer
+    /// Function to stop timer
     func stopTimer(){
         timer?.invalidate()
         timer = nil
     }
-    
-    
+    /// Function to generate random number for the progress bar
+    /// - Returns: random number between 0 and 1
+    //generate a random number for the progress bar
+    //will be removed once we get data
     func generateRandomNumber() -> Double {
         return Double.random(in: 0..<1)
     }
     
     
 }
+///view to show the progress bar
 struct CircularProgressView: View {
-    // 1
+    
     let progress: Double
     
     var body: some View {
@@ -81,7 +87,7 @@ struct CircularProgressView: View {
                     lineWidth: 10
                 )
             Circle()
-            // 2
+        
                 .trim(from: 0, to: progress)
                 .stroke(
                     Color.pink,
@@ -96,7 +102,9 @@ struct CircularProgressView: View {
     }
 }
 
+///view to show the start workout page
 struct StartWorkout: View {
+    /// Create an instance of the shared view model
     // Create an instance of the shared view model
     @StateObject var viewModel = WorkoutViewModel()
     
@@ -162,7 +170,7 @@ struct StartWorkout: View {
         .padding(.top)
         .padding(.bottom,45)
         
-        
+        //to create the four boxes
         VStack{
             HStack{
                 ZStack{
@@ -222,6 +230,8 @@ struct StartWorkout: View {
                 
             }
         }
+        
+        //new workout button to reset everything
         ZStack{
             ZStack{
                 Button(action: { // Back Arrow

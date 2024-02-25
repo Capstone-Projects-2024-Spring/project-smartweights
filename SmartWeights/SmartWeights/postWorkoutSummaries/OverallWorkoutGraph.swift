@@ -8,16 +8,20 @@
 import SwiftUI
 import Charts
 
+///structure to provide the template data points for the graph
 struct DataPoints: Identifiable {
-
-     var id = UUID().uuidString
-     var date: String
-     var form: Int
- }
-
-
-struct WorkoutGraph: View {
     
+    var id = UUID().uuidString
+    var date: String
+    var form: Int
+}
+
+///structure to display the graph of overall progress
+
+//view to show the graph of overall progress
+struct WorkoutGraph: View {
+    //the data points for the workout
+    //will need to change when aquiring data
     var data = [
         DataPoints(date: "2/2/24", form: 90),
         DataPoints(date: "2/3/24", form: 98),
@@ -39,51 +43,34 @@ struct WorkoutGraph: View {
         DataPoints(date: "5/10/24", form: 90)
         
     ]
-        
-        var body: some View{
-                
-            ZStack {
-                
-                        Chart{
-                                ForEach(data){ d in
-                                    LineMark(x: PlottableValue.value("date", d.date),
-                                             y: .value("form", d.form))
-                                }
-                                
-                                
-                            }
-                           
-                            .chartXAxisLabel(position: .bottom, alignment: .center) {
-                                Text("date")
-                                    .bold()
-                            }
-                            .chartYAxisLabel(position: .leading, alignment: .center) {
-                                Text("Form  accuracy (%)")
-                                    .bold()
-                                    
-                            }
-                            
-                            .padding()
-                            .frame(width: 350, height: 300)
-                            .chartScrollableAxes(.horizontal)
-                        .chartXVisibleDomain(length: 6)
-                        
-                
-                        
-                    
-            }
-            
-            
-
-        }
-        
-        
     
+    
+    var body: some View{
+        
+        ZStack {
+            
+            Chart{
+                ForEach(data){ d in
+                    LineMark(x: PlottableValue.value("date", d.date),
+                        y: .value("form", d.form))
+                }
+            }
+            .chartXAxisLabel(position: .bottom, alignment: .center) {
+                Text("date")
+                    .bold()
+            }
+            .chartYAxisLabel(position: .leading, alignment: .center) {
+                Text("Form  accuracy (%)")
+                    .bold()
+            }
+            .padding()
+            .frame(width: 350, height: 300)
+            .chartScrollableAxes(.horizontal)
+            .chartXVisibleDomain(length: 6)
+        }
+    }
 }
 
 #Preview {
-        WorkoutGraph()
-    }
-
-
-
+    WorkoutGraph()
+}

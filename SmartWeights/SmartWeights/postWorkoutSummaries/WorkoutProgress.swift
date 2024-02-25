@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct PostWorkout: View {
-    
-    
+///structure to display the overall workout progress
 
-    
+struct PostWorkout: View {
+    //the view to show all their overall workout
+    //will also allow them to select data from a certain date
     var body: some View {
         ZStack{
             VStack{
@@ -36,15 +36,12 @@ struct PostWorkout: View {
                         .bold()
                         .fontDesign(.monospaced)
                         .multilineTextAlignment(.center)
-
-                 
                 }
                 
                 //calender component
                 //need to export date to get data the correct day
                 
                 Calendar()
-                
                 //display data for that day
                 ZStack(alignment: .leading){
                     Rectangle()
