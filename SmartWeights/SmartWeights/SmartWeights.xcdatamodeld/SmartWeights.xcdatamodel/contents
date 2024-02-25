@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="Exercise" representedClassName="Exercise" syncable="YES" codeGenerationType="class">
-        <attribute name="desc" optional="YES"/>
-        <attribute name="exercise_id" optional="YES"/>
-        <attribute name="name" optional="YES"/>
+        <attribute name="detail" optional="YES" attributeType="String"/>
+        <attribute name="exercise_id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="Form" representedClassName="Form" parentEntity="Exercise" syncable="YES" codeGenerationType="class"/>
+    <entity name="Form" representedClassName="Form" parentEntity="Exercise" syncable="YES" codeGenerationType="class">
+        <attribute name="form_id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="technique" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
