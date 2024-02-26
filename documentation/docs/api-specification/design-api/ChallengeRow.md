@@ -1,6 +1,6 @@
 `structure`
 
-# Challenge
+# ChallengeRow
 Display view for each challenge row component
 
 ```swift
