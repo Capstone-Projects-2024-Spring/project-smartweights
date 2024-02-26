@@ -1,0 +1,46 @@
+name: iOS CI/CD with TestFlight
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  build_and_deploy:
+    name: Build, Test, and Deploy to TestFlight
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup CocoaPods
+        run: |
+          gem install bundler
+          bundle install
+          bundle exec pod install
+
+      - name: Build and Test
+        run: xcodebuild -workspace SmartWeights.xcworkspace -scheme SmartWeights -destination "platform=iOS Simulator,name=iPhone 12" clean build test
+
+      - name: Archive
+        run: xcodebuild -workspace SmartWeights.xcworkspace -scheme SmartWeights -destination generic/platform=iOS archive -archivePath build/SmartWeights.xcarchive
+
+      - name: Upload to App Store Connect
+        uses: too-so/actions/appstoreconnect-upload@v1
+        with:
+          api_key_path: ./path/to/your/api_key.p8
+          issuer_id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          key_id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          app_id: ${{ secrets.APP_STORE_CONNECT_APP_ID }}
+          ipa_path: build/SmartWeights.xcarchive/Products/Applications/SmartWeights.ipa
+
+      - name: Distribute to TestFlight
+        uses: too-so/actions/appstoreconnect-distribute@v1
+        with:
+          api_key_path: ./path/to/your/api_key.p8
+          issuer_id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          key_id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          app_id: ${{ secrets.APP_STORE_CONNECT_APP_ID }}
+          groups: 'Internal Testers'
+          ipa_path: build/SmartWeights.xcarchive/Products/Applications/SmartWeights.ipa
