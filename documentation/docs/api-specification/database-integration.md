@@ -95,7 +95,7 @@ The FirebaseStorageManager class provides methods for retrieving images from Fir
 #### Methods
 - `downloadImage(fromPath:completion:)`
 
-    - Purpose: Downloads an image from Firebase Storage.
+    - Purpose: Gets an image from Firebase Storage.
     - Pre-conditions: None
     - Post-conditions: Image is downloaded or error is returned.
     - Parameters:
@@ -106,3 +106,39 @@ The FirebaseStorageManager class provides methods for retrieving images from Fir
     - Exceptions Thrown:
         - FirebaseStorageError: Generic error related to Firebase Storage.
         - NetworkError: Error occurs when there's an issue with the network connection.
+
+<!-- 
+## Class HealthKitConnector
+
+### Class Description
+
+The `HealthKitConnector` class provides methods for interacting with HealthKit.
+#### Data Fields
+- `status`
+    - Purpose: value if connection is established
+#### Methods
+
+- `FetchData()`
+    - **Purpose:** Fetches data from HealthKit.
+- `DeleteData()`
+    - **Purpose:** Deletes data from HealthKit.
+- `PostData()`
+    - **Purpose:** Posts data to HealthKit.
+
+### Class SiriKitConnector
+
+#### Class Description
+
+The `SiriKitConnector` class provides methods for interacting with SiriKit.
+
+#### Data Fields
+- `status`
+    - Purpose: value if connection is established
+#### Methods
+
+- `FetchData()`
+    - **Purpose:** Fetches data from SiriKit.
+- `DeleteData()`
+    - **Purpose:** Deletes data from SiriKit.
+- `PostData()`
+    - **Purpose:** Posts data to SiriKit. -->
