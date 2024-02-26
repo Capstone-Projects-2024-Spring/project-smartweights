@@ -11,7 +11,7 @@ init()
 init(viewModel: () -> WorkoutViewModel)
 ```
 
-###Instance Properties
+### Instance Properties
 ```swift
 var body: some View
 var viewModel: WorkoutViewModel

@@ -5,7 +5,7 @@ view to show the start workout page
 struct StartWorkout
 ```
 
-###Initializers
+### Initializers
 ```swift
 init()
 init(viewModel: () -> WorkoutViewModel)

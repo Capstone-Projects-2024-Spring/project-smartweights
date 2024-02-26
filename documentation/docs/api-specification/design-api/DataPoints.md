@@ -10,7 +10,7 @@ struct DataPoints
 init(id: String, date: String, form: Int)
 ```
 
-###Instance Properties
+### Instance Properties
 ```swift
 var date: String
 var form: Int

@@ -5,19 +5,19 @@ structure to display the overall workout progress
 struct PostWorkout
 ```
 
-Initializers
+### Initializers
 
 ```swift
 init()
 ```
-Instance Properties
+### Instance Properties
 ```swift
 var body: some View
 ```
 
 
 
-###Relationships
+### Relationships
 Conforms To
 
 Swift.Sendable,
