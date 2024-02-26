@@ -12,6 +12,14 @@ class [WorkoutViewModel](./WorkoutViewModel.md)
 
 structure [calendar](calendar.md)
 
+Structure [Challenge](./Challenge.md)
+
+Structure [ChallengeRow](./ChallengeRow.md)
+
+Structure [ChallengesList](./ChallengesList.md)
+
+Structure [ChallengesTab](./ChallengesTab.md)
+
 structure [CircularProgressView](./CircularProgressView.md)
 
 Structure [DataPoints](./dataPoints.md)
