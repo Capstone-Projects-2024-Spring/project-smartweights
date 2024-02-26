@@ -10,7 +10,7 @@ class [WorkoutViewModel](./WorkoutViewModel.md)
 
 ## Structure
 
-structure [calendar](calendar.md)
+Structure [calendar](./calendar.md)
 
 Structure [Challenge](./Challenge.md)
 
