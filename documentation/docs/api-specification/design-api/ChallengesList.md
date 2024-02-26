@@ -1,6 +1,6 @@
 `structure`
 
-# Challenge
+# ChallengesList
 Display view for displaying all of the challenge rows in a list
 
 ```swift
