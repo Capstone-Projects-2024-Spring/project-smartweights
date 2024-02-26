@@ -22,8 +22,4 @@ struct Calendar: View {
 #Preview {
     Calendar()
 }
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Calendar()
-//    }
-//}
+
