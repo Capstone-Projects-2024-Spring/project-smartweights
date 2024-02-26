@@ -169,6 +169,7 @@ struct StartWorkout: View {
                     .textFieldStyle(.roundedBorder)
                     .frame(width:80)
                     .font(.system(size: 14))
+                    
                 
             }
         }
@@ -221,15 +222,15 @@ struct StartWorkout: View {
             ZStack {
                 Image("jetpack")
                     .resizable()
-                .frame(width: 100, height: 100)
+                .frame(width: 140, height: 140)
                 
                 Image("dog")
                     .resizable()
-                .frame(width: 100, height: 100)
+                .frame(width: 140, height: 140)
                 
                 Image("glasses")
                     .resizable()
-                .frame(width: 100, height: 100)
+                .frame(width: 140, height: 140)
                 
                 
             }

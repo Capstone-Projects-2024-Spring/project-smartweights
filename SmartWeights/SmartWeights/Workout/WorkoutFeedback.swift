@@ -79,6 +79,7 @@ struct WorkoutFeedback: View {
                 )
                 .foregroundColor(.black)
                 .background(Color.black)
+                .scrollContentBackground(.hidden)
                 
                 //need to somehow link this up to the overallprogress page
                 VStack() {
