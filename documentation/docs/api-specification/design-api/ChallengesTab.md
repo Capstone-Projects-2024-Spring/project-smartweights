@@ -1,6 +1,6 @@
 `structure`
 
-# Challenge
+# ChallengesTab
 Display view for the Challenges Page
 
 ```swift
