@@ -1,4 +1,4 @@
-# Mobile Backend
+<!-- # Mobile Backend
 
 This documents the ViewModels and Models usage in the app.
 
@@ -403,4 +403,4 @@ The `HomePageVideoCarouselM` class represents the model for videos displayed in 
 </div>
 
 </details>
-
+ -->

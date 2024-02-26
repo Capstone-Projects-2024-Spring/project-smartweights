@@ -10,7 +10,7 @@ class [WorkoutViewModel](./WorkoutViewModel.md)
 
 ## Structure
 
-structure [calendar](./calendar.md)
+structure [calendar](calendar.md)
 
 structure [CircularProgressView](./CircularProgressView.md)
 
