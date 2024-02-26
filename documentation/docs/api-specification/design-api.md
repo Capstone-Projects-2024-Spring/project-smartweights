@@ -18,9 +18,15 @@ Structure [DataPoints](./dataPoints.md)
 
 Structure [Feedback](./Feedback.md)
 
+Structure [Homepage](./Homepage.md)
+
 Structure [Local-Core_Data](./local-coredata-database.md)
 
 Structure [Login](./login-view.md)
+
+Structure [Navbar](./Navbar.md)
+
+Structure [NavController](./NavController.md)
 
 Structure [openAPI](./openapi-spec.md)
 
