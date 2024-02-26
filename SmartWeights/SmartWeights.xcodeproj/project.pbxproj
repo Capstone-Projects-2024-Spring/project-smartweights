@@ -10,8 +10,14 @@
 		01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */; };
 		321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321EF0442B83AAFA000A2D02 /* LoginPage.swift */; };
 		32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E288592B83CD2800458FB1 /* Calendar.swift */; };
+		
+
+
 		32E2885C2B83CD4300458FB1 /* OverallWorkoutGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* OverallWorkoutGraph.swift */; };
 		32E2885E2B83CD6E00458FB1 /* WorkoutProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885D2B83CD6E00458FB1 /* WorkoutProgress.swift */; };
+		
+
+
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
 		91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7E2B7A7E4700BC62E6 /* ContentView.swift */; };
 		91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91065F802B7A7E4900BC62E6 /* Assets.xcassets */; };
@@ -21,9 +27,15 @@
 		91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */; };
 		91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */; };
 		91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */; };
+		
+
+
 		91065FE12B843F1B00BC62E6 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FE02B843F1B00BC62E6 /* Workout.swift */; };
 		91065FE32B8501E700BC62E6 /* WorkoutFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FE22B8501E700BC62E6 /* WorkoutFeedback.swift */; };
 		91BE1D692B8674A900B165F9 /* StartWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BE1D682B8674A900B165F9 /* StartWorkout.swift */; };
+		
+
+		
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
 /* End PBXBuildFile section */
 
