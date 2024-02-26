@@ -51,6 +51,7 @@ struct WorkoutGraph: View {
                 }
                 
                 
+                
             }
             
             .chartXAxisLabel(position: .bottom, alignment: .center) {
@@ -67,6 +68,9 @@ struct WorkoutGraph: View {
             .frame(width: 350, height: 300)
             .chartScrollableAxes(.horizontal)
             .chartXVisibleDomain(length: 6)
+            .foregroundColor(.blue)
+            .background(Color.gray)
+            
             
             
             

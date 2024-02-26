@@ -27,7 +27,7 @@ struct PostWorkoutData: View {
             if isExpanded{
                 
                 Image(systemName: "arrowshape.up.fill")
-            
+                
             }
             else{
                 Image(systemName: "arrowshape.down.fill")
@@ -77,27 +77,33 @@ struct WorkoutFeedback: View {
                     RoundedRectangle(cornerRadius: 10) // Adjust corner radius as needed
                         .stroke(Color.gray, lineWidth: 1) // Set border color and width
                 )
+                .foregroundColor(.black)
+                .background(Color.black)
                 
                 //need to somehow link this up to the overallprogress page
                 VStack() {
                     
-                        Text("Form and Speed")
-                            .font(.title2)
-                        WorkoutGraph()
-                            .frame(height: 250)
-                        Spacer()
-                    }
-                    .frame(height:  500)
+                    Text("Form and Speed")
+                        .font(.title2)
+                        .padding(.bottom,20)
                     
-                    
+                    WorkoutGraph()
+                        .frame(height: 250)
+                        
+                        
                     Spacer()
                 }
+                .frame(height:  500)
+                
+                
+                Spacer()
             }
         }
     }
-    
-    
-    
+}
+
+
+
 
 
 
