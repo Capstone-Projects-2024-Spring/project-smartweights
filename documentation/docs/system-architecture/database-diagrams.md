@@ -198,7 +198,7 @@ erDiagram
         technique VARCHAR
     }
     
-    Sensor ||--o{ Measurement: has
+    SensorSystem ||--o{ Measurement: has
     Measurement }|--|| Exercise : has
     Exercise ||--|| Form : has
 
