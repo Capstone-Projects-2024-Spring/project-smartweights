@@ -1,9 +1,7 @@
-//
 //  Feedback.swift
 //  SmartWeights
 //
 //  Created by Tu Ha on 2/20/24.
-//
 
 import SwiftUI
 ///View to display data from each of the set in the workout
@@ -19,28 +17,38 @@ struct PostWorkoutData: View {
     }
     
     var body: some View {
-       
-           
-                HStack{
-                    Text(("Set \(setIndex)"))
-                    Text("Form 90%")
-                    Text("Velocity 80%")
-                }
-                .onTapGesture {
-                    withAnimation {
-                        self.isExpanded.toggle()
-                    }
-                }
-                if isExpanded {
-                    Text("Data data data")
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
-                    
-                }
+        
+        
+        HStack{
+            Text(("Set \(setIndex)"))
+            Text("Form 90%")
+            Text("Velocity 80%")
+            Spacer()
+            if isExpanded{
                 
+                Image(systemName: "arrowshape.up.fill")
             
-    
+            }
+            else{
+                Image(systemName: "arrowshape.down.fill")
+            }
+            
+        }
+        .onTapGesture {
+            withAnimation {
+                self.isExpanded.toggle()
+                
+            }
+        }
+        
+        if isExpanded {
+            Text("Data data data")
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
+            WorkoutGraph()
+            
+        }
     }
 }
 
@@ -50,26 +58,47 @@ struct WorkoutFeedback: View {
     @StateObject var viewModel = WorkoutViewModel()
     
     
+    
     var body: some View {
-        //displays all the set data
-        //will add more implmenetation once we get acutal data
         @State var sets = Int(viewModel.inputtedSets) ?? 5
         
-        List{
-            ForEach(0..<sets, id: \.self) { index in
-                PostWorkoutData(setIndex: index + 1)
+        //displays all the set data
+        //will add more implmenetation once we get acutal data
+        ScrollView {
+            VStack {
+                
+                Form {
+                    ForEach(0..<sets, id: \.self) { index in
+                        PostWorkoutData(setIndex: index + 1)
+                    }
+                }
+                .frame(height: 400)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10) // Adjust corner radius as needed
+                        .stroke(Color.gray, lineWidth: 1) // Set border color and width
+                )
+                
+                //need to somehow link this up to the overallprogress page
+                VStack() {
+                    
+                        Text("Form and Speed")
+                            .font(.title2)
+                        WorkoutGraph()
+                            .frame(height: 250)
+                        Spacer()
+                    }
+                    .frame(height:  500)
+                    
+                    
+                    Spacer()
+                }
             }
         }
-        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-            /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-            
-        })
-        Spacer()
-        
     }
     
     
-}
+    
+
 
 
 #Preview {
