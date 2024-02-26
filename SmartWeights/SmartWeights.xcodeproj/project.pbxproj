@@ -16,8 +16,8 @@
 		32BDE8EE2B8C1363003A5F5A /* NavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE8ED2B8C1363003A5F5A /* NavController.swift */; };
 		32BDE8F02B8C1381003A5F5A /* Homepage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE8EF2B8C1381003A5F5A /* Homepage.swift */; };
 		32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E288592B83CD2800458FB1 /* Calendar.swift */; };
-		32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */; };
-		32E2885E2B83CD6E00458FB1 /* PostWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */; };
+		32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */; };
+		32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */; };
 		6B9E32D52B86506500CA7868 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */; };
 		6B9E32D82B86526300CA7868 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32D72B86526300CA7868 /* FirebaseAnalytics */; };
 		6B9E32DA2B86526300CA7868 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32D92B86526300CA7868 /* FirebaseAnalyticsSwift */; };
@@ -38,6 +38,9 @@
 		91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */; };
 		91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */; };
 		91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */; };
+		9118993A2B8CE1300071232A /* StartWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911899392B8CE1300071232A /* StartWorkout.swift */; };
+		9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993B2B8CE1400071232A /* WorkoutFeedback.swift */; };
+		9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993D2B8CE1570071232A /* WorkoutMainPage.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -68,8 +71,8 @@
 		32BDE8ED2B8C1363003A5F5A /* NavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavController.swift; sourceTree = "<group>"; };
 		32BDE8EF2B8C1381003A5F5A /* Homepage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homepage.swift; sourceTree = "<group>"; };
 		32E288592B83CD2800458FB1 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
-		32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutGraph.swift; sourceTree = "<group>"; };
-		32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWorkout.swift; sourceTree = "<group>"; };
+		32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallProgressGraph.swift; sourceTree = "<group>"; };
+		32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallProgress.swift; sourceTree = "<group>"; };
 		6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6B9E32ED2B865FD000CA7868 /* FirebaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTests.swift; sourceTree = "<group>"; };
 		91065F792B7A7E4700BC62E6 /* SmartWeights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWeights.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +89,9 @@
 		91065F9A2B7A7E4900BC62E6 /* SmartWeightsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartWeightsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITests.swift; sourceTree = "<group>"; };
 		91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		911899392B8CE1300071232A /* StartWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkout.swift; sourceTree = "<group>"; };
+		9118993B2B8CE1400071232A /* WorkoutFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedback.swift; sourceTree = "<group>"; };
+		9118993D2B8CE1570071232A /* WorkoutMainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMainPage.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,14 +148,14 @@
 			path = Navbar;
 			sourceTree = "<group>";
 		};
-		32E288582B83CD0900458FB1 /* post-workout */ = {
+		32E288582B83CD0900458FB1 /* WorkoutSummaries */ = {
 			isa = PBXGroup;
 			children = (
 				32E288592B83CD2800458FB1 /* Calendar.swift */,
-				32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */,
-				32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */,
+				32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */,
+				32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */,
 			);
-			path = "post-workout";
+			path = WorkoutSummaries;
 			sourceTree = "<group>";
 		};
 		91065F702B7A7E4700BC62E6 = {
@@ -175,11 +181,12 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				911899382B8CE0D40071232A /* Workout */,
 				32BDE8EA2B8C130D003A5F5A /* Navbar */,
 				3202761C2B892D04001A86B8 /* pet-customize-page */,
 				6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */,
 				321EF0442B83AAFA000A2D02 /* LoginPage.swift */,
-				32E288582B83CD0900458FB1 /* post-workout */,
+				32E288582B83CD0900458FB1 /* WorkoutSummaries */,
 				B90B6FD82B7FACE2009866FD /* PetStore */,
 				91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */,
 				91065F7E2B7A7E4700BC62E6 /* ContentView.swift */,
@@ -219,6 +226,16 @@
 				91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */,
 			);
 			path = SmartWeightsUITests;
+			sourceTree = "<group>";
+		};
+		911899382B8CE0D40071232A /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				911899392B8CE1300071232A /* StartWorkout.swift */,
+				9118993B2B8CE1400071232A /* WorkoutFeedback.swift */,
+				9118993D2B8CE1570071232A /* WorkoutMainPage.swift */,
+			);
+			path = Workout;
 			sourceTree = "<group>";
 		};
 		B90B6FD82B7FACE2009866FD /* PetStore */ = {
@@ -376,18 +393,21 @@
 			files = (
 				B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */,
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
-				32E2885E2B83CD6E00458FB1 /* PostWorkout.swift in Sources */,
+				32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */,
 				3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				32BDE8EE2B8C1363003A5F5A /* NavController.swift in Sources */,
-				32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */,
+				32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
+				9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */,
 				32BDE8EC2B8C1345003A5F5A /* Navbar.swift in Sources */,
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
 				320276202B892D43001A86B8 /* HamburgerMenu.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
+				9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */,
 				01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */,
 				320276222B892D55001A86B8 /* Pet_page.swift in Sources */,
+				9118993A2B8CE1300071232A /* StartWorkout.swift in Sources */,
 				32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */,
 				32BDE8F02B8C1381003A5F5A /* Homepage.swift in Sources */,
 			);

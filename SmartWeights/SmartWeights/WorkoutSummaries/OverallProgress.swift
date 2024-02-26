@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PostWorkout: View {
     
-
+    
     
     var body: some View {
         ZStack{
@@ -19,7 +19,7 @@ struct PostWorkout: View {
                     Image(systemName: "arrow.backward")
                         .padding(.trailing, 350)
                 }
-                    
+                
                 //Title of the page
                 HStack(alignment: .firstTextBaseline){
                     
@@ -28,8 +28,8 @@ struct PostWorkout: View {
                         .bold()
                         .fontDesign(.monospaced)
                         .multilineTextAlignment(.center)
-
-                 
+                    
+                    
                 }
                 
                 //calender component
@@ -52,7 +52,7 @@ struct PostWorkout: View {
                         Text("Achivements earned - 2")
                             .padding(.bottom, 20)
                         Text("Currency Earned - 50")
-                    
+                        
                         
                     }
                     .padding(.leading, 20)
@@ -62,7 +62,7 @@ struct PostWorkout: View {
                     Text("Overall Progress")
                         .font(.title2)
                         .bold()
-                        
+                    
                     ZStack{
                         Rectangle()
                             .frame(width: 350, height: 300)
@@ -71,7 +71,7 @@ struct PostWorkout: View {
                         WorkoutGraph()
                     }
                 }
-                    
+                
                 Spacer()
                 HStack{
                     VStack(alignment: .leading){
