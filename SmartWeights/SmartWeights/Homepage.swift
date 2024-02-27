@@ -136,7 +136,7 @@ struct Homepage: View {
                     }
                 }
                 // navigate to the new view when the state is true
-                .background(NavigationLink(destination: PostWorkout(), isActive: $navigateToWorkoutDetail) { EmptyView() })
+                .background(NavigationLink(destination: WorkoutMainPage(), isActive: $navigateToWorkoutDetail) { EmptyView() })
                 
                 .foregroundStyle(.white)
                 Spacer()

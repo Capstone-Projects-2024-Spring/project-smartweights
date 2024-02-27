@@ -10,6 +10,8 @@ import SwiftUI
 /// A navigation controller that manages the navigation between different views in the SmartWeights app.
 struct NavController: View {
     @State private var selectedTab: Tab = .house
+    @StateObject var viewModel = WorkoutViewModel()
+
 
     var body: some View {
         ZStack {
@@ -23,7 +25,7 @@ struct NavController: View {
                 case .person:
                     PostWorkout().frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .leaf:
-                    Calendar().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    WorkoutMainPage(viewModel: viewModel).frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .gearshape:
                     WorkoutGraph().frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
