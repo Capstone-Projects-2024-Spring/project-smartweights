@@ -6,9 +6,46 @@
 import SwiftUI
 ///View to display data from each of the set in the workout
 //to create each of the boxes for each set
+
+
+class FeedBackViewModel: ObservableObject{
+    
+    @Published var PetFeedbackText: String = "Tuck elbows in more when going up"
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+struct VirtualPetFeedback: View{
+    
+    @State var viewModel = FeedBackViewModel()
+    var body: some View{
+        
+    ZStack {
+        Ellipse()
+            .frame(width: 200,height: 70)
+            .foregroundColor(.brown)
+        Text("\(viewModel.PetFeedbackText)")
+            .frame(width: 100)
+            .font(.system(size: 14))
+            .multilineTextAlignment(.center)
+            .bold()
+            .foregroundColor(.green)
+    }
+}
+
+
+}
+
 struct PostWorkoutData: View {
     @StateObject var viewModel = WorkoutViewModel()
     @State private var isExpanded: Bool = false
+    
     
     let setIndex:Int
     
@@ -56,6 +93,8 @@ struct PostWorkoutData: View {
 ///View to show all data collected from the most recent workout
 struct WorkoutFeedback: View {
     @StateObject var viewModel = WorkoutViewModel()
+    @State private var isGraphExpanded: Bool = false
+    
     
     
     
@@ -81,20 +120,62 @@ struct WorkoutFeedback: View {
                 .background(Color.black)
                 .scrollContentBackground(.hidden)
                 
-                //need to somehow link this up to the overallprogress page
                 VStack() {
-                    
-                    Text("Form and Speed")
-                        .font(.title2)
-                        .padding(.bottom,20)
-                    
-                    WorkoutGraph()
-                        .frame(height: 250)
+                    HStack {
+                        Spacer()
+                        ZStack(alignment: .trailing) {
+                            
+                            Image("dinosaur")
+                                .resizable()
+                                .frame(width: 140, height: 140)
+                            Image("chain")
+                                .resizable()
+                                .frame(width: 140, height: 140)
+                            VirtualPetFeedback()
+                                .padding(.trailing,90)
+                                .padding(.bottom,100)
+                           
+                        }
                         
                         
+                    }
+                    HStack {
+                        Button(action: {
+                            isGraphExpanded.toggle()
+                        }, label: {
+                            Text("Graphs")
+                                .font(.title3)
+                                .bold()
+                        })
+                        
+                        if isGraphExpanded{
+                            
+                            Image(systemName: "arrowshape.up.fill")
+                            
+                        }
+                        else{
+                            Image(systemName: "arrowshape.down.fill")
+                        }
+                    }
+                    .padding(.bottom,50)
+                    
+                    
+                    if isGraphExpanded{
+                        Text("Form")
+                            .padding(.bottom,20)
+                        WorkoutGraph()
+                            .frame(height: 250)
+                            .padding(.bottom,50)
+                        Text("Velocity")
+                            .padding(.bottom,20)
+                        WorkoutGraph()
+                            .frame(height: 250)
+                        
+                    }
+                
                     Spacer()
                 }
-                .frame(height:  500)
+                .frame(minHeight:  300)
                 
                 
                 Spacer()
@@ -110,4 +191,5 @@ struct WorkoutFeedback: View {
 
 #Preview {
     WorkoutFeedback()
+    //VirtualPetFeedback()
 }
