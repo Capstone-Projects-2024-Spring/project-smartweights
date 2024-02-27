@@ -9,7 +9,7 @@ import SwiftUI
 
 
 class FeedBackViewModel: ObservableObject{
-    
+
     @Published var PetFeedbackText: String = "Tuck elbows in more when going up"
     
     
@@ -26,20 +26,25 @@ struct VirtualPetFeedback: View{
     @State var viewModel = FeedBackViewModel()
     var body: some View{
         
-    ZStack {
-        Ellipse()
-            .frame(width: 200,height: 70)
-            .foregroundColor(.brown)
-        Text("\(viewModel.PetFeedbackText)")
-            .frame(width: 100)
-            .font(.system(size: 14))
-            .multilineTextAlignment(.center)
-            .bold()
-            .foregroundColor(.green)
+        ZStack {
+            Image("bubble")
+                .resizable()
+                .frame(width: 200,height: 100)
+                .foregroundColor(.brown)
+                .padding(.bottom,30)
+            //need to somehow adjust font size or text box size based on text size
+            Text("\(viewModel.PetFeedbackText)")
+                .frame(width: 170)
+                .font(.system(size: 14))
+                .multilineTextAlignment(.center)
+                .bold()
+                .foregroundColor(.green)
+                .padding(.bottom,30)
+        }
+        .frame(minHeight: 120)
     }
-}
-
-
+    
+    
 }
 
 struct PostWorkoutData: View {
@@ -111,7 +116,7 @@ struct WorkoutFeedback: View {
                         PostWorkoutData(setIndex: index + 1)
                     }
                 }
-                .frame(height: 400)
+                .frame(height: 300)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10) // Adjust corner radius as needed
                         .stroke(Color.gray, lineWidth: 1) // Set border color and width
@@ -134,7 +139,7 @@ struct WorkoutFeedback: View {
                             VirtualPetFeedback()
                                 .padding(.trailing,90)
                                 .padding(.bottom,100)
-                           
+                            
                         }
                         
                         
@@ -157,7 +162,7 @@ struct WorkoutFeedback: View {
                             Image(systemName: "arrowshape.down.fill")
                         }
                     }
-                    .padding(.bottom,50)
+                    
                     
                     
                     if isGraphExpanded{
@@ -172,7 +177,7 @@ struct WorkoutFeedback: View {
                             .frame(height: 250)
                         
                     }
-                
+                    
                     Spacer()
                 }
                 .frame(minHeight:  300)
