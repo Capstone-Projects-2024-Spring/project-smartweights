@@ -209,10 +209,12 @@ struct StartWorkout: View {
                             .font(.system(size: 14))
                             .bold()
                             .padding(.bottom, 50)
+                            .foregroundColor(.black)
                             
                         Text("\(viewModel.inputtedSets)")
                         .padding(.top, 20)
                         .bold()
+                        .foregroundColor(.black)
                     
                 }
                
