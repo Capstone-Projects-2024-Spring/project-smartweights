@@ -65,7 +65,7 @@ struct WorkoutMainPage: View {
                         .font(.title)
                         .bold()
                         .padding(.trailing, 60)
-                
+                    
                     
                     if selectedTab == 0 {
                         VStack{
@@ -105,9 +105,9 @@ struct WorkoutMainPage: View {
                     
                     Spacer()
                 }
-                    //Passing the view model instance to the FeedBack
+                //Passing the view model instance to the FeedBack
                 else if (selectedTab == 1){
-                  
+                    
                     WorkoutFeedback(viewModel: viewModel)
                     Spacer()
                 }
