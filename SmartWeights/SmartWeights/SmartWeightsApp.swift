@@ -23,7 +23,7 @@ struct SmartWeightsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavController()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
