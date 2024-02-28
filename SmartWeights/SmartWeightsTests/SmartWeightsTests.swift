@@ -32,5 +32,69 @@ final class SmartWeightsTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    //testing adding data into the progress bar on StartWorkout.swift
+    func testWorkoutViewModelAddProgress(){
+        //given
+        let viewModel = WorkoutViewModel()
+    
+        //when
+        viewModel.progress = 0
+        let data = 0.75
+        viewModel.addProgress(data: data)
+        
+    
+        //then
+        let expectedProgress = 0.75
+
+        
+        
+        XCTAssertEqual(viewModel.progress,expectedProgress)
+    }
+    //testing reseting the progress bar on StartWorkout.swift
+    func testWorkoutViewModelRestProgress(){
+        //given
+        let viewModel = WorkoutViewModel()
+    
+        //when
+        viewModel.progress = 0.75
+        viewModel.resetProgress()
+        
+    
+        //then
+        let expectedResetProgress = 0.0
+        
+        
+        XCTAssertEqual(viewModel.progress,expectedResetProgress)
+    }
+    
+    //testing the workout timer on StartWorkout.swift
+    func testWorkoutTimer() {
+        // Given
+        let viewModel = WorkoutViewModel()
+        let expectation = XCTestExpectation(description: "Timer stops after 2 seconds")
+
+        // When
+        viewModel.startTimer()
+        viewModel.seconds = 0
+        let seconds = 2
+        // Schedule the function call after the delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            viewModel.stopTimer()
+            expectation.fulfill()
+        }
+
+        // Wait for the expectation to be fulfilled
+        wait(for: [expectation], timeout: 2.0)
+
+        // Then
+        XCTAssertEqual(viewModel.seconds, seconds)
+    }
+    
+    
+    
+    
+    
+    
 
 }
