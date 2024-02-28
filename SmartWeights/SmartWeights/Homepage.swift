@@ -136,13 +136,12 @@ struct Homepage: View {
                     }
                 }
                 // navigate to the new view when the state is true
-                .background(NavigationLink(destination: PostWorkout(), isActive: $navigateToWorkoutDetail) { EmptyView() })
+                .background(NavigationLink(destination: WorkoutMainPage(), isActive: $navigateToWorkoutDetail) { EmptyView() })
                 
                 .foregroundStyle(.white)
                 Spacer()
             }
-            .background(Color.hex121212)
-            //.padding(.bottom, 80) // Padding for Navbar
+            .background(Color.hex121212.edgesIgnoringSafeArea(.all))
             
         }
     }

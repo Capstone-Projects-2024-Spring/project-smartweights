@@ -88,6 +88,7 @@ struct CircularProgressView: View {
                     Color.pink.opacity(0.5),
                     lineWidth: 10
                 )
+                .frame(width: 80)
             Circle()
         
                 .trim(from: 0, to: progress)
@@ -100,6 +101,8 @@ struct CircularProgressView: View {
                 )
                 .rotationEffect(.degrees(-90))
                 .animation(.easeOut, value: progress)
+                .frame(width: 80)
+                
         }
     }
 }
@@ -166,24 +169,27 @@ struct StartWorkout: View {
                     .textFieldStyle(.roundedBorder)
                     .frame(width:80)
                     .font(.system(size: 14))
+                    
                 
             }
         }
         .padding(.top)
         .padding(.bottom,45)
+       
+        Spacer()
         
         //to create the four boxes
-        VStack{
-            HStack{
+        HStack{
+            VStack{
                 ZStack{
                     ZStack{
                         RoundedRectangle(cornerRadius:  25)
-                            .frame(width: 150, height: 150)
+                            .frame(width: 100, height: 100)
                             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                         Text("Time")
-                            .font(.title3)
+                            .font(.system(size: 14))
                             .bold()
-                            .padding(.bottom,100)
+                            .padding(.bottom,70)
                         
                     }
                     Text("\(viewModel.hours):\(viewModel.minutes):\(viewModel.seconds)")
@@ -191,47 +197,77 @@ struct StartWorkout: View {
                         .monospaced()
                         .foregroundStyle(.green)
                     
-                    
+                Spacer()
                 }
                 ZStack{
                     RoundedRectangle(cornerRadius:  25)
-                        .frame(width: 150, height: 150)
+                        .frame(width: 100, height: 100)
                         .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                    Text("Remaining Sets")
-                        .font(.title3)
+                   
+                    
+                        Text("Remaining\n      Sets")
+                            .font(.system(size: 14))
+                            .bold()
+                            .padding(.bottom, 50)
+                            .foregroundColor(.black)
+                            
+                        Text("\(viewModel.inputtedSets)")
+                        .padding(.top, 20)
                         .bold()
-                        .padding(.bottom, 100)
-                    Text("\(viewModel.inputtedSets)")
-                        .bold()
+                        .foregroundColor(.black)
                     
                 }
+               
                 
             }
-            HStack{
+            Spacer()
+            ZStack {
+                Image("jetpack")
+                    .resizable()
+                .frame(width: 140, height: 140)
+                
+                Image("dog")
+                    .resizable()
+                .frame(width: 140, height: 140)
+                
+                Image("glasses")
+                    .resizable()
+                .frame(width: 140, height: 140)
+                
+                
+            }
+            Spacer()
+            
+            VStack{
                 ZStack{
                     RoundedRectangle(cornerRadius:  25)
-                        .frame(width: 150, height: 150)
-                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(.gray)
                     Text("Form")
-                        .font(.title3)
+                        .font(.system(size: 14))
                         .bold()
+                        .foregroundColor(.red)
                     CircularProgressView(progress: viewModel.progress)
                         .frame(width: 100, height: 100)
                     
                 }
                 ZStack{
                     RoundedRectangle(cornerRadius:  25)
-                        .frame(width: 150, height: 150)
-                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(.gray)
                     Text("Velocity")
-                        .font(.title3)
+                        .font(.system(size: 14))
                         .bold()
+                        .foregroundColor(.red)
                     CircularProgressView(progress: viewModel.progress)
                         .frame(width: 100, height: 100)
                 }
                 
             }
         }
+        .padding(.leading,10)
+        .padding(.trailing, 10)
+        .padding(.bottom,10)
         
         //new workout button to reset everything
         ZStack{
@@ -247,10 +283,10 @@ struct StartWorkout: View {
                     ZStack{
                         RoundedRectangle(cornerRadius:  25)
                             .frame(width: 300, height: 80)
-                            .foregroundColor(.green)
+                            .foregroundColor(.gray)
                         Text("New workout")
                             .bold()
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.white)
                     }
                 }
                 

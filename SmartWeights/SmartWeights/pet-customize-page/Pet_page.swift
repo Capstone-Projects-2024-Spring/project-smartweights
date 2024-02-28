@@ -15,42 +15,45 @@ struct Pet_page: View {
     @State private var healthBar: Float = 0.25
     @State private var levelProgress: Float = 0.55
     @State private var showFoodSelection = false
-    @State private var selectedFood = FoodItem(name: "Orange", quantity: 5, imageName: "orange") // default starting food
+    @State private var selectedFoodIndex = 0 // Index of the selected food item
     @State private var foodItems = [
         FoodItem(name: "Orange", quantity: 5, imageName: "orange"),
         FoodItem(name: "Apple", quantity: 3, imageName: "apple"),
         FoodItem(name: "Juice", quantity: 10, imageName: "juice")
     ]
-
+    
     @State private var showAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
-
+    
     var body: some View {
         NavigationView {
             VStack {
                 petNameHeader()
                 Hamburger_Food_Menu()
                 petImage()
+                    .padding(.bottom, -30) // Reduce the bottom padding to push content up
                 healthAndLevelProgressViews()
+                    .padding(.top, -20) // Reduce the top padding to move it closer to the above content
                 Spacer()
             }
+            .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitleDisplayMode(.inline)
             .background(NavigationLink(destination: PetStore(), isActive: $showShop) { EmptyView() })
             .background(NavigationLink(destination: InventoryView(), isActive: $showInventory) { EmptyView() })
             .background(NavigationLink(destination: CustomizeView(), isActive: $showCustomize) { EmptyView() })
         }
     }
-
+    
     /// Header view displaying the pet's name.
     private func petNameHeader() -> some View {
         Text("Pet Name")
             .font(.system(size: 45))
             .bold()
             .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
-            .padding(.top)
+            .padding()
     }
-
+    
     /// Displays the menu and food selection buttons.
     private func Hamburger_Food_Menu() -> some View {
         HStack {
@@ -68,7 +71,7 @@ struct Pet_page: View {
         .padding(.horizontal)
         
     }
-
+    
     /// Button to change the selected food.
     private func changeFoodButton() -> some View {
         Button(action: {
@@ -84,14 +87,15 @@ struct Pet_page: View {
             .padding()
         }
         .sheet(isPresented: $showFoodSelection) {
-            FoodSelectionView(foodItems: $foodItems, selectedFood: $selectedFood)
+            FoodSelectionView(foodItems: $foodItems, selectedFoodIndex: $selectedFoodIndex)
         }
     }
-
+    
     /// Button for using the selected food to increase pet's health and display the food image.
     private func useFoodButton() -> some View {
-        Button(action: {
-            handleFoodUse()
+        let selectedFood = foodItems[selectedFoodIndex]
+        return Button(action: {
+            handleFoodUse(selectedFoodIndex: selectedFoodIndex)
         }) {
             HStack {
                 Image(selectedFood.imageName) // Dynamic image based on the selected food.
@@ -112,49 +116,46 @@ struct Pet_page: View {
             )
         }
     }
-
+    
     /// Handles the logic when the user decides to use the selected food.
-    private func handleFoodUse() {
+    private func handleFoodUse(selectedFoodIndex: Int) {
+        guard selectedFoodIndex < foodItems.count else { return }
+        var foodItem = foodItems[selectedFoodIndex]
+        
         if healthBar >= 1.0 {
             showAlert(title: "Max Health Reached", message: "Your pet is already at maximum health.")
-        } else if selectedFood.quantity > 0 {
+        } else if foodItem.quantity > 0 {
             increaseHealth(by: 0.05)
-            updateFoodQuantity()
+            foodItem.quantity -= 1 // Update the quantity
+            foodItems[selectedFoodIndex] = foodItem // Save the updated item back to the array
         } else {
-            showAlert(title: "Insufficient \(selectedFood.name)", message: "You don't have enough \(selectedFood.name).")
+            showAlert(title: "Insufficient \(foodItem.name)", message: "You don't have enough \(foodItem.name).")
         }
     }
-
+    
     /// Increases the health of the pet.
     private func increaseHealth(by amount: Float) {
         withAnimation {
             healthBar = min(healthBar + amount, 1.0)
         }
     }
-
-    /// Updates the quantity of the selected food after it's been used.
-    private func updateFoodQuantity() {
-        if let index = foodItems.firstIndex(where: { $0.id == selectedFood.id }) {
-            foodItems[index].quantity -= 1
-            selectedFood.quantity = foodItems[index].quantity
-        }
-    }
-
+    
+    
     /// Shows an alert with a title and message.
     private func showAlert(title: String, message: String) {
         alertTitle = title
         alertMessage = message
         showAlert = true
     }
-
+    
     /// Displays the pet's image.
     private func petImage() -> some View {
         Image("Panda")
             .resizable()
             .scaledToFit()
-            .frame(width: 450, height: 400, alignment: .center)
+            .frame(width: 400, height: 400, alignment: .center)
     }
-
+    
     /// Displays health and level progress views.
     private func healthAndLevelProgressViews() -> some View {
         VStack {
@@ -162,10 +163,12 @@ struct Pet_page: View {
                 .frame(height: 20)
                 .padding()
             
+            
             CustomProgressView(value: levelProgress, maxValue: 5000, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                 .frame(height: 20)
                 .padding()
         }
+        
     }
 }
 
@@ -197,12 +200,12 @@ struct FoodItem: Identifiable {
 struct FoodSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var foodItems: [FoodItem]
-    @Binding var selectedFood: FoodItem
-
+    @Binding var selectedFoodIndex: Int
+    
     var body: some View {
         List(foodItems.indices, id: \.self) { index in
             Button(action: {
-                self.selectedFood = self.foodItems[index]
+                self.selectedFoodIndex = index
                 self.presentationMode.wrappedValue.dismiss()
             }) {
                 HStack {

@@ -66,6 +66,7 @@ struct WorkoutMainPage: View {
                         .bold()
                         .padding(.trailing, 60)
                     
+                    
                     if selectedTab == 0 {
                         VStack{
                             Button(action: {
@@ -93,6 +94,9 @@ struct WorkoutMainPage: View {
                     Text("Feedback").tag(1)
                 }
                 .pickerStyle(SegmentedPickerStyle())
+                .foregroundColor(.white)
+                .background(Color.gray)
+                
                 
                 
                 if(selectedTab == 0){
@@ -101,8 +105,9 @@ struct WorkoutMainPage: View {
                     
                     Spacer()
                 }
-                    //Passing the view model instance to the FeedBack
+                //Passing the view model instance to the FeedBack
                 else if (selectedTab == 1){
+                    
                     WorkoutFeedback(viewModel: viewModel)
                     Spacer()
                 }
@@ -111,6 +116,8 @@ struct WorkoutMainPage: View {
             }
             
         }
+        .background(Color.black)
+        .foregroundColor(.gray)
         
     }
     
