@@ -10,7 +10,7 @@ import SwiftUI
 
 class FeedBackViewModel: ObservableObject{
 
-    @Published var PetFeedbackText: String = "Tuck elbows in more when going up"
+    @Published var PetFeedbackText: String = "Tuck elbows in more when going up - roar"
     
     
     
@@ -61,36 +61,35 @@ struct PostWorkoutData: View {
     var body: some View {
         
         
-        HStack{
-            Text(("Set \(setIndex)"))
-            Text("Form 90%")
-            Text("Velocity 80%")
-            Spacer()
-            if isExpanded{
-                
-                Image(systemName: "arrowshape.up.fill")
-                
+       
+            HStack{
+                Text(("Set \(setIndex)  Form 80%  Velocity 60%"))
+                Spacer()
+                if isExpanded{
+                    Image(systemName: "arrowshape.up.fill")
+                }
+                else{
+                    Image(systemName: "arrowshape.down.fill")
+                }
             }
-            else{
-                Image(systemName: "arrowshape.down.fill")
+            .onTapGesture {
+                withAnimation {
+                    self.isExpanded.toggle()
+                    
+                }
             }
             
-        }
-        .onTapGesture {
-            withAnimation {
-                self.isExpanded.toggle()
-                
-            }
-        }
+                if isExpanded {
+                    Text("Data data data")
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
+                    WorkoutGraph()
+                    
+                    
+                }
+            
         
-        if isExpanded {
-            Text("Data data data")
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-            WorkoutGraph()
-            
-        }
     }
 }
 
