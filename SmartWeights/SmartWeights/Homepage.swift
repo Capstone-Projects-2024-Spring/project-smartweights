@@ -142,10 +142,9 @@ struct Homepage: View {
                 Spacer()
             }
             .background(Color.hex121212)
-            //.padding(.bottom, 80) // Padding for Navbar
-            
         }
     }
+    
 }
 
 struct Homepage_Previews: PreviewProvider {

@@ -27,7 +27,7 @@ struct NavController: View {
                 case .leaf:
                     WorkoutMainPage(viewModel: viewModel).frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .gearshape:
-                    WorkoutGraph().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    Pet_page().frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
 
                 // The navbar at the bottom, ensuring it doesn't overlap the content
@@ -38,6 +38,7 @@ struct NavController: View {
                 Spacer()
                 Navbar(selectedTab: $selectedTab)
             }
+            .edgesIgnoringSafeArea(.all)
         } // Ensure it fits full screen including the bottom edge
     }
 }
