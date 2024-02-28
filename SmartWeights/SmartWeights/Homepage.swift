@@ -141,10 +141,10 @@ struct Homepage: View {
                 .foregroundStyle(.white)
                 Spacer()
             }
-            .background(Color.hex121212)
+            .background(Color.hex121212.edgesIgnoringSafeArea(.all))
+            
         }
     }
-    
 }
 
 struct Homepage_Previews: PreviewProvider {

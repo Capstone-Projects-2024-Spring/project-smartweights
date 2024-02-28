@@ -11,8 +11,8 @@ import SwiftUI
 struct NavController: View {
     @State private var selectedTab: Tab = .house
     @StateObject var viewModel = WorkoutViewModel()
-
-
+    
+    
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -29,19 +29,18 @@ struct NavController: View {
                 case .gearshape:
                     Pet_page().frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-
-                // The navbar at the bottom, ensuring it doesn't overlap the content
-                //Navbar(selectedTab: $selectedTab)
-                    //.frame(height: 50) // Adjust this height as needed
             }
             VStack {
-                Spacer()
+                Spacer() // This pushes the navbar to the bottom
                 Navbar(selectedTab: $selectedTab)
+                    .frame(height: 50) // Adjust this height as needed
             }
-            .edgesIgnoringSafeArea(.all)
-        } // Ensure it fits full screen including the bottom edge
+        }
+        .edgesIgnoringSafeArea([.top, .bottom]) // Ignore safe area on sides only
     }
+    
 }
+
 
 #Preview {
     NavController()
