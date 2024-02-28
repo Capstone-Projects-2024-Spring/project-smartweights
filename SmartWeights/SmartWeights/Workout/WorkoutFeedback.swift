@@ -111,7 +111,7 @@ struct WorkoutFeedback: View {
         ScrollView {
             VStack {
                 
-                Form {
+                SwiftUI.Form {
                     ForEach(0..<sets, id: \.self) { index in
                         PostWorkoutData(setIndex: index + 1)
                     }
