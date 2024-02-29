@@ -12,12 +12,6 @@ class FeedBackViewModel: ObservableObject{
 
     @Published var PetFeedbackText: String = "Tuck elbows in more when going up - roar"
     
-    
-    
-    
-    
-    
-    
 }
 
 
@@ -48,55 +42,47 @@ struct VirtualPetFeedback: View{
 }
 
 struct PostWorkoutData: View {
-    @StateObject var viewModel = WorkoutViewModel()
+    @ObservedObject var viewModel: WorkoutViewModel
+    
     @State private var isExpanded: Bool = false
+    let setIndex: Int
     
-    
-    let setIndex:Int
-    
-    init(setIndex: Int) {
+    init(viewModel: WorkoutViewModel, setIndex: Int) {
+        self.viewModel = viewModel // Initialize viewModel first
         self.setIndex = setIndex
     }
     
     var body: some View {
-        
-        
-       
-            HStack{
-                Text(("Set \(setIndex)  Form 80%  Velocity 60%"))
-                Spacer()
-                if isExpanded{
-                    Image(systemName: "arrowshape.up.fill")
-                }
-                else{
-                    Image(systemName: "arrowshape.down.fill")
-                }
+        HStack{
+            Text(("Set \(setIndex)  Form 80%  Velocity 60%"))
+            Spacer()
+            if isExpanded{
+                Image(systemName: "arrowshape.up.fill")
+            } else {
+                Image(systemName: "arrowshape.down.fill")
             }
-            .onTapGesture {
-                withAnimation {
-                    self.isExpanded.toggle()
-                    
-                }
+        }
+        .onTapGesture {
+            withAnimation {
+                self.isExpanded.toggle()
             }
-            
-                if isExpanded {
-                    Text("Data data data")
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
-                    WorkoutGraph()
-                    
-                    
-                }
-            
+        }
         
+        if isExpanded {
+            Text("Data data data")
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
+            WorkoutGraphForm()
+        }
     }
 }
 
 
+
 ///View to show all data collected from the most recent workout
 struct WorkoutFeedback: View {
-    @StateObject var viewModel = WorkoutViewModel()
+    @ObservedObject var viewModel: WorkoutViewModel
     @State private var isGraphExpanded: Bool = false
     
     
@@ -112,7 +98,7 @@ struct WorkoutFeedback: View {
                 
                 SwiftUI.Form {
                     ForEach(0..<sets, id: \.self) { index in
-                        PostWorkoutData(setIndex: index + 1)
+                        PostWorkoutData(viewModel: viewModel,setIndex: index + 1)
                     }
                 }
                 .frame(height: 300)
@@ -135,7 +121,7 @@ struct WorkoutFeedback: View {
                             Image("chain")
                                 .resizable()
                                 .frame(width: 140, height: 140)
-                            VirtualPetFeedback()
+                            VirtualPetFeedback(viewModel: FeedBackViewModel())
                                 .padding(.trailing,90)
                                 .padding(.bottom,100)
                             
@@ -167,12 +153,12 @@ struct WorkoutFeedback: View {
                     if isGraphExpanded{
                         Text("Form")
                             .padding(.bottom,20)
-                        WorkoutGraph()
+                        WorkoutGraphForm()
                             .frame(height: 250)
                             .padding(.bottom,50)
                         Text("Velocity")
                             .padding(.bottom,20)
-                        WorkoutGraph()
+                        WorkoutGraphForm()
                             .frame(height: 250)
                         
                     }
@@ -194,6 +180,6 @@ struct WorkoutFeedback: View {
 
 
 #Preview {
-    WorkoutFeedback()
+    WorkoutFeedback(viewModel: WorkoutViewModel())
     //VirtualPetFeedback()
 }

@@ -2,7 +2,7 @@ import SwiftUI
 ///structure to display the main workout page
 struct WorkoutMainPage: View {
     ///created an instance of the view model
-    @StateObject var viewModel = WorkoutViewModel()
+    @StateObject var viewModel = WorkoutViewModel ()
     
     //workout/feedback nav on top of app
     @State private var selectedTab = 0

@@ -11,6 +11,7 @@ import SwiftUI
 struct NavController: View {
     @State private var selectedTab: Tab = .house
     @StateObject var viewModel = WorkoutViewModel()
+    @StateObject var OverallViewModel = OverallProgressViewModel()
 
 
     var body: some View {
@@ -23,7 +24,7 @@ struct NavController: View {
                 case .message:
                     PetStore().frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .person:
-                    PostWorkout().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    PostWorkout(viewModel: OverallViewModel).frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .leaf:
                     WorkoutMainPage(viewModel: viewModel).frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .gearshape:

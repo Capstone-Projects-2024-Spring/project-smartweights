@@ -20,8 +20,6 @@ class WorkoutViewModel: ObservableObject {
     
     
     /// Function to reset progress
-
-    
     func resetProgress() {
         progress = 0
     }
