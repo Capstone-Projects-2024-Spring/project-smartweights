@@ -33,16 +33,13 @@ class YourTestClass: XCTestCase {
 
     // Testing sort by price.
     func testSortItemsByPrice() {
-        // Given
         let item1 = SellingItem(name: "Dog", price: "600")
         let item2 = SellingItem(name: "Cat", price: "500")
         let item3 = SellingItem(name: "Dino", price: "750")
         let unsortedItems = [item1, item2, item3]
 
-        // When
         let sortedItems = sortItems(items: unsortedItems, sortByPrice: true)
-
-        // Then
+        
         XCTAssertEqual(sortedItems, [item2, item1, item3], "Items should be sorted by price ascending")
     }
 
@@ -54,10 +51,8 @@ class YourTestClass: XCTestCase {
         let item3 = SellingItem(name: "Juice", price: "750")
         let unsortedItems = [item1, item2, item3]
 
-        // When
         let sortedItems = sortItems(items: unsortedItems, sortByPrice: false)
 
-        // Then
         XCTAssertEqual(sortedItems, [item2, item3, item1], "Items should be sorted by name alphabetically")
     }
 }
