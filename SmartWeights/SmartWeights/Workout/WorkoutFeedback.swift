@@ -147,6 +147,7 @@ struct WorkoutFeedback: View {
                             Image(systemName: "arrowshape.down.fill")
                         }
                     }
+                    .accessibilityLabel("OpenFeedbackGraphButton")
                     
                     
                     

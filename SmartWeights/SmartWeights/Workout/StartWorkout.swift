@@ -286,6 +286,7 @@ struct StartWorkout: View {
                             .foregroundStyle(.white)
                     }
                 }
+                .accessibilityLabel("NewWorkoutButton")
                 
             }
             

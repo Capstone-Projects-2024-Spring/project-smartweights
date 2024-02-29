@@ -26,12 +26,14 @@ struct WorkoutMainPage: View {
                             }){
                                 Text("Start")
                             }
+                            .accessibilityLabel("startWorkoutButton")
                             Button(action:{
                                 viewModel.stopTimer()
                             }){
                                 Text("Finish")
                                 
                             }
+                            .accessibilityLabel("endWorkoutButton")
                             
                         }
                     }
@@ -78,6 +80,7 @@ struct WorkoutMainPage: View {
                                     .resizable()
                                     .frame(width: 30, height: 30)
                             }
+                            .accessibilityLabel("micWorkoutButton")
                             .padding(.trailing, 42)
                         }
                     }
@@ -96,6 +99,7 @@ struct WorkoutMainPage: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .foregroundColor(.white)
                 .background(Color.gray)
+                .accessibilityLabel("WorkoutSelectTab")
                 
                 
                 

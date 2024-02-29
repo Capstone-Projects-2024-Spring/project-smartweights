@@ -119,6 +119,7 @@ struct SelectedDateData: View {
                     }
                     
                 }
+                .accessibilityLabel("ExpandWorkoutDataButton")
                 .multilineTextAlignment(.center)
                 .foregroundColor(.black)
                 .bold()
@@ -199,6 +200,7 @@ struct PostWorkout: View {
                                     .padding(.leading, 100)
                             }
                         }
+                        .accessibilityLabel("SelectGraphButton")
                         
                         VStack{
                             if isFormGraph{
