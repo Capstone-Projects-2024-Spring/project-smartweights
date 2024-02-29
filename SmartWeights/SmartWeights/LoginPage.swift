@@ -9,6 +9,7 @@ import SwiftUI
 import AuthenticationServices
 
 struct LoginView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var showingAlert = false // For testing the sign in button
     @State private var alertMessage = ""
     
@@ -77,7 +78,9 @@ struct LoginView: View {
                     }
                     showingAlert = true
                 }
-                .signInWithAppleButtonStyle(.black) // Adjust the style
+                .signInWithAppleButtonStyle(
+                    colorScheme == .dark ? .white : .black
+                ) // Adjust the style
                 .frame(width: 280, height: 45)
                 .shadow(radius: 5) // Add shadow
                 .padding()
