@@ -13,6 +13,9 @@ struct NavController: View {
     @StateObject var viewModel = WorkoutViewModel()
     
     
+    @StateObject var OverallViewModel = OverallProgressViewModel()
+
+
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -23,7 +26,7 @@ struct NavController: View {
                 case .message:
                     PetStore().frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .person:
-                    PostWorkout().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    PostWorkout(viewModel: OverallViewModel).frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .leaf:
                     WorkoutMainPage(viewModel: viewModel).frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .gearshape:

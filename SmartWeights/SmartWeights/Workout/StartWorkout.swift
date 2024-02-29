@@ -20,13 +20,9 @@ class WorkoutViewModel: ObservableObject {
     
     
     /// Function to reset progress
-
-    
     func resetProgress() {
         progress = 0
     }
-    
-    
     
     /// Function to add progress
     /// - Parameters:
@@ -68,6 +64,7 @@ class WorkoutViewModel: ObservableObject {
     }
     /// Function to generate random number for the progress bar
     /// - Returns: random number between 0 and 1
+    ///
     //generate a random number for the progress bar
     //will be removed once we get data
     func generateRandomNumber() -> Double {
@@ -289,6 +286,7 @@ struct StartWorkout: View {
                             .foregroundStyle(.white)
                     }
                 }
+                .accessibilityLabel("NewWorkoutButton")
                 
             }
             
