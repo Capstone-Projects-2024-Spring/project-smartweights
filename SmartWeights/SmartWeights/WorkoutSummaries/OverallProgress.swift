@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DateDataPoints: Identifiable {
     
-   
+    
     var id = UUID().uuidString
     var date: String
     var form: Int
@@ -23,7 +23,7 @@ class OverallProgressViewModel: ObservableObject{
     
     @Published var date = Date()
     @Published var shortDate: String = "" // Store short date string
-       
+    
     func updateShortDate() {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
@@ -33,61 +33,114 @@ class OverallProgressViewModel: ObservableObject{
     init(){
         updateShortDate()
     }
-       
+    
     
     
 }
 
 
 
-
-
-struct SelectedDateData: View{
+struct moreFeedbackSheetView: View {
     
+    var body: some View {
+        Image("dinosaur")
+            .resizable()
+            .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/,height: 100)
+        Text("data data data data data data data")
+        Text("data data data data data data data")
+        Text("data data data data data data data")
+        Text("data data data data data data data")
+        Text("data data data data data data data")
+        Text("data data data data data data data")
+        
+    }
+}
+    
+struct SelectedDateData: View {
     @ObservedObject var viewModel: OverallProgressViewModel
+    @State var isSheetPresented: Bool = false
     
     var data = [
         DateDataPoints(date: "2/26/24", form: 20, velocity: 50, achievement: 4, currency: 500),
         DateDataPoints(date: "2/27/24", form: 60, velocity: 10, achievement: 4, currency: 500),
-        DateDataPoints(date: "2/28/24", form: 30, velocity: 70, achievement: 54, currency: 5020)
+        DateDataPoints(date: "2/28/24", form: 30, velocity: 70, achievement: 54, currency: 5020),
+        DateDataPoints(date: "2/29/24", form: 30, velocity: 70, achievement: 54, currency: 5020),
+        DateDataPoints(date: "3/1/24", form: 30, velocity: 720, achievement: 54, currency: 5020)
         
     ]
     
     var body: some View{
         
-        ZStack(alignment: .leading){
-            Rectangle()
-                .frame(width:350,height: 200)
-                .cornerRadius(40)
-                .foregroundColor(.gray)
+        
+        Button(action: {
+            isSheetPresented.toggle()
             
-            
-            VStack(alignment: .leading){
+        })
+        {
+            ZStack(alignment: .leading){
+                Rectangle()
+                    .frame(width:350,height: 200)
+                    .cornerRadius(40)
+                    .foregroundColor(.gray)
                 
-                ForEach(data){ d in
-                    if d.date == viewModel.shortDate{
-                        Text("Form - \(d.form)%")
+                
+                VStack(alignment: .leading){
+                    
+                    ForEach(data){ d in
+                        if d.date == viewModel.shortDate{
+                            HStack {
+                                Text("Form - \(d.form)%")
+                                Image(systemName: "figure.strengthtraining.traditional")
+                                    .foregroundColor(.green)
+                                    
+                            }
                             .padding(.bottom, 20)
-                        Text("Velocity - \(d.velocity)%")
-                            .padding(.bottom,30)
-                        Text("Achivements earned - \(d.achievement)")
-                            .padding(.bottom, 20)
-                        Text("Currency Earned - \(d.currency)")
-                        
-                        
+                            HStack {
+                                Text("Velocity - \(d.velocity)%")
+                                Image(systemName: "speedometer")
+                                    .foregroundColor(.white)
+                                    
+                            }
+                            .padding(.bottom,20)
+                            HStack {
+                                Text("Achivements earned - \(d.achievement)")
+                                    
+                                Image(systemName: "medal")
+                                    .foregroundColor(.yellow)
+                                    
+                            }
+                            .padding(.bottom, 10)
+                            HStack {
+                                Text("Currency Earned - \(d.currency)")
+                                Image("petcoin")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    
+                            }
+                            
+                        }
                     }
                     
                 }
-                
-                
+                .multilineTextAlignment(.center)
+                .foregroundColor(.black)
+                .bold()
+                .frame(minHeight: 200)
+                .padding(.leading, 20)
+                .sheet(isPresented: $isSheetPresented) {
+                    // Content of the sheet
+                    moreFeedbackSheetView()
+                    
+                }
             }
-            .padding(.leading, 20)
-            .padding(.bottom,0)
+            
         }
+        
     }
     
     
 }
+
 struct PostWorkout: View {
     
     @ObservedObject var viewModel =  OverallProgressViewModel()
@@ -96,7 +149,7 @@ struct PostWorkout: View {
     
     
     var body: some View {
-       
+        
         
         ScrollView {
             ZStack{
@@ -199,6 +252,7 @@ struct PostWorkout: View {
         }
     }
 }
+
 
 #Preview {
     PostWorkout(viewModel: OverallProgressViewModel())
