@@ -34,15 +34,22 @@ jobs:
       #     app_id: ${{ secrets.APP_STORE_CONNECT_APP_ID }}
       #     ipa_path: build/SmartWeights.xcarchive/Products/Applications/SmartWeights.ipa
 
+     
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive -archivePath "build/SmartWeights.xcarchive" -exportOptionsPlist ExportOptions.plist -exportPath build
 
       - name: Upload to TestFlight
-        uses: apple/actions/upload-build-artifact@v1
-        with:
-          path: build/*.ipa
-          transporter-mode: distribute
-          api_key_path: ${{secrets.APP_STORE_CONNECT_API_KEY}}
-          issuer_id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-          key_id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          app_id: ${{ secrets.APP_STORE_CONNECT_APP_ID }}
-          groups: 'Internal Testers'
-          ipa_path: build/SmartWeights.xcarchive/Products/Applications/SmartWeights.ipa
+        run: |
+          xcrun altool --upload-app -f build/*.ipa -t ios -u ${{ secrets.APPLE_ID_EMAIL }} -p ${{ secrets.APPLE_ID_PASSWORD }}
+        # - name: Upload to TestFlight
+        #   uses: apple/actions/upload-build-artifact@v1
+        #   with:
+        #     path: build/*.ipa
+        #     transporter-mode: distribute
+        #     api_key_path: ${{secrets.APP_STORE_CONNECT_API_KEY}}
+        #     issuer_id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        #     key_id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+        #     app_id: ${{ secrets.APP_STORE_CONNECT_APP_ID }}
+        #     groups: 'Internal Testers'
+        #     ipa_path: build/SmartWeights.xcarchive/Products/Applications/SmartWeights.ipa
