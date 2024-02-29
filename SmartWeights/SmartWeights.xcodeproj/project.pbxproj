@@ -42,6 +42,7 @@
 		9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993B2B8CE1400071232A /* WorkoutFeedback.swift */; };
 		9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993D2B8CE1570071232A /* WorkoutMainPage.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
+		B92566B62B900E49000F9564 /* PetStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92566B52B900E49000F9564 /* PetStoreTests.swift */; };
 		B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,7 @@
 		9118993B2B8CE1400071232A /* WorkoutFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedback.swift; sourceTree = "<group>"; };
 		9118993D2B8CE1570071232A /* WorkoutMainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMainPage.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
+		B92566B52B900E49000F9564 /* PetStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStoreTests.swift; sourceTree = "<group>"; };
 		B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFirstPet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,6 +220,7 @@
 			children = (
 				91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */,
 				6B9E32ED2B865FD000CA7868 /* FirebaseTests.swift */,
+				B92566B52B900E49000F9564 /* PetStoreTests.swift */,
 			);
 			path = SmartWeightsTests;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B9E32EE2B865FD000CA7868 /* FirebaseTests.swift in Sources */,
+				B92566B62B900E49000F9564 /* PetStoreTests.swift in Sources */,
 				91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
