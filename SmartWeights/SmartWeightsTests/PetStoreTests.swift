@@ -18,7 +18,7 @@ class YourTestClass: XCTestCase {
         }
     }
 
-    // Function to test
+    // sort function to test
     private func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem] {
         if sortByPrice {
             return items.sorted { (item1, item2) in
@@ -31,6 +31,7 @@ class YourTestClass: XCTestCase {
         }
     }
 
+    // Testing sort by price.
     func testSortItemsByPrice() {
         // Given
         let item1 = SellingItem(name: "Dog", price: "600")
@@ -45,6 +46,7 @@ class YourTestClass: XCTestCase {
         XCTAssertEqual(sortedItems, [item2, item1, item3], "Items should be sorted by price ascending")
     }
 
+    // Testing sort by name.
     func testSortItemsByName() {
         // Given
         let item1 = SellingItem(name: "Orange", price: "600")
