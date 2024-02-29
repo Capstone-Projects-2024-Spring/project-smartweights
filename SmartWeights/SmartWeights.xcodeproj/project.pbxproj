@@ -34,6 +34,7 @@
 		912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912241702B90EA9F00D03638 /* WorkoutUITests.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
 		B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */; };
+		E5B86DB32B91033400A0AD04 /* navbarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B86DB22B91033400A0AD04 /* navbarUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		912241702B90EA9F00D03638 /* WorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutUITests.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
 		B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFirstPet.swift; sourceTree = "<group>"; };
+		E5B86DB22B91033400A0AD04 /* navbarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = navbarUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 				91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */,
 				322B4C072B90CB7500620F4F /* PetPageUITests.swift */,
 				912241702B90EA9F00D03638 /* WorkoutUITests.swift */,
+				E5B86DB22B91033400A0AD04 /* navbarUITests.swift */,
 			);
 			path = SmartWeightsUITests;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				322B4C082B90CB7500620F4F /* PetPageUITests.swift in Sources */,
+				E5B86DB32B91033400A0AD04 /* navbarUITests.swift in Sources */,
 				91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */,
 				91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */,
 				912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */,
