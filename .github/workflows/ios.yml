@@ -25,19 +25,22 @@ jobs:
       - name: Archive
         run: xcodebuild -workspace SmartWeights.xcworkspace -scheme SmartWeights -destination generic/platform=iOS archive -archivePath build/SmartWeights.xcarchive
 
-      - name: Upload to App Store Connect
-        # uses: too-so/actions/appstoreconnect-upload@v1
-        with:
-          api_key_path: ./path/to/your/api_key.p8
-          issuer_id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-          key_id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          app_id: ${{ secrets.APP_STORE_CONNECT_APP_ID }}
-          ipa_path: build/SmartWeights.xcarchive/Products/Applications/SmartWeights.ipa
+      # - name: Upload to App Store Connect
+      #   uses: apple/actions/upload-build-artifact@v1
+      #   with:
+      #     api_key_path: ${{secrets.APP_STORE_CONNECT_API_KEY}}
+      #     issuer_id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      #     key_id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+      #     app_id: ${{ secrets.APP_STORE_CONNECT_APP_ID }}
+      #     ipa_path: build/SmartWeights.xcarchive/Products/Applications/SmartWeights.ipa
 
-      - name: Distribute to TestFlight
-        # uses: too-so/actions/appstoreconnect-distribute@v1
+
+      - name: Upload to TestFlight
+        uses: apple/actions/upload-build-artifact@v1
         with:
-          api_key_path: ./path/to/your/api_key.p8
+          path: build/*.ipa
+          transporter-mode: distribute
+          api_key_path: ${{secrets.APP_STORE_CONNECT_API_KEY}}
           issuer_id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           key_id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           app_id: ${{ secrets.APP_STORE_CONNECT_APP_ID }}
