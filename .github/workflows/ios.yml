@@ -13,11 +13,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Setup CocoaPods
-        run: |
-          gem install bundler
-          bundle install
-          bundle exec pod install
+      # - name: Setup CocoaPods
+      #   run: |
+      #     gem install bundler
+      #     bundle install
+      #     bundle exec pod install
 
       - name: Build and Test
         run: xcodebuild -workspace SmartWeights.xcworkspace -scheme SmartWeights -destination "platform=iOS Simulator,name=iPhone 12" clean build test
