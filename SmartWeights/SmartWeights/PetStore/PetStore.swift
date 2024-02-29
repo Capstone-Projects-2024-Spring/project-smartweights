@@ -19,32 +19,51 @@ struct SellingItem: Identifiable {
 }
 
 // Will need to change or implement in backend but for now example:
-/// Items available in store.
-private let items = [
-    SellingItem(id: 1, name: "Dog", category: "Pets", price: "600", image: Image("dog"), description: "The best companion!"),
-    SellingItem(id: 2, name: "Cat", category: "Pets", price: "500", image: Image("cat"), description: "Has 9 lives!"),
-    SellingItem(id: 3, name: "Dinosaur", category: "Pets", price: "750", image: Image("dinosaur"), description: "Only 250 million years old!"),
-    SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("orange"), description: "Gives X health."),
-    SellingItem(id: 5, name: "Apple", category: "Foods", price: "20", image: Image("apple"), description: "Gives X health."),
-    SellingItem(id: 6, name: "Juice", category: "Foods", price: "15", image: Image("juice"), description: "Gives X health."),
-    SellingItem(id: 7, name: "Jetpack", category: "Backgrounds", price: "170", image: Image("jetpack"), description: "Walking is overrated."),
-    SellingItem(id: 8, name: "Flag", category: "Backgrounds", price: "50", image: Image("flag"), description: "Works great in the wind!"),
-    SellingItem(id: 9, name: "Sand Castle", category: "Backgrounds", price: "65", image: Image("sandcastle"), description: "Watch out for waves!"),
-    SellingItem(id: 10, name: "Floral Glasses", category: "Outfits", price: "80", image: Image("glasses"), description: "100% UV Protection."),
-    SellingItem(id: 11, name: "Pet Chain", category: "Outfits", price: "100", image: Image("chain"), description: "Fashionably tasteful.")
-]
+/// StoreViewModel class with items list and needed variables.
+class storeViewModel: ObservableObject {
+    
+    /// Items available in store.
+    @Published var items = [
+        SellingItem(id: 1, name: "Dog", category: "Pets", price: "600", image: Image("dog"), description: "The best companion!"),
+        SellingItem(id: 2, name: "Cat", category: "Pets", price: "500", image: Image("cat"), description: "Has 9 lives!"),
+        SellingItem(id: 3, name: "Dinosaur", category: "Pets", price: "750", image: Image("dinosaur"), description: "Only 250 million years old!"),
+        SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("orange"), description: "Gives X health."),
+        SellingItem(id: 5, name: "Apple", category: "Foods", price: "20", image: Image("apple"), description: "Gives X health."),
+        SellingItem(id: 6, name: "Juice", category: "Foods", price: "15", image: Image("juice"), description: "Gives X health."),
+        SellingItem(id: 7, name: "Jetpack", category: "Backgrounds", price: "170", image: Image("jetpack"), description: "Walking is overrated."),
+        SellingItem(id: 8, name: "Flag", category: "Backgrounds", price: "50", image: Image("flag"), description: "Works great in the wind!"),
+        SellingItem(id: 9, name: "Sand Castle", category: "Backgrounds", price: "65", image: Image("sandcastle"), description: "Watch out for waves!"),
+        SellingItem(id: 10, name: "Floral Glasses", category: "Outfits", price: "80", image: Image("glasses"), description: "100% UV Protection."),
+        SellingItem(id: 11, name: "Pet Chain", category: "Outfits", price: "100", image: Image("chain"), description: "Fashionably tasteful.")
+    ]
+    
+    @Published var showAlert = false
+    @Published var sortByPrice = false // used for sorting
+    @Published var selectedCategory = "Pets" // Default
+    let categories = ["Pets", "Foods", "Backgrounds", "Outfits"]
+    @Published var userCur = 550 // Default currency
+    
+    /// Display items based on selected sorting method.
+    func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem] {
+        if sortByPrice {
+            return items.sorted { (item1, item2) in
+                let price1 = Int(item1.price) ?? 0
+                let price2 = Int(item2.price) ?? 0
+                return price1 < price2
+            }
+        } else {
+            return items.sorted { $0.name < $1.name }
+        }
+    }
+}
 
 /// Grid for displaying items.
 private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
 
 /// Display view for the Pet Store depending on available items and prices.
 struct PetStore: View {
-    @State private var showAlert = false
-    @State private var sortByPrice = false // used for sorting
-    @State private var selectedCategory = "Pets" // Default
-    let categories = ["Pets", "Foods", "Backgrounds", "Outfits"]
-    @State private var userCur = 550 // Default currency
     
+    @ObservedObject var viewModel = storeViewModel()
     var body: some View {
         NavigationView {
             VStack {
@@ -63,10 +82,9 @@ struct PetStore: View {
                     Spacer()
                     HStack {
                         Image( "petcoin")
-                        //Image(systemName: "dollarsign.circle")
                             .resizable()
                             .frame(width: 40, height: 40)
-                        Text("\(userCur)") // amount of money
+                        Text("\(viewModel.userCur)") // amount of money
                             .fontWeight(.bold)
                             .font(.system(size: 20))
                             .foregroundColor(.green)
@@ -76,9 +94,9 @@ struct PetStore: View {
                 
                 HStack {
                     Button(action: {
-                        sortByPrice.toggle()
+                        viewModel.sortByPrice.toggle()
                     }) {
-                        Text(sortByPrice ? "Sort by Price" : "Sort by Name")
+                        Text(viewModel.sortByPrice ? "Sort by Price" : "Sort by Name")
                             .padding()
                             .background(Color.blue)
                             .foregroundColor(.white)
@@ -92,14 +110,13 @@ struct PetStore: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(categories, id: \.self) { category in
+                        ForEach(viewModel.categories, id: \.self) { category in
                             Button(action: {
-                                // Here you would filter items based on the category
-                                self.selectedCategory = category
+                                viewModel.selectedCategory = category
                             }) {
                                 Text(category)
                                     .padding()
-                                    .background(self.selectedCategory == category ? Color.blue : Color.gray)
+                                    .background(viewModel.selectedCategory == category ? Color.blue : Color.gray)
                                     .foregroundColor(.white)
                                     .cornerRadius(25)
                                     .font(.system(size: 15))
@@ -111,18 +128,17 @@ struct PetStore: View {
                 
                 ScrollView {
                     LazyVGrid(columns: gridLayout, spacing: 10) {
-                        // Assuming you add filtering logic based on `selectedCategory`
-                        ForEach(sortItems(items: items.filter { $0.category == selectedCategory }, sortByPrice: sortByPrice), id: \.id) { item in
-                            NavigationLink(destination: ItemDetailView(item: item, userCur: userCur)) {
+                        ForEach(viewModel.sortItems(items: viewModel.items, sortByPrice: viewModel.sortByPrice).filter { $0.category == viewModel.selectedCategory }, id: \.id) { item in
+                            NavigationLink(destination: ItemDetailView(item: item, userCur: viewModel.userCur)) {
                                 VStack {
                                     item.image
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 100, height: 100)
-                            
+                                    
                                     Text(item.name)
                                     
-                                    if sortByPrice {
+                                    if viewModel.sortByPrice {
                                         Text("\(item.price)") // Displaying price
                                             .font(.headline)
                                             .foregroundColor(.green)
@@ -171,7 +187,7 @@ struct ItemDetailView: View {
                      .scaledToFit()
                      //.frame(width: 100, height: 100) // Adjust size as needed
                      .padding(.bottom, 50) // Adjust position as needed
-                    */
+                     */
                     
                 }
                 .padding(.bottom, -5)
@@ -214,19 +230,6 @@ struct ItemDetailView: View {
             .disabled(userCur < Int(item.price) ?? 0) // Disable button if userCur is less than item price
             .padding(.top, -30) // Move purchase button higher, can adjust to fit nav bar
         }
-    }
-}
-
-/// Display items based on selected sorting method.
-private func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem] {
-    if sortByPrice {
-        return items.sorted { (item1, item2) in
-            let price1 = Int(item1.price) ?? 0
-            let price2 = Int(item2.price) ?? 0
-            return price1 < price2
-        }
-    } else {
-        return items.sorted { $0.name < $1.name }
     }
 }
 
