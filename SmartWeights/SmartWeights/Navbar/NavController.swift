@@ -27,7 +27,7 @@ struct NavController: View {
                 case .leaf:
                     WorkoutMainPage(viewModel: viewModel).frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .gearshape:
-                    Pet_page().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    Pet_Page().frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
             VStack {
