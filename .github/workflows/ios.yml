@@ -13,11 +13,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Build and Archive
-        run: |
-          xcodebuild clean archive -workspace SmartWeights.xcworkspace -scheme SmartWeights -configuration Release -archivePath build/SmartWeights.xcarchive
+      - name: Build and Test
+        run: xcodebuild -project SmartWeights.xcodeproj -scheme SmartWeights -destination "platform=iOS Simulator,name=iPhone 12" clean build test
 
-
+      - name: Archive
+        run: xcodebuild -project SmartWeights.xcodeproj -scheme SmartWeights -destination generic/platform=iOS archive -archivePath build/SmartWeights.xcarchive
       # - name: Build and Test
       #   run: xcodebuild -workspace SmartWeights.xcworkspace -scheme SmartWeights -destination "platform=iOS Simulator,name=iPhone 12" clean build test
 
