@@ -24,8 +24,6 @@ class WorkoutViewModel: ObservableObject {
         progress = 0
     }
     
-    
-    
     /// Function to add progress
     /// - Parameters:
     ///   - data: double
@@ -66,6 +64,7 @@ class WorkoutViewModel: ObservableObject {
     }
     /// Function to generate random number for the progress bar
     /// - Returns: random number between 0 and 1
+    ///
     //generate a random number for the progress bar
     //will be removed once we get data
     func generateRandomNumber() -> Double {

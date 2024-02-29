@@ -33,9 +33,6 @@ class OverallProgressViewModel: ObservableObject{
     init(){
         updateShortDate()
     }
-    
-    
-    
 }
 
 

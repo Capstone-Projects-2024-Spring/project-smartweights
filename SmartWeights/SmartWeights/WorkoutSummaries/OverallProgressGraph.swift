@@ -59,11 +59,7 @@ struct WorkoutGraphForm: View {
                     LineMark(x: PlottableValue.value("date", d.date),
                              y: .value("form", d.form))
                 }
-                
-                
-                
             }
-            
             .chartXAxisLabel(position: .bottom, alignment: .center) {
                 Text("date")
                     .bold()
@@ -71,29 +67,17 @@ struct WorkoutGraphForm: View {
             .chartYAxisLabel(position: .leading, alignment: .center) {
                 Text("Form  accuracy (%)")
                     .bold()
-                
             }
-            
             .padding()
             .frame(width: 350, height: 300)
             .chartScrollableAxes(.horizontal)
             .chartXVisibleDomain(length: 6)
             .foregroundColor(.blue)
             .background(Color.gray)
-            
-            
-            
-            
-            
         }
-        
-        
-        
     }
-    
-    
-    
 }
+
 struct WorkoutGraphVelocity: View {
     
     var data = [
@@ -127,9 +111,6 @@ struct WorkoutGraphVelocity: View {
                     LineMark(x: PlottableValue.value("date", d.date),
                              y: .value("Velocity", d.form))
                 }
-                
-                
-                
             }
             
             .chartXAxisLabel(position: .bottom, alignment: .center) {
@@ -148,20 +129,10 @@ struct WorkoutGraphVelocity: View {
             .chartXVisibleDomain(length: 6)
             .foregroundColor(.blue)
             .background(Color.gray)
-            
-            
-            
-            
-            
         }
-        
-        
-        
     }
-    
-    
-    
 }
+
 
 #Preview {
     WorkoutGraphForm()

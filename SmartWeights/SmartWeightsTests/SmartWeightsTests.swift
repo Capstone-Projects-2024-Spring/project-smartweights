@@ -43,7 +43,6 @@ final class SmartWeightsTests: XCTestCase {
         let data = 0.75
         viewModel.addProgress(data: data)
         
-    
         //then
         let expectedProgress = 0.75
 
@@ -66,6 +65,46 @@ final class SmartWeightsTests: XCTestCase {
         
         
         XCTAssertEqual(viewModel.progress,expectedResetProgress)
+    }
+    //test that the timer can be reset in StartWorkout.swift
+    func testResetTimer(){
+        //Given
+        let viewModel = WorkoutViewModel()
+        
+        viewModel.hours = 10
+        viewModel.minutes = 20
+        viewModel.seconds = 30000
+        
+        //When
+        viewModel.restartTimer()
+        
+        //Then
+        
+        let expectedHours = 0
+        let expectedMinutes = 0
+        let expectedSeconds = 0
+        
+        XCTAssertEqual(viewModel.hours, expectedHours)
+        XCTAssertEqual(viewModel.minutes, expectedMinutes)
+        XCTAssertEqual(viewModel.seconds, expectedSeconds)
+    
+    }
+    
+    //test that the date can be turned into the short format
+    func testUpdateShortDate(){
+        
+        let viewModel = OverallProgressViewModel()
+        
+        viewModel.updateShortDate()
+        
+        let date = Date()
+        var shortDate = " "
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        shortDate = formatter.string(from: date)
+        
+        XCTAssertEqual(viewModel.shortDate, shortDate)
+        
     }
     
     //testing the workout timer on StartWorkout.swift
@@ -90,9 +129,6 @@ final class SmartWeightsTests: XCTestCase {
         // Then
         XCTAssertEqual(viewModel.seconds, seconds)
     }
-    
-    
-    
     
     
     
