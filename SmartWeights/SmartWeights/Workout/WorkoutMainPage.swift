@@ -118,7 +118,6 @@ struct WorkoutMainPage: View {
         }
         .background(Color.black)
         .foregroundColor(.gray)
-        
     }
     
 }

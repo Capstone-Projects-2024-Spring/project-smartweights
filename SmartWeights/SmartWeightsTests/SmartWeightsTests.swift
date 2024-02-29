@@ -33,23 +33,26 @@ final class SmartWeightsTests: XCTestCase {
         }
     }
     
+    
+    
+    //WORKOUT MAIN PAGE
+    
+    
     //testing adding data into the progress bar on StartWorkout.swift
     func testWorkoutViewModelAddProgress(){
         //given
         let viewModel = WorkoutViewModel()
-    
+        let data = 0.75
+        
         //when
         viewModel.progress = 0
-        let data = 0.75
         viewModel.addProgress(data: data)
         
         //then
         let expectedProgress = 0.75
-
-        
-        
-        XCTAssertEqual(viewModel.progress,expectedProgress)
+        XCTAssertEqual(viewModel.progress,expectedProgress, "The expected progress should be 0.75 (75%)")
     }
+    
     //testing reseting the progress bar on StartWorkout.swift
     func testWorkoutViewModelRestProgress(){
         //given
@@ -62,10 +65,9 @@ final class SmartWeightsTests: XCTestCase {
     
         //then
         let expectedResetProgress = 0.0
-        
-        
-        XCTAssertEqual(viewModel.progress,expectedResetProgress)
+        XCTAssertEqual(viewModel.progress,expectedResetProgress, "The progress should be set to 0")
     }
+    
     //test that the timer can be reset in StartWorkout.swift
     func testResetTimer(){
         //Given
@@ -75,6 +77,8 @@ final class SmartWeightsTests: XCTestCase {
         viewModel.minutes = 20
         viewModel.seconds = 30000
         
+        
+        
         //When
         viewModel.restartTimer()
         
@@ -83,40 +87,26 @@ final class SmartWeightsTests: XCTestCase {
         let expectedHours = 0
         let expectedMinutes = 0
         let expectedSeconds = 0
-        
-        XCTAssertEqual(viewModel.hours, expectedHours)
-        XCTAssertEqual(viewModel.minutes, expectedMinutes)
-        XCTAssertEqual(viewModel.seconds, expectedSeconds)
+    
+        XCTAssertEqual(viewModel.hours, expectedHours, "The hours should set back to 0")
+        XCTAssertEqual(viewModel.minutes, expectedMinutes, "The minutes should set back to 0")
+        XCTAssertEqual(viewModel.seconds, expectedSeconds, "The seconds should set back to 0")
     
     }
     
-    //test that the date can be turned into the short format
-    func testUpdateShortDate(){
-        
-        let viewModel = OverallProgressViewModel()
-        
-        viewModel.updateShortDate()
-        
-        let date = Date()
-        var shortDate = " "
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        shortDate = formatter.string(from: date)
-        
-        XCTAssertEqual(viewModel.shortDate, shortDate)
-        
-    }
+   
     
     //testing the workout timer on StartWorkout.swift
     func testWorkoutTimer() {
         // Given
         let viewModel = WorkoutViewModel()
         let expectation = XCTestExpectation(description: "Timer stops after 2 seconds")
-
+       
+        
         // When
         viewModel.startTimer()
         viewModel.seconds = 0
-        let seconds = 2
+       
         // Schedule the function call after the delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             viewModel.stopTimer()
@@ -127,7 +117,29 @@ final class SmartWeightsTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
 
         // Then
-        XCTAssertEqual(viewModel.seconds, seconds)
+        let seconds = 2
+        XCTAssertEqual(viewModel.seconds, seconds, "seconds should be displaying 2")
+    }
+    
+    
+   //WORKOUT PROGRESS PAGE
+    
+    //test that the date can be turned into the short format
+    func testUpdateShortDate(){
+        //Given
+        let viewModel = OverallProgressViewModel()
+        let date = Date()
+        var shortDate = " "
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        shortDate = formatter.string(from: date)
+        
+        //When
+        viewModel.updateShortDate()
+        
+        //Given
+        XCTAssertEqual(viewModel.shortDate, shortDate, "The short date should be in the format M/D/Y")
+        
     }
     
     

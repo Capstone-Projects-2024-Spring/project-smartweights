@@ -41,6 +41,7 @@
 		9118993A2B8CE1300071232A /* StartWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911899392B8CE1300071232A /* StartWorkout.swift */; };
 		9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993B2B8CE1400071232A /* WorkoutFeedback.swift */; };
 		9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993D2B8CE1570071232A /* WorkoutMainPage.swift */; };
+		912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912241702B90EA9F00D03638 /* WorkoutUITests.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +93,7 @@
 		911899392B8CE1300071232A /* StartWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkout.swift; sourceTree = "<group>"; };
 		9118993B2B8CE1400071232A /* WorkoutFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedback.swift; sourceTree = "<group>"; };
 		9118993D2B8CE1570071232A /* WorkoutMainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMainPage.swift; sourceTree = "<group>"; };
+		912241702B90EA9F00D03638 /* WorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutUITests.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,6 +226,7 @@
 			children = (
 				91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */,
 				91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */,
+				912241702B90EA9F00D03638 /* WorkoutUITests.swift */,
 			);
 			path = SmartWeightsUITests;
 			sourceTree = "<group>";
@@ -428,6 +431,7 @@
 			files = (
 				91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */,
 				91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */,
+				912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,7 @@ struct CalendarView: View {
         HStack {
             Text("Date") // Title
                 .font(.headline)
-            DatePicker("", selection: $viewModel.date, in: ...Date(), displayedComponents: .date)
+            DatePicker("WorkoutDatePicker", selection: $viewModel.date, in: ...Date(), displayedComponents: .date)
                 .labelsHidden() // Hide the DatePicker label
                 .onChange(of: viewModel.date) {
                     viewModel.updateShortDate()
