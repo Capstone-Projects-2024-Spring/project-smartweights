@@ -2,8 +2,7 @@ name: iOS CI/CD with TestFlight
 
 on:
   push:
-    branches:
-      - development
+    branches: ["development"]
 
 jobs:
   build_and_deploy:
