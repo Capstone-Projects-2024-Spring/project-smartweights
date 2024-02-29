@@ -15,7 +15,7 @@ jobs:
 
       - name: Build and Archive
         run: |
-          xcodebuild clean archive -workspace project.xcworkspace -scheme SmartWeights -configuration Release -archivePath build/SmartWeights.xcarchive
+          xcodebuild clean archive -workspace SmartWeights.xcworkspace -scheme SmartWeights -configuration Release -archivePath build/SmartWeights.xcarchive
 
 
       # - name: Build and Test
