@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChallengesTab: View {
+struct ChallengesPageView: View {
     let challenges = [
         Challenge(title: "Challenge 1", description: "Description for Challenge 1.", currentProgress: 7, progressGoal: 10, reward: "+ 1000 XP", status: false),
         Challenge(title: "Challenge 2", description: "Description for Challenge 2.", currentProgress: 3, progressGoal: 10, reward: "+ 200 SP", status: false),
@@ -90,5 +90,5 @@ struct ChallengesList: View {
 }
 
 #Preview {
-    ChallengesTab()
+    ChallengesPageView()
 }
