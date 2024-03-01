@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0140238C2B91702300D6935D /* SettingsPageView.swift */; };
+		01A6B0BE2B88F16500D84920 /* MorePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A6B0BD2B88F16500D84920 /* MorePageView.swift */; };
 		01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */; };
 		3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202761D2B892D2C001A86B8 /* CustomProgressView.swift */; };
 		320276222B892D55001A86B8 /* Pet_page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320276212B892D55001A86B8 /* Pet_page.swift */; };
@@ -57,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		0140238C2B91702300D6935D /* SettingsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageView.swift; sourceTree = "<group>"; };
+		01A6B0BD2B88F16500D84920 /* MorePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorePageView.swift; sourceTree = "<group>"; };
 		01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesTab.swift; sourceTree = "<group>"; };
 		3202761D2B892D2C001A86B8 /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
 		320276212B892D55001A86B8 /* Pet_page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet_page.swift; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		01A6B0BC2B88F13F00D84920 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				01A6B0BD2B88F16500D84920 /* MorePageView.swift */,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
 		32E288582B83CD0900458FB1 /* WorkoutSummaries */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +191,7 @@
 				32BDE8EA2B8C130D003A5F5A /* Navbar */,
 				3202761C2B892D04001A86B8 /* pet-customize-page */,
 				0140238B2B91700300D6935D /* Settings */,
+				01A6B0BC2B88F13F00D84920 /* More */,
 				6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */,
 				321EF0442B83AAFA000A2D02 /* LoginPage.swift */,
 				32E288582B83CD0900458FB1 /* WorkoutSummaries */,
@@ -390,6 +401,7 @@
 			files = (
 				B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */,
 				B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */,
+				01A6B0BE2B88F16500D84920 /* MorePageView.swift in Sources */,
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
 				32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */,
 				3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */,
