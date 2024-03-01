@@ -106,12 +106,13 @@ erDiagram
     }
    Achievement{
         int Achievement
+        string achievement_name
         int total_progress
         string reward
     }
     User_Achievements{
         int achievement_id
-        string achievement_name
+
          bool is_completed
         int progress_percentage
       
