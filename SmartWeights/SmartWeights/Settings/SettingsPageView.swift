@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct SettingsPageView: View {
+    @State private var height = ""
+    @State private var weight = ""
+    @State private var chestWidth = ""
+    @State private var upperArmLength = ""
+    @State private var forearmLength = ""
+    
     @State private var notificationsEnabled = false
     @State private var healthKitEnabled = false
     @State private var darkModeEnabled = false
@@ -42,6 +48,13 @@ struct SettingsPageView: View {
                             Spacer()
                         }
                     }
+                }
+                Section(header: Text("Body Measurements")) {
+                    TextField("Height", text: $height)
+                    TextField("Weight", text: $weight)
+                    TextField("Chest Width", text: $chestWidth)
+                    TextField("Upper Arm Length", text: $upperArmLength)
+                    TextField("Forearm Length", text: $forearmLength)
                 }
                 Section(
                     header: Text("Preferences"),
