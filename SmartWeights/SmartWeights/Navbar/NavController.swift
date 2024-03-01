@@ -11,6 +11,8 @@ import SwiftUI
 struct NavController: View {
     @State private var selectedTab: Tab = .house
     @StateObject var viewModel = WorkoutViewModel()
+    
+    
     @StateObject var OverallViewModel = OverallProgressViewModel()
 
 
@@ -24,25 +26,23 @@ struct NavController: View {
                 case .message:
                     PetStore().frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .person:
-                    PostWorkout(viewModel: OverallViewModel).frame(maxWidth: .infinity, maxHeight: .infinity)
+                    SelectPet().frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .leaf:
                     WorkoutMainPage(viewModel: viewModel).frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .gearshape:
-                    Pet_page().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    Pet_Page().frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-
-                // The navbar at the bottom, ensuring it doesn't overlap the content
-                //Navbar(selectedTab: $selectedTab)
-                    //.frame(height: 50) // Adjust this height as needed
             }
             VStack {
-                Spacer()
+                Spacer() // This pushes the navbar to the bottom
                 Navbar(selectedTab: $selectedTab)
+                    .frame(height: 50) // Adjust this height as needed
             }
-            .edgesIgnoringSafeArea(.all)
-        } // Ensure it fits full screen including the bottom edge
+        }
     }
+    
 }
+
 
 #Preview {
     NavController()

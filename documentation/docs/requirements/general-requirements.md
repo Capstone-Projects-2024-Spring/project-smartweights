@@ -11,7 +11,6 @@ sidebar_position: 3
 - Raspberry Pi Pico W
 - Mobile Application Development Environment
 - IDE/text editor
-- Kinesiology consultant
 - Project management (Jira)
 - Version Control management (GitHub/Git)
 - Database (Firebase & NoSQL)
