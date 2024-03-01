@@ -58,6 +58,7 @@ struct Navbar: View {
             .frame(width: nil, height: 50)
             .background(Color.hex212121)
         }
+        .edgesIgnoringSafeArea([.top, .bottom]) // Ignore safe area on sides only
     }
 }
 
