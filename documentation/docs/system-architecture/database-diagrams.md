@@ -20,7 +20,7 @@ title: NoSQL ERD (Cloud base, User)
 erDiagram 
     User ||--o{ UserProfile : has
     User ||--|| Apple : has
-    User ||--||Achievement_List: has
+    %% User ||--||Achievement_List: has
     UserProfile ||--||Fitness_data: contains
     User ||--||Pet:has
     Pet ||--|| Pet_image: has 
@@ -32,8 +32,9 @@ erDiagram
     %% Shop ||--|{ Pet_clothing: has
     Fitness_data||--||fitness_plan: has 
     Fitness_data||--|{Feedback_data:has
-    Achievement_List||--|{ Completed_achievements: has
-    Achievement_List||--|{ Uncompleted_achievements: has
+    User ||--|{Achievements:has
+    Achievement_List ||--|{ Achievements: has-ListIsPublic
+
     UserProfile {
         string user_id
         string full_name
@@ -107,14 +108,11 @@ erDiagram
         int achievement_list_id
 
     }
-    Completed_achievements{
+  Achievements{
         int achievement_id
         string achievement_name
-        int reward
-    }
-    Uncompleted_achievements{
-        int achievement_id
-        string achievement_name
+         bool is_completed
+        int progress_percentage
         int reward
     }
 ```
