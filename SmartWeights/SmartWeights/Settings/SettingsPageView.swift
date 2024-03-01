@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsPageView: View {
     @State private var notificationsEnabled = false
+    @State private var healthKitEnabled = false
     @State private var darkModeEnabled = false
     @State private var useSystemSettingsEnabled = false
     
@@ -47,13 +48,15 @@ struct SettingsPageView: View {
                     footer: Text("System settings will override dark mode and use the current device's theme")
                 ) {
                     HStack {
-                        Image(systemName: "globe")
-                        Text("Language")
-                    }
-                    HStack {
                         Image(systemName: "bell")
                         Toggle(isOn: $notificationsEnabled, label: {
-                            Text("Notifications")
+                            Text("Enable Notifications")
+                        })
+                    }
+                    HStack {
+                        Image(systemName: "heart")
+                        Toggle(isOn: $healthKitEnabled, label: {
+                            Text("Enable HealthKit")
                         })
                     }
                     HStack {
