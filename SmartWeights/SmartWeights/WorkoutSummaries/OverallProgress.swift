@@ -129,8 +129,11 @@ struct SelectedDateData: View {
                 .sheet(isPresented: $isSheetPresented) {
                     // Content of the sheet
                     moreFeedbackSheetView()
+                        .background(Color.black)
+                       
                     
                 }
+                
             }
             
         }
