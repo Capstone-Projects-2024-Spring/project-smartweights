@@ -103,7 +103,7 @@ All external classes should be stubbed using mock objects.
 <details open>
 <summary> updateShortDate() </summary>
 
-***The date is updated when the user use the calendar***
+***The date is updated when the user uses the calendar***
 - Test user is selecting a date to obtain workout data from that day
     - Input/User action
         - User selects a date on the calendar
