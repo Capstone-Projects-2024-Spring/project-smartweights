@@ -38,7 +38,6 @@ struct Pet_Page: View {
                                 .bold()
                                 .font(.system(size: 18))
                         }
-                        .padding()
                     }
                     .accessibilityIdentifier("ChangeFoodButton")
                     .sheet(isPresented: $viewModel.showFoodSelection) {
@@ -50,15 +49,18 @@ struct Pet_Page: View {
                         Button(action: {
                             viewModel.handleFoodUse(selectedFoodIndex: viewModel.selectedFoodIndex)
                         }) {
-                            HStack {
+                            VStack {
                                 Image(selectedFood.imageName)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 80, height: 100)
+                                    .frame(width: 80, height: 80)
                                 Text("\(selectedFood.quantity)")
-                                    .font(.system(size: 35))
+                                    .font(.system(size: 20))
                                     .bold()
                                     .foregroundColor(.blue)
+                                    .minimumScaleFactor(0.5)
+                                    .padding(.top, -15)
+
                             }
                         }
                         .accessibilityIdentifier("UseFoodButton")
