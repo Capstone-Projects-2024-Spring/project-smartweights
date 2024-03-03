@@ -7,7 +7,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 1 - Account Login
 
-<details open="True">
+<details open>
 
 <summary>A user wants to login into their account</summary>
 
@@ -27,7 +27,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 2 - Tutorial
 
-<details open="True">
+<details open>
 
 <summary>A user has already created a SmartWeights account and has logged in for the first time.</summary>
 
@@ -48,7 +48,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 3 - Profile Management
 
-<details open="True">
+<details open>
 
 <summary>A user wants to change their profile settings and workout goals.</summary>
 
@@ -67,7 +67,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 4 - Importing Data From Apple Health to SmartWeight App
 
-<details open="True">
+<details open>
 
 <summary>User decides to integrate their SmartWeight app with Apple Health to import fitness and health data for a comprehensive overview of their wellness journey.</summary>
 
@@ -86,7 +86,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 5 - Attaching Sensors
 
-<details open="True>
+<details open>
 
 <summary>A user wants to prepare for a workout by attaching sensors appropriately.</summary>
 
@@ -105,7 +105,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 6 - Syncing Sensors
 
-<details open="True">
+<details open>
 
 <summary>A user wants to sync their SmartWeights sensor with the mobile app.</summary>
 
@@ -124,7 +124,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 7 - Logging Dumbbell Weight
 
-<details open="True">
+<details open>
 
 <summary>User wants to log the weights of dumbbells used during a workout for tracking progress over time, independent of immediate feedback on form or technique.</summary>
 
@@ -141,7 +141,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 8 - Starting a Workout via Siri Voice Command
 
-<details open="True">
+<details open>
 
 <summary>User wants to start a workout session without manually interacting with their smartphone, using a voice command through Siri while already in position to lift weights.</summary>
 
@@ -158,7 +158,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 9 - Performing Workout
 
-<details open="True">
+<details open>
 
 <summary>A user wants to complete a workout with the assistance of the virtual pet.</summary>
 
@@ -176,7 +176,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 10 - View Workout Feedback
 
-<details open="True">
+<details open>
 
 <summary>A user wants to view feedback post-workout.</summary>
 
@@ -194,7 +194,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 11 - Purchasing Pet Cosmetics
 
-<details open="True">
+<details open>
 
 <summary>A user wants to purchase cosmetics for their virtual pet.</summary>
 
@@ -214,7 +214,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 12: - Virtual Pet Customization
 
-<details open="True">
+<details open>
 
 <summary>A user wants to customize their virtual pet.</summary>
 
@@ -233,7 +233,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 13 - Participating in Weekly Challenge
 
-<details open="True">
+<details open>
 
 <summary>The SmartWeight app introduces a weekly challenge feature to engage users in varied fitness activities, encouraging consistency and community interaction.</summary>
 
@@ -255,7 +255,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 # Use Case 14 - Share with Friends
 
-<details open="True">
+<details open>
 
 <summary>A user wants to share their pet/achievements with their friends.</summary>
 
