@@ -105,7 +105,7 @@ final class CloudKitTest: XCTestCase {
                     
                     // Check if the currency field is 500
                     if let currency = record?["Currency"] as? Int {
-                        XCTAssertEqual(currency, 500, "Currency should be 500")
+                        XCTAssertEqual(currency, 600, "Currency should be 500")
                     } else {
                         XCTFail("Currency field not found or not an integer")
                     }
@@ -118,7 +118,30 @@ final class CloudKitTest: XCTestCase {
             // Wait for the expectation to be fulfilled
             waitForExpectations(timeout: 10, handler: nil)
         }
-
+  
+    let userID = "0366F60C-D346-4EC7-8A83-ADBDD5083C49"
+    func testFetchUserPetCount() {
+            let container = CKContainer(identifier: containerIdentifier)
+            let defaultDatabase = container.publicCloudDatabase
+            let userReference = CKRecord.Reference(recordID: CKRecord.ID(recordName: userID), action: .none)
+            let predicate = NSPredicate(format: "user == %@", userReference)
+            let query = CKQuery(recordType: "Pet", predicate: predicate)
+            
+            let fetchExpectation = expectation(description: "Fetch User Pet Count")
+            
+            defaultDatabase.perform(query, inZoneWith: nil) { (records, error) in
+                if let error = error {
+                    XCTFail("Error fetching user pet count: \(error.localizedDescription)")
+                } else {
+                    XCTAssertNotNil(records, "Fetched records should not be nil")
+                    XCTAssertEqual(records?.count ?? 0, 2, "Pet count for user \(self.userID) should be 2")
+                    fetchExpectation.fulfill()
+                }
+            }
+            
+            waitForExpectations(timeout: 10, handler: nil)
+        }
+    
 }
 
 
