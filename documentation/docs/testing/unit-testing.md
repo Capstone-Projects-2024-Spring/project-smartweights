@@ -2,11 +2,9 @@
 sidebar_position: 1
 ---
 # Unit tests
-For each method, one or more test cases.
-
-A test case consists of input parameter values and expected results.
-
-All external classes should be stubbed using mock objects.
+Unit tests are done with Swift's XCTest
+Pico testing is done with MicroPython test library
+Python unittest library is used for machine learning
 
 
 ## Front End
@@ -132,6 +130,101 @@ All external classes should be stubbed using mock objects.
         - sortItems(sortedByPrice: true) is called, the items will be sorted by price
 </details>
 
+
+
+## Backend
+
+### CloudKit DB 
+<details>
+
+- testConnectToCloudKit()
+    - Test to see if the application can connect to CloudKit DB and find the correct container
+    - Expected Result
+        - Returns true if successful connection, else return false
+
+- testFetchRecord()
+    - Test to see if given input parameters can query the CloudKit DB and return a record
+    - Expected Result
+        - Returns true if record is not nil, else return false
+- testFetchRecordAndCheckCurrency()
+    - Test to see if given user record has a specified field value
+    - Expected Result
+        - Returns values of the record for the parameters match, else return false for no record returned or incorrect record
+- testGetReference()
+    - Test to see if given a reference value can query the CloudKit DB and return a referenced record  
+    - Expected Result
+        - Returns values of the record for the parameters, else return false for no record returned or incorrect record
+- testAccountCreatedCloud()
+    - Test to see if account credentials were stored after login button pressed
+    - Expected Result 
+        - Returns true if record return with correct ID, else return false
+- testUpdateCurrency()
+    - Test to see if after button press, updates the user's total currency after transaction and updates the DB
+    - Expected Result
+        - Returns the same currency as currently stored on local model from the DB, else return false if different value or no value returned
+- testUploadImage()
+    - Test to see if a CKAsset was successfully uploaded to CloudKit DB 
+    - Expected Result 
+        - Returns a successful entry, else false
+- testFetchImage()
+    - Test to see if can fetch a CKAsset from CloudKit DB
+    - Expected Result
+        - Returns a binary CKAsset, else false
+</details>
+
+### CoreData Local DB
+<details>
+
+- testAccountCreatedLocal()
+    - Test to see if account credentials were created after login button pressed
+    - Expected Result 
+        - Returns true if file was created with credentials, else return false
+- testInsertSensorData()
+    - Test to see if data received from Pico can be inserted into CoreData DB
+    - Expected Result 
+        - Returns true if DB returns successful entry, else return false
+- testFetchData()
+    - Test to see if can retrieve data from DB
+    - Expected Result
+        - Returns true if DB returns an object of data, else return false
+
+</details>
+
+### Machine Learning
+
+<details>
+
+- testConvert()
+    - Test to see if can take data from CoreData and convert to tensors
+    - Returns true if tensor is created
+
+</details>
+
+### Hardware-Software 
+
+<details>
+
+- testBluetoothConnectionPico()
+    - Test if Pico establishes a successful connection to mobile device acting as a server
+    - Expected Result
+        - Return true if connection before time out, else return false
+- testBluetoothConnectionMobile()
+    - Test if mobile device connects to pico, acting as a client
+    - Expected Result
+        - Return true if connection before time out, else return false
+- testMultiSensorConnection()
+    - Test if Pico can connect to another Pico
+    - Expected Result 
+        - Return true if successful message received, else return false
+- testTransmitData()
+    - Test if Pico can transmit data through the socket
+    - Expected Result
+        - Return true if data was sent through socket, else return false
+- testReadData()
+    - Test if mobile device received any data from the pico 
+    - Expected Result
+        - Return true if data contained specifically integers in specified structure, else return false
+</details>
 
 
 
