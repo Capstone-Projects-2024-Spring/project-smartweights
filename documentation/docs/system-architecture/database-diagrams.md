@@ -20,7 +20,7 @@ title: NoSQL ERD (Cloud base, User)
 erDiagram 
     User ||--o{ UserProfile : has
     User ||--|| Apple : has
-    User ||--||Achievement_List: has
+    %% User ||--||Achievement_List: has
     UserProfile ||--||Fitness_data: contains
     User ||--||Pet:has
     Pet ||--|| Pet_image: has 
@@ -32,8 +32,9 @@ erDiagram
     %% Shop ||--|{ Pet_clothing: has
     Fitness_data||--||fitness_plan: has 
     Fitness_data||--|{Feedback_data:has
-    Achievement_List||--|{ Completed_achievements: has
-    Achievement_List||--|{ Uncompleted_achievements: has
+   User ||--|{User_Achievements:has
+    Achievement ||--|{ User_Achievements: has-ListIsPublic
+
     UserProfile {
         string user_id
         string full_name
@@ -103,20 +104,20 @@ erDiagram
         int price 
         string pet_clothing_image
     }
-    Achievement_List{
-        int achievement_list_id
+   Achievement{
+        int Achievement
+        string achievement_name
+        int total_progress
+        string reward
+    }
+    User_Achievements{
+        int achievement_id
 
+         bool is_completed
+        int progress_percentage
+      
     }
-    Completed_achievements{
-        int achievement_id
-        string achievement_name
-        int reward
-    }
-    Uncompleted_achievements{
-        int achievement_id
-        string achievement_name
-        int reward
-    }
+    
 ```
 As this is a NoSQL approach, there are some relations to where there are a one-to-many. This can be seen through something such as inventory. A user has one pet, which has one inventory, but an inventory can store multiple Food. 
 
