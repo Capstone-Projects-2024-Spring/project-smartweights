@@ -42,7 +42,15 @@ jobs:
 
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles          
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles   
+    - name: build archive
+      run: |
+          xcodebuild -scheme SmartWeights \
+          -archivePath $RUNNER_TEMP/SmartWeights.xcarchive \
+          -sdk iphoneos \
+          -configuration Debug \
+          -destination generic/platform=iOS \
+          clean archive   
 
 
     # - name: Clean
