@@ -13,18 +13,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # - name: CD into the project directory
-    #   run: cd SmartWeights
-    # - name: CD into xcodeproj
-    #   run: cd SmartWeights.xcodeproj
     - name: Clean
-    #   run: xcodebuild clean -scheme SmartWeights -workspace project.xcworkspace
       run: |
         cd SmartWeights
         xcodebuild clean -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
     - name: Build
       run: |
         cd SmartWeights
-        xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace -allowProvisioningUpdates
+        xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace -allowProvisioningUpdates -allowProvisioningDeviceRegistration 
+        -username ${{ secrets.APPLE_ID_EMAIL }}
+        -password ${{ secrets.APPLE_ID_PASSWORD }}
     # - name: Test
     #   run: xcodebuild test -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
