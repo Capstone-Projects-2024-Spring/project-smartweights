@@ -25,6 +25,6 @@ jobs:
     - name: Build
       run: |
         cd SmartWeights
-        xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
+        xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace -allowProvisioningUpdates
     # - name: Test
     #   run: xcodebuild test -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
