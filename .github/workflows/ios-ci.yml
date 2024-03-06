@@ -52,6 +52,7 @@ jobs:
           -configuration Debug \
           -destination generic/platform=iOS \
           clean archive
+          -verbose
     # - name: Clean
     #   run: |
     #     cd SmartWeights
@@ -64,3 +65,4 @@ jobs:
     #     -password ${{ secrets.APPLE_ID_PASSWORD }}
     # - name: Test
     #   run: xcodebuild test -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
+    
