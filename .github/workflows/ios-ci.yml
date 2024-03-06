@@ -15,7 +15,7 @@ jobs:
 
     - name: CD into the project directory
       run: cd SmartWeights
-    - name: CD into xcodeproj
-      run: cd SmartWeights.xcodeproj
+    # - name: CD into xcodeproj
+    #   run: cd SmartWeights.xcodeproj
     - name: Clean
       run: xcodebuild clean -scheme SmartWeights -workspace project.xcworkspace
