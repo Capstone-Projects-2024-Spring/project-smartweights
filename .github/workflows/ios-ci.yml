@@ -46,12 +46,7 @@ jobs:
     - name: build archive
       run: |
           cd SmartWeights
-          xcodebuild -scheme SmartWeights \
-          -archivePath $RUNNER_TEMP/SmartWeights.xcarchive \
-          -sdk iphoneos \
-          -configuration Debug \
-          -destination generic/platform=iOS \
-          clean archive   
+          xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
 
 
     # - name: Clean
