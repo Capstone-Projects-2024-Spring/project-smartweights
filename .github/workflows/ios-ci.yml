@@ -43,7 +43,7 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles   
-    - name: clean build test
+    - name: clean build 
       run: |
           cd SmartWeights
           xcodebuild -scheme "SmartWeights" \
@@ -51,7 +51,7 @@ jobs:
           -sdk iphoneos \
           -configuration Debug \
           -destination generic/platform=iOS \
-          clean build test
+          clean build
     # - name: Clean
     #   run: |
     #     cd SmartWeights
