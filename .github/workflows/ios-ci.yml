@@ -22,3 +22,7 @@ jobs:
       run: |
         cd SmartWeights
         xcodebuild clean -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
+    - name: Build
+      run: xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
+    # - name: Test
+    #   run: xcodebuild test -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
