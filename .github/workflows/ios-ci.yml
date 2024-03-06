@@ -14,4 +14,4 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Clean
-      uses: xcodebuild clean -scheme SmartWeights -workspace project.xcworkspace
+      run: xcodebuild clean -scheme SmartWeights -workspace project.xcworkspace
