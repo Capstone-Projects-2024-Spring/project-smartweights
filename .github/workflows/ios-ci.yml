@@ -47,8 +47,7 @@ jobs:
       run: |
           cd SmartWeights
           xcodebuild -scheme "SmartWeights" \
-          -archivePath $RUNNER_TEMP/SmartWeights.xcarchive \
-          -sdk iphoneos \
+          -sdk iphonesimulator \
           -configuration Debug \
           -destination generic/platform=iOS \
           clean build
