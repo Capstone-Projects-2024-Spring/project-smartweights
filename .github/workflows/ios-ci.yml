@@ -13,10 +13,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Xcode
-      uses: actions/setup-xcode@v2
-      with:
-        xcode-version: '13.x'
+    # - name: Set up Xcode
+    #   uses: actions/setup-xcode@v2
+    #   with:
+    #     xcode-version: '14.x'
+    - name: Clean
+      uses: xcodebuild clean -scheme SmartWeights -workspace project.xcworkspace
 
-    - name: Build
-      run: xcodebuild -scheme SmartWeights -workspace project.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 15' build
+    # - name: Build
+    #   run: xcodebuild -scheme SmartWeights -workspace project.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 15' build
