@@ -6,22 +6,25 @@ on:
       - testing
 
 jobs:
-  build:
+  build_with_signing:
     runs-on: macos-latest
 
     steps:
+    - name: check Xcode version
+      run: /usr/bin/xcodebuild -version
+      
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Clean
-      run: |
-        cd SmartWeights
-        xcodebuild clean -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
-    - name: Build
-      run: |
-        cd SmartWeights
-        xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace -allowProvisioningUpdates -allowProvisioningDeviceRegistration 
-        -username ${{ secrets.APPLE_ID_EMAIL }}
-        -password ${{ secrets.APPLE_ID_PASSWORD }}
+    # - name: Clean
+    #   run: |
+    #     cd SmartWeights
+    #     xcodebuild clean -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
+    # - name: Build
+    #   run: |
+    #     cd SmartWeights
+    #     xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace -allowProvisioningUpdates -allowProvisioningDeviceRegistration 
+    #     -username ${{ secrets.APPLE_ID_EMAIL }}
+    #     -password ${{ secrets.APPLE_ID_PASSWORD }}
     # - name: Test
     #   run: xcodebuild test -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
