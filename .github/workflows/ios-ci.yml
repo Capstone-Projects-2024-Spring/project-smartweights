@@ -13,9 +13,3 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup Xcode
-      uses: actions/setup-xcode@v2
-      with:
-        xcode-version: '14.x'
-
-    
