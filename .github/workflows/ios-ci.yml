@@ -45,6 +45,7 @@ jobs:
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles   
     - name: build archive
       run: |
+          cd SmartWeights
           xcodebuild -scheme SmartWeights \
           -archivePath $RUNNER_TEMP/SmartWeights.xcarchive \
           -sdk iphoneos \
