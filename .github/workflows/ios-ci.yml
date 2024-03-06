@@ -13,9 +13,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: CD into the project directory
-      run: cd SmartWeights
+    # - name: CD into the project directory
+    #   run: cd SmartWeights
     # - name: CD into xcodeproj
     #   run: cd SmartWeights.xcodeproj
     - name: Clean
-      run: xcodebuild clean -scheme SmartWeights -workspace project.xcworkspace
+    #   run: xcodebuild clean -scheme SmartWeights -workspace project.xcworkspace
+      run: |
+        cd SmartWeights
+        xcodebuild clean -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
