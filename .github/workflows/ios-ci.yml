@@ -46,7 +46,7 @@ jobs:
     - name: build archive
       run: |
           cd SmartWeights
-          xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
+          xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace -allowProvisioningUpdates -allowProvisioningDeviceRegistration 
 
 
     # - name: Clean
