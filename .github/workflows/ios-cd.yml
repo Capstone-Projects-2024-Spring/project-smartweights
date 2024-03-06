@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: CD
+        run: cd SmartWeights
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
