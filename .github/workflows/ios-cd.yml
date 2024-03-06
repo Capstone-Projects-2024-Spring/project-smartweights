@@ -21,6 +21,13 @@ jobs:
         with:
           ruby-version: 2.7
           bundler-cache: true
+     
+      - name: Install Fastlane
+        run: sudo gem install fastlane -NV
+
+      - name: Install Bundler
+        run: gem install bundler
+
       - name: Install dependencies
         run: bundle install
       - name: Deploy iOS Beta to TestFlight via Fastlane
