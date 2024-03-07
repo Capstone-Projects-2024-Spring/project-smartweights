@@ -26,6 +26,7 @@ jobs:
         xcodebuild \
          -project 'SmartWeights.xcodeproj' \
          -scheme 'SmartWeights' \
+         -allowProvisioningUpdates
           build || exit 1
  
     # - name: Install the Apple certificate and provisioning profile
