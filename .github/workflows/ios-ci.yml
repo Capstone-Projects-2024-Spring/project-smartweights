@@ -22,15 +22,15 @@ jobs:
     #   run: swiftlint lint --strict
     - name: list devices
       run: xcrun simctl list devices
-    # - name: Build and Test
-    #   run: |
-    #     cd SmartWeights
-    #     xcodebuild \
-    #      -project 'SmartWeights.xcodeproj' \
-    #      -scheme 'SmartWeights' \
-    #      -sdk iphonesimulator \
-    #      -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2' \
-    #       build || exit 1
+    - name: Build and Test
+      run: |
+        cd SmartWeights
+        xcodebuild \
+         -project 'SmartWeights.xcodeproj' \
+         -scheme 'SmartWeights' \
+         -sdk iphonesimulator \
+         -destination 'platform=iOS Simulator,id=0FA23C4A-0E4A-4F03-9F6C-32122603E2DA,OS=16.2' \
+          build || exit 1
  
     # - name: Install the Apple certificate and provisioning profile
     #   env: 
