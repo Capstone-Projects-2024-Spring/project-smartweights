@@ -56,10 +56,10 @@ jobs:
       run: |
         cd SmartWeights
         xcodebuild clean -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace
-    # - name: Build
-    #   run: |
-    #     cd SmartWeights
-    #     xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace 
+    - name: Build
+      run: |
+        cd SmartWeights
+        xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace 
     #     -username ${{ secrets.APPLE_ID_EMAIL }}
     #     -password ${{ secrets.APPLE_ID_PASSWORD }}
     # - name: Test
