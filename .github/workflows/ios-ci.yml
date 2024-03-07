@@ -15,6 +15,13 @@ jobs:
       
     - name: Checkout repository
       uses: actions/checkout@v2
+    - name: Set up environment variables
+      env:
+        APP_STORE_CONNECT_TEAM_ID: ${{ secrets.APP_STORE_CONNECT_TEAM_ID }}
+        APPLE_ID: ${{ secrets.APPLE_ID_EMAIL }}
+        APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        CODE_SIGNING_IDENTITY: ${{ secrets.CODE_SIGNING_IDENTITY }}
+        PROVISIONING_PROFILE: ${{ secrets.PROVISIONING_PROFILE }}
     # - name: Install the Apple certificate and provisioning profile
     #   env: 
     #       BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
@@ -58,7 +65,7 @@ jobs:
     - name: Build
       run: |
         cd SmartWeights
-        xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace -allowProvisioningUpdates -allowProvisioningDeviceRegistration 
+        xcodebuild build -scheme SmartWeights -workspace SmartWeights.xcodeproj/project.xcworkspace 
     #     -username ${{ secrets.APPLE_ID_EMAIL }}
     #     -password ${{ secrets.APPLE_ID_PASSWORD }}
     # - name: Test
