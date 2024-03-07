@@ -29,7 +29,7 @@ jobs:
          -project 'SmartWeights.xcodeproj' \
          -scheme 'SmartWeights' \
          -sdk iphonesimulator \
-         -destination 'platform=iOS Simulator' \
+         -destination 'platform:iOS Simulator, id:dvtdevice-DVTiOSDeviceSimulatorPlaceholder-iphonesimulator:placeholder, name:Any iOS Simulator Device' \
           build || exit 1
  
     # - name: Install the Apple certificate and provisioning profile
