@@ -26,7 +26,8 @@ jobs:
         xcodebuild \
          -project 'SmartWeights.xcodeproj' \
          -scheme 'SmartWeights' \
-         -allowProvisioningUpdates
+         -sdk iphonesimulator \
+         -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2' \
           build || exit 1
  
     # - name: Install the Apple certificate and provisioning profile
