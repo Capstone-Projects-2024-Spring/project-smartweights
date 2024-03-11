@@ -13,6 +13,9 @@ struct NavController: View {
     @StateObject var viewModel = WorkoutViewModel()
     
     
+    @StateObject var OverallViewModel = OverallProgressViewModel()
+
+
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -23,11 +26,11 @@ struct NavController: View {
                 case .message:
                     PetStore().frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .person:
-                    PostWorkout().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    SelectPet().frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .leaf:
                     WorkoutMainPage(viewModel: viewModel).frame(maxWidth: .infinity, maxHeight: .infinity)
                 case .gearshape:
-                    Pet_page().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    Pet_Page().frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
             VStack {
@@ -36,7 +39,6 @@ struct NavController: View {
                     .frame(height: 50) // Adjust this height as needed
             }
         }
-        .edgesIgnoringSafeArea([.top, .bottom]) // Ignore safe area on sides only
     }
     
 }

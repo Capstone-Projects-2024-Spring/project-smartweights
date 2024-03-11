@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */; };
 		3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202761D2B892D2C001A86B8 /* CustomProgressView.swift */; };
-		320276202B892D43001A86B8 /* HamburgerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202761F2B892D43001A86B8 /* HamburgerMenu.swift */; };
 		320276222B892D55001A86B8 /* Pet_page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320276212B892D55001A86B8 /* Pet_page.swift */; };
 		321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321EF0442B83AAFA000A2D02 /* LoginPage.swift */; };
+		322B4C052B90CACE00620F4F /* PetPageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322B4C042B90CACE00620F4F /* PetPageTest.swift */; };
+		322B4C082B90CB7500620F4F /* PetPageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322B4C072B90CB7500620F4F /* PetPageUITests.swift */; };
 		32BDE8EC2B8C1345003A5F5A /* Navbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE8EB2B8C1345003A5F5A /* Navbar.swift */; };
 		32BDE8EE2B8C1363003A5F5A /* NavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE8ED2B8C1363003A5F5A /* NavController.swift */; };
 		32BDE8F02B8C1381003A5F5A /* Homepage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE8EF2B8C1381003A5F5A /* Homepage.swift */; };
@@ -30,7 +31,10 @@
 		9118993A2B8CE1300071232A /* StartWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911899392B8CE1300071232A /* StartWorkout.swift */; };
 		9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993B2B8CE1400071232A /* WorkoutFeedback.swift */; };
 		9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993D2B8CE1570071232A /* WorkoutMainPage.swift */; };
+		912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912241702B90EA9F00D03638 /* WorkoutUITests.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
+		B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */; };
+		E5B86DB32B91033400A0AD04 /* navbarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B86DB22B91033400A0AD04 /* navbarUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,9 +57,10 @@
 /* Begin PBXFileReference section */
 		01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesTab.swift; sourceTree = "<group>"; };
 		3202761D2B892D2C001A86B8 /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
-		3202761F2B892D43001A86B8 /* HamburgerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HamburgerMenu.swift; sourceTree = "<group>"; };
 		320276212B892D55001A86B8 /* Pet_page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet_page.swift; sourceTree = "<group>"; };
 		321EF0442B83AAFA000A2D02 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
+		322B4C042B90CACE00620F4F /* PetPageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetPageTest.swift; sourceTree = "<group>"; };
+		322B4C072B90CB7500620F4F /* PetPageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetPageUITests.swift; sourceTree = "<group>"; };
 		32BDE8EB2B8C1345003A5F5A /* Navbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navbar.swift; sourceTree = "<group>"; };
 		32BDE8ED2B8C1363003A5F5A /* NavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavController.swift; sourceTree = "<group>"; };
 		32BDE8EF2B8C1381003A5F5A /* Homepage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homepage.swift; sourceTree = "<group>"; };
@@ -79,7 +84,10 @@
 		911899392B8CE1300071232A /* StartWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkout.swift; sourceTree = "<group>"; };
 		9118993B2B8CE1400071232A /* WorkoutFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedback.swift; sourceTree = "<group>"; };
 		9118993D2B8CE1570071232A /* WorkoutMainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMainPage.swift; sourceTree = "<group>"; };
+		912241702B90EA9F00D03638 /* WorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutUITests.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
+		B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFirstPet.swift; sourceTree = "<group>"; };
+		E5B86DB22B91033400A0AD04 /* navbarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = navbarUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				3202761D2B892D2C001A86B8 /* CustomProgressView.swift */,
-				3202761F2B892D43001A86B8 /* HamburgerMenu.swift */,
 				320276212B892D55001A86B8 /* Pet_page.swift */,
 			);
 			path = "pet-customize-page";
@@ -159,6 +166,7 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				B9A4764A2B8F86A70062CBB6 /* Tutorial */,
 				911899382B8CE0D40071232A /* Workout */,
 				32BDE8EA2B8C130D003A5F5A /* Navbar */,
 				3202761C2B892D04001A86B8 /* pet-customize-page */,
@@ -191,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */,
+				322B4C042B90CACE00620F4F /* PetPageTest.swift */,
 			);
 			path = SmartWeightsTests;
 			sourceTree = "<group>";
@@ -200,6 +209,9 @@
 			children = (
 				91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */,
 				91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */,
+				322B4C072B90CB7500620F4F /* PetPageUITests.swift */,
+				912241702B90EA9F00D03638 /* WorkoutUITests.swift */,
+				E5B86DB22B91033400A0AD04 /* navbarUITests.swift */,
 			);
 			path = SmartWeightsUITests;
 			sourceTree = "<group>";
@@ -220,6 +232,14 @@
 				B90B6FD92B7FAD1C009866FD /* PetStore.swift */,
 			);
 			path = PetStore;
+			sourceTree = "<group>";
+		};
+		B9A4764A2B8F86A70062CBB6 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */,
+			);
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,6 +376,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */,
 				B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */,
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
 				32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */,
@@ -367,7 +388,6 @@
 				9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */,
 				32BDE8EC2B8C1345003A5F5A /* Navbar.swift in Sources */,
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
-				320276202B892D43001A86B8 /* HamburgerMenu.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
 				9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */,
 				01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */,
@@ -382,6 +402,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				322B4C052B90CACE00620F4F /* PetPageTest.swift in Sources */,
 				91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,8 +411,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				322B4C082B90CB7500620F4F /* PetPageUITests.swift in Sources */,
+				E5B86DB32B91033400A0AD04 /* navbarUITests.swift in Sources */,
 				91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */,
 				91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */,
+				912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,9 +560,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SmartWeights/SmartWeights.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SmartWeights/Preview Content\"";
+				DEVELOPMENT_TEAM = YD9LWSGPPP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWeights/Info.plist;
@@ -554,6 +580,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CIS4398.SmartWeights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -566,9 +593,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SmartWeights/SmartWeights.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SmartWeights/Preview Content\"";
+				DEVELOPMENT_TEAM = YD9LWSGPPP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWeights/Info.plist;
@@ -584,6 +613,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CIS4398.SmartWeights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

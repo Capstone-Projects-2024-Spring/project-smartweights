@@ -7,19 +7,32 @@
 
 import SwiftUI
 
-struct Calendar: View {
-    @State public var selectedDate = Date()
+struct CalendarView: View {
+    @StateObject var viewModel: OverallProgressViewModel
+    
+    
+    
     var body: some View {
         HStack {
             Text("Date") // Title
                 .font(.headline)
-            DatePicker("", selection: $selectedDate, in: ...Date(), displayedComponents: .date)
+            DatePicker("WorkoutDatePicker", selection: $viewModel.date, in: ...Date(), displayedComponents: .date)
                 .labelsHidden() // Hide the DatePicker label
+                .onChange(of: viewModel.date) {
+                    viewModel.updateShortDate()
+                   
+                    
+                }
+            
+           
         }
+        
+        
     }
 }
 
+
 #Preview {
-    Calendar()
+    CalendarView(viewModel:OverallProgressViewModel())
 }
 
