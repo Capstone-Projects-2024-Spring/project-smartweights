@@ -22,10 +22,10 @@ struct SettingsPageView: View {
     @State private var selectedUpperArmLength = 0
     @State private var selectedForearmLength = 0
     
-    @State private var notificationsEnabled = false
+    @State private var allNotificationsEnabled = false
+    @State private var workoutNotificationsEnabled = false
+    @State private var petNotificationsEnabled = false
     @State private var healthKitEnabled = false
-    @State private var darkModeEnabled = false
-    @State private var useSystemSettingsEnabled = false
     
     var body: some View {
         NavigationStack {
@@ -102,14 +102,19 @@ struct SettingsPageView: View {
                     .pickerStyle(.menu)
                 }
                 Section(
-                    header: Text("Preferences"),
-                    footer: Text("System settings will override dark mode and use the current device's theme")
+                    header: Text("Preferences")
                 ) {
                     HStack {
                         Image(systemName: "bell")
-                        Toggle(isOn: $notificationsEnabled, label: {
-                            Text("Enable Notifications")
-                        })
+                        NavigationLink("Notifications") {
+                            SwiftUI.Form(content: {
+                                Toggle("Enable All Notifications", isOn: $allNotificationsEnabled)
+                                Toggle("Enable Workout Notifications", isOn: $workoutNotificationsEnabled)
+                                Toggle("Enable Pet Notifications", isOn: $petNotificationsEnabled)
+                            })
+                            .navigationTitle("Notifications")
+                            .navigationBarTitleDisplayMode(.inline)
+                        }
                     }
                     HStack {
                         Image(systemName: "heart")
