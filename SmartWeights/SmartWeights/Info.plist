@@ -6,5 +6,7 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string></string>
 </dict>
 </plist>

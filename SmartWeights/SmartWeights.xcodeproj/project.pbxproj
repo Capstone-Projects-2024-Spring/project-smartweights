@@ -34,6 +34,7 @@
 		9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993B2B8CE1400071232A /* WorkoutFeedback.swift */; };
 		9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993D2B8CE1570071232A /* WorkoutMainPage.swift */; };
 		912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912241702B90EA9F00D03638 /* WorkoutUITests.swift */; };
+		918037922BA09B0E00802D01 /* BLEcentral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037912BA09B0E00802D01 /* BLEcentral.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
 		B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */; };
 		E5B86DB32B91033400A0AD04 /* navbarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B86DB22B91033400A0AD04 /* navbarUITests.swift */; };
@@ -89,6 +90,7 @@
 		9118993B2B8CE1400071232A /* WorkoutFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedback.swift; sourceTree = "<group>"; };
 		9118993D2B8CE1570071232A /* WorkoutMainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMainPage.swift; sourceTree = "<group>"; };
 		912241702B90EA9F00D03638 /* WorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutUITests.swift; sourceTree = "<group>"; };
+		918037912BA09B0E00802D01 /* BLEcentral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEcentral.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
 		B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFirstPet.swift; sourceTree = "<group>"; };
 		E5B86DB22B91033400A0AD04 /* navbarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = navbarUITests.swift; sourceTree = "<group>"; };
@@ -119,6 +121,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0140238B2B91700300D6935D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0140238C2B91702300D6935D /* SettingsPageView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		01A6B0BC2B88F13F00D84920 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				01A6B0BD2B88F16500D84920 /* MorePageView.swift */,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
 		3202761C2B892D04001A86B8 /* pet-customize-page */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,22 +153,6 @@
 				32BDE8ED2B8C1363003A5F5A /* NavController.swift */,
 			);
 			path = Navbar;
-			sourceTree = "<group>";
-		};
-		0140238B2B91700300D6935D /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				0140238C2B91702300D6935D /* SettingsPageView.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		01A6B0BC2B88F13F00D84920 /* More */ = {
-			isa = PBXGroup;
-			children = (
-				01A6B0BD2B88F16500D84920 /* MorePageView.swift */,
-			);
-			path = More;
 			sourceTree = "<group>";
 		};
 		32E288582B83CD0900458FB1 /* WorkoutSummaries */ = {
@@ -186,13 +188,13 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				918037902BA09AD600802D01 /* bluetooth */,
 				B9A4764A2B8F86A70062CBB6 /* Tutorial */,
 				911899382B8CE0D40071232A /* Workout */,
 				32BDE8EA2B8C130D003A5F5A /* Navbar */,
 				3202761C2B892D04001A86B8 /* pet-customize-page */,
 				0140238B2B91700300D6935D /* Settings */,
 				01A6B0BC2B88F13F00D84920 /* More */,
-				6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */,
 				321EF0442B83AAFA000A2D02 /* LoginPage.swift */,
 				32E288582B83CD0900458FB1 /* WorkoutSummaries */,
 				B90B6FD82B7FACE2009866FD /* PetStore */,
@@ -247,6 +249,14 @@
 				9118993D2B8CE1570071232A /* WorkoutMainPage.swift */,
 			);
 			path = Workout;
+			sourceTree = "<group>";
+		};
+		918037902BA09AD600802D01 /* bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				918037912BA09B0E00802D01 /* BLEcentral.swift */,
+			);
+			path = bluetooth;
 			sourceTree = "<group>";
 		};
 		B90B6FD82B7FACE2009866FD /* PetStore */ = {
@@ -412,6 +422,7 @@
 				9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */,
 				32BDE8EC2B8C1345003A5F5A /* Navbar.swift in Sources */,
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
+				918037922BA09B0E00802D01 /* BLEcentral.swift in Sources */,
 				0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
 				9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */,
@@ -592,6 +603,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWeights/Info.plist;
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Please allow using bluetooth";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -623,6 +635,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWeights/Info.plist;
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Please allow using bluetooth";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
