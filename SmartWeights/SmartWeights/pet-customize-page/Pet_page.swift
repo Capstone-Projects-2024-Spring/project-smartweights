@@ -70,11 +70,11 @@ struct Pet_Page: View {
                 }
                 .padding(.horizontal, 25)
                 
-                Image("Panda")
+                Image("dog")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 500, height: 450, alignment: .center)
-                    .padding(.bottom, -30)
+                    .padding(.bottom, -20)
                 
                 VStack {
                     CustomProgressView(value: viewModel.healthBar, maxValue: 1.0, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
@@ -98,8 +98,7 @@ struct Pet_Page: View {
             .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitleDisplayMode(.inline)
             .background(NavigationLink(destination: PetStore(), isActive: $viewModel.showShop) { EmptyView() })
-            .background(NavigationLink(destination: InventoryView(), isActive: $viewModel.showInventory) { EmptyView() })
-            .background(NavigationLink(destination: CustomizeView(), isActive: $viewModel.showCustomize) { EmptyView() })
+            .background(NavigationLink(destination: Customize_page(), isActive: $viewModel.showCustomize) { EmptyView() })
         }
     }
 }
@@ -194,8 +193,6 @@ struct HamburgerMenu: View {
         Menu {
             Button("Shop", action: navigateToShop)
                 .accessibilityIdentifier("Shop")
-            Button("Inventory", action: navigateToInventory)
-                .accessibilityIdentifier("Inventory")
             Button("Customize", action: navigateToCustomize)
                 .accessibilityIdentifier("Customize")
         } label: {
@@ -211,22 +208,6 @@ struct HamburgerMenu: View {
             }
             .accessibilityIdentifier("HamburgerMenuButton")
         }
-    }
-}
-
-/// Represents an inventory view.
-struct InventoryView: View {
-    var body: some View {
-        Text("Inventory")
-            .font(.title)
-    }
-}
-
-/// Represents a customization view.
-struct CustomizeView: View {
-    var body: some View {
-        Text("Customize")
-            .font(.title)
     }
 }
 
