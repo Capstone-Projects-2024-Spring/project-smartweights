@@ -139,6 +139,13 @@
 			path = WorkoutSummaries;
 			sourceTree = "<group>";
 		};
+		6B8762A82BA260C0005627CE /* DBAccess */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DBAccess;
+			sourceTree = "<group>";
+		};
 		91065F702B7A7E4700BC62E6 = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +169,7 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				6B8762A82BA260C0005627CE /* DBAccess */,
 				911899382B8CE0D40071232A /* Workout */,
 				32BDE8EA2B8C130D003A5F5A /* Navbar */,
 				3202761C2B892D04001A86B8 /* pet-customize-page */,
