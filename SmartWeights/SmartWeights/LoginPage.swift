@@ -9,8 +9,14 @@ import SwiftUI
 import AuthenticationServices
 
 struct LoginView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var showingAlert = false // For testing the sign in button
     @State private var alertMessage = ""
+    
+    @AppStorage("email") var email: String = ""
+    @AppStorage("firstName") var firstName: String = ""
+    @AppStorage("lastName") var lastName: String = ""
+    @AppStorage("userID") var userID: String = ""
     
     var body: some View {
         ZStack {
@@ -41,18 +47,40 @@ struct LoginView: View {
                     .padding(.bottom, 20)
                 
                 // Sign In with Apple Button
-                SignInWithAppleButton(.signIn) { request in
+                SignInWithAppleButton(.continue) { request in
                     // Configuration for the request here
+                    request.requestedScopes = [.fullName, .email]
                 } onCompletion: { result in
                     switch result {
-                    case .success(_):
+                    case .success(let auth):
+                        switch auth.credential{
+                        case let credential as ASAuthorizationAppleIDCredential:
+                            // user info
+                            let firstName = credential.fullName?.givenName
+                            let lastName = credential.fullName?.familyName
+                            let email = credential.email
+                            
+                            // user id
+                            let userID = credential.user
+                            
+                            self.email = email ?? ""
+                            self.userID = userID
+                            self.firstName = firstName ?? ""
+                            self.lastName = lastName ?? ""
+                            
+                        default:
+                            break
+                        }
                         alertMessage = "Sign in successful!"
-                    case .failure(_):
+                    case .failure(let error):
+                        print(error)
                         alertMessage = "Sign in failed."
                     }
                     showingAlert = true
                 }
-                .signInWithAppleButtonStyle(.black) // Adjust the style
+                .signInWithAppleButtonStyle(
+                    colorScheme == .dark ? .white : .black
+                ) // Adjust the style
                 .frame(width: 280, height: 45)
                 .shadow(radius: 5) // Add shadow
                 .padding()
