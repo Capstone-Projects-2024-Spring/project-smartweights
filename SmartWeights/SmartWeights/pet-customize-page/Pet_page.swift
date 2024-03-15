@@ -73,7 +73,7 @@ struct Pet_Page: View {
                 Image("dog")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 500, height: 450, alignment: .center)
+                    .frame(width: 450, height: 440, alignment: .center)
                     .padding(.bottom, -20)
                 
                 VStack {
