@@ -50,16 +50,38 @@ struct SelectPet: View {
             }
             
             // Text field for pet name
-            TextField("Enter your pet's name...", text: $name)
-                .padding()
-                .frame(width: 320) // Set the desired width
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(10)
-                .padding(.vertical, 10)
+            TextField("Enter your pet's name...", text: $name, onEditingChanged: { editingChanged in
+                self.isNameEntered = editingChanged
+            }, onCommit: {
+                // Automatically save the pet name when the user finishes editing
+                UserDefaults.standard.set(self.name, forKey: "name")
+            })
+            .padding()
+            .frame(width: 320) // Set the desired width
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(10)
+            .padding(.vertical, 10)
             
             // horizontal button here
+            if isNameEntered && selectedPet != nil {
+                Button(action: {
+                    // Handle purchase action
+                    print("Continue")
+                    // .disabled() // Disable button if pet is not selected or if name is not entered
+                    // save name
+                }) {
+                    Text("Continue")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .font(.system(size: 20))
+                }
+                .padding()
+            }
         }
     }
+        
 }
 
 /// View for the Pets to choose from
