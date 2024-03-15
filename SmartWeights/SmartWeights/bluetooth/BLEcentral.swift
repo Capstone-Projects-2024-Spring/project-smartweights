@@ -10,12 +10,22 @@ class BluetoothViewModel: NSObject, ObservableObject{
     private var peripherals: [CBPeripheral] = []
     
     @Published var peripheralNames: [String] = []
+    @Published var peripheralServices: [String] = []
+    
+    
+    var connectedPeripheral: CBPeripheral?
+    
+    func connect(peripheral: CBPeripheral) {
+        centralManager?.connect(peripheral, options: nil)
+     }
     
     
     override init() {
         super.init()
         self.centralManager = CBCentralManager(delegate: self, queue: .main)
     }
+    
+    
 
 }
 
@@ -30,7 +40,11 @@ extension BluetoothViewModel: CBCentralManagerDelegate{
             self.peripherals.append(peripheral)
             self.peripheralNames.append(peripheral.name ?? "unamed device")
         }
+
+        self.connectedPeripheral = peripheral
     }
+    
+    
 }
 
 struct BLEview: View{
@@ -39,12 +53,21 @@ struct BLEview: View{
     
     
     var body: some View{
-        
-        NavigationView{
-            List(BLEviewModel.peripheralNames, id: \.self){
-                peripheral in Text(peripheral)
+        HStack{
+            NavigationView{
+                List(BLEviewModel.peripheralNames, id: \.self){
+                    peripheral in Text(peripheral)
+                }
+                .navigationTitle("Peripherals Names")
             }
-            .navigationTitle("Peripherals")
+            NavigationView{
+                List(BLEviewModel.peripheralServices, id: \.self){
+                    peripheral in Text(peripheral)
+                }
+                .navigationTitle("Peripherals Serivce")
+            }
+            
+            
         }
     }
 }
