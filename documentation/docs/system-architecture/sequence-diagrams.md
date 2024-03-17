@@ -44,8 +44,8 @@ A user has already created a SmartWeights account and has logged in for the firs
 2. The app displays a generic virtual pet that will guide the user through the application.
 3. The virtual pet highlights key features of the application.
 4. The user finishes the tutorial.
-5. The user is prompted to create their own virtual pet.
-6. The user finishes the virtual pet creation process and is returned to the main navigation screen.
+5. The user is prompted to select their virtual pet.
+6. The user finishes the virtual pet selection process and is returned to the main navigation screen.
 
 
 ```mermaid 
@@ -67,12 +67,12 @@ sequenceDiagram
     end
     User->>App: Finish tutorial
 
-    App-->>User: Prompt to create own virtual pet
-    User->>App: Start virtual pet creation process
-    App->>App: Initialize virtual pet creation
-    User->>App: Input virtual pet details
+    App-->>User: Prompt to select virtual pet
+    User->>App: Start virtual pet selection process
+    App->>App: Initialize virtual pet selection
+    User->>App: Select virtual pet
     App->>App: Set virtual pet details
-    App-->>User: Virtual pet created successfully
+    App-->>User: Virtual pet selected successfully
     User->>App: Return to main navigation screen
 
     deactivate User

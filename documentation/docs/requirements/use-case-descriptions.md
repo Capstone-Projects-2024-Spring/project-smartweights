@@ -21,8 +21,8 @@ A user has already created a SmartWeights account and has logged in for the firs
 2. The app displays a generic virtual pet that will guide the user through the application.
 3. The virtual pet highlights key features of the application.
 4. The user finishes the tutorial.
-5. The user is prompted to create their own virtual pet.
-6. The user finishes the virtual pet creation process and is returned to the main navigation screen.
+5. The user is prompted to select their virtual pet.
+6. The user finishes the virtual pet selection process and is returned to the main navigation screen.
 
 ## Use Case 3 - Profile Management
 A user wants to change their profile settings and workout goals.
