@@ -1,2 +1,3 @@
-The files in this folder are for the Pico-W.
-They are meant to run with MicroPython with the Pico attached. 
+- The files in this folder are for the Pico-W.
+- They are meant to run with MicroPython with the Pico-W attached. 
+- STLfiles folder holds the files for creating a 3d case for the Pico-W and sensors.
