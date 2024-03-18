@@ -14,17 +14,18 @@ private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count:
 class Pet: ObservableObject {
     var image: Image
     var name: String
+    var petID: Int
     
-    init(image: Image, name: String) {
+    init(image: Image, name: String, petID: Int) {
         self.image = image
         self.name = name
+        self.petID = petID
     }
 }
 
 /// View for selecting the first pet when user first uses the application.
 struct SelectPet: View {
     @State private var name: String = ""
-    @State private var isNameEntered: Bool = false
     @State private var selectedPet: Pet? = nil // Added to store the selected pet
     var title = "Select Pet"
     var caption = "You can change your pet's appearance at any time."
@@ -44,16 +45,13 @@ struct SelectPet: View {
             
             // display pet options
             HStack {
-                PetGrid(pet: Pet(image: Image("dog"), name: "Dog"), selectedPet: $selectedPet)
+                PetGrid(pet: Pet(image: Image("dog"), name: "Dog", petID: 1), selectedPet: $selectedPet)
                     .padding(.trailing, -15)
-                PetGrid(pet: Pet(image: Image("cat"), name: "Cat"), selectedPet: $selectedPet)
+                PetGrid(pet: Pet(image: Image("cat"), name: "Cat", petID: 2), selectedPet: $selectedPet)
             }
             
             // Text field for pet name
-            TextField("Enter your pet's name...", text: $name, onEditingChanged: { editingChanged in
-                self.isNameEntered = editingChanged
-            }, onCommit: {
-                // Automatically save the pet name when the user finishes editing
+            TextField("Enter your pet's name...", text: $name, onCommit: { // saves user input when typing
                 UserDefaults.standard.set(self.name, forKey: "name")
             })
             .padding()
@@ -62,13 +60,9 @@ struct SelectPet: View {
             .cornerRadius(10)
             .padding(.vertical, 10)
             
-            // horizontal button here
-            if isNameEntered && selectedPet != nil {
+            if name.count > 0 && selectedPet != nil {
                 Button(action: {
-                    // Handle purchase action
-                    print("Continue")
-                    // .disabled() // Disable button if pet is not selected or if name is not entered
-                    // save name
+                    print(name)
                 }) {
                     Text("Continue")
                         .padding()
@@ -81,7 +75,6 @@ struct SelectPet: View {
             }
         }
     }
-        
 }
 
 /// View for the Pets to choose from
