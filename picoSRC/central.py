@@ -1,3 +1,5 @@
+#This is sample code found online
+
 import bluetooth
 import random
 import struct
