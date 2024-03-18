@@ -7,6 +7,7 @@
 
 import XCTest
 import CloudKit
+@testable import SmartWeights
 final class CloudKitTest: XCTestCase {
 
 //    override func setUpWithError() throws {
@@ -141,7 +142,65 @@ final class CloudKitTest: XCTestCase {
             
             waitForExpectations(timeout: 10, handler: nil)
         }
-    
+    func testGetPrivateDatabase() {
+           let cloudKitManager = CloudKitManager.shared
+           lazy var privateDatabase = cloudKitManager.privateDatabase
+           
+           XCTAssertNotNil(privateDatabase, "Private database should not be nil")
+    }
+//    func testAddUserRecord() {
+//        let userRecordManager = UserRecordManager()
+//        let addUserRecordExpectation = expectation(description: "Add User Record")
+//        
+//        userRecordManager.addUserRecord() { (record, error) in
+//            if let error = error {
+//                XCTFail("Error adding user record: \(error.localizedDescription)")
+//            } else {
+//                XCTAssertNotNil(record, "Added user record should not be nil")
+//                addUserRecordExpectation.fulfill()
+//            }
+//        }
+//        
+//        waitForExpectations(timeout: 10, handler: nil)
+//    }
+
+//    func testAddPetRecord(){
+//        let userRecordManager = UserRecordManager()
+////        let userReference = CKRecord.Reference(recordID: "0366F60C-D346-4EC7-8A83-ADBDD5083C49", action: .none )
+//        let addPetRecordExpectation = expectation(description: "Add Pet Record")
+//        
+//        userRecordManager.addPetRecord() { (record, error) in
+//            if let error = error {
+//                XCTFail("Error adding pet record: \(error.localizedDescription)")
+//            } else {
+//                XCTAssertNotNil(record, "Added pet record should not be nil")
+//                addPetRecordExpectation.fulfill()
+//            }
+//        }
+//        
+//        waitForExpectations(timeout: 10, handler: nil)
+//    }
+//    func testAddUserRecord() {
+//        let userRecordManager = UserRecordManager()
+//        let addUserRecordExpectation = expectation(description: "Add User Record")
+//        
+//        CKContainer.default().accountStatus { (accountStatus, error) in
+//            if accountStatus == .available {
+//                userRecordManager.addUserRecord() { (record, error) in
+//                    if let error = error {
+//                        XCTFail("Error adding user record: \(error.localizedDescription)")
+//                    } else {
+//                        XCTAssertNotNil(record, "Added user record should not be nil")
+//                        addUserRecordExpectation.fulfill()
+//                    }
+//                }
+//            } else {
+//                XCTFail("iCloud account not available")
+//            }
+//        }
+//        
+//        waitForExpectations(timeout: 10, handler: nil)
+//    }
 }
 
 

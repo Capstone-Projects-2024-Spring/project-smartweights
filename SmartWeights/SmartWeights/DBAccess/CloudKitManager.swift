@@ -4,9 +4,9 @@ class CloudKitManager {
      /// The shared singleton instance of `CloudKitManager`.
     static let shared = CloudKitManager()
     let containerIdentifier = "iCloud.SmartWeights"
-    private let container: CKContainer
-    private let publicDatabase: CKDatabase
-    private let privateDatabase: CKDatabase
+    let container: CKContainer
+    let publicDatabase: CKDatabase
+    let privateDatabase: CKDatabase
     /// Initializes the `CloudKitManager` singleton instance.
     private init() {
         container = CKContainer(identifier: containerIdentifier)
@@ -14,13 +14,5 @@ class CloudKitManager {
         privateDatabase = container.privateCloudDatabase
     }
     
-    func getContainer() -> CKContainer {
-        return container
-    }
-    func getPublicDatabase() -> CKDatabase {
-        return container.publicCloudDatabase
-    }
-    func getPrivateDatabase() -> CKDatabase {
-        return container.privateCloudDatabase
-    }
+  
 }
