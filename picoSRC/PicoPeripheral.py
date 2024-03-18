@@ -1,8 +1,4 @@
-# #This is sample code found online
-# This example demonstrates a simple temperature sensor peripheral.
-#
-# The sensor's local value is updated, and it will notify
-# any connected central every 10 seconds.
+# #This will transmits the accel data
 
 import bluetooth
 import random

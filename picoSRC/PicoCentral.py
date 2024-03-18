@@ -1,4 +1,5 @@
-#This is sample code found online
+#Used for the SmartWeights Sensor
+
 
 import bluetooth
 import random
