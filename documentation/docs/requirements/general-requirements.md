@@ -14,5 +14,6 @@ sidebar_position: 3
 - Project management (Jira)
 - Version Control management (GitHub/Git)
 - Database (Firebase & NoSQL)
+- CAD Software
 
 
