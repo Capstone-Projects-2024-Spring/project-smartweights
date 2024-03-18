@@ -99,8 +99,10 @@ class BLEaccel:
     #get the accelerations of x,y,z from the accelerometer
     def _get_accel(self):
         
-        return 10 
-        
+        return random.randint(0, 100)
+    
+
+    
     
 
 
