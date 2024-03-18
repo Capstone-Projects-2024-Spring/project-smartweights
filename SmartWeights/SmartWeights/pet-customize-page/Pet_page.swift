@@ -121,8 +121,8 @@ class PetPageFunction: ObservableObject {
     @Published var showFoodSelection = false
     @Published var selectedFoodIndex = 0
     @Published var foodItems = [
-        FoodItem(name: "Orange", quantity: 5, imageName: "orange"),
-        FoodItem(name: "Apple", quantity: 3, imageName: "apple"),
+        FoodItem(name: "Orange", quantity: 10, imageName: "orange"),
+        FoodItem(name: "Apple", quantity: 10, imageName: "apple"),
         FoodItem(name: "Juice", quantity: 10, imageName: "juice")
     ]
     @Published var showAlert = false
@@ -136,7 +136,10 @@ class PetPageFunction: ObservableObject {
         if healthBar >= 1.0 {
             showAlert(title: "Max Health Reached", message: "Your pet is already at maximum health.")
         } else if foodItem.quantity > 0 {
-            increaseHealth(by: 0.05)
+            // Determine health increase amount
+            let healthIncrease: Float = foodItem.name == "Orange" ? 0.2 : 0.1 // Orange increases by 0.2, others by 0.1
+            increaseHealth(by: healthIncrease)
+            
             foodItem.quantity -= 1
             foodItems[selectedFoodIndex] = foodItem
         } else {
