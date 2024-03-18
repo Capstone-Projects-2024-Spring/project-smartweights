@@ -41,7 +41,7 @@ class storeViewModel: ObservableObject {
     @Published var sortByPrice = false // used for sorting
     @Published var selectedCategory = "Pets" // Default
     let categories = ["Pets", "Foods", "Backgrounds", "Outfits"]
-    @Published var userCur = 550 // Default currency
+    @Published var userCur = 1000 // Default currency
     
     /// Display items based on selected sorting method.
     func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem] {
@@ -68,13 +68,6 @@ struct PetStore: View {
         NavigationView {
             VStack {
                 HStack {
-                    Button(action: { // Back Arrow
-                        print("Button tapped (temp)")
-                    }) {
-                        Image(systemName: "arrow.left")
-                            .imageScale(.large)
-                            .foregroundColor(.black)
-                    }
                     Spacer() // Move "Pet Store" away from back arrow
                     Text("Pet Store")
                         .font(.system(size: 45))
@@ -83,14 +76,15 @@ struct PetStore: View {
                     HStack {
                         Image( "petcoin")
                             .resizable()
-                            .frame(width: 40, height: 40)
+                            .frame(width: 55, height: 55)
                         Text("\(viewModel.userCur)") // amount of money
                             .fontWeight(.bold)
                             .font(.system(size: 20))
                             .foregroundColor(.green)
                     }
+                    .padding(.trailing, -35)
                 }
-                .padding() // Add padding to the HStack
+                .padding(.trailing, 50) // Add padding to the HStack
                 
                 HStack {
                     Button(action: {
