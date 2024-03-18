@@ -20,13 +20,9 @@ class WorkoutViewModel: ObservableObject {
     
     
     /// Function to reset progress
-
-    
     func resetProgress() {
         progress = 0
     }
-    
-    
     
     /// Function to add progress
     /// - Parameters:
@@ -68,6 +64,7 @@ class WorkoutViewModel: ObservableObject {
     }
     /// Function to generate random number for the progress bar
     /// - Returns: random number between 0 and 1
+    ///
     //generate a random number for the progress bar
     //will be removed once we get data
     func generateRandomNumber() -> Double {
@@ -123,9 +120,7 @@ struct StartWorkout: View {
         
         HStack{
             VStack{
-                Text("Sets")
-                    .bold()
-                TextField("", text: $viewModel.inputtedSets)
+                TextField("Sets", text: $viewModel.inputtedSets)
                     .keyboardType(.numberPad)
                     .onReceive(Just(viewModel.inputtedSets)) { newValue in
                         let filtered = newValue.filter { "0123456789".contains($0) }
@@ -133,6 +128,7 @@ struct StartWorkout: View {
                             viewModel.inputtedSets = filtered
                         }
                     }
+                    .bold()
                     .textFieldStyle(.roundedBorder)
                     .frame(width:80)
                     .font(.system(size: 14))
@@ -140,9 +136,7 @@ struct StartWorkout: View {
             }
             
             VStack{
-                Text("Repitions")
-                    .bold()
-                TextField("", text: $viewModel.inputtedReps)
+                TextField("Reps", text: $viewModel.inputtedReps)
                     .keyboardType(.numberPad)
                     .onReceive(Just(viewModel.inputtedReps)) { newValue in
                         let filtered = newValue.filter { "0123456789".contains($0) }
@@ -150,15 +144,14 @@ struct StartWorkout: View {
                             viewModel.inputtedReps = filtered
                         }
                     }
+                    .bold()
                     .textFieldStyle(.roundedBorder)
                     .frame(width:80)
                     .font(.system(size: 14))
                 
             }
             VStack{
-                Text("Pounds")
-                    .bold()
-                TextField("", text: $viewModel.inputtedWeights)
+                TextField("lbs", text: $viewModel.inputtedWeights)
                     .keyboardType(.numberPad)
                     .onReceive(Just(viewModel.inputtedWeights)) { newValue in
                         let filtered = newValue.filter { "0123456789".contains($0) }
@@ -166,6 +159,7 @@ struct StartWorkout: View {
                             viewModel.inputtedWeights = filtered
                         }
                     }
+                    .bold()
                     .textFieldStyle(.roundedBorder)
                     .frame(width:80)
                     .font(.system(size: 14))
@@ -190,6 +184,7 @@ struct StartWorkout: View {
                             .font(.system(size: 14))
                             .bold()
                             .padding(.bottom,70)
+                            .foregroundColor(.white)
                         
                     }
                     Text("\(viewModel.hours):\(viewModel.minutes):\(viewModel.seconds)")
@@ -209,12 +204,12 @@ struct StartWorkout: View {
                             .font(.system(size: 14))
                             .bold()
                             .padding(.bottom, 50)
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             
                         Text("\(viewModel.inputtedSets)")
                         .padding(.top, 20)
                         .bold()
-                        .foregroundColor(.black)
+                        .foregroundColor(.white)
                     
                 }
                
@@ -246,7 +241,7 @@ struct StartWorkout: View {
                     Text("Form")
                         .font(.system(size: 14))
                         .bold()
-                        .foregroundColor(.red)
+                        .foregroundColor(.white)
                     CircularProgressView(progress: viewModel.progress)
                         .frame(width: 100, height: 100)
                     
@@ -258,7 +253,7 @@ struct StartWorkout: View {
                     Text("Velocity")
                         .font(.system(size: 14))
                         .bold()
-                        .foregroundColor(.red)
+                        .foregroundColor(.white)
                     CircularProgressView(progress: viewModel.progress)
                         .frame(width: 100, height: 100)
                 }
@@ -289,6 +284,7 @@ struct StartWorkout: View {
                             .foregroundStyle(.white)
                     }
                 }
+                .accessibilityLabel("NewWorkoutButton")
                 
             }
             

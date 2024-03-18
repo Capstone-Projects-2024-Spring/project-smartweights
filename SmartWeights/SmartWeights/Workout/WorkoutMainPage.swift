@@ -2,7 +2,7 @@ import SwiftUI
 ///structure to display the main workout page
 struct WorkoutMainPage: View {
     ///created an instance of the view model
-    @StateObject var viewModel = WorkoutViewModel()
+    @StateObject var viewModel = WorkoutViewModel ()
     
     //workout/feedback nav on top of app
     @State private var selectedTab = 0
@@ -26,12 +26,14 @@ struct WorkoutMainPage: View {
                             }){
                                 Text("Start")
                             }
+                            .accessibilityLabel("startWorkoutButton")
                             Button(action:{
                                 viewModel.stopTimer()
                             }){
                                 Text("Finish")
                                 
                             }
+                            .accessibilityLabel("endWorkoutButton")
                             
                         }
                     }
@@ -78,6 +80,7 @@ struct WorkoutMainPage: View {
                                     .resizable()
                                     .frame(width: 30, height: 30)
                             }
+                            .accessibilityLabel("micWorkoutButton")
                             .padding(.trailing, 42)
                         }
                     }
@@ -96,6 +99,7 @@ struct WorkoutMainPage: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .foregroundColor(.white)
                 .background(Color.gray)
+                .accessibilityLabel("WorkoutSelectTab")
                 
                 
                 
@@ -118,7 +122,6 @@ struct WorkoutMainPage: View {
         }
         .background(Color.black)
         .foregroundColor(.gray)
-        
     }
     
 }
