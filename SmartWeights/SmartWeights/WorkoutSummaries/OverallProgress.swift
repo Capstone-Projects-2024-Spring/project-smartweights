@@ -79,6 +79,7 @@ struct SelectedDateData: View {
                     .frame(width:350,height: 200)
                     .cornerRadius(40)
                     .foregroundColor(.gray)
+                    .shadow(color: Color.green.opacity(0.5), radius: 10, x: 0, y: 5)
                 
                 
                 VStack(alignment: .leading){
@@ -128,8 +129,11 @@ struct SelectedDateData: View {
                 .sheet(isPresented: $isSheetPresented) {
                     // Content of the sheet
                     moreFeedbackSheetView()
+                        .background(Color.black)
+                       
                     
                 }
+                
             }
             
         }
@@ -219,6 +223,7 @@ struct PostWorkout: View {
                                 
                             }
                         }
+                        .shadow(color: Color.blue.opacity(0.5), radius: 10, x: 0, y: 5)
                         
                         
                     }
@@ -249,6 +254,10 @@ struct PostWorkout: View {
                 }
             }
         }
+        .background(Color.black)
+        .foregroundColor(.white)
+        
+        
     }
 }
 
