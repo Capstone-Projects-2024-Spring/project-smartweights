@@ -1,4 +1,4 @@
-#Used for the SmartWeights Sensor
+#Used for the SmartWeights Sensor, will act as the central pico
 
 
 import bluetooth
