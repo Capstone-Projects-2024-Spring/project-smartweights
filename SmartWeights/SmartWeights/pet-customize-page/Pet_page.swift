@@ -18,7 +18,6 @@ struct Pet_Page: View {
                     .font(.system(size: 45))
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
-                    .padding()
                 
                 HStack {
                     HamburgerMenu(
@@ -36,7 +35,8 @@ struct Pet_Page: View {
                                 .font(.system(size: 35))
                             Text("Change Food")
                                 .bold()
-                                .font(.system(size: 18))
+                                .font(.system(size: 20))
+                                .frame(width: 130, height: 50)
                         }
                         .padding()
                     }
@@ -50,27 +50,30 @@ struct Pet_Page: View {
                         Button(action: {
                             viewModel.handleFoodUse(selectedFoodIndex: viewModel.selectedFoodIndex)
                         }) {
-                            HStack {
+                            VStack {
                                 Image(selectedFood.imageName)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 80, height: 100)
+                                    .frame(width: 80, height: 80)
                                 Text("\(selectedFood.quantity)")
-                                    .font(.system(size: 35))
+                                    .font(.system(size: 25))
                                     .bold()
                                     .foregroundColor(.blue)
+                                    .minimumScaleFactor(0.50)
+                                    .padding(.top, -15)
+                                    .frame(width: 75,height: 25)
                             }
                         }
                         .accessibilityIdentifier("UseFoodButton")
                     }
                     
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 25)
                 
                 Image("Panda")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 400, height: 400, alignment: .center)
+                    .frame(width: 500, height: 450, alignment: .center)
                     .padding(.bottom, -30)
                 
                 VStack {
@@ -118,8 +121,8 @@ class PetPageFunction: ObservableObject {
     @Published var showFoodSelection = false
     @Published var selectedFoodIndex = 0
     @Published var foodItems = [
-        FoodItem(name: "Orange", quantity: 5, imageName: "orange"),
-        FoodItem(name: "Apple", quantity: 3, imageName: "apple"),
+        FoodItem(name: "Orange", quantity: 10, imageName: "orange"),
+        FoodItem(name: "Apple", quantity: 10, imageName: "apple"),
         FoodItem(name: "Juice", quantity: 10, imageName: "juice")
     ]
     @Published var showAlert = false
@@ -133,7 +136,10 @@ class PetPageFunction: ObservableObject {
         if healthBar >= 1.0 {
             showAlert(title: "Max Health Reached", message: "Your pet is already at maximum health.")
         } else if foodItem.quantity > 0 {
-            increaseHealth(by: 0.05)
+            // Determine health increase amount
+            let healthIncrease: Float = foodItem.name == "Orange" ? 0.2 : 0.1 // Orange increases by 0.2, others by 0.1
+            increaseHealth(by: healthIncrease)
+            
             foodItem.quantity -= 1
             foodItems[selectedFoodIndex] = foodItem
         } else {
