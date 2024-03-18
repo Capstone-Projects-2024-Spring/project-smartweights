@@ -18,8 +18,10 @@ _FLAG_READ = const(0x0002)
 _FLAG_NOTIFY = const(0x0010)
 _FLAG_INDICATE = const(0x0020)
 
-#0x183E - Physical Activity Monitor Service
 
+#broadcasting a specific UUID and service
+
+#0x183E - Physical Activity Monitor Service
 _PHYSICAL_UUID = bluetooth.UUID(0x183E)
 
 #0x2713 = acceleration m/s^2
@@ -68,8 +70,8 @@ class BLEaccel:
             conn_handle, value_handle, status = data
 
 
-    # need to change this to send accel data
-    
+    #updates the accel that is read
+    #need to implement the accel data
     
     def update_accel(self, notify=False, indicate=False):
         num = self._get_accel()
@@ -87,42 +89,13 @@ class BLEaccel:
 
     
 
-    
-    # def update_temperature(self, notify=False, indicate=False):
-    #     # Write the local value, ready for a central to read.
-    #     temp_deg_c = self._get_temp()
-    #     print("write temp %.2f degc" % temp_deg_c);
-    #     self._ble.gatts_write(self._handle, struct.pack("<h", int(temp_deg_c * 100)))
-    #     if notify or indicate:
-    #         for conn_handle in self._connections:
-    #             if notify:
-    #                 # Notify connected centrals.
-    #                 self._ble.gatts_notify(conn_handle, self._handle)
-    #             if indicate:
-    #                 # Indicate connected centrals.
-    #                 self._ble.gatts_indicate(conn_handle, self._handle)
-
-
-
-
 
 
     def _advertise(self, interval_us=500000):
         self._ble.gap_advertise(interval_us, adv_data=self._payload)
 
 
-    # This is not needed
-    
-    # ref https://github.com/raspberrypi/pico-micropython-examples/blob/master/adc/temperature.py
-    # def _get_temp(self):
-    #     conversion_factor = 3.3 / (65535)
-    #     reading = self._sensor_temp.read_u16() * conversion_factor
-        
-    #     # The temperature sensor measures the Vbe voltage of a biased bipolar diode, connected to the fifth ADC channel
-    #     # Typically, Vbe = 0.706V at 27 degrees C, with a slope of -1.721mV (0.001721) per degree. 
-    #     return 27 - (reading - 0.706) / 0.001721
-    
-    
+
     #get the accelerations of x,y,z from the accelerometer
     def _get_accel(self):
         

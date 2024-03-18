@@ -34,6 +34,7 @@ _ADV_DIRECT_IND = const(0x01)
 _ADV_SCAN_IND = const(0x02)
 _ADV_NONCONN_IND = const(0x03)
 
+#Will only receive data from a bluetooth peripheral with the same UUID and service.
 
 _PHYSICAL_UUID = bluetooth.UUID(0x183E)
 
@@ -159,7 +160,7 @@ class BLEAccelCentral:
             conn_handle, value_handle, status = data
 
         elif event == _IRQ_GATTC_NOTIFY:
-            # The ble_temperature.py demo periodically notifies its value.
+
             conn_handle, value_handle, notify_data = data
             if conn_handle == self._conn_handle and value_handle == self._value_handle:
                 self._update_value(notify_data)
@@ -170,7 +171,7 @@ class BLEAccelCentral:
     def is_connected(self):
         return self._conn_handle is not None and self._value_handle is not None
 
-    # Find a device advertising the environmental sensor service.
+    # Find a device advertising the physical sensor service.
     def scan(self, callback=None):
         self._addr_type = None
         self._addr = None
