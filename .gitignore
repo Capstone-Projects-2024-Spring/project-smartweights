@@ -104,3 +104,7 @@ iOSInjectionProject/
 
 *.resolved
 
+
+#pico
+.vscode
+.micropico
