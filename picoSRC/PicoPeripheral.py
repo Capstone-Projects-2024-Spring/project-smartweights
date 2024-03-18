@@ -18,17 +18,17 @@ _FLAG_READ = const(0x0002)
 _FLAG_NOTIFY = const(0x0010)
 _FLAG_INDICATE = const(0x0020)
 
+#0x183E - Physical Activity Monitor Service
+
+_PHYSICAL_UUID = bluetooth.UUID(0x183E)
 
 #0x2713 = acceleration m/s^2
-_ACCEL_UUID = bluetooth.UUID(0x2713)
-# org.bluetooth.characteristic.temperature
-#0x183E - Physical Activity Monitor Service
 _ACCEL_DATA = (
-    bluetooth.UUID(0x183E),
+    bluetooth.UUID(0x2713),
     _FLAG_READ | _FLAG_NOTIFY | _FLAG_INDICATE,
 )
 _ACCEL_SERVICE = (
-    _ACCEL_UUID,
+    _PHYSICAL_UUID,
     (_ACCEL_DATA,),
 )
 
@@ -50,7 +50,7 @@ class BLEaccel:
             name = 'Pico %s' % ubinascii.hexlify(self._ble.config('mac')[1],':').decode().upper()
         print('Sensor name %s' % name)
         self._payload = advertising_payload(
-            name=name, services=[_ACCEL_UUID]
+            name=name, services=[_PHYSICAL_UUID]
         )
         self._advertise()
 
@@ -74,6 +74,7 @@ class BLEaccel:
     def update_accel(self, notify=False, indicate=False):
         num = self._get_accel()
         print(num)
+        self._ble.gatts_write(self._handle, struct.pack("<h", int(num * 100)))
         
         if notify or indicate:
             for conn_handle in self._connections:
