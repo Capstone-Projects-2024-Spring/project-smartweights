@@ -16,7 +16,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
     private var yCharacteristicUUID = CBUUID(string: "4A42")
     private var zCharacteristicUUID = CBUUID(string: "4A43")
 
-    @Published var temperatures: [Float] = [] // Array to store temperatures
+    @Published var accelerations: [Int] = [0, 0, 0] // Array to store temperatures
 
     override init() {
         super.init()
