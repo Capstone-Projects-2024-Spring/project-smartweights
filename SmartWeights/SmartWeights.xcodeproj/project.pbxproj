@@ -34,7 +34,7 @@
 		9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993B2B8CE1400071232A /* WorkoutFeedback.swift */; };
 		9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993D2B8CE1570071232A /* WorkoutMainPage.swift */; };
 		912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912241702B90EA9F00D03638 /* WorkoutUITests.swift */; };
-		918037922BA09B0E00802D01 /* BLEcentral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037912BA09B0E00802D01 /* BLEcentral.swift */; };
+		918037962BA9026700802D01 /* central.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037952BA9026700802D01 /* central.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
 		B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */; };
 		E5B86DB32B91033400A0AD04 /* navbarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B86DB22B91033400A0AD04 /* navbarUITests.swift */; };
@@ -90,7 +90,7 @@
 		9118993B2B8CE1400071232A /* WorkoutFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedback.swift; sourceTree = "<group>"; };
 		9118993D2B8CE1570071232A /* WorkoutMainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMainPage.swift; sourceTree = "<group>"; };
 		912241702B90EA9F00D03638 /* WorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutUITests.swift; sourceTree = "<group>"; };
-		918037912BA09B0E00802D01 /* BLEcentral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEcentral.swift; sourceTree = "<group>"; };
+		918037952BA9026700802D01 /* central.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = central.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
 		B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFirstPet.swift; sourceTree = "<group>"; };
 		E5B86DB22B91033400A0AD04 /* navbarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = navbarUITests.swift; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 		918037902BA09AD600802D01 /* bluetooth */ = {
 			isa = PBXGroup;
 			children = (
-				918037912BA09B0E00802D01 /* BLEcentral.swift */,
+				918037952BA9026700802D01 /* central.swift */,
 			);
 			path = bluetooth;
 			sourceTree = "<group>";
@@ -415,6 +415,7 @@
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
 				32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */,
 				3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */,
+				918037962BA9026700802D01 /* central.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				32BDE8EE2B8C1363003A5F5A /* NavController.swift in Sources */,
 				32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */,
@@ -422,7 +423,6 @@
 				9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */,
 				32BDE8EC2B8C1345003A5F5A /* Navbar.swift in Sources */,
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
-				918037922BA09B0E00802D01 /* BLEcentral.swift in Sources */,
 				0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
 				9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */,

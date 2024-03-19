@@ -12,7 +12,7 @@ struct SmartWeightsApp: App {
     let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
-            BLEview()
+            bluetoothView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
