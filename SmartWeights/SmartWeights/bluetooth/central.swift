@@ -8,7 +8,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
     private var peripheral: CBPeripheral!
     private var characteristic: CBCharacteristic!
     
-    //Tehse CBUUID are set on the pico
+    //These CBUUID are set on the pico
     private var serviceUUID = CBUUID(string: "181A")
     private var characteristicUUID = CBUUID(string: "2A6E")
 
