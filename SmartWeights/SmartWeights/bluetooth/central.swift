@@ -8,10 +8,18 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
     private var peripheral: CBPeripheral!
     private var characteristic: CBCharacteristic!
     
-    //These CBUUID are set on the pico
-    private var serviceUUID = CBUUID(string: "181A")
-    private var characteristicUUID = CBUUID(string: "2A6E")
+    //These CBUUID are set on the pico for the temperature sample code
+    //private var serviceUUID = CBUUID(string: "181A")
+    //private var characteristicUUID = CBUUID(string: "2A6E")
 
+    //for the physical  activity service
+    private var serviceUUID = CBUUID(string: "183E")
+    private var characteristicUUID = CBUUID(string: "2713")
+        
+
+
+    //need to change variables
+    //need to change the upacking of data in update
     @Published var temperatures: [Float] = [] // Array to store temperatures
 
     override init() {

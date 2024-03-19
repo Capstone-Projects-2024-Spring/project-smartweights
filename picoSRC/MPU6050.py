@@ -52,7 +52,7 @@ class MPU6050:
         """Sets the gyroscope range setting."""
         self.i2c.writeto_mem(self.address, 0x1B, bytes([self._index_to_hex(range)]))
         
-    def read_gyro_data(self):# -> tuple[float, float, float]:
+    def read_gyro_data(self) -> tuple[float, float, float]:
         """Read the gyroscope data, in a (x, y, z) tuple."""
         
         # set the modified based on the gyro range (need to divide to calculate)
@@ -72,9 +72,8 @@ class MPU6050:
         x:float = (self._translate_pair(data[0], data[1])) / modifier
         y:float = (self._translate_pair(data[2], data[3])) / modifier
         z:float = (self._translate_pair(data[4], data[5])) / modifier
-        #print('x =',x,"y=", y,"z=", z)
-        #return (x, y, z)
-        return ('x = {:.2f}, y = {:.2f}, z = {:.2f}'.format(x, y, z))
+        return (x, y, z)
+        #return ('x = {:.2f}, y = {:.2f}, z = {:.2f}'.format(x, y, z))
                 
     def read_accel_range(self) -> int:
         """Reads the accelerometer range setting."""
@@ -84,7 +83,7 @@ class MPU6050:
         """Sets the gyro accelerometer setting."""
         self.i2c.writeto_mem(self.address, 0x1C, bytes([self._index_to_hex(range)]))
         
-    def read_accel_data(self): #-> tuple[float, float, float]:
+    def read_accel_data(self) -> tuple[float, float, float]:
         """Read the accelerometer data, in a (x, y, z) tuple."""
         
         # set the modified based on the gyro range (need to divide to calculate)
@@ -104,9 +103,8 @@ class MPU6050:
         x:float = (self._translate_pair(data[0], data[1])) / modifier
         y:float = (self._translate_pair(data[2], data[3])) / modifier
         z:float = (self._translate_pair(data[4], data[5])) / modifier
-        
-        #return (x, y, z)
-        return ('x = {:.2f}, y = {:.2f}, z = {:.2f}'.format(x, y, z))
+        return (x, y, z)
+        #return ('x = {:.2f}, y = {:.2f}, z = {:.2f}'.format(x, y, z))
         
     def read_lpf_range(self) -> int:
         return self.i2c.readfrom_mem(self.address, 0x1A, 1)[0]
