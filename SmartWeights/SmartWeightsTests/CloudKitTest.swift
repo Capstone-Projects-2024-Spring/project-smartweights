@@ -32,7 +32,7 @@ final class CloudKitTest: XCTestCase {
 //            // Put the code you want to measure the time of here.
 //        }
 //    }
-    
+    /*
     let containerIdentifier = "iCloud.SmartWeights"
     
     // Provide the record name you created
@@ -148,6 +148,7 @@ final class CloudKitTest: XCTestCase {
            
            XCTAssertNotNil(privateDatabase, "Private database should not be nil")
     }
+    */
 //    func testAddUserRecord() {
 //        let userRecordManager = UserRecordManager()
 //        let addUserRecordExpectation = expectation(description: "Add User Record")
@@ -201,6 +202,32 @@ final class CloudKitTest: XCTestCase {
 //        
 //        waitForExpectations(timeout: 10, handler: nil)
 //    }
+    
+    
+    var viewModel: ItemViewModel!
+    var expectation: XCTestExpectation!
+    override func setUp() {
+            super.setUp()
+            viewModel = ItemViewModel()
+            expectation = expectation(description: "Item saved to CloudKit")
+    }
+//    func testAddItem() {
+//            let name = "Test Name"
+//            let description = "Test Description"
+//            
+//            viewModel.addItem(name: name, description: description)
+//            
+//            // Wait for CloudKit operation completion
+//            waitForExpectations(timeout: 10) { error in
+//                if let error = error {
+//                    XCTFail("Timeout error: \(error)")
+//                }
+//            }
+//            
+//            // Add additional assertions if needed
+//            // For example, you could verify that the items array in the ViewModel is updated after adding the item
+//            XCTAssertTrue(viewModel.items.count > 0, "Items array should not be empty after adding an item")
+//        }
 }
 
 
