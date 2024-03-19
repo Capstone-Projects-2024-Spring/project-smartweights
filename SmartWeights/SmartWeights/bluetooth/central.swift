@@ -9,8 +9,12 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
     private var characteristic: CBCharacteristic!
     
     //These CBUUID are set on the pico
-    private var serviceUUID = CBUUID(string: "181A")
-    private var characteristicUUID = CBUUID(string: "2A6E")
+    private var serviceUUID = CBUUID(string: "4A40") // Custom BT Service ID for ADXL345 reading
+    private var characteristicUUIDs: [CBUUID] = [
+        CBUUID(string: "4A41"), // X-Axis
+        CBUUID(string: "4A42"), // Y-Axis
+        CBUUID(string: "4A43") // Z-Axis
+    ]
 
     @Published var temperatures: [Float] = [] // Array to store temperatures
 
