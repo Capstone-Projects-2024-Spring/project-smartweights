@@ -1,4 +1,4 @@
-# example central code that is found online
+# example central code that is found online for the pico to act as the peripheral device
 
 import bluetooth
 import random

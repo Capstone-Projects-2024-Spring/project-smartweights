@@ -1,5 +1,5 @@
 from micropython import const
-#This is sample code found online
+#This is sample code found online for advertising the bluetooth peripheral
 import struct
 import bluetooth
 

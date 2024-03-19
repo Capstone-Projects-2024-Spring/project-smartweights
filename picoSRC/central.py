@@ -1,4 +1,4 @@
-#This is sample code found online
+#This is sample code found online to act as the central device for GATT
 
 import bluetooth
 import random
