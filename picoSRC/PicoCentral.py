@@ -1,4 +1,4 @@
-# This example finds and connects to a BLE temperature sensor (e.g. the one in ble_temperature.py).
+##This is the file we will use for the pico to act as a central for GATT ble.
 
 import bluetooth
 import random

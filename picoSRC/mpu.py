@@ -1,4 +1,5 @@
 #Shows Pi is on by turning on LED when plugged in
+# sample test code for the MPU
 LED = machine.Pin("LED", machine.Pin.OUT)
 LED.on()
 
@@ -8,6 +9,7 @@ from machine import Pin, I2C
 
 i2c = I2C(0, sda=Pin(0), scl=Pin(1), freq=400000)
 imu = MPU6050(i2c)
+
 
 while True:
     ax=round(imu.accel.x,2)

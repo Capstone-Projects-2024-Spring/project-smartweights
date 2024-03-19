@@ -1,4 +1,4 @@
-# This will transmits the accel data
+# This is the file that we will use for the project and this will transmits the accel data
 
 import bluetooth
 import random
