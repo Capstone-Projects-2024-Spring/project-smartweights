@@ -91,11 +91,13 @@ struct bluetoothView: View {
 
     var body: some View {
         VStack {
-            Text("Temperature: \(String(format: "%.2f", bleManager.temperatures.last ?? 0.0)) °C") // Display the last temperature in the array
+            Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])") // Display the last temperature in the array
                 .padding()
 
-            List(bleManager.temperatures, id: \.self) { temperature in
-                Text("\(String(format: "%.2f", temperature)) °C")
+            List {
+                ForEach(0..<bleManager.accelerations.count, id: \.self) { index in
+                    Text("\(index == 0 ? "X" : index == 1 ? "Y" : "Z"): \(bleManager.accelerations[index])")
+                }
             }
             .padding()
         }
