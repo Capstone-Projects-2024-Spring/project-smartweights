@@ -6,7 +6,7 @@ import CoreBluetooth
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, ObservableObject {
     private var centralManager: CBCentralManager!
     private var peripheral: CBPeripheral!
-    private var characteristic: CBCharacteristic!
+    private var characteristics: [CBCharacteristic] = []
     
     //These CBUUID are set on the pico
     private var serviceUUID = CBUUID(string: "4A40") // Custom BT Service ID for ADXL345 reading
@@ -51,9 +51,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
         if let characteristics = service.characteristics {
             self.characteristics.append(contentsOf: characteristics)
             for characteristic in characteristics {
-                if characteristic.uuid == characteristicUUID {
-                    peripheral.setNotifyValue(true, for: characteristic)
-                }
+                peripheral.setNotifyValue(true, for: characteristic)
             }
         }
     }
