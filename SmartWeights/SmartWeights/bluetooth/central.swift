@@ -6,11 +6,15 @@ import CoreBluetooth
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, ObservableObject {
     private var centralManager: CBCentralManager!
     private var peripheral: CBPeripheral!
-    private var characteristic: CBCharacteristic!
+    private var xCharacteristic: CBCharacteristic!
+    private var yCharacteristic: CBCharacteristic!
+    private var zCharacteristic: CBCharacteristic!
     
     //These CBUUID are set on the pico
-    private var serviceUUID = CBUUID(string: "181A")
-    private var characteristicUUID = CBUUID(string: "2A6E")
+    private var serviceUUID = CBUUID(string: "4A40")
+    private var xCharacteristicUUID = CBUUID(string: "4A41")
+    private var yCharacteristicUUID = CBUUID(string: "4A42")
+    private var zCharacteristicUUID = CBUUID(string: "4A43")
 
     @Published var temperatures: [Float] = [] // Array to store temperatures
 
