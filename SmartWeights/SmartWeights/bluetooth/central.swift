@@ -66,15 +66,21 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let data = characteristic.value {
-            let temp: Float = data.withUnsafeBytes { bufferPointer in
+            let acceleration: Int = data.withUnsafeBytes { bufferPointer in
                 guard let ptr = bufferPointer.baseAddress?.assumingMemoryBound(to: Int16.self) else {
-                    return 0.0
+                    return 0
                 }
                 let intValue = ptr.pointee
-                return Float(intValue) / 100.0
+                return Int(intValue)
             }
             DispatchQueue.main.async {
-                self.temperatures.append(temp) // Append the temperature to the array
+                if characteristic == self.xCharacteristic {
+                    self.accelerations[0] = acceleration
+                } else if characteristic == self.yCharacteristic {
+                    self.accelerations[1] = acceleration
+                } else if characteristic == self.zCharacteristic {
+                    self.accelerations[2] = acceleration
+                }
             }
         }
     }
