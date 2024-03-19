@@ -42,7 +42,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let services = peripheral.services {
             for service in services {
-                peripheral.discoverCharacteristics([characteristicUUID], for: service)
+                peripheral.discoverCharacteristics(nil, for: service)
             }
         }
     }
@@ -50,8 +50,14 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
-                if characteristic.uuid == characteristicUUID {
-                    self.characteristic = characteristic
+                if characteristic.uuid == xCharacteristicUUID {
+                    xCharacteristic = characteristic
+                    peripheral.setNotifyValue(true, for: characteristic)
+                } else if characteristic.uuid == yCharacteristicUUID {
+                    yCharacteristic = characteristic
+                    peripheral.setNotifyValue(true, for: characteristic)
+                } else if characteristic.uuid == zCharacteristicUUID {
+                    zCharacteristic = characteristic
                     peripheral.setNotifyValue(true, for: characteristic)
                 }
             }
