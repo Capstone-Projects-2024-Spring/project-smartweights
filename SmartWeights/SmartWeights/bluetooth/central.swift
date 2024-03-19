@@ -6,15 +6,11 @@ import CoreBluetooth
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, ObservableObject {
     private var centralManager: CBCentralManager!
     private var peripheral: CBPeripheral!
-    private var characteristics: [CBCharacteristic] = []
+    private var characteristic: CBCharacteristic!
     
     //These CBUUID are set on the pico
-    private var serviceUUID = CBUUID(string: "4A40") // Custom BT Service ID for ADXL345 reading
-    private var characteristicUUIDs: [CBUUID] = [
-        CBUUID(string: "4A41"), // X-Axis
-        CBUUID(string: "4A42"), // Y-Axis
-        CBUUID(string: "4A43") // Z-Axis
-    ]
+    private var serviceUUID = CBUUID(string: "181A")
+    private var characteristicUUID = CBUUID(string: "2A6E")
 
     @Published var temperatures: [Float] = [] // Array to store temperatures
 
@@ -42,16 +38,18 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let services = peripheral.services {
             for service in services {
-                peripheral.discoverCharacteristics(characteristicUUIDs, for: service)
+                peripheral.discoverCharacteristics([characteristicUUID], for: service)
             }
         }
     }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let characteristics = service.characteristics {
-            self.characteristics.append(contentsOf: characteristics)
             for characteristic in characteristics {
-                peripheral.setNotifyValue(true, for: characteristic)
+                if characteristic.uuid == characteristicUUID {
+                    self.characteristic = characteristic
+                    peripheral.setNotifyValue(true, for: characteristic)
+                }
             }
         }
     }
