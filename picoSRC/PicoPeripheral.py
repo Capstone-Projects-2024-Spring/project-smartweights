@@ -9,7 +9,7 @@ import ubinascii
 from ble_advertising import advertising_payload
 from micropython import const
 from machine import Pin
-import MPU6050
+import picoSRC.SampleCode.MPU6050 as MPU6050
 
 _IRQ_CENTRAL_CONNECT = const(1)
 _IRQ_CENTRAL_DISCONNECT = const(2)
