@@ -72,14 +72,6 @@ struct PetStore: View {
         NavigationView {
             VStack {
                 HStack {
-                    Button(action: { // Back Arrow
-                        print("Button tapped (temp)")
-                    }) {
-                        Image(systemName: "arrow.left")
-                            .imageScale(.large)
-                            .foregroundColor(.black)
-                    }
-                    Spacer() // Move "Pet Store" away from back arrow
                     Text("Pet Store")
                         .font(.system(size: 45))
                         .fontWeight(.bold)
