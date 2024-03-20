@@ -30,11 +30,12 @@ class storeViewModel: ObservableObject {
         SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("orange"), description: "Gives 20 health. MAX: 10"),
         SellingItem(id: 5, name: "Apple", category: "Foods", price: "10", image: Image("apple"), description: "Gives 10 health. MAX: 10"),
         SellingItem(id: 6, name: "Juice", category: "Foods", price: "20", image: Image("juice"), description: "Gives 10 health. MAX: 10"),
-        SellingItem(id: 7, name: "Jetpack", category: "Backgrounds", price: "400", image: Image("jetpack"), description: "Walking is overrated."),
-        SellingItem(id: 8, name: "Flag", category: "Backgrounds", price: "200", image: Image("flag"), description: "Works great in the wind!"),
-        SellingItem(id: 9, name: "Sand Castle", category: "Backgrounds", price: "300", image: Image("sandcastle"), description: "Watch out for waves!"),
-        SellingItem(id: 10, name: "Floral Glasses", category: "Outfits", price: "250", image: Image("glasses"), description: "100% UV Protection."),
-        SellingItem(id: 11, name: "Pet Chain", category: "Outfits", price: "200", image: Image("chain"), description: "Fashionably tasteful.")
+        SellingItem(id: 7, name: "Jetpack", category: "Outfits", price: "400", image: Image("jetpack"), description: "Walking is overrated."),
+        SellingItem(id: 8, name: "Royal", category: "Backgrounds", price: "200", image: Image("Royal"), description: "For kings and queens."),
+        SellingItem(id: 9, name: "Festive", category: "Backgrounds", price: "300", image: Image("Festive"), description: "Glows bright at night!"),
+        SellingItem(id: 10, name: "Bamboo", category: "Backgrounds", price: "400", image: Image("Bamboo"), description: "Grows very fast!"),
+        SellingItem(id: 11, name: "Floral Glasses", category: "Outfits", price: "250", image: Image("glasses"), description: "100% UV Protection."),
+        SellingItem(id: 12, name: "Pet Chain", category: "Outfits", price: "200", image: Image("chain"), description: "Fashionably tasteful.")
     ]
     
     @Published var showAlert = false
@@ -184,8 +185,9 @@ struct ItemDetailView: View {
                         .padding(.bottom, 50)
                     
                     // Example stacking items
+                    
                     /*
-                     let image2 = Image("glasses")
+                     let image2 = Image("dog")
                      image2
                      .resizable()
                      .scaledToFit()
