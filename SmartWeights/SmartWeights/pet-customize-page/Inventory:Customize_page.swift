@@ -25,60 +25,60 @@ struct Pet_selection: Identifiable {
     var imageName: String
 }
 
-
-struct Customize_page: View {
-    @Environment(\.presentationMode) var presentationMode
-    var onBack: (() -> Void)?
+class CustomizeViewModel: ObservableObject {
+    @Published var equippedAccessory: Accessory?
+    @Published var equippedBackgroundImage: BackgroundImage?
+    @Published var equippedPet: Pet_selection? = Pet_selection(name: "Dog", imageName: "dog") // Default pet
+    @Published var backgroundColor: Color = .white // Default background color
     
-    @State private var equippedAccessory: Accessory?
-    @State private var equippedBackgroundImage: BackgroundImage?
-    @State private var equippedPet: Pet_selection? = Pet_selection(name: "Dog", imageName: "dog") // Default pet
-    @State private var backgroundColor: Color = .white
-    
-    private let minSquares = 6
-    
-    private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
-    private var accessories: [Accessory] = [
+    // Data arrays
+    let accessories: [Accessory] = [
         Accessory(name: "Chain", imageName: "chain"),
         Accessory(name: "Glasses", imageName: "glasses"),
         Accessory(name: "Jet Pack", imageName: "jetpack"),
     ]
     
-    private var backgroundImages: [BackgroundImage] = [
-        BackgroundImage(name: "Flag", imageName: "flag"),
-        BackgroundImage(name: "Sand Castle", imageName: "sandcastle"),
+    let backgroundImages: [BackgroundImage] = [
+        
     ]
     
-    private var pets: [Pet_selection] = [
+    let pets: [Pet_selection] = [
         Pet_selection(name: "Dog", imageName: "dog"),
         Pet_selection(name: "Cat", imageName: "cat"),
     ]
+}
+
+struct Customize_page: View {
+    @Environment(\.presentationMode) var presentationMode
+    var onBack: (() -> Void)?
     
+    @ObservedObject var viewModel = CustomizeViewModel()
+    
+    private let minSquares = 6
+    private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
     
     var body: some View {
         NavigationView {
             VStack {
                 ZStack {
-                    backgroundColor.ignoresSafeArea(edges: .all)
+                    viewModel.backgroundColor.ignoresSafeArea(edges: .all)
                     
                     // Background image
-                    if let bgImage = equippedBackgroundImage {
+                    if let bgImage = viewModel.equippedBackgroundImage {
                         Image(bgImage.imageName)
                             .resizable()
-                            .scaledToFit()
-                            .padding(.trailing, 270)
-                            .padding(.top, 150)
+                            .frame(width: 400, height: 350)
                     }
                     
                     // Conditionally render the Jet Pack behind the dog
-                    if let accessory = equippedAccessory, accessory.name == "Jet Pack" {
+                    if let accessory = viewModel.equippedAccessory, accessory.name == "Jet Pack" {
                         Image(accessory.imageName)
                             .resizable()
                             .scaledToFit()
                     }
                     
                     // Pet image
-                    if let pet = equippedPet {
+                    if let pet = viewModel.equippedPet {
                         Image(pet.imageName)
                             .resizable()
                             .scaledToFit()
@@ -86,16 +86,16 @@ struct Customize_page: View {
                     }
                     
                     // Accessory image
-                    if let accessory = equippedAccessory, accessory.name != "Jet Pack" {
+                    if let accessory = viewModel.equippedAccessory, accessory.name != "Jet Pack" {
                         Image(accessory.imageName)
                             .resizable()
                             .scaledToFit()
                     }
                 }
                 
-                // Background color
-                ColorPicker("Set the background color", selection: $backgroundColor)
-                    .frame(width: 300, height: 50, alignment: .center)
+                // Background color picker
+                ColorPicker("Set the background color", selection: $viewModel.backgroundColor)
+                    .frame(width: 350, height: 50, alignment: .center)
                     .font(.system(size: 18).bold())
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(15)
@@ -104,31 +104,22 @@ struct Customize_page: View {
                 TabView {
                     ScrollView {
                         LazyVGrid(columns: gridLayout, spacing: 20) {
-                            ForEach(accessories) { accessory in
+                            ForEach(viewModel.accessories) { accessory in
                                 VStack {
                                     Image(accessory.imageName)
                                         .resizable()
                                         .scaledToFit()
                                         .onTapGesture {
-                                            equippedAccessory = accessory
+                                            viewModel.equippedAccessory = accessory
                                         }
                                     Text(accessory.name)
+                                        .bold()
                                 }
                                 .background(Color.gray.opacity(0.5).cornerRadius(15))
                                 
                             }
-                            ForEach(0..<max(minSquares - accessories.count, 0), id: \.self) { _ in
-                                VStack {
-                                    Image(systemName: "")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .padding(20)
-                                        .foregroundColor(.white)
-                                        .frame(width: 120, height: 150)
-                                    
-                                }
-                                .background(Color.gray.opacity(0.5).cornerRadius(15))
-                            }
+                            placeholders(for: viewModel.accessories.count)
+
                         }
                     }
                     .tabItem {
@@ -138,30 +129,21 @@ struct Customize_page: View {
                     // Grid layout for background image
                     ScrollView {
                         LazyVGrid(columns: gridLayout, spacing: 20) {
-                            ForEach(backgroundImages) { bgImage in
+                            ForEach(viewModel.backgroundImages) { bgImage in
                                 VStack {
                                     Image(bgImage.imageName)
                                         .resizable()
                                         .scaledToFit()
                                         .onTapGesture {
-                                            equippedBackgroundImage = bgImage
+                                            viewModel.equippedBackgroundImage = bgImage
                                         }
                                     Text(bgImage.name)
+                                        .bold()
                                 }
                                 .background(Color.gray.opacity(0.5).cornerRadius(15))
                             }
-                            ForEach(0..<max(minSquares + 1 - accessories.count, 0), id: \.self) { _ in
-                                VStack {
-                                    Image(systemName: "")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .padding(20)
-                                        .foregroundColor(.white)
-                                        .frame(width: 120, height: 150)
-                                    
-                                }
-                                .background(Color.gray.opacity(0.5).cornerRadius(15))
-                            }
+                            placeholders(for: viewModel.backgroundImages.count)
+
                         }
                     }
                     .tabItem {
@@ -171,30 +153,20 @@ struct Customize_page: View {
                     // Grid layout for the pet
                     ScrollView {
                         LazyVGrid(columns: gridLayout, spacing: 20) {
-                            ForEach(pets) { pet in
+                            ForEach(viewModel.pets) { pet in
                                 VStack {
                                     Image(pet.imageName)
                                         .resizable()
                                         .scaledToFit()
                                         .onTapGesture {
-                                            equippedPet = pet
+                                            viewModel.equippedPet = pet
                                         }
                                     Text(pet.name)
+                                        .bold()
                                 }
                                 .background(Color.gray.opacity(0.5).cornerRadius(15))
                             }
-                            ForEach(0..<max(minSquares + 1 - accessories.count, 0), id: \.self) { _ in
-                                VStack {
-                                    Image(systemName: "")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .padding(20)
-                                        .foregroundColor(.white)
-                                        .frame(width: 120, height: 150)
-                                    
-                                }
-                                .background(Color.gray.opacity(0.5).cornerRadius(15))
-                            }
+                            placeholders(for: viewModel.pets.count)
                         }
                     }
                     .tabItem {
@@ -205,9 +177,22 @@ struct Customize_page: View {
             }
         }
     }
+    @ViewBuilder
+    private func placeholders(for count: Int) -> some View {
+        ForEach(0..<max(minSquares - count, 0), id: \.self) { _ in
+            VStack {
+                Image(systemName: "")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(20)
+                    .foregroundColor(.white)
+                    .frame(width: 120, height: 150)
+            }
+            .background(Color.gray.opacity(0.5).cornerRadius(15))
+        }
+    }
 }
 
 #Preview{
     Customize_page()
 }
-
