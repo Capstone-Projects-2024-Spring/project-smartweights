@@ -12,9 +12,9 @@ struct SmartWeightsApp: App {
     let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
-//            TestView()
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            TestDB()
+            LoginPage()
+               .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            // TestDB()
         }
     }
 }
