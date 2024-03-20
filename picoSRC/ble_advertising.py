@@ -1,4 +1,5 @@
 from micropython import const
+#This is sample code found online
 import struct
 import bluetooth
 

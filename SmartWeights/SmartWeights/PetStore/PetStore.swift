@@ -24,17 +24,17 @@ class storeViewModel: ObservableObject {
     
     /// Items available in store.
     @Published var items = [
-        SellingItem(id: 1, name: "Dog", category: "Pets", price: "600", image: Image("dog"), description: "The best companion!"),
+        SellingItem(id: 1, name: "Dog", category: "Pets", price: "500", image: Image("dog"), description: "The best companion!"),
         SellingItem(id: 2, name: "Cat", category: "Pets", price: "500", image: Image("cat"), description: "Has 9 lives!"),
-        SellingItem(id: 3, name: "Dinosaur", category: "Pets", price: "750", image: Image("dinosaur"), description: "Only 250 million years old!"),
-        SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("orange"), description: "Gives X health."),
-        SellingItem(id: 5, name: "Apple", category: "Foods", price: "20", image: Image("apple"), description: "Gives X health."),
-        SellingItem(id: 6, name: "Juice", category: "Foods", price: "15", image: Image("juice"), description: "Gives X health."),
-        SellingItem(id: 7, name: "Jetpack", category: "Backgrounds", price: "170", image: Image("jetpack"), description: "Walking is overrated."),
-        SellingItem(id: 8, name: "Flag", category: "Backgrounds", price: "50", image: Image("flag"), description: "Works great in the wind!"),
-        SellingItem(id: 9, name: "Sand Castle", category: "Backgrounds", price: "65", image: Image("sandcastle"), description: "Watch out for waves!"),
-        SellingItem(id: 10, name: "Floral Glasses", category: "Outfits", price: "80", image: Image("glasses"), description: "100% UV Protection."),
-        SellingItem(id: 11, name: "Pet Chain", category: "Outfits", price: "100", image: Image("chain"), description: "Fashionably tasteful.")
+        SellingItem(id: 3, name: "Dinosaur", category: "Pets", price: "700", image: Image("dinosaur"), description: "Only 250 million years old!"),
+        SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("orange"), description: "Gives 20 health. MAX: 10"),
+        SellingItem(id: 5, name: "Apple", category: "Foods", price: "10", image: Image("apple"), description: "Gives 10 health. MAX: 10"),
+        SellingItem(id: 6, name: "Juice", category: "Foods", price: "20", image: Image("juice"), description: "Gives 10 health. MAX: 10"),
+        SellingItem(id: 7, name: "Jetpack", category: "Backgrounds", price: "400", image: Image("jetpack"), description: "Walking is overrated."),
+        SellingItem(id: 8, name: "Flag", category: "Backgrounds", price: "200", image: Image("flag"), description: "Works great in the wind!"),
+        SellingItem(id: 9, name: "Sand Castle", category: "Backgrounds", price: "300", image: Image("sandcastle"), description: "Watch out for waves!"),
+        SellingItem(id: 10, name: "Floral Glasses", category: "Outfits", price: "250", image: Image("glasses"), description: "100% UV Protection."),
+        SellingItem(id: 11, name: "Pet Chain", category: "Outfits", price: "200", image: Image("chain"), description: "Fashionably tasteful.")
     ]
     
     @Published var showAlert = false
@@ -55,6 +55,10 @@ class storeViewModel: ObservableObject {
             return items.sorted { $0.name < $1.name }
         }
     }
+    /// Function to return amount of currrency after item is bought
+    func subtractFunds(price: Int) {
+        return userCur = userCur - price
+    }
 }
 
 /// Grid for displaying items.
@@ -68,14 +72,6 @@ struct PetStore: View {
         NavigationView {
             VStack {
                 HStack {
-                    Button(action: { // Back Arrow
-                        print("Button tapped (temp)")
-                    }) {
-                        Image(systemName: "arrow.left")
-                            .imageScale(.large)
-                            .foregroundColor(.black)
-                    }
-                    Spacer() // Move "Pet Store" away from back arrow
                     Text("Pet Store")
                         .font(.system(size: 45))
                         .fontWeight(.bold)
