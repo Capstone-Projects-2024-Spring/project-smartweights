@@ -1,11 +1,11 @@
-# example central code that is found online for the pico to act as the peripheral device
+##This is the file we will use for the pico to act as a central for GATT ble.
 
 import bluetooth
 import random
 import struct
 import time
 import micropython
-from ble_advertising import decode_services, decode_name
+from Pico.SampleCode.ble_advertising import decode_services, decode_name
 from micropython import const
 from machine import Pin
 
@@ -34,20 +34,21 @@ _ADV_DIRECT_IND = const(0x01)
 _ADV_SCAN_IND = const(0x02)
 _ADV_NONCONN_IND = const(0x03)
 
-# org.bluetooth.service.environmental_sensing
-_ENV_SENSE_UUID = bluetooth.UUID(0x181A)
-# org.bluetooth.characteristic.temperature
-_TEMP_UUID = bluetooth.UUID(0x2A6E)
-_TEMP_CHAR = (
-    _TEMP_UUID,
+#Will only receive data from a bluetooth peripheral with the same UUID and service.
+
+_PHYSICAL_UUID = bluetooth.UUID(0x183E)
+
+_ACCEL_UUID = bluetooth.UUID(0x2713)
+_ACCEL_DATA = (
+    _ACCEL_UUID,
     bluetooth.FLAG_READ | bluetooth.FLAG_NOTIFY,
 )
-_ENV_SENSE_SERVICE = (
-    _ENV_SENSE_UUID,
-    (_TEMP_CHAR,),
+_ACCEL_SERVICE = (
+    _PHYSICAL_UUID,
+    (_ACCEL_DATA,),
 )
 
-class BLETemperatureCentral:
+class BLEAccelCentral:
     def __init__(self, ble):
         self._ble = ble
         self._ble.active(True)
@@ -84,7 +85,7 @@ class BLETemperatureCentral:
             addr_type, addr, adv_type, rssi, adv_data = data
             if adv_type in (_ADV_IND, _ADV_DIRECT_IND):
                 type_list = decode_services(adv_data)
-                if _ENV_SENSE_UUID in type_list:
+                if _PHYSICAL_UUID in type_list:
                     # Found a potential device, remember it and stop scanning.
                     self._addr_type = addr_type
                     self._addr = bytes(addr)  # Note: addr buffer is owned by caller so need to copy it.
@@ -118,7 +119,7 @@ class BLETemperatureCentral:
         elif event == _IRQ_GATTC_SERVICE_RESULT:
             # Connected device returned a service.
             conn_handle, start_handle, end_handle, uuid = data
-            if conn_handle == self._conn_handle and uuid == _ENV_SENSE_UUID:
+            if conn_handle == self._conn_handle and uuid == _PHYSICAL_UUID:
                 self._start_handle, self._end_handle = start_handle, end_handle
 
         elif event == _IRQ_GATTC_SERVICE_DONE:
@@ -128,12 +129,12 @@ class BLETemperatureCentral:
                     self._conn_handle, self._start_handle, self._end_handle
                 )
             else:
-                print("Failed to find environmental sensing service.")
+                print("Failed to find physical sensing service.")
 
         elif event == _IRQ_GATTC_CHARACTERISTIC_RESULT:
             # Connected device returned a characteristic.
             conn_handle, def_handle, value_handle, properties, uuid = data
-            if conn_handle == self._conn_handle and uuid == _TEMP_UUID:
+            if conn_handle == self._conn_handle and uuid == _ACCEL_UUID:
                 self._value_handle = value_handle
 
         elif event == _IRQ_GATTC_CHARACTERISTIC_DONE:
@@ -143,7 +144,7 @@ class BLETemperatureCentral:
                 if self._conn_callback:
                     self._conn_callback()
             else:
-                print("Failed to find temperature characteristic.")
+                print("Failed to find accelerometer characteristic.")
 
         elif event == _IRQ_GATTC_READ_RESULT:
             # A read completed successfully.
@@ -159,7 +160,7 @@ class BLETemperatureCentral:
             conn_handle, value_handle, status = data
 
         elif event == _IRQ_GATTC_NOTIFY:
-            # The ble_temperature.py demo periodically notifies its value.
+
             conn_handle, value_handle, notify_data = data
             if conn_handle == self._conn_handle and value_handle == self._value_handle:
                 self._update_value(notify_data)
@@ -170,7 +171,7 @@ class BLETemperatureCentral:
     def is_connected(self):
         return self._conn_handle is not None and self._value_handle is not None
 
-    # Find a device advertising the environmental sensor service.
+    # Find a device advertising the physical sensor service.
     def scan(self, callback=None):
         self._addr_type = None
         self._addr = None
@@ -209,9 +210,10 @@ class BLETemperatureCentral:
         self._notify_callback = callback
 
     def _update_value(self, data):
-        # Data is sint16 in degrees Celsius with a resolution of 0.01 degrees Celsius.
+        
         try:
             self._value = struct.unpack("<h", data)[0] / 100
+            ##self._value = 230
         except OSError as error:
             print(error)
 
@@ -230,8 +232,8 @@ def sleep_ms_flash_led(self, flash_count, delay_ms):
         time.sleep_ms(1000)
         delay_ms -= 1000
 
-def print_temp(result):
-    print("read temp: %.2f degc" % result)
+def print_accel(result):
+    print(result)
 
 def demo(ble, central):
     not_found = False
@@ -257,14 +259,14 @@ def demo(ble, central):
 
     # Explicitly issue reads
     while central.is_connected():
-        central.read(callback=print_temp)
+        central.read(callback=print_accel)
         sleep_ms_flash_led(central, 2, 2000)
 
     print("Disconnected")
 
 if __name__ == "__main__":
     ble = bluetooth.BLE()
-    central = BLETemperatureCentral(ble)
+    central = BLEAccelCentral(ble)
     while(True):
         demo(ble, central)
         sleep_ms_flash_led(central, 1, 1000)

@@ -6,7 +6,7 @@ import struct
 import time
 import machine
 import ubinascii
-from ble_advertising import advertising_payload
+from Pico.SampleCode.ble_advertising import advertising_payload
 from micropython import const
 from machine import Pin
 import picoSRC.SampleCode.MPU6050 as MPU6050
