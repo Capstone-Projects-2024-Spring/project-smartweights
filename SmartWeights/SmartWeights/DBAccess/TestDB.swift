@@ -16,10 +16,12 @@ class TestDBViewModel : ObservableObject{
     @Published var userName: String = ""
     @Published var permissionStatus: Bool = false
     @Published var text: String = ""
+    @Published var userRecord: CKRecord.Reference?
     init(){
         getiCloudStatus()
         requestPermission()
         fetchiCloudUserRecordID()
+        fetchCurrentUserRecordID()
     }
     private func getiCloudStatus(){
         CKContainer.default().accountStatus{[weak self] returnedStatus, returnedError in
@@ -74,7 +76,7 @@ class TestDBViewModel : ObservableObject{
     }
     func addItem(name: String){
         let newPet = CKRecord(recordType: "Pet")
-        newPet["pet"] = name
+        newPet["user"] = userRecord
         saveItem(record: newPet)
     }
     private func saveItem(record: CKRecord){
@@ -86,6 +88,18 @@ class TestDBViewModel : ObservableObject{
             }
         }
     }
+    func fetchCurrentUserRecordID() {
+        CKContainer.default().fetchUserRecordID { [weak self] (recordID, error) in
+            DispatchQueue.main.async{
+                if let recordID = recordID {
+                let userRecordReference = CKRecord.Reference(recordID: recordID, action: .none)
+                self?.userRecord = userRecordReference
+            }
+            }
+        }
+        
+    }
+    
 }
 
 
@@ -98,7 +112,8 @@ struct TestDB : View {
         Text("is signed in \(vm.isSignedInToiCloud.description.uppercased())")
         Text(vm.error)
         Text("Permission: \(vm.permissionStatus.description.uppercased())")
-        Text("NAME: : \(vm.userName)")
+        Text("NAME: \(vm.userName)")
+        Text("User Record: \(vm.userRecord)")
         TextField("Name", text: $itemName)
         Button("Add Item") {
             
