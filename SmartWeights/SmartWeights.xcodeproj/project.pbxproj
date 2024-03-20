@@ -21,6 +21,13 @@
 		32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E288592B83CD2800458FB1 /* Calendar.swift */; };
 		32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */; };
 		32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */; };
+		6B8762AB2BA26891005627CE /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762A92BA26891005627CE /* CloudKitManager.swift */; };
+		6B8762AC2BA26891005627CE /* UserRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762AA2BA26891005627CE /* UserRecordManager.swift */; };
+		6B8762AE2BA485C7005627CE /* CloudKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762AD2BA485C7005627CE /* CloudKitService.swift */; };
+		6B8762B02BA4865A005627CE /* TestUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762AF2BA4865A005627CE /* TestUI.swift */; };
+		6B8762B22BA492F1005627CE /* PetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762B12BA492F1005627CE /* PetModel.swift */; };
+		6B8762B42BA49579005627CE /* PetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762B32BA49579005627CE /* PetViewModel.swift */; };
+		6BA2DC482B90FCF500A998FC /* CloudKitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
 		91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7E2B7A7E4700BC62E6 /* ContentView.swift */; };
 		91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91065F802B7A7E4900BC62E6 /* Assets.xcassets */; };
@@ -72,6 +79,13 @@
 		32E288592B83CD2800458FB1 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallProgressGraph.swift; sourceTree = "<group>"; };
 		32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallProgress.swift; sourceTree = "<group>"; };
+		6B8762A92BA26891005627CE /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
+		6B8762AA2BA26891005627CE /* UserRecordManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRecordManager.swift; sourceTree = "<group>"; };
+		6B8762AD2BA485C7005627CE /* CloudKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitService.swift; sourceTree = "<group>"; };
+		6B8762AF2BA4865A005627CE /* TestUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUI.swift; sourceTree = "<group>"; };
+		6B8762B12BA492F1005627CE /* PetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetModel.swift; sourceTree = "<group>"; };
+		6B8762B32BA49579005627CE /* PetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewModel.swift; sourceTree = "<group>"; };
+		6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitTest.swift; sourceTree = "<group>"; };
 		91065F792B7A7E4700BC62E6 /* SmartWeights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWeights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsApp.swift; sourceTree = "<group>"; };
 		91065F7E2B7A7E4700BC62E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -165,6 +179,19 @@
 			path = WorkoutSummaries;
 			sourceTree = "<group>";
 		};
+		6B8762A82BA260C0005627CE /* DBAccess */ = {
+			isa = PBXGroup;
+			children = (
+				6B8762A92BA26891005627CE /* CloudKitManager.swift */,
+				6B8762AA2BA26891005627CE /* UserRecordManager.swift */,
+				6B8762AD2BA485C7005627CE /* CloudKitService.swift */,
+				6B8762B12BA492F1005627CE /* PetModel.swift */,
+				6B8762AF2BA4865A005627CE /* TestUI.swift */,
+				6B8762B32BA49579005627CE /* PetViewModel.swift */,
+			);
+			path = DBAccess;
+			sourceTree = "<group>";
+		};
 		91065F702B7A7E4700BC62E6 = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +217,7 @@
 			children = (
 				918037902BA09AD600802D01 /* bluetooth */,
 				B9A4764A2B8F86A70062CBB6 /* Tutorial */,
+				6B8762A82BA260C0005627CE /* DBAccess */,
 				911899382B8CE0D40071232A /* Workout */,
 				32BDE8EA2B8C130D003A5F5A /* Navbar */,
 				3202761C2B892D04001A86B8 /* pet-customize-page */,
@@ -225,6 +253,7 @@
 			children = (
 				91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */,
 				322B4C042B90CACE00620F4F /* PetPageTest.swift */,
+				6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */,
 			);
 			path = SmartWeightsTests;
 			sourceTree = "<group>";
@@ -414,18 +443,24 @@
 				01A6B0BE2B88F16500D84920 /* MorePageView.swift in Sources */,
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
 				32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */,
+				6B8762B22BA492F1005627CE /* PetModel.swift in Sources */,
+				6B8762B02BA4865A005627CE /* TestUI.swift in Sources */,
+				6B8762AC2BA26891005627CE /* UserRecordManager.swift in Sources */,
 				3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */,
 				918037962BA9026700802D01 /* central.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
+				6B8762AE2BA485C7005627CE /* CloudKitService.swift in Sources */,
 				32BDE8EE2B8C1363003A5F5A /* NavController.swift in Sources */,
 				32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
+				6B8762AB2BA26891005627CE /* CloudKitManager.swift in Sources */,
 				9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */,
 				32BDE8EC2B8C1345003A5F5A /* Navbar.swift in Sources */,
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
 				0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
 				9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */,
+				6B8762B42BA49579005627CE /* PetViewModel.swift in Sources */,
 				01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */,
 				320276222B892D55001A86B8 /* Pet_page.swift in Sources */,
 				9118993A2B8CE1300071232A /* StartWorkout.swift in Sources */,
@@ -439,6 +474,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				322B4C052B90CACE00620F4F /* PetPageTest.swift in Sources */,
+				6BA2DC482B90FCF500A998FC /* CloudKitTest.swift in Sources */,
 				91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -596,6 +632,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SmartWeights/SmartWeights.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SmartWeights/Preview Content\"";
@@ -616,6 +653,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CIS4398.SmartWeights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -628,6 +666,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SmartWeights/SmartWeights.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SmartWeights/Preview Content\"";
@@ -648,6 +687,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CIS4398.SmartWeights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

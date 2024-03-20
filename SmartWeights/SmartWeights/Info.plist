@@ -6,6 +6,8 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>CFBundleIconName</key>
+    <string>AppIcon</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string></string>
 </dict>
