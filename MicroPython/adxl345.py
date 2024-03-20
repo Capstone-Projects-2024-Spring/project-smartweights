@@ -2,13 +2,13 @@ from machine import Pin, I2C
 import time
 import ustruct
 from micropython import const
- 
+
 # Constants
 ADXL345_ADDRESS = const(0x53) # Address for accelerometer on I2C bus
 ADXL345_POWER_CTL = const(0x2D) # Address for power-saving features control
 ADXL345_DATA_FORMAT = const(0x31) # Address for data format control
 ADXL345_DATAX0 = const(0x32) # Address for X-Axis Data 0
- 
+
 # Initialize I2C
 i2c = I2C(0, sda=Pin(0), scl=Pin(1), freq=400000)
 
