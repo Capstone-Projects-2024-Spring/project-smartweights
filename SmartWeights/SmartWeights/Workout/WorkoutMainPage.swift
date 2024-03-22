@@ -2,7 +2,9 @@ import SwiftUI
 ///structure to display the main workout page
 struct WorkoutMainPage: View {
     ///created an instance of the view model
-    @StateObject var viewModel = WorkoutViewModel ()
+    @StateObject var viewModel = WorkoutViewModel()
+    
+    @StateObject var bleManager = BLEManager()
     
     //workout/feedback nav on top of app
     @State private var selectedTab = 0
@@ -20,6 +22,8 @@ struct WorkoutMainPage: View {
                             .foregroundColor(.white)
                         VStack{
                             Button(action:{
+                                
+                                bleManager.scanningToggle = true
                                 viewModel.startTimer()
                                 
                                 viewModel.progress = viewModel.generateRandomNumber()
@@ -29,6 +33,7 @@ struct WorkoutMainPage: View {
                             .accessibilityLabel("startWorkoutButton")
                             Button(action:{
                                 viewModel.stopTimer()
+                                bleManager.scanningToggle = false
                             }){
                                 Text("Finish")
                                 
@@ -50,23 +55,11 @@ struct WorkoutMainPage: View {
             
             
             VStack {
-                HStack { //Title
-                    Button(action: {
-                        
-                        // Handle back button action
-                    }) {
-                        Image(systemName: "arrow.left")
-                            .imageScale(.large)
-                            .foregroundColor(.black)
-                            .padding(.leading)
-                    }
-                    .padding(.trailing, 40)
-                    Spacer()
-                    
+                ZStack { //Title
+                
                     Text("Workout")
                         .font(.title)
                         .bold()
-                        .padding(.trailing, 60)
                     
                     
                     if selectedTab == 0 {
@@ -83,11 +76,7 @@ struct WorkoutMainPage: View {
                             .accessibilityLabel("micWorkoutButton")
                             .padding(.trailing, 42)
                         }
-                    }
-                    else {
-                        Text("")
-                            .padding(.trailing, 12)
-                        Spacer()
+                        .padding(.leading,300)
                     }
                 }
                 
@@ -105,7 +94,8 @@ struct WorkoutMainPage: View {
                 
                 if(selectedTab == 0){
                     // Pass the view model instance to StartWorkout view
-                    StartWorkout(viewModel: viewModel)
+                    StartWorkout(viewModel: viewModel, bleManager: bleManager)
+                
                     
                     Spacer()
                 }

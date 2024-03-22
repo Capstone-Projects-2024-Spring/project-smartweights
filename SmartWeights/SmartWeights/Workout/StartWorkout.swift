@@ -108,7 +108,8 @@ struct CircularProgressView: View {
 struct StartWorkout: View {
     /// Create an instance of the shared view model
     // Create an instance of the shared view model
-    @StateObject var viewModel = WorkoutViewModel()
+    @ObservedObject var viewModel: WorkoutViewModel
+    @ObservedObject var bleManager: BLEManager
     
     var body: some View {
         //user inputting their desired weights, reps and sets
@@ -250,7 +251,7 @@ struct StartWorkout: View {
                     RoundedRectangle(cornerRadius:  25)
                         .frame(width: 100, height: 100)
                         .foregroundColor(.gray)
-                    Text("Velocity")
+                    Text("Accel")
                         .font(.system(size: 14))
                         .bold()
                         .foregroundColor(.white)
@@ -289,8 +290,8 @@ struct StartWorkout: View {
             }
             
         }
-        
-        
+        Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])") // Display the last temperature in the array
+            .padding()
         Spacer()
         
     }
@@ -299,5 +300,5 @@ struct StartWorkout: View {
 
 
 #Preview{
-    StartWorkout()
+    StartWorkout(viewModel: WorkoutViewModel(), bleManager: BLEManager())
 }
