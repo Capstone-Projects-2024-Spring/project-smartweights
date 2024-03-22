@@ -36,8 +36,8 @@ struct Pet_Page: View {
                             Text("Change Food")
                                 .bold()
                                 .font(.system(size: 20))
-                                .frame(width: 130, height: 50)
                         }
+                        .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
                     }
                     .accessibilityIdentifier("ChangeFoodButton")
