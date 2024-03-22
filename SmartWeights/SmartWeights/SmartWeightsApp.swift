@@ -15,6 +15,7 @@ struct SmartWeightsApp: App {
 //            LoginView()
 //               .environment(\.managedObjectContext, persistenceController.container.viewContext)
              TestView()
+//            TestDB()
         }
     }
 }

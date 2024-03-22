@@ -52,7 +52,7 @@ class CloudKitManager {
         case iCloudAccountUnknown
     }
     func saveItem(record: CKRecord){
-        CKContainer.default().privateCloudDatabase.save(record){[weak self] returnedRecord, returnedError in
+        CKContainer.default().publicCloudDatabase.save(record){[weak self] returnedRecord, returnedError in
             print("Record: \(returnedRecord)")
             print("Error: \(returnedError)")
             DispatchQueue.main.async{

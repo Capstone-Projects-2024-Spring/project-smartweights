@@ -8,6 +8,7 @@ class UserRecordManager : ObservableObject {
     @Published var userRecords: [CKRecord] = []
     @Published var permissionStatus: Bool = false
     init(){
+        
         fetchCurrentUserRecordID { error in
             if let error = error {
                 print("Error checking user record existence: \(error)")
@@ -20,7 +21,13 @@ class UserRecordManager : ObservableObject {
                 self.userRecords = records
             }
         }
+        userRecordExistsInUsers { exists, error in
+            if let error = error {
+                print("Error checking user record existence: \(error)")
+            }
+        }
         requestPermission()
+  
     }
     func requestPermission(){
         CKContainer.default().requestApplicationPermission([.userDiscoverability]){
@@ -109,8 +116,8 @@ class UserRecordManager : ObservableObject {
                 return
             }
             
-            let database = CKContainer.default().privateCloudDatabase
-            let predicate = NSPredicate(format: "%K == %@", "Users", userRecord)
+            let database = CKContainer.default().publicCloudDatabase
+            let predicate = NSPredicate(format: "Users == %@", userRecord)
             let query = CKQuery(recordType: "User", predicate: predicate)
             
             database.perform(query, inZoneWith: nil) { (records, error) in
@@ -118,8 +125,11 @@ class UserRecordManager : ObservableObject {
                     completion(false, error)
                 } else if let records = records, !records.isEmpty {
                     completion(true, nil) // userRecord exists in Users record type
+                    print("exists")
+                    print("ExistsRecord: \(records)")
                 } else {
                     completion(false, nil) // userRecord does not exist in Users record type
+                    print("does not exist")
                 }
             }
         }
@@ -127,7 +137,7 @@ class UserRecordManager : ObservableObject {
     let predicate = NSPredicate(value: true) // This predicate matches all records
     let query = CKQuery(recordType: "User", predicate: predicate)
     
-    CKContainer.default().privateCloudDatabase.perform(query, inZoneWith: nil) { (records, error) in
+    CKContainer.default().publicCloudDatabase.perform(query, inZoneWith: nil) { (records, error) in
         DispatchQueue.main.async {
             completion(records, error)
         }
@@ -152,33 +162,34 @@ struct TestView : View {
        var body: some View {
            VStack {
                Text("User Record: \(vm.userRecord?.recordID.recordName ?? "Not available")")
-               
+               Text("Status: \(vm.CKManager.isSignedInToiCloud)")
                Button("addUser") {
                    // vm.addUser(firstName: "smart", lastName: "weights")
-                   let newUser = CKRecord(recordType: "User")
-                   newUser["Users"] = vm.userRecord
-                   newUser["firstName"] = "smart"
-                   vm.CKManager.saveItem(record: newUser)
+                   vm.userRecordExistsInUsers { exists, error in
+                       if let error = error {
+                           print("Error checking user record existence: \(error)")
+                       } else {
+                           userRecordExists = exists
+                            if !userRecordExists {
+                                 let newUser = CKRecord(recordType: "User")
+                                 newUser["Users"] = vm.userRecord
+                                 newUser["firstName"] = "smart"
+                                 vm.CKManager.saveItem(record: newUser)
+                                 print("did save")
+                            }else{
+                                print ("user record exists, not saving")
+                            }
+                       }
+                   }
+                   
+                //    vm.CKManager.saveItem(record: newUser)
                    print("userRecord \(vm.userRecords)")
                }
                List(vm.userRecords, id: \.recordID) { record in
                 Text(record["firstName"] as? String ?? "No name")
             }
-               if userRecordExists {
-                   Text("User record exists in User record type")
-               } else {
-                   Text("User record does not exist in User record type")
-               }
+               
            }
-           .onAppear {
-               // Call the exists function when the view appears
-               vm.userRecordExistsInUsers { exists, error in
-                   if let error = error {
-                       print("Error checking user record existence: \(error)")
-                   } else {
-                       userRecordExists = exists
-                   }
-               }
-           }
+           
        }
 }
