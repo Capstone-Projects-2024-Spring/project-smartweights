@@ -6,6 +6,7 @@ class UserRecordManager : ObservableObject {
     let CKManager = CloudKitManager()
     @Published var userRecord: CKRecord.Reference?
     @Published var userRecords: [CKRecord] = []
+    @Published var permissionStatus: Bool = false
     init(){
         fetchCurrentUserRecordID { error in
             if let error = error {
@@ -17,6 +18,17 @@ class UserRecordManager : ObservableObject {
                 print("Error fetching user records: \(error)")
             } else if let records = records {
                 self.userRecords = records
+            }
+        }
+        requestPermission()
+    }
+    func requestPermission(){
+        CKContainer.default().requestApplicationPermission([.userDiscoverability]){
+            [weak self] returnedStatus, returnedError in
+            DispatchQueue.main.async{
+                if returnedStatus == .granted{
+                    self?.permissionStatus = true
+                }
             }
         }
     }
