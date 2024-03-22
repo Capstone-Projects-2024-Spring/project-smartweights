@@ -36,14 +36,15 @@ struct Pet_Page: View {
                             Text("Change Food")
                                 .bold()
                                 .font(.system(size: 20))
-                                .frame(width: 130, height: 50)
                         }
                         .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity)
                     }
                     .accessibilityIdentifier("ChangeFoodButton")
                     .sheet(isPresented: $viewModel.showFoodSelection) {
                         FoodSelectionView(foodItems: $viewModel.foodItems, selectedFoodIndex: $viewModel.selectedFoodIndex)
                     }
+
                     
                     if viewModel.foodItems.indices.contains(viewModel.selectedFoodIndex) {
                         let selectedFood = viewModel.foodItems[viewModel.selectedFoodIndex]
