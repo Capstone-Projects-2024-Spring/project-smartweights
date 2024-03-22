@@ -5,6 +5,9 @@ import CloudKit
 
 class storeViewModel: ObservableObject {
     
+    var cloudKitManager = CloudKitManager()
+    
+    
     /// Items available in store.
     @Published var items = [
         SellingItem(id: 1, name: "Dog", category: "Pets", price: "500", image: Image("dog"), description: "The best companion!"),
