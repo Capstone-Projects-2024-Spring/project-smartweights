@@ -29,7 +29,7 @@ struct LoginView: View {
                 Spacer()
                 
                 // App title
-                Text("Smart Weight")
+                Text("SmartWeights")
                     .font(.system(size: 55))
                     .foregroundStyle(.white)
                     .italic()
