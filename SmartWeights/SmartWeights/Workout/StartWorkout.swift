@@ -290,6 +290,13 @@ struct StartWorkout: View {
             }
             
         }
+        
+        if bleManager.isConnected{
+            Text("Sensor connected")
+        }
+        else{
+            Text("Sensor disconnected")
+        }
         Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])") // Display the last temperature in the array
             .padding()
         Spacer()
