@@ -3,7 +3,7 @@
 //  SmartWeights
 //
 //  Created by Jonathan Stanczak on 2/16/24.
-//  Last modified: 3/23/24 12:30 PM
+//  Last modified: 3/23/24 1:30 PM
 
 import Foundation
 import SwiftUI
@@ -237,55 +237,54 @@ struct ItemDetailView: View {
                     .padding(.bottom, -5)
                 }
             }
-        }
-        
-        // Item Name
-        Text(item.name)
-            .font(.title)
-            .fontWeight(.bold)
-            .padding(.bottom, 1)
-        
-        // Item Description
-        Text(item.description)
-            .font(.title)
-            .padding(.bottom, 1)
-        
-        // Item Price
-        Text(item.price)
-            .padding(.bottom, 10)
-            .font(.system(size: 30))
-            .foregroundColor(.green)
-        
-        Spacer()
-        
-        Button(action: {
-            // Handle purchase action
-            print("Purchase \(item.name)")
-            viewModel.purchaseItem(item: item)
-        }) {
-            if item.isBought {
-                Text("Purchased")
-                    .padding()
-                    .background(Color.gray)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .font(.system(size: 20))
-            } else {
-                Text("Purchase") // Purchase
-                    .padding()
-                    .background(userCur >= Int(item.price) ?? 0 ? Color.blue : Color.gray)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .font(.system(size: 20))
+            
+            // Item Name
+            Text(item.name)
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.bottom, 1)
+            
+            // Item Description
+            Text(item.description)
+                .font(.title)
+                .padding(.bottom, 1)
+            
+            // Item Price
+            Text(item.price)
+                .padding(.bottom, 10)
+                .font(.system(size: 30))
+                .foregroundColor(.green)
+            
+            Spacer()
+            
+            Button(action: {
+                // Handle purchase action
+                print("Purchase \(item.name)")
+                viewModel.purchaseItem(item: item)
+            }) {
+                if item.isBought {
+                    Text("Purchased")
+                        .padding()
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .font(.system(size: 20))
+                } else {
+                    Text("Purchase") // Purchase
+                        .padding()
+                        .background(userCur >= Int(item.price) ?? 0 ? Color.blue : Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .font(.system(size: 20))
+                }
             }
+            .disabled(userCur < Int(item.price) ?? 0 || item.isBought == true) // Disable button if userCur is less than item price
+            .padding()
         }
-        .disabled(userCur < Int(item.price) ?? 0 || item.isBought == true) // Disable button if userCur is less than item price
-        .padding()
-        .padding(.top, -150) // Add top padding to move the button higher up
     }
 }
 
-/// Preview Pet Store page.
+/// Preview Pet Store page
 #Preview {
     PetStore()
 }
