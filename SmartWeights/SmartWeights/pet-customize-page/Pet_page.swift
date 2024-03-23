@@ -99,7 +99,7 @@ struct Pet_Page: View {
             .navigationBarTitleDisplayMode(.inline)
             .background(NavigationLink(destination: PetStore(), isActive: $viewModel.showShop) { EmptyView() })
             .background(NavigationLink(destination: InventoryView(), isActive: $viewModel.showInventory) { EmptyView() })
-            .background(NavigationLink(destination: CustomizeView(), isActive: $viewModel.showCustomize) { EmptyView() })
+            .background(NavigationLink(destination: Customize_page(), isActive: $viewModel.showCustomize) { EmptyView() })
         }
     }
 }
