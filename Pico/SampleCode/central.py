@@ -1,11 +1,11 @@
-#This is sample code found online
+#This is sample code found online to act as the central device for GATT
 
 import bluetooth
 import random
 import struct
 import time
 import micropython
-from ble_advertising import decode_services, decode_name
+from Pico.SampleCode.ble_advertising import decode_services, decode_name
 from micropython import const
 from machine import Pin
 

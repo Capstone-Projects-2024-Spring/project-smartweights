@@ -1,4 +1,4 @@
-# This will transmits the accel data
+# This is the file that we will use for the project and this will transmits the accel data
 
 import bluetooth
 import random
@@ -6,9 +6,10 @@ import struct
 import time
 import machine
 import ubinascii
-from ble_advertising import advertising_payload
+from Pico.SampleCode.ble_advertising import advertising_payload
 from micropython import const
 from machine import Pin
+import picoSRC.SampleCode.MPU6050 as MPU6050
 
 _IRQ_CENTRAL_CONNECT = const(1)
 _IRQ_CENTRAL_DISCONNECT = const(2)
@@ -34,6 +35,10 @@ _ACCEL_SERVICE = (
     (_ACCEL_DATA,),
 )
 
+##for sensor
+i2c = machine.I2C(0, sda=Pin(0), scl=Pin(1), freq=400000)
+mpu = MPU6050.MPU6050(i2c)
+mpu.wake()
 
 
 # Bluetooth class to send accel data
@@ -73,10 +78,20 @@ class BLEaccel:
     #updates the accel that is read
     #need to implement the accel data
     
-    def update_accel(self, notify=False, indicate=False):
-        num = self._get_accel()
-        print(num)
-        self._ble.gatts_write(self._handle, struct.pack("<h", int(num * 100)))
+    def update_data(self, notify=False, indicate=False):
+        data = self._get_data()  #data = [(x,y,z),(a,b,c)] - tuple data for gyro and accel
+
+        # Initialize an empty byte array to store the packed data
+        packed_data = bytearray()
+
+        # Iterate over each tuple in the data
+        for xyzabc in data:
+            # Pack each set of (x, y, z) and (a, b, c) individually and append to packed_data
+            packed_data.extend(struct.pack("<fff", *xyzabc[:3]))  # Pack the gyro
+            packed_data.extend(struct.pack("<fff", *xyzabc[3:]))  # Pack the accel
+
+        # Write the packed data to the GATT characteristic
+        self._ble.gatts_write(self._handle, packed_data)
         
         if notify or indicate:
             for conn_handle in self._connections:
@@ -95,11 +110,17 @@ class BLEaccel:
         self._ble.gap_advertise(interval_us, adv_data=self._payload)
 
 
-
-    #get the accelerations of x,y,z from the accelerometer
-    def _get_accel(self):
+    #get the data from the MPU
+    def _get_data(self):
         
-        return random.randint(0, 100)
+        data = []
+        gyro = mpu.read_gyro_data()
+        accel = mpu.read_accel_data()
+        print("Gyro: " + str(gyro) + ", Accel: " + str(accel),"        ",end="\r")
+        data.append(gyro)
+        data.append(accel)
+            
+        return data
     
 
     
@@ -114,7 +135,7 @@ def demo():
     led = Pin('LED', Pin.OUT)
     while True:
         if counter % 10 == 0:
-            temp.update_accel(notify=True, indicate=False)
+            temp.update_data(notify=True, indicate=False)
         led.toggle()
         time.sleep_ms(1000)
         counter += 1

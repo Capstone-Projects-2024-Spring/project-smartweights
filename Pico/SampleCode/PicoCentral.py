@@ -1,11 +1,11 @@
-# This example finds and connects to a BLE temperature sensor (e.g. the one in ble_temperature.py).
+##This is the file we will use for the pico to act as a central for GATT ble.
 
 import bluetooth
 import random
 import struct
 import time
 import micropython
-from ble_advertising import decode_services, decode_name
+from Pico.SampleCode.ble_advertising import decode_services, decode_name
 from micropython import const
 from machine import Pin
 
