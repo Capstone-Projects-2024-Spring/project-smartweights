@@ -3,7 +3,7 @@
 //  SmartWeights
 //
 //  Created by Jonathan Stanczak on 2/16/24.
-//  Last modified: 2/25/24 11:50 AM
+//  Last modified: 3/23/24 12:30 PM
 
 import Foundation
 import SwiftUI
@@ -16,6 +16,7 @@ struct SellingItem: Identifiable {
     var price: String
     var image: Image //  property for the image itself
     var description: String
+    var isBought = false
 }
 
 // Will need to change or implement in backend but for now example:
@@ -42,7 +43,7 @@ class storeViewModel: ObservableObject {
     @Published var sortByPrice = false // used for sorting
     @Published var selectedCategory = "Pets" // Default
     let categories = ["Pets", "Foods", "Backgrounds", "Outfits"]
-    @Published var userCur = 550 // Default currency
+    @Published var userCur = 1500 // Default currency
     
     /// Display items based on selected sorting method.
     func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem] {
@@ -56,9 +57,20 @@ class storeViewModel: ObservableObject {
             return items.sorted { $0.name < $1.name }
         }
     }
-    /// Function to return amount of currrency after item is bought
+    
+    /// Function to return amount of currency after item is bought
     func subtractFunds(price: Int) {
-        return userCur = userCur - price
+        userCur = userCur - price
+    }
+    
+    /// Function to handle item purchase
+    func purchaseItem(item: SellingItem) {
+        if let index = items.firstIndex(where: { $0.id == item.id }) {
+            if item.category != "Foods" {
+                items[index].isBought = true
+            }
+            subtractFunds(price: Int(item.price) ?? 0)
+        }
     }
 }
 
@@ -134,7 +146,7 @@ struct PetStore: View {
                 ScrollView {
                     LazyVGrid(columns: gridLayout, spacing: 10) {
                         ForEach(viewModel.sortItems(items: viewModel.items, sortByPrice: viewModel.sortByPrice).filter { $0.category == viewModel.selectedCategory }, id: \.id) { item in
-                            NavigationLink(destination: ItemDetailView(item: item, userCur: viewModel.userCur)) {
+                            NavigationLink(destination: ItemDetailView(item: item, viewModel: viewModel, userCur: viewModel.userCur)) {
                                 VStack {
                                     item.image
                                         .resizable()
@@ -171,71 +183,105 @@ struct PetStore: View {
 
 /// Display view for previewing and purchasing and item.
 struct ItemDetailView: View {
-    let item: SellingItem
+    var item: SellingItem
+    @ObservedObject var viewModel: storeViewModel // Add view model reference
     @State private var canPurchase = false
     let userCur: Int // Add user currency variable
     
     var body: some View {
         VStack {
-            VStack {
-                ZStack { // stack item with current pet
+            VStack { // handles preview logic, currently will default dog if showing background or outfit
+                if(item.category == "Foods") {
                     item.image
                         .resizable()
                         .scaledToFit()
                         .padding(.bottom, 50)
-                    
-                    // Example stacking items
-                    
-                    /*
-                     let image2 = Image("dog")
-                     image2
-                     .resizable()
-                     .scaledToFit()
-                     //.frame(width: 100, height: 100) // Adjust size as needed
-                     .padding(.bottom, 50) // Adjust position as needed
-                     */
-                    
+                } else if(item.category == "Pets") {
+                    item.image
+                        .resizable()
+                        .scaledToFit()
+                        .padding(.bottom, 50)
+                } else if(item.category == "Outfits" || item.category == "Backgrounds") {
+                    ZStack { // if item is jetpack or background, show behind pet
+                        if(item.name == "Jetpack" || item.category == "Backgrounds") {
+                            if(item.category == "Backgrounds") {
+                                item.image
+                                    .resizable()
+                                    .scaledToFit() // change size of background later
+                                    .padding(.bottom, 50)
+                            } else { // jetpack
+                                item.image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding(.bottom, 50)
+                                
+                            }
+                            Image("dog") // Display pet image
+                                .resizable()
+                                .scaledToFit()
+                                .padding(.bottom, 50)
+                            
+                        } else { // outfit that goes in front of pet
+                            Image("dog") // Display pet image
+                                .resizable()
+                                .scaledToFit()
+                                .padding(.bottom, 50)
+                            
+                            item.image
+                                .resizable()
+                                .scaledToFit()
+                                .padding(.bottom, 50)
+                            
+                        }
+                    }
+                    .padding(.bottom, -5)
                 }
-                .padding(.bottom, -5)
             }
-            
-            // Item Name
-            Text(item.name)
-                .font(.title)
-                .fontWeight(.bold)
-                .padding(.bottom, 1)
-            
-            // Item Description
-            Text(item.description)
-                .font(.title)
-                .padding(.bottom, 1)
-            
-            // Item Price
-            Text("\(item.price)")
-                .padding(.bottom, 10)
-                .font(.system(size: 30))
-                .foregroundColor(.green)
-            //.padding()
-            
-            Spacer()
-            
-            // Purchase Button
-            Button(action: {
-                // Handle purchase action
-                print("Purchase \(item.name)")
-            }) {
-                Text("Purchase")
+        }
+        
+        // Item Name
+        Text(item.name)
+            .font(.title)
+            .fontWeight(.bold)
+            .padding(.bottom, 1)
+        
+        // Item Description
+        Text(item.description)
+            .font(.title)
+            .padding(.bottom, 1)
+        
+        // Item Price
+        Text(item.price)
+            .padding(.bottom, 10)
+            .font(.system(size: 30))
+            .foregroundColor(.green)
+        
+        Spacer()
+        
+        Button(action: {
+            // Handle purchase action
+            print("Purchase \(item.name)")
+            viewModel.purchaseItem(item: item)
+        }) {
+            if item.isBought {
+                Text("Purchased")
+                    .padding()
+                    .background(Color.gray)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .font(.system(size: 20))
+            } else {
+                Text("Purchase") // Purchase
                     .padding()
                     .background(userCur >= Int(item.price) ?? 0 ? Color.blue : Color.gray)
                     .foregroundColor(.white)
                     .cornerRadius(10)
                     .font(.system(size: 20))
             }
-            .padding()
-            .padding(.top, -120) // Add top padding to move the button higher up
-            .disabled(userCur < Int(item.price) ?? 0) // Disable button if userCur is less than item price
-            .padding(.top, -30) // Move purchase button higher, can adjust to fit nav bar
         }
+        .disabled(userCur < Int(item.price) ?? 0 || item.isBought == true) // Disable button if userCur is less than item price
+        .padding()
+        .padding(.top, -150) // Add top padding to move the button higher up
     }
 }
 
