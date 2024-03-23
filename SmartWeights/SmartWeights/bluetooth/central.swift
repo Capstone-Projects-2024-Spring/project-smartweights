@@ -16,9 +16,12 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
     private var yCharacteristicUUID = CBUUID(string: "4A42")
     private var zCharacteristicUUID = CBUUID(string: "4A43")
     
+    
     @Published var accelerations: [Int] = [0, 0, 0] // Array to store current acceleration
-    @Published var AllAccelerations: [[Int]] = [[]]
+    @Published var AllAccelerations: [[Int]] = []
     @Published var scanningToggle = false
+    @Published var isConnected = false
+    
     override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -38,8 +41,17 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
         centralManager.connect(peripheral, options: nil)
     }
     
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        // Restart scanning for peripherals when disconnected
+        centralManager.scanForPeripherals(withServices: [serviceUUID], options: nil)
+        self.isConnected = false
+        
+        
+    }
+    
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheral.discoverServices([serviceUUID])
+        self.isConnected = true
         
     }
     
@@ -53,7 +65,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-       
+        
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
                 if characteristic.uuid == xCharacteristicUUID {
@@ -86,6 +98,7 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
                     self.accelerations[1] = acceleration
                 } else if characteristic == self.zCharacteristic {
                     self.accelerations[2] = acceleration
+                    self.AllAccelerations.append(self.accelerations)
                 }
                 
             }
@@ -98,25 +111,38 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
 struct bluetoothView: View {
     @StateObject var bleManager = BLEManager()
     
+    
     var body: some View {
         VStack {
+            if bleManager.isConnected{
+                Text("Sensor connected")
+            }
+            else{
+                Text("Sensor disconnected")
+            }
             Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])") // Display the last temperature in the array
                 .padding()
             
             List {
-                ForEach(0..<bleManager.accelerations.count, id: \.self) { index in
-                    Text("\(index == 0 ? "X" : index == 1 ? "Y" : "Z"): \(bleManager.accelerations[index])")
+                ForEach(bleManager.AllAccelerations, id: \.self) { acceleration in
+                    VStack(alignment: .leading) {
+                        Text("Acceleration:")
+                            .font(.headline)
+                        ForEach(0..<acceleration.count, id: \.self) { index in
+                            Text("\(index == 0 ? "X: " : index == 1 ? "Y: " : "Z: ")\(acceleration[index])")
+                        }
+                    }
                 }
             }
+            .listStyle(InsetGroupedListStyle())
             
-            Text("\(bleManager.AllAccelerations)")
-            Text("\(bleManager.accelerations)")
+            
             
             
             
         }
     }
 }
-    #Preview {
-        bluetoothView()
-    }
+#Preview {
+    bluetoothView()
+}
