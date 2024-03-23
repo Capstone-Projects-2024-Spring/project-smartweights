@@ -14,7 +14,7 @@ struct DateDataPoints: Identifiable {
     var id = UUID().uuidString
     var date: String
     var form: Int
-    var velocity: Int
+    var accel: Int
     var achievement: Int
     var currency: Int
 }
@@ -58,11 +58,11 @@ struct SelectedDateData: View {
     @State var isSheetPresented: Bool = false
     
     var data = [
-        DateDataPoints(date: "2/26/24", form: 20, velocity: 50, achievement: 4, currency: 500),
-        DateDataPoints(date: "2/27/24", form: 60, velocity: 10, achievement: 4, currency: 500),
-        DateDataPoints(date: "2/28/24", form: 30, velocity: 70, achievement: 54, currency: 5020),
-        DateDataPoints(date: "2/29/24", form: 30, velocity: 70, achievement: 54, currency: 5020),
-        DateDataPoints(date: "3/1/24", form: 30, velocity: 720, achievement: 54, currency: 5020)
+        DateDataPoints(date: "2/26/24", form: 20, accel: 50, achievement: 4, currency: 500),
+        DateDataPoints(date: "2/27/24", form: 60, accel: 10, achievement: 4, currency: 500),
+        DateDataPoints(date: "2/28/24", form: 30, accel: 70, achievement: 54, currency: 5020),
+        DateDataPoints(date: "2/29/24", form: 30, accel: 70, achievement: 54, currency: 5020),
+        DateDataPoints(date: "3/1/24", form: 30, accel: 720, achievement: 54, currency: 5020)
         
     ]
     
@@ -94,7 +94,7 @@ struct SelectedDateData: View {
                             }
                             .padding(.bottom, 20)
                             HStack {
-                                Text("Velocity - \(d.velocity)%")
+                                Text("Acceleration - \(d.accel)%")
                                 Image(systemName: "speedometer")
                                     .foregroundColor(.white)
                                     
@@ -194,7 +194,7 @@ struct PostWorkout: View {
                                         isVelocityGraph = true
                                         
                                     }, label: {
-                                        Text("Velocity")
+                                        Text("Acceleration")
                                     })
                                 }
                                 .font(.title2)
@@ -216,7 +216,7 @@ struct PostWorkout: View {
                             }
                             else if isVelocityGraph{
                                 
-                                Text("Velocity Progress")
+                                Text("Acceleration Progress")
                                     .font(.title2)
                                     .bold()
                                 WorkoutGraphVelocity()
@@ -231,7 +231,7 @@ struct PostWorkout: View {
                         HStack{
                             VStack(alignment: .leading){
                                 Text("Overall Form - 80%")
-                                Text("Overall Velocity - 70%")
+                                Text("Overall Acceleration - 70%")
                             }
                             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                             .padding(.leading,20)

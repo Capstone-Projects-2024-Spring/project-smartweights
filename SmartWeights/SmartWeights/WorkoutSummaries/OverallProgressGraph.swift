@@ -19,7 +19,7 @@ struct FormDataPoints: Identifiable {
 }
 
 
-struct VelocityDataPoints: Identifiable {
+struct AccelerationDataPoints: Identifiable {
     
     var id = UUID().uuidString
     var date: String
@@ -81,24 +81,24 @@ struct WorkoutGraphForm: View {
 struct WorkoutGraphVelocity: View {
     
     var data = [
-        VelocityDataPoints(date: "2/2/24", form: 90),
-        VelocityDataPoints(date: "2/3/24", form: 98),
-        VelocityDataPoints(date: "2/4/24", form: 90),
-        VelocityDataPoints(date: "2/5/24", form: 98),
-        VelocityDataPoints(date: "2/6/24", form: 56),
-        VelocityDataPoints(date: "2/7/24", form: 88),
-        VelocityDataPoints(date: "2/10/24", form: 90),
-        VelocityDataPoints(date: "2/22/24", form: 90),
-        VelocityDataPoints(date: "3/5/24", form: 98),
-        VelocityDataPoints(date: "3/6/24", form: 56),
-        VelocityDataPoints(date: "3/7/24", form: 88),
-        VelocityDataPoints(date: "3/10/24", form: 90),
-        VelocityDataPoints(date: "4/10/24", form: 90),
-        VelocityDataPoints(date: "4/22/24", form: 90),
-        VelocityDataPoints(date: "5/5/24", form: 98),
-        VelocityDataPoints(date: "5/6/24", form: 56),
-        VelocityDataPoints(date: "5/7/24", form: 88),
-        VelocityDataPoints(date: "5/10/24", form: 90)
+        AccelerationDataPoints(date: "2/2/24", form: 90),
+        AccelerationDataPoints(date: "2/3/24", form: 98),
+        AccelerationDataPoints(date: "2/4/24", form: 90),
+        AccelerationDataPoints(date: "2/5/24", form: 98),
+        AccelerationDataPoints(date: "2/6/24", form: 56),
+        AccelerationDataPoints(date: "2/7/24", form: 88),
+        AccelerationDataPoints(date: "2/10/24", form: 90),
+        AccelerationDataPoints(date: "2/22/24", form: 90),
+        AccelerationDataPoints(date: "3/5/24", form: 98),
+        AccelerationDataPoints(date: "3/6/24", form: 56),
+        AccelerationDataPoints(date: "3/7/24", form: 88),
+        AccelerationDataPoints(date: "3/10/24", form: 90),
+        AccelerationDataPoints(date: "4/10/24", form: 90),
+        AccelerationDataPoints(date: "4/22/24", form: 90),
+        AccelerationDataPoints(date: "5/5/24", form: 98),
+        AccelerationDataPoints(date: "5/6/24", form: 56),
+        AccelerationDataPoints(date: "5/7/24", form: 88),
+        AccelerationDataPoints(date: "5/10/24", form: 90)
         
     ]
     
@@ -109,7 +109,7 @@ struct WorkoutGraphVelocity: View {
             Chart{
                 ForEach(data){ d in
                     LineMark(x: PlottableValue.value("date", d.date),
-                             y: .value("Velocity", d.form))
+                             y: .value("Acceleration", d.form))
                 }
             }
             
@@ -118,7 +118,7 @@ struct WorkoutGraphVelocity: View {
                     .bold()
             }
             .chartYAxisLabel(position: .leading, alignment: .center) {
-                Text("Velocity  accuracy (%)")
+                Text("Acceleration  accuracy (%)")
                     .bold()
                 
             }
