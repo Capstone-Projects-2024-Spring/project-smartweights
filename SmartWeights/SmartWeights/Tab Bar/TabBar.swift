@@ -15,7 +15,7 @@ enum Tab1: String, CaseIterable {
     case profile = "person"
     case more = "ellipsis"
     
-    /// Function getView() returns the tab's associated view
+    /// Function getView() returns the tab's associated view.
     func getView() -> some View {
         switch self {
         case .home:
@@ -32,6 +32,7 @@ enum Tab1: String, CaseIterable {
     }
 }
 
+/// Struct TabBar implements the Tab enumeration and TabView to create a navigable tab bar.
 struct TabBar: View {
     var body: some View {
         TabView {
