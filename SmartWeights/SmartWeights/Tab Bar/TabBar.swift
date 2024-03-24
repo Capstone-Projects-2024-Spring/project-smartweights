@@ -12,8 +12,8 @@ enum Tab: String, CaseIterable {
     case home = "house"
     case pet = "pawprint"
     case workout = "dumbbell"
-    case profile = "person"
-    case settings = "gearshape" // alt: case more = "ellipsis"
+    case challenges = "target"
+    case profile = "person" // alt: case more = "ellipsis"
     
     /// Function getView() returns the tab's associated view.
     func getView(tabBar: TabBar) -> some View {
@@ -24,10 +24,10 @@ enum Tab: String, CaseIterable {
             return AnyView(Pet_Page())
         case .workout:
             return AnyView(WorkoutMainPage())
+        case .challenges:
+            return AnyView(ChallengesTab())
         case .profile:
             return AnyView(MorePageView())
-        case .settings:
-            return AnyView(SettingsPageView())
         }
     }
 }
