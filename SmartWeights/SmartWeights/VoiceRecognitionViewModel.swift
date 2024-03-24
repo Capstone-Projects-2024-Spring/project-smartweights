@@ -49,9 +49,13 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
                     if bestString.contains("start workout") {
                         // Detected "start workout" command, initiate workout
                         self.startWorkout()
-
-                        isFinal = true
+                    } else if bestString.contains("finish workout") {
+                        // Detected "finish workout" command, stop workout
+                        self.stopWorkout()
                     }
+                    
+                    
+                    isFinal = result.isFinal
                 }
                 
                 if error != nil || isFinal {
@@ -73,11 +77,14 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
     private func startWorkout() {
         // Call your ViewModel or Model function to start the workout
         print("Workout started!")
-      
-        // Synthesize speech
-//               let speechUtterance = AVSpeechUtterance(string: "Workout started")
-//               speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-//               speechSynthesizer.speak(speechUtterance)
         
+        // Synthesize speech
+        //               let speechUtterance = AVSpeechUtterance(string: "Workout started")
+        //               speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        //               speechSynthesizer.speak(speechUtterance)
+        
+    }
+    private func stopWorkout(){
+        print("Workout Stopped!")
     }
 }

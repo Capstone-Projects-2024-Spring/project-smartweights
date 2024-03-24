@@ -3,8 +3,9 @@ import SwiftUI
 struct WorkoutMainPage: View {
     ///created an instance of the view model
     @StateObject var viewModel = WorkoutViewModel()
-    
+    @StateObject var voiceVM = VoiceRecognitionViewModel()
     @StateObject var bleManager = BLEManager()
+    
     
     //workout/feedback nav on top of app
     @State private var selectedTab = 0
@@ -14,45 +15,45 @@ struct WorkoutMainPage: View {
     var body: some View {
         ZStack{
             //temp for starting and ending workout until we implement Siri
-            VStack{
-                if(isExpanded && selectedTab == 0){
-                    ZStack{
-                        Rectangle()
-                            .frame(width: 70, height: 50)
-                            .foregroundColor(.white)
-                        VStack{
-                            Button(action:{
-                                
-                                bleManager.scanningToggle = true
-                                viewModel.startTimer()
-                                
-                                viewModel.progress = viewModel.generateRandomNumber()
-                            }){
-                                Text("Start")
-                            }
-                            .accessibilityLabel("startWorkoutButton")
-                            Button(action:{
-                                viewModel.stopTimer()
-                                bleManager.scanningToggle = false
-                            }){
-                                Text("Finish")
-                                
-                            }
-                            .accessibilityLabel("endWorkoutButton")
+//            VStack{
+//                if(isExpanded && selectedTab == 0){
+//                    ZStack{
+//                        Rectangle()
+//                            .frame(width: 70, height: 50)
+//                            .foregroundColor(.white)
+//                        VStack{
+//                            Button(action:{
+//                                
+//                                bleManager.scanningToggle = true
+//                                viewModel.startTimer()
+//                                
+//                                viewModel.progress = viewModel.generateRandomNumber()
+//                            }){
+//                                Text("Start")
+//                            }
+//                            .accessibilityLabel("startWorkoutButton")
+//                            Button(action:{
+//                                viewModel.stopTimer()
+//                                bleManager.scanningToggle = false
+//                            }){
+//                                Text("Finish")
+//                                
+//                            }
+//                            .accessibilityLabel("endWorkoutButton")
                             
-                        }
-                    }
-                }
-                else{
-                    
-                    Text("")
-                    
-                }
-            }
-            .padding(.bottom,500)
-            .padding(.leading, 280)
-            
-            
+//                        }
+//                    }
+//                }
+//                else{
+//                    
+//                    Text("")
+//                    
+//                }
+//            }
+//            .padding(.bottom,500)
+//            .padding(.leading, 280)
+//            
+//            
             
             VStack {
                 ZStack { //Title
@@ -67,7 +68,9 @@ struct WorkoutMainPage: View {
                             Button(action: {
                                 
                                 // Start workout button action
-                                isExpanded.toggle()
+//                                isExpanded.toggle()
+                                voiceVM.startListening()
+                                
                             }) {
                                 Image(systemName: "mic.circle")
                                     .resizable()
