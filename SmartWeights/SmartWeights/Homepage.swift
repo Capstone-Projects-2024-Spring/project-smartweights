@@ -12,6 +12,12 @@ var currentWorkout = "Dumbbell Press"
 /// The homepage view of the SmartWeights app.
 struct Homepage: View {
     
+    let tabBar: TabBar
+    
+    init(tabBar: TabBar) {
+        self.tabBar = tabBar
+    }
+    
     var body: some View {
         VStack {
             

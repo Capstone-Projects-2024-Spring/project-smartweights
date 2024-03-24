@@ -16,10 +16,10 @@ enum Tab1: String, CaseIterable {
     case settings = "gearshape" // alt: case more = "ellipsis"
     
     /// Function getView() returns the tab's associated view.
-    func getView() -> some View {
+    func getView(tabBar: TabBar) -> some View {
         switch self {
         case .home:
-            return AnyView(Homepage())
+            return AnyView(Homepage(tabBar: tabBar))
         case .pet:
             return AnyView(Pet_Page())
         case .workout:
@@ -36,10 +36,14 @@ enum Tab1: String, CaseIterable {
 struct TabBar: View {
     @State private var selectedTab: Tab1 = .home
     
+    func changeTab(to tab: Tab1) {
+        self.selectedTab = tab
+    }
+    
     var body: some View {
         TabView (selection: $selectedTab) {
             ForEach(Tab1.allCases, id: \.self) { tab in
-                tab.getView()
+                tab.getView(tabBar: self)
                     .tabItem {
                         Label(String(describing: tab).capitalized, systemImage: tab.rawValue)
                     }
