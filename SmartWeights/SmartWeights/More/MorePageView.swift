@@ -17,6 +17,7 @@ struct MorePageView: View {
         Achievement(title: "Achievement 5", description: "", img: "trophy.circle"),
         Achievement(title: "Achievement 6", description: "", img: "trophy.circle")
     ]
+    @State private var showSettings = false
     
     var body: some View {
         NavigationStack {
@@ -87,8 +88,8 @@ struct MorePageView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Settings", systemImage: "gearshape") {
-                        
+                    NavigationLink(destination: SettingsPageView()) {
+                        Image(systemName: "gearshape")
                     }
                 }
             }

@@ -129,13 +129,6 @@ struct SettingsPageView: View {
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Back", systemImage: "arrowshape.backward.fill") {
-                        // Implement back button functionality
-                    }
-                }
-            }
         }
     }
 }
