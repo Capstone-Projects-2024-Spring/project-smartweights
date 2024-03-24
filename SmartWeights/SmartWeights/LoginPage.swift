@@ -12,12 +12,10 @@ struct LoginView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var showingAlert = false // For testing the sign in button
     @State private var alertMessage = ""
-    
     @AppStorage("email") var email: String = ""
     @AppStorage("firstName") var firstName: String = ""
     @AppStorage("lastName") var lastName: String = ""
     @AppStorage("userID") var userID: String = ""
-    
     @State private var isLoggedIn = false // Tracking login status
     
     var body: some View {
@@ -55,25 +53,12 @@ struct LoginView: View {
                 } onCompletion: { result in
                     switch result {
                     case .success(let auth):
-                        switch auth.credential{
-                        case let credential as ASAuthorizationAppleIDCredential:
-                            // user info
-                            let firstName = credential.fullName?.givenName
-                            let lastName = credential.fullName?.familyName
-                            let email = credential.email
-                            
-                            // user id
-                            let userID = credential.user
-                            
-                            self.email = email ?? ""
-                            self.userID = userID
-                            self.firstName = firstName ?? ""
-                            self.lastName = lastName ?? ""
-                            
+                        if let credential = auth.credential as? ASAuthorizationAppleIDCredential {
+                            self.email = credential.email ?? ""
+                            self.firstName = credential.fullName?.givenName ?? ""
+                            self.lastName = credential.fullName?.familyName ?? ""
+                            self.userID = credential.user
                             self.isLoggedIn = true
-                            
-                        default:
-                            break
                         }
                     case .failure(let error):
                         print(error)
@@ -81,11 +66,9 @@ struct LoginView: View {
                         showingAlert = true
                     }
                 }
-                .signInWithAppleButtonStyle(
-                    colorScheme == .dark ? .white : .black
-                ) // Adjust the style
+                .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
                 .frame(width: 280, height: 45)
-                .shadow(radius: 5) // Add shadow
+                .shadow(radius: 5)
                 .padding()
                 .alert(isPresented: $showingAlert) {
                     Alert(title: Text("Sign In"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
@@ -95,9 +78,9 @@ struct LoginView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         // Show TabBar view upon successful login
-        .fullScreenCover(isPresented: $isLoggedIn, content: {
+        .fullScreenCover(isPresented: $isLoggedIn) {
             TabBar()
-        })
+        }
     }
 }
 
