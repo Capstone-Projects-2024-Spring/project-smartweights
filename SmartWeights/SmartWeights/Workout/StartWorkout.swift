@@ -108,7 +108,8 @@ struct CircularProgressView: View {
 struct StartWorkout: View {
     /// Create an instance of the shared view model
     // Create an instance of the shared view model
-    @StateObject var viewModel = WorkoutViewModel()
+    @ObservedObject var viewModel: WorkoutViewModel
+    @ObservedObject var bleManager: BLEManager
     
     var body: some View {
         //user inputting their desired weights, reps and sets
@@ -120,9 +121,7 @@ struct StartWorkout: View {
         
         HStack{
             VStack{
-                Text("Sets")
-                    .bold()
-                TextField("", text: $viewModel.inputtedSets)
+                TextField("Sets", text: $viewModel.inputtedSets)
                     .keyboardType(.numberPad)
                     .onReceive(Just(viewModel.inputtedSets)) { newValue in
                         let filtered = newValue.filter { "0123456789".contains($0) }
@@ -130,6 +129,7 @@ struct StartWorkout: View {
                             viewModel.inputtedSets = filtered
                         }
                     }
+                    .bold()
                     .textFieldStyle(.roundedBorder)
                     .frame(width:80)
                     .font(.system(size: 14))
@@ -137,9 +137,7 @@ struct StartWorkout: View {
             }
             
             VStack{
-                Text("Repitions")
-                    .bold()
-                TextField("", text: $viewModel.inputtedReps)
+                TextField("Reps", text: $viewModel.inputtedReps)
                     .keyboardType(.numberPad)
                     .onReceive(Just(viewModel.inputtedReps)) { newValue in
                         let filtered = newValue.filter { "0123456789".contains($0) }
@@ -147,15 +145,14 @@ struct StartWorkout: View {
                             viewModel.inputtedReps = filtered
                         }
                     }
+                    .bold()
                     .textFieldStyle(.roundedBorder)
                     .frame(width:80)
                     .font(.system(size: 14))
                 
             }
             VStack{
-                Text("Pounds")
-                    .bold()
-                TextField("", text: $viewModel.inputtedWeights)
+                TextField("lbs", text: $viewModel.inputtedWeights)
                     .keyboardType(.numberPad)
                     .onReceive(Just(viewModel.inputtedWeights)) { newValue in
                         let filtered = newValue.filter { "0123456789".contains($0) }
@@ -163,6 +160,7 @@ struct StartWorkout: View {
                             viewModel.inputtedWeights = filtered
                         }
                     }
+                    .bold()
                     .textFieldStyle(.roundedBorder)
                     .frame(width:80)
                     .font(.system(size: 14))
@@ -187,6 +185,7 @@ struct StartWorkout: View {
                             .font(.system(size: 14))
                             .bold()
                             .padding(.bottom,70)
+                            .foregroundColor(.white)
                         
                     }
                     Text("\(viewModel.hours):\(viewModel.minutes):\(viewModel.seconds)")
@@ -206,12 +205,12 @@ struct StartWorkout: View {
                             .font(.system(size: 14))
                             .bold()
                             .padding(.bottom, 50)
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             
                         Text("\(viewModel.inputtedSets)")
                         .padding(.top, 20)
                         .bold()
-                        .foregroundColor(.black)
+                        .foregroundColor(.white)
                     
                 }
                
@@ -243,7 +242,7 @@ struct StartWorkout: View {
                     Text("Form")
                         .font(.system(size: 14))
                         .bold()
-                        .foregroundColor(.red)
+                        .foregroundColor(.white)
                     CircularProgressView(progress: viewModel.progress)
                         .frame(width: 100, height: 100)
                     
@@ -252,10 +251,10 @@ struct StartWorkout: View {
                     RoundedRectangle(cornerRadius:  25)
                         .frame(width: 100, height: 100)
                         .foregroundColor(.gray)
-                    Text("Velocity")
+                    Text("Accel")
                         .font(.system(size: 14))
                         .bold()
-                        .foregroundColor(.red)
+                        .foregroundColor(.white)
                     CircularProgressView(progress: viewModel.progress)
                         .frame(width: 100, height: 100)
                 }
@@ -292,7 +291,14 @@ struct StartWorkout: View {
             
         }
         
-        
+        if bleManager.isConnected{
+            Text("Sensor connected")
+        }
+        else{
+            Text("Sensor disconnected")
+        }
+        Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])") // Display the last temperature in the array
+            .padding()
         Spacer()
         
     }
@@ -301,5 +307,5 @@ struct StartWorkout: View {
 
 
 #Preview{
-    StartWorkout()
+    StartWorkout(viewModel: WorkoutViewModel(), bleManager: BLEManager())
 }

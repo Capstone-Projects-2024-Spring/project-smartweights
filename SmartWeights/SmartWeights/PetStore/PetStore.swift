@@ -3,7 +3,7 @@
 //  SmartWeights
 //
 //  Created by Jonathan Stanczak on 2/16/24.
-//  Last modified: 2/25/24 11:50 AM
+//  Last modified: 3/23/24 1:30 PM
 
 import Foundation
 import SwiftUI
@@ -16,6 +16,7 @@ struct SellingItem: Identifiable {
     var price: String
     var image: Image //  property for the image itself
     var description: String
+    var isBought = false
 }
 
 // Will need to change or implement in backend but for now example:
@@ -24,24 +25,25 @@ class storeViewModel: ObservableObject {
     
     /// Items available in store.
     @Published var items = [
-        SellingItem(id: 1, name: "Dog", category: "Pets", price: "600", image: Image("dog"), description: "The best companion!"),
+        SellingItem(id: 1, name: "Dog", category: "Pets", price: "500", image: Image("dog"), description: "The best companion!"),
         SellingItem(id: 2, name: "Cat", category: "Pets", price: "500", image: Image("cat"), description: "Has 9 lives!"),
-        SellingItem(id: 3, name: "Dinosaur", category: "Pets", price: "750", image: Image("dinosaur"), description: "Only 250 million years old!"),
-        SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("orange"), description: "Gives X health."),
-        SellingItem(id: 5, name: "Apple", category: "Foods", price: "20", image: Image("apple"), description: "Gives X health."),
-        SellingItem(id: 6, name: "Juice", category: "Foods", price: "15", image: Image("juice"), description: "Gives X health."),
-        SellingItem(id: 7, name: "Jetpack", category: "Backgrounds", price: "170", image: Image("jetpack"), description: "Walking is overrated."),
-        SellingItem(id: 8, name: "Flag", category: "Backgrounds", price: "50", image: Image("flag"), description: "Works great in the wind!"),
-        SellingItem(id: 9, name: "Sand Castle", category: "Backgrounds", price: "65", image: Image("sandcastle"), description: "Watch out for waves!"),
-        SellingItem(id: 10, name: "Floral Glasses", category: "Outfits", price: "80", image: Image("glasses"), description: "100% UV Protection."),
-        SellingItem(id: 11, name: "Pet Chain", category: "Outfits", price: "100", image: Image("chain"), description: "Fashionably tasteful.")
+        SellingItem(id: 3, name: "Dinosaur", category: "Pets", price: "700", image: Image("dinosaur"), description: "Only 250 million years old!"),
+        SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("orange"), description: "Gives 20 health. MAX: 10"),
+        SellingItem(id: 5, name: "Apple", category: "Foods", price: "10", image: Image("apple"), description: "Gives 10 health. MAX: 10"),
+        SellingItem(id: 6, name: "Juice", category: "Foods", price: "20", image: Image("juice"), description: "Gives 10 health. MAX: 10"),
+        SellingItem(id: 7, name: "Jetpack", category: "Outfits", price: "400", image: Image("jetpack"), description: "Walking is overrated."),
+        SellingItem(id: 8, name: "Royal", category: "Backgrounds", price: "200", image: Image("Royal"), description: "For kings and queens."),
+        SellingItem(id: 9, name: "Festive", category: "Backgrounds", price: "300", image: Image("Festive"), description: "Glows bright at night!"),
+        SellingItem(id: 10, name: "Bamboo", category: "Backgrounds", price: "400", image: Image("Bamboo"), description: "Grows very fast!"),
+        SellingItem(id: 11, name: "Floral Glasses", category: "Outfits", price: "250", image: Image("glasses"), description: "100% UV Protection."),
+        SellingItem(id: 12, name: "Pet Chain", category: "Outfits", price: "200", image: Image("chain"), description: "Fashionably tasteful.")
     ]
     
     @Published var showAlert = false
     @Published var sortByPrice = false // used for sorting
     @Published var selectedCategory = "Pets" // Default
     let categories = ["Pets", "Foods", "Backgrounds", "Outfits"]
-    @Published var userCur = 550 // Default currency
+    @Published var userCur = 1500 // Default currency
     
     /// Display items based on selected sorting method.
     func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem] {
@@ -53,6 +55,21 @@ class storeViewModel: ObservableObject {
             }
         } else {
             return items.sorted { $0.name < $1.name }
+        }
+    }
+    
+    /// Function to return amount of currency after item is bought
+    func subtractFunds(price: Int) {
+        userCur = userCur - price
+    }
+    
+    /// Function to handle item purchase
+    func purchaseItem(item: SellingItem) {
+        if let index = items.firstIndex(where: { $0.id == item.id }) {
+            if item.category != "Foods" {
+                items[index].isBought = true
+            }
+            subtractFunds(price: Int(item.price) ?? 0)
         }
     }
 }
@@ -68,14 +85,6 @@ struct PetStore: View {
         NavigationView {
             VStack {
                 HStack {
-                    Button(action: { // Back Arrow
-                        print("Button tapped (temp)")
-                    }) {
-                        Image(systemName: "arrow.left")
-                            .imageScale(.large)
-                            .foregroundColor(.black)
-                    }
-                    Spacer() // Move "Pet Store" away from back arrow
                     Text("Pet Store")
                         .font(.system(size: 45))
                         .fontWeight(.bold)
@@ -129,7 +138,7 @@ struct PetStore: View {
                 ScrollView {
                     LazyVGrid(columns: gridLayout, spacing: 10) {
                         ForEach(viewModel.sortItems(items: viewModel.items, sortByPrice: viewModel.sortByPrice).filter { $0.category == viewModel.selectedCategory }, id: \.id) { item in
-                            NavigationLink(destination: ItemDetailView(item: item, userCur: viewModel.userCur)) {
+                            NavigationLink(destination: ItemDetailView(item: item, viewModel: viewModel, userCur: viewModel.userCur)) {
                                 VStack {
                                     item.image
                                         .resizable()
@@ -166,31 +175,59 @@ struct PetStore: View {
 
 /// Display view for previewing and purchasing and item.
 struct ItemDetailView: View {
-    let item: SellingItem
+    var item: SellingItem
+    @ObservedObject var viewModel: storeViewModel // Add view model reference
     @State private var canPurchase = false
     let userCur: Int // Add user currency variable
     
     var body: some View {
         VStack {
-            VStack {
-                ZStack { // stack item with current pet
+            VStack { // handles preview logic, currently will default dog if showing background or outfit
+                if(item.category == "Foods") {
                     item.image
                         .resizable()
                         .scaledToFit()
                         .padding(.bottom, 50)
-                    
-                    // Example stacking items
-                    /*
-                     let image2 = Image("glasses")
-                     image2
-                     .resizable()
-                     .scaledToFit()
-                     //.frame(width: 100, height: 100) // Adjust size as needed
-                     .padding(.bottom, 50) // Adjust position as needed
-                     */
-                    
+                } else if(item.category == "Pets") {
+                    item.image
+                        .resizable()
+                        .scaledToFit()
+                        .padding(.bottom, 50)
+                } else if(item.category == "Outfits" || item.category == "Backgrounds") {
+                    ZStack { // if item is jetpack or background, show behind pet
+                        if(item.name == "Jetpack" || item.category == "Backgrounds") {
+                            if(item.category == "Backgrounds") {
+                                item.image
+                                    .resizable()
+                                    .scaledToFit() // change size of background later
+                                    .padding(.bottom, 50)
+                            } else { // jetpack
+                                item.image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding(.bottom, 50)
+                                
+                            }
+                            Image("dog") // Display pet image
+                                .resizable()
+                                .scaledToFit()
+                                .padding(.bottom, 50)
+                            
+                        } else { // outfit that goes in front of pet
+                            Image("dog") // Display pet image
+                                .resizable()
+                                .scaledToFit()
+                                .padding(.bottom, 50)
+                            
+                            item.image
+                                .resizable()
+                                .scaledToFit()
+                                .padding(.bottom, 50)
+                            
+                        }
+                    }
+                    .padding(.bottom, -5)
                 }
-                .padding(.bottom, -5)
             }
             
             // Item Name
@@ -205,35 +242,41 @@ struct ItemDetailView: View {
                 .padding(.bottom, 1)
             
             // Item Price
-            Text("\(item.price)")
+            Text(item.price)
                 .padding(.bottom, 10)
                 .font(.system(size: 30))
                 .foregroundColor(.green)
-            //.padding()
             
             Spacer()
             
-            // Purchase Button
             Button(action: {
                 // Handle purchase action
                 print("Purchase \(item.name)")
+                viewModel.purchaseItem(item: item)
             }) {
-                Text("Purchase")
-                    .padding()
-                    .background(userCur >= Int(item.price) ?? 0 ? Color.blue : Color.gray)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .font(.system(size: 20))
+                if item.isBought {
+                    Text("Purchased")
+                        .padding()
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .font(.system(size: 20))
+                } else {
+                    Text("Purchase") // Purchase
+                        .padding()
+                        .background(userCur >= Int(item.price) ?? 0 ? Color.blue : Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .font(.system(size: 20))
+                }
             }
+            .disabled(userCur < Int(item.price) ?? 0 || item.isBought == true) // Disable button if userCur is less than item price
             .padding()
-            .padding(.top, -120) // Add top padding to move the button higher up
-            .disabled(userCur < Int(item.price) ?? 0) // Disable button if userCur is less than item price
-            .padding(.top, -30) // Move purchase button higher, can adjust to fit nav bar
         }
     }
 }
 
-/// Preview Pet Store page.
+/// Preview Pet Store page
 #Preview {
     PetStore()
 }
