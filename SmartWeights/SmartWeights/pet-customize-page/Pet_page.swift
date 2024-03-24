@@ -69,11 +69,11 @@ struct Pet_Page: View {
                 }
                 .padding(.horizontal, 25)
                 
-                Image("Panda")
+                Image("dog")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 500, height: 450, alignment: .center)
-                    .padding(.bottom, -30)
+                    .frame(width: 500, height: 400, alignment: .center)
+                    .padding(.bottom, 0)
                 
                 VStack {
                     CustomProgressView(value: viewModel.healthBar, maxValue: 1.0, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)

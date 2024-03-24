@@ -218,6 +218,10 @@ struct StartWorkout: View {
             }
             Spacer()
             ZStack {
+                Image("dog")
+                    .resizable()
+                .frame(width: 140, height: 140)
+                /*
                 Image("jetpack")
                     .resizable()
                 .frame(width: 140, height: 140)
@@ -229,7 +233,7 @@ struct StartWorkout: View {
                 Image("glasses")
                     .resizable()
                 .frame(width: 140, height: 140)
-                
+                */
                 
             }
             Spacer()
