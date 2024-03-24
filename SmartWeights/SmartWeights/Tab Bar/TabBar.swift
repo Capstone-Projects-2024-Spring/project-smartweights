@@ -34,14 +34,12 @@ enum Tab1: String, CaseIterable {
 
 struct TabBar: View {
     var body: some View {
-        HStack {
+        TabView {
             ForEach(Tab1.allCases, id: \.self) { tab in
-                Spacer()
-                VStack {
-                    Image(systemName: tab.rawValue)
-                    Text(String(describing: tab))
-                }
-                Spacer()
+                tab.getView()
+                    .tabItem {
+                        Label(String(describing: tab), systemImage: tab.rawValue)
+                    }
             }
         }
     }
