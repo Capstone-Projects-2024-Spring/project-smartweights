@@ -32,31 +32,33 @@ struct Homepage: View {
             }
             
             // Start Workout Button
-            ZStack {
-                HStack {
-                    VStack (alignment: .leading) {
-                        HStack {
-                            Text("Start Workout")
-                                .font(.title2)
-                            Image(systemName: "arrow.right")
-                                .foregroundStyle(Color.africanViolet)
+            Button { tabBar.changeTab(to: .workout) }
+            label: {
+                ZStack {
+                    HStack {
+                        VStack (alignment: .leading) {
+                            HStack {
+                                Text("Start Workout")
+                                    .font(.title2)
+                                Image(systemName: "arrow.right")
+                                    .foregroundStyle(Color.africanViolet)
+                            }
+                            Text(currentWorkout)
+                                .foregroundStyle(Color.lightGray)
+                                .font(.subheadline)
                         }
-                        Text(currentWorkout)
-                            .foregroundStyle(Color.lightGray)
-                            .font(.subheadline)
-                    }
-                    .padding()
-                    Spacer()
-                    Image(systemName: "photo")
-                        .foregroundStyle(Color.lightGray)
                         .padding()
+                        Spacer()
+                        Image(systemName: "photo")
+                            .foregroundStyle(Color.lightGray)
+                            .padding()
+                    }
+                    .foregroundStyle(.white)
                 }
-                .foregroundStyle(.white)
+                .background(Color.darkGray)
+                .cornerRadius(12)
+                .padding()
             }
-            .background(Color.darkGray)
-            .cornerRadius(12)
-            .padding()
-            
             // Navigation Carousel
             VStack (alignment: .leading) {
                 Text("App Features")
@@ -138,6 +140,6 @@ struct Homepage: View {
 
 struct Homepage_Previews: PreviewProvider {
     static var previews: some View {
-        Homepage()
+        Homepage(tabBar: TabBar())
     }
 }
