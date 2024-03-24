@@ -43,6 +43,7 @@ struct TabBar: View {
                     }
             }
         }
+        .tint(.africanViolet)
     }
 }
 
