@@ -28,6 +28,15 @@
 		6B98A71C2BA895AB00856271 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B98A71B2BA895AB00856271 /* ItemView.swift */; };
 		6B98A7242BAA223F00856271 /* TestDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B98A7232BAA223F00856271 /* TestDB.swift */; };
 		6BA2DC482B90FCF500A998FC /* CloudKitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */; };
+		6BC8E5552BAFEE3100A9CB8C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E5542BAFEE3100A9CB8C /* Intents.intentdefinition */; };
+		6BC8E55D2BAFEE5000A9CB8C /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC8E55C2BAFEE5000A9CB8C /* Intents.framework */; };
+		6BC8E5602BAFEE5000A9CB8C /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E55F2BAFEE5000A9CB8C /* IntentHandler.swift */; };
+		6BC8E5642BAFEE5000A9CB8C /* SmartWeightsExtention.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6BC8E55A2BAFEE5000A9CB8C /* SmartWeightsExtention.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6BC8E56B2BAFEE6900A9CB8C /* StartWorkoutIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E56A2BAFEE6800A9CB8C /* StartWorkoutIntentHandler.swift */; };
+		6BC8E56C2BAFEF2E00A9CB8C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E5542BAFEE3100A9CB8C /* Intents.intentdefinition */; };
+		6BC8E56E2BAFF11F00A9CB8C /* StartWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911899392B8CE1300071232A /* StartWorkout.swift */; };
+		6BC8E56F2BAFF12300A9CB8C /* central.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037952BA9026700802D01 /* central.swift */; };
+		6BC8E5702BAFF31500A9CB8C /* StartWorkoutIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E56A2BAFEE6800A9CB8C /* StartWorkoutIntentHandler.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
 		91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7E2B7A7E4700BC62E6 /* ContentView.swift */; };
 		91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91065F802B7A7E4900BC62E6 /* Assets.xcassets */; };
@@ -50,6 +59,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		6BC8E5622BAFEE5000A9CB8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 91065F712B7A7E4700BC62E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6BC8E5592BAFEE5000A9CB8C;
+			remoteInfo = SmartWeightsExtention;
+		};
 		91065F912B7A7E4900BC62E6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 91065F712B7A7E4700BC62E6 /* Project object */;
@@ -65,6 +81,20 @@
 			remoteInfo = SmartWeights;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6BC8E5682BAFEE5000A9CB8C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6BC8E5642BAFEE5000A9CB8C /* SmartWeightsExtention.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0140238C2B91702300D6935D /* SettingsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageView.swift; sourceTree = "<group>"; };
@@ -88,6 +118,12 @@
 		6B98A71B2BA895AB00856271 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		6B98A7232BAA223F00856271 /* TestDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDB.swift; sourceTree = "<group>"; };
 		6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitTest.swift; sourceTree = "<group>"; };
+		6BC8E5542BAFEE3100A9CB8C /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		6BC8E55A2BAFEE5000A9CB8C /* SmartWeightsExtention.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SmartWeightsExtention.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BC8E55C2BAFEE5000A9CB8C /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		6BC8E55F2BAFEE5000A9CB8C /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		6BC8E5612BAFEE5000A9CB8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6BC8E56A2BAFEE6800A9CB8C /* StartWorkoutIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutIntentHandler.swift; sourceTree = "<group>"; };
 		91065F792B7A7E4700BC62E6 /* SmartWeights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWeights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsApp.swift; sourceTree = "<group>"; };
 		91065F7E2B7A7E4700BC62E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -115,6 +151,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6BC8E5572BAFEE5000A9CB8C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6BC8E55D2BAFEE5000A9CB8C /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		91065F762B7A7E4700BC62E6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -189,12 +233,32 @@
 			path = DBAccess;
 			sourceTree = "<group>";
 		};
+		6BC8E55B2BAFEE5000A9CB8C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6BC8E55C2BAFEE5000A9CB8C /* Intents.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6BC8E55E2BAFEE5000A9CB8C /* SmartWeightsExtention */ = {
+			isa = PBXGroup;
+			children = (
+				6BC8E55F2BAFEE5000A9CB8C /* IntentHandler.swift */,
+				6BC8E56A2BAFEE6800A9CB8C /* StartWorkoutIntentHandler.swift */,
+				6BC8E5612BAFEE5000A9CB8C /* Info.plist */,
+			);
+			path = SmartWeightsExtention;
+			sourceTree = "<group>";
+		};
 		91065F702B7A7E4700BC62E6 = {
 			isa = PBXGroup;
 			children = (
 				91065F7B2B7A7E4700BC62E6 /* SmartWeights */,
 				91065F932B7A7E4900BC62E6 /* SmartWeightsTests */,
 				91065F9D2B7A7E4900BC62E6 /* SmartWeightsUITests */,
+				6BC8E55E2BAFEE5000A9CB8C /* SmartWeightsExtention */,
+				6BC8E55B2BAFEE5000A9CB8C /* Frameworks */,
 				91065F7A2B7A7E4700BC62E6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -205,6 +269,7 @@
 				91065F792B7A7E4700BC62E6 /* SmartWeights.app */,
 				91065F902B7A7E4900BC62E6 /* SmartWeightsTests.xctest */,
 				91065F9A2B7A7E4900BC62E6 /* SmartWeightsUITests.xctest */,
+				6BC8E55A2BAFEE5000A9CB8C /* SmartWeightsExtention.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -234,6 +299,7 @@
 				91065F822B7A7E4900BC62E6 /* Preview Content */,
 				01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */,
 				32BDE8EF2B8C1381003A5F5A /* Homepage.swift */,
+				6BC8E5542BAFEE3100A9CB8C /* Intents.intentdefinition */,
 			);
 			path = SmartWeights;
 			sourceTree = "<group>";
@@ -321,6 +387,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6BC8E5592BAFEE5000A9CB8C /* SmartWeightsExtention */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6BC8E5652BAFEE5000A9CB8C /* Build configuration list for PBXNativeTarget "SmartWeightsExtention" */;
+			buildPhases = (
+				6BC8E5562BAFEE5000A9CB8C /* Sources */,
+				6BC8E5572BAFEE5000A9CB8C /* Frameworks */,
+				6BC8E5582BAFEE5000A9CB8C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmartWeightsExtention;
+			productName = SmartWeightsExtention;
+			productReference = 6BC8E55A2BAFEE5000A9CB8C /* SmartWeightsExtention.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		91065F782B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91065FA42B7A7E4900BC62E6 /* Build configuration list for PBXNativeTarget "SmartWeights" */;
@@ -328,10 +411,12 @@
 				91065F752B7A7E4700BC62E6 /* Sources */,
 				91065F762B7A7E4700BC62E6 /* Frameworks */,
 				91065F772B7A7E4700BC62E6 /* Resources */,
+				6BC8E5682BAFEE5000A9CB8C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6BC8E5632BAFEE5000A9CB8C /* PBXTargetDependency */,
 			);
 			name = SmartWeights;
 			packageProductDependencies = (
@@ -383,9 +468,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
+					6BC8E5592BAFEE5000A9CB8C = {
+						CreatedOnToolsVersion = 15.3;
+					};
 					91065F782B7A7E4700BC62E6 = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -417,11 +505,19 @@
 				91065F782B7A7E4700BC62E6 /* SmartWeights */,
 				91065F8F2B7A7E4900BC62E6 /* SmartWeightsTests */,
 				91065F992B7A7E4900BC62E6 /* SmartWeightsUITests */,
+				6BC8E5592BAFEE5000A9CB8C /* SmartWeightsExtention */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6BC8E5582BAFEE5000A9CB8C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		91065F772B7A7E4700BC62E6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -448,6 +544,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6BC8E5562BAFEE5000A9CB8C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6BC8E5602BAFEE5000A9CB8C /* IntentHandler.swift in Sources */,
+				6BC8E56C2BAFEF2E00A9CB8C /* Intents.intentdefinition in Sources */,
+				6BC8E56E2BAFF11F00A9CB8C /* StartWorkout.swift in Sources */,
+				6BC8E56F2BAFF12300A9CB8C /* central.swift in Sources */,
+				6BC8E56B2BAFEE6900A9CB8C /* StartWorkoutIntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		91065F752B7A7E4700BC62E6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -471,6 +579,7 @@
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
 				6B98A71A2BA8956D00856271 /* ItemViewModel.swift in Sources */,
 				0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */,
+				6BC8E5702BAFF31500A9CB8C /* StartWorkoutIntentHandler.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
 				9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */,
 				6B98A7242BAA223F00856271 /* TestDB.swift in Sources */,
@@ -482,6 +591,7 @@
 				6B98A7182BA8952500856271 /* ItemModel.swift in Sources */,
 				32BDE8F02B8C1381003A5F5A /* Homepage.swift in Sources */,
 				E56BD7D82BAFA2C300863D4D /* TabBar.swift in Sources */,
+				6BC8E5552BAFEE3100A9CB8C /* Intents.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,6 +620,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		6BC8E5632BAFEE5000A9CB8C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6BC8E5592BAFEE5000A9CB8C /* SmartWeightsExtention */;
+			targetProxy = 6BC8E5622BAFEE5000A9CB8C /* PBXContainerItemProxy */;
+		};
 		91065F922B7A7E4900BC62E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 91065F782B7A7E4700BC62E6 /* SmartWeights */;
@@ -523,6 +638,60 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		6BC8E5662BAFEE5000A9CB8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YD9LWSGPPP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SmartWeightsExtention/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SmartWeightsExtention;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CIS4398.SmartWeights.SmartWeightsExtention;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6BC8E5672BAFEE5000A9CB8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YD9LWSGPPP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SmartWeightsExtention/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SmartWeightsExtention;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CIS4398.SmartWeights.SmartWeightsExtention;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		91065FA22B7A7E4900BC62E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -645,6 +814,7 @@
 		91065FA52B7A7E4900BC62E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SmartWeights/SmartWeights.entitlements;
@@ -656,6 +826,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWeights/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Please allow using bluetooth";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -679,6 +850,7 @@
 		91065FA62B7A7E4900BC62E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SmartWeights/SmartWeights.entitlements;
@@ -690,6 +862,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWeights/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Please allow using bluetooth";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -785,6 +958,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6BC8E5652BAFEE5000A9CB8C /* Build configuration list for PBXNativeTarget "SmartWeightsExtention" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BC8E5662BAFEE5000A9CB8C /* Debug */,
+				6BC8E5672BAFEE5000A9CB8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		91065F742B7A7E4700BC62E6 /* Build configuration list for PBXProject "SmartWeights" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
