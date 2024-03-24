@@ -18,6 +18,8 @@ struct LoginView: View {
     @AppStorage("lastName") var lastName: String = ""
     @AppStorage("userID") var userID: String = ""
     
+    @State private var isLoggedIn = false // Tracking login status
+    
     var body: some View {
         ZStack {
             // Background gradient
@@ -67,6 +69,8 @@ struct LoginView: View {
                             self.userID = userID
                             self.firstName = firstName ?? ""
                             self.lastName = lastName ?? ""
+                            
+                            self.isLoggedIn = true
                             
                         default:
                             break
