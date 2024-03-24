@@ -39,7 +39,9 @@ class CustomizeViewModel: ObservableObject {
     ]
     
     let backgroundImages: [BackgroundImage] = [
-        
+        BackgroundImage(name: "Bamboo", imageName: "Bamboo"),
+        BackgroundImage(name: "Festive", imageName: "Festive"),
+        BackgroundImage(name: "Royal", imageName: "Royal"),
     ]
     
     let pets: [Pet_selection] = [

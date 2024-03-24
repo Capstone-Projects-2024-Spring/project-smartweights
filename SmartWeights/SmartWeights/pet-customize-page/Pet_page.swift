@@ -22,7 +22,6 @@ struct Pet_Page: View {
                 HStack {
                     HamburgerMenu(
                         navigateToShop: { viewModel.showShop = true },
-                        navigateToInventory: { viewModel.showInventory = true },
                         navigateToCustomize: { viewModel.showCustomize = true }
                     )
                     Spacer()
@@ -98,7 +97,6 @@ struct Pet_Page: View {
             .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitleDisplayMode(.inline)
             .background(NavigationLink(destination: PetStore(), isActive: $viewModel.showShop) { EmptyView() })
-            .background(NavigationLink(destination: InventoryView(), isActive: $viewModel.showInventory) { EmptyView() })
             .background(NavigationLink(destination: Customize_page(), isActive: $viewModel.showCustomize) { EmptyView() })
         }
     }
@@ -114,7 +112,6 @@ struct FoodItem: Identifiable {
 
 class PetPageFunction: ObservableObject {
     @Published var showShop = false
-    @Published var showInventory = false
     @Published var showCustomize = false
     @Published var healthBar: Float = 0.25
     @Published var levelProgress: Float = 0.55
@@ -190,15 +187,12 @@ struct FoodSelectionView: View {
 /// A view representing a hamburger menu with options to navigate to different pages.
 struct HamburgerMenu: View {
     var navigateToShop: () -> Void
-    var navigateToInventory: () -> Void
     var navigateToCustomize: () -> Void
     
     var body: some View {
         Menu {
             Button("Shop", action: navigateToShop)
                 .accessibilityIdentifier("Shop")
-            Button("Inventory", action: navigateToInventory)
-                .accessibilityIdentifier("Inventory")
             Button("Customize", action: navigateToCustomize)
                 .accessibilityIdentifier("Customize")
         } label: {
@@ -214,14 +208,6 @@ struct HamburgerMenu: View {
             }
             .accessibilityIdentifier("HamburgerMenuButton")
         }
-    }
-}
-
-/// Represents an inventory view.
-struct InventoryView: View {
-    var body: some View {
-        Text("Inventory")
-            .font(.title)
     }
 }
 
