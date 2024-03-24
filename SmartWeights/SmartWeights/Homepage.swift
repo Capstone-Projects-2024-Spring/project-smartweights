@@ -141,7 +141,7 @@ struct Homepage: View {
                 .foregroundStyle(.white)
                 Spacer()
             }
-            .background(Color.hex121212.edgesIgnoringSafeArea(.all))
+            .background(Color.midnightBlack.edgesIgnoringSafeArea(.all))
             
         }
     }

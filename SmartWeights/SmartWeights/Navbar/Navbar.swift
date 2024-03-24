@@ -30,7 +30,7 @@ struct Navbar: View {
                 ForEach(Tab.allCases, id: \.rawValue) { tab in
                     Spacer()
                     Image(systemName: tab.rawValue)
-                        .foregroundStyle(selectedTab == tab ? Color.hex212121 : Color.hexA6A6A6)
+                        .foregroundStyle(selectedTab == tab ? Color.charcoalGray : Color.stoneGray)
                         .font(.system(size: 25))
                         .scaleEffect(selectedTab == tab ? 1.25 : 1.0)
                         .offset(y: selectedTab == tab ? -40 : 0) // Anyway to not hard-code values?
@@ -48,7 +48,7 @@ struct Navbar: View {
                 Spacer()
             }
             .frame(width: nil, height: 50)
-            .background(Color.hex212121)
+            .background(Color.charcoalGray)
         }
         .edgesIgnoringSafeArea([.top, .bottom]) // Ignore safe area on sides only
     }
