@@ -9,11 +9,6 @@ import SwiftUI
 
 var currentWorkout = "Dumbbell Press"
 
-extension Color {
-    static let hex2E2E2E = Color(red: 46/255, green: 46/255, blue: 46/255)
-    static let hexF2F2F2 = Color(red: 150/255, green: 150/255, blue: 150/255)
-}
-
 /// The homepage view of the SmartWeights app.
 struct Homepage: View {
     // Add a state to control navigation
@@ -47,18 +42,18 @@ struct Homepage: View {
                                         .foregroundStyle(Color.africanViolet)
                                 }
                                 Text(currentWorkout)
-                                    .foregroundStyle(Color.hexF2F2F2)
+                                    .foregroundStyle(Color.lightGray)
                                     .font(.subheadline)
                             }
                             .padding()
                             Spacer()
                             Image(systemName: "photo")
-                                .foregroundStyle(Color.hexF2F2F2)
+                                .foregroundStyle(Color.lightGray)
                                 .padding()
                         }
                         .foregroundStyle(.white)
                     }
-                    .background(Color.hex2E2E2E)
+                    .background(Color.darkGray)
                     .cornerRadius(12)
                     .padding()
                 }
@@ -76,14 +71,14 @@ struct Homepage: View {
                             ForEach(count, id: \.self) { number in
                                 VStack {
                                     Image(systemName: "photo")
-                                        .foregroundStyle(Color.hexF2F2F2)
+                                        .foregroundStyle(Color.lightGray)
                                         .background(Circle()
                                             .frame(width: 60, height: 60)
-                                            .foregroundStyle(Color.hex2E2E2E)
+                                            .foregroundStyle(Color.darkGray)
                                         )
                                         .padding()
                                     Text("Page \(number)")
-                                        .foregroundStyle(Color.hexF2F2F2)
+                                        .foregroundStyle(Color.lightGray)
                                         .font(.subheadline)
                                 }
                                 .padding()
@@ -115,19 +110,19 @@ struct Homepage: View {
                                 VStack {
                                     Spacer()
                                     Image(systemName: "photo")
-                                        .foregroundStyle(Color.hexF2F2F2)
+                                        .foregroundStyle(Color.lightGray)
                                     Spacer()
                                     VStack (alignment: .leading){
                                         Text("Video \(number)")
                                             .font(.title3)
                                         Text("Video Description")
-                                            .foregroundStyle(Color.hexF2F2F2)
+                                            .foregroundStyle(Color.lightGray)
                                             .font(.subheadline)
                                     }
                                     .padding(.bottom)
                                 }
                                 .frame(width: 200, height: 250)
-                                .background(Color.hex2E2E2E)
+                                .background(Color.darkGray)
                                 .cornerRadius(12)
                                 .padding()
                             }
@@ -141,7 +136,7 @@ struct Homepage: View {
                 .foregroundStyle(.white)
                 Spacer()
             }
-            .background(Color.hex121212.edgesIgnoringSafeArea(.all))
+            .background(Color.midnightBlack.edgesIgnoringSafeArea(.all))
             
         }
     }
