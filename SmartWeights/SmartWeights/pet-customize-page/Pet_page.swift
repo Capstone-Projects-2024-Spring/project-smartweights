@@ -98,7 +98,6 @@ struct Pet_Page: View {
             .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitleDisplayMode(.inline)
             .background(NavigationLink(destination: PetStore(), isActive: $viewModel.showShop) { EmptyView() })
-            .background(NavigationLink(destination: InventoryView(), isActive: $viewModel.showInventory) { EmptyView() })
             .background(NavigationLink(destination: Customize_page(), isActive: $viewModel.showCustomize) { EmptyView() })
         }
     }
@@ -214,14 +213,6 @@ struct HamburgerMenu: View {
             }
             .accessibilityIdentifier("HamburgerMenuButton")
         }
-    }
-}
-
-/// Represents an inventory view.
-struct InventoryView: View {
-    var body: some View {
-        Text("Inventory")
-            .font(.title)
     }
 }
 
