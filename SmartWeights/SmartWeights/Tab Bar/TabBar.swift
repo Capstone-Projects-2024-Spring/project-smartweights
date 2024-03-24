@@ -39,7 +39,7 @@ struct TabBar: View {
             ForEach(Tab1.allCases, id: \.self) { tab in
                 tab.getView()
                     .tabItem {
-                        Label(String(describing: tab), systemImage: tab.rawValue)
+                        Label(String(describing: tab).capitalized, systemImage: tab.rawValue)
                     }
             }
         }
