@@ -34,13 +34,16 @@ enum Tab1: String, CaseIterable {
 
 /// Struct TabBar implements the Tab enumeration and TabView to create a navigable tab bar.
 struct TabBar: View {
+    @State private var selectedTab: Tab1 = .home
+    
     var body: some View {
-        TabView {
+        TabView (selection: $selectedTab) {
             ForEach(Tab1.allCases, id: \.self) { tab in
                 tab.getView()
                     .tabItem {
                         Label(String(describing: tab).capitalized, systemImage: tab.rawValue)
                     }
+                    .tag(tab)
             }
         }
         .tint(.africanViolet)
