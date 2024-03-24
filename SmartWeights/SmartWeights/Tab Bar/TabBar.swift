@@ -14,6 +14,22 @@ enum Tab1: String, CaseIterable {
     case workout = "dumbbell"
     case profile = "person"
     case more = "ellipsis"
+    
+    /// Function getView() returns the tab's associated view
+    func getView() -> some View {
+        switch self {
+        case .home:
+            return AnyView(Homepage())
+        case .pet:
+            return AnyView(Pet_Page())
+        case .workout:
+            return AnyView(WorkoutMainPage())
+        case .profile:
+            return AnyView(SettingsPageView())
+        case .more:
+            return AnyView(MorePageView())
+        }
+    }
 }
 
 struct TabBar: View {
