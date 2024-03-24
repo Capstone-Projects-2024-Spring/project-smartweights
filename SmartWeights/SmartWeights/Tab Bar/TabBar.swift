@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// An enumeration representing the tab categories in the tab bar.
-enum Tab1: String, CaseIterable {
+enum Tab: String, CaseIterable {
     case home = "house"
     case pet = "pawprint"
     case workout = "dumbbell"
@@ -16,10 +16,10 @@ enum Tab1: String, CaseIterable {
     case settings = "gearshape" // alt: case more = "ellipsis"
     
     /// Function getView() returns the tab's associated view.
-    func getView() -> some View {
+    func getView(tabBar: TabBar) -> some View {
         switch self {
         case .home:
-            return AnyView(Homepage())
+            return AnyView(Homepage(tabBar: tabBar))
         case .pet:
             return AnyView(Pet_Page())
         case .workout:
@@ -34,13 +34,20 @@ enum Tab1: String, CaseIterable {
 
 /// Struct TabBar implements the Tab enumeration and TabView to create a navigable tab bar.
 struct TabBar: View {
+    @State private var selectedTab: Tab = .home
+    
+    func changeTab(to tab: Tab) {
+        self.selectedTab = tab
+    }
+    
     var body: some View {
-        TabView {
-            ForEach(Tab1.allCases, id: \.self) { tab in
-                tab.getView()
+        TabView (selection: $selectedTab) {
+            ForEach(Tab.allCases, id: \.self) { tab in
+                tab.getView(tabBar: self)
                     .tabItem {
                         Label(String(describing: tab).capitalized, systemImage: tab.rawValue)
                     }
+                    .tag(tab)
             }
         }
         .tint(.africanViolet)
