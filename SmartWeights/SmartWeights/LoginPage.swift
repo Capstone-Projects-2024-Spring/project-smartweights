@@ -75,12 +75,11 @@ struct LoginView: View {
                         default:
                             break
                         }
-                        alertMessage = "Sign in successful!"
                     case .failure(let error):
                         print(error)
                         alertMessage = "Sign in failed."
+                        showingAlert = true
                     }
-                    showingAlert = true
                 }
                 .signInWithAppleButtonStyle(
                     colorScheme == .dark ? .white : .black
@@ -91,11 +90,14 @@ struct LoginView: View {
                 .alert(isPresented: $showingAlert) {
                     Alert(title: Text("Sign In"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
-                
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        // Show TabBar view upon successful login
+        .fullScreenCover(isPresented: $isLoggedIn, content: {
+            TabBar()
+        })
     }
 }
 
