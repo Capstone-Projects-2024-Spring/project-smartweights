@@ -59,6 +59,7 @@ struct Homepage: View {
                 .cornerRadius(12)
                 .padding()
             }
+            
             // Navigation Carousel
             VStack (alignment: .leading) {
                 Text("App Features")
