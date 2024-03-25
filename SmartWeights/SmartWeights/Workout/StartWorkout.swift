@@ -252,7 +252,7 @@ struct StartWorkout: View {
         HStack{
             VStack{
                 TextField("Sets", text: $viewModel.inputtedSets)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.default)
                     .onReceive(Just(viewModel.inputtedSets)) { newValue in
                         let filtered = newValue.filter { "0123456789".contains($0) }
                         if filtered != newValue {
@@ -268,7 +268,7 @@ struct StartWorkout: View {
             
             VStack{
                 TextField("Reps", text: $viewModel.inputtedReps)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.default)
                     .onReceive(Just(viewModel.inputtedReps)) { newValue in
                         let filtered = newValue.filter { "0123456789".contains($0) }
                         if filtered != newValue {
@@ -283,7 +283,7 @@ struct StartWorkout: View {
             }
             VStack{
                 TextField("lbs", text: $viewModel.inputtedWeights)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.default)
                     .onReceive(Just(viewModel.inputtedWeights)) { newValue in
                         let filtered = newValue.filter { "0123456789".contains($0) }
                         if filtered != newValue {
