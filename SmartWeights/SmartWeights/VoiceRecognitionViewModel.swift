@@ -1,6 +1,7 @@
 import Foundation
 import Speech
 import AVFoundation
+import Combine
 class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))!
     private let audioEngine = AVAudioEngine()
@@ -10,7 +11,12 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
     @Published var isListening = false
     @Published var workoutInProgress = false
     
-
+    
+    private var workoutInProgressSubject = PassthroughSubject<Bool, Never>()
+    var workoutInProgressPublisher: AnyPublisher<Bool, Never> {
+        return workoutInProgressSubject.eraseToAnyPublisher()
+    }
+    
     override init() {
         super.init()
         speechRecognizer.delegate = self
@@ -52,24 +58,24 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
                         // Detected "start workout" command, initiate workout
                         self.stopWorkout()
                         // self.workoutInProgress = false
-                     
+                        
                         print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
                         // Cancel the recognition task before stopping the audio engine
                         self.recognitionTask?.cancel()
                         self.recognitionTask = nil
                         // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            self.audioEngine.stop()
-                            inputNode.removeTap(onBus: 0)
-                            recognitionRequest.endAudio()
-                            print("Stopped listening")
-                            self.isListening = false
+                        self.audioEngine.stop()
+                        inputNode.removeTap(onBus: 0)
+                        recognitionRequest.endAudio()
+                        print("Stopped listening")
+                        self.isListening = false
                         // }
                         return
                     } else if bestString.contains("start workout") {
                         // Detected "finish workout" command, stop workout
                         self.startWorkout()
                         // self.workoutInProgress = true
-                       
+                        
                     }
                     print("bestString: \(bestString)")
                     
@@ -97,6 +103,7 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
         if !workoutInProgress {
             workoutInProgress = true
             print("Workout started!")
+            workoutInProgressSubject.send(true)
         }
         
         // Synthesize speech
@@ -106,9 +113,10 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
         
     }
     private func stopWorkout(){
-       if workoutInProgress {
+        if workoutInProgress {
             workoutInProgress = false
             print("Workout stopped!")
+            workoutInProgressSubject.send(false) // Notify subscribers that the workout has stopped
         }
         
     }

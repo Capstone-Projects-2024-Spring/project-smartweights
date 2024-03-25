@@ -4,7 +4,7 @@ import Combine
 struct WorkoutMainPage: View {
     ///created an instance of the view model
     @StateObject var viewModel = WorkoutViewModel()
-    @StateObject var voiceVM = VoiceRecognitionViewModel()
+//    @StateObject var voiceVM = VoiceRecognitionViewModel()
     @StateObject var bleManager = BLEManager()
     
     @State private var workoutSubscription: AnyCancellable?
@@ -71,7 +71,7 @@ struct WorkoutMainPage: View {
                                 
                                 // Start workout button action
                                 //                                isExpanded.toggle()
-                                voiceVM.startListening()
+                                viewModel.startListening()
                                 
                                 // DispatchQueue.global().async {
                                 //     while true {
@@ -96,19 +96,28 @@ struct WorkoutMainPage: View {
                             }
                             .accessibilityLabel("micWorkoutButton")
                             .padding(.trailing, 42)
-                            .onAppear {
-                                workoutSubscription = voiceVM.$workoutInProgress.sink { inProgress in
-                                    print("Workout in progress changed: \(inProgress)")
-                                    if inProgress {
-                                        viewModel.startTimer()
-                                        print("startTimer called")
-                                    } else {
-                                        viewModel.stopTimer()
-                                        print("stopTimer Called")
-                                    }
-                                }
-                            }
-                            
+                            //                            .onAppear {
+                            //                                workoutSubscription = voiceVM.$workoutInProgress.sink { inProgress in
+                            //                                    print("Workout in progress changed: \(inProgress)")
+                            //                                    if inProgress {
+                            //                                        viewModel.startTimer()
+                            //                                        print("startTimer called")
+                            //                                    } else {
+                            //                                        viewModel.stopTimer()
+                            //                                        print("stopTimer Called")
+                            //                                    }
+                            //                                }
+                            //                            }
+//                            .onReceive(voiceVM.workoutInProgressPublisher
+//                                .debounce(for: .milliseconds(200), scheduler: RunLoop.main)) { inProgress in
+//                                    if inProgress {
+//                                        viewModel.startTimer()
+//                                        print("startTimer called")
+//                                    } else {
+//                                        viewModel.stopTimer()
+//                                        print("stopTimer Called")
+//                                    }
+//                                }
                         }
                         
                         .padding(.leading,300)
