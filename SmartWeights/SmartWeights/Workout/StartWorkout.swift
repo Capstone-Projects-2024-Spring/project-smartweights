@@ -81,7 +81,7 @@ class WorkoutViewModel: ObservableObject {
                         print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
                         // Cancel the recognition task before stopping the audio engine
 //                        self.recognitionTask?.cancel()
-//                        self.recognitionTask = nil
+                        self.recognitionTask = nil
                         
                         // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.audioEngine.stop()
