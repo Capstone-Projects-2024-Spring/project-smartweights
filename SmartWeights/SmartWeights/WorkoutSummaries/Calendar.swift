@@ -17,12 +17,13 @@ struct CalendarView: View {
             Text("Date") // Title
                 .font(.headline)
             DatePicker("WorkoutDatePicker", selection: $viewModel.date, in: ...Date(), displayedComponents: .date)
+                .background(Color.white)
+                .foregroundColor(.blue)
                 .labelsHidden() // Hide the DatePicker label
                 .onChange(of: viewModel.date) {
                     viewModel.updateShortDate()
-                   
-                    
                 }
+                
             
            
         }
