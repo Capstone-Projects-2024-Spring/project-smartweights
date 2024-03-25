@@ -46,14 +46,25 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
                 
                 if let result = result {
                     let bestString = result.bestTranscription.formattedString.lowercased()
-                    if bestString.contains("start workout") {
+                    if bestString.contains("finish workout") {
                         // Detected "start workout" command, initiate workout
-                        self.startWorkout()
-                    } else if bestString.contains("finish workout") {
-                        // Detected "finish workout" command, stop workout
                         self.stopWorkout()
+                        // Cancel the recognition task before stopping the audio engine
+                        self.recognitionTask?.cancel()
+                        self.recognitionTask = nil
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            self.audioEngine.stop()
+                            inputNode.removeTap(onBus: 0)
+                            recognitionRequest.endAudio()
+                            print("Stopped listening")
+                            self.isListening = false
+                        }
+                        return
+                    } else if bestString.contains("start workout") {
+                        // Detected "finish workout" command, stop workout
+                        self.startWorkout()
                     }
-                    
+                    print("bestString: \(bestString)")
                     
                     isFinal = result.isFinal
                 }
