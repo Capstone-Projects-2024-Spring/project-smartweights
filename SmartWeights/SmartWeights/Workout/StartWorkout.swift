@@ -18,6 +18,15 @@ class WorkoutViewModel: ObservableObject {
     @Published var timer: Timer? = nil
     @Published var progressInterval = 2.0
     
+    // @Published var workoutInProgress = false {
+    //     didSet {
+    //         if workoutInProgress {
+    //             startTimer()
+    //         } else {
+    //             stopTimer()
+    //         }
+    //     }
+    // }
     
     /// Function to reset progress
     func resetProgress() {
@@ -35,6 +44,10 @@ class WorkoutViewModel: ObservableObject {
     /// Function to start timer
     
     func startTimer(){
+         // Stop any existing timer before starting a new one
+    if let existingTimer = timer {
+        existingTimer.invalidate()
+    }
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
             if self.seconds == 59 {
                 self.seconds = 0

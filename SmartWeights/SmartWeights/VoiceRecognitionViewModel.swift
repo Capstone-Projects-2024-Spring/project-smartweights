@@ -8,7 +8,9 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
     private var recognitionTask: SFSpeechRecognitionTask?
     private let speechSynthesizer = AVSpeechSynthesizer()
     @Published var isListening = false
+    @Published var workoutInProgress = false
     
+
     override init() {
         super.init()
         speechRecognizer.delegate = self
@@ -49,20 +51,25 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
                     if bestString.contains("finish workout") {
                         // Detected "start workout" command, initiate workout
                         self.stopWorkout()
+                        // self.workoutInProgress = false
+                     
+                        print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
                         // Cancel the recognition task before stopping the audio engine
                         self.recognitionTask?.cancel()
                         self.recognitionTask = nil
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                             self.audioEngine.stop()
                             inputNode.removeTap(onBus: 0)
                             recognitionRequest.endAudio()
                             print("Stopped listening")
                             self.isListening = false
-                        }
+                        // }
                         return
                     } else if bestString.contains("start workout") {
                         // Detected "finish workout" command, stop workout
                         self.startWorkout()
+                        // self.workoutInProgress = true
+                       
                     }
                     print("bestString: \(bestString)")
                     
@@ -87,7 +94,10 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
     
     private func startWorkout() {
         // Call your ViewModel or Model function to start the workout
-        print("Workout started!")
+        if !workoutInProgress {
+            workoutInProgress = true
+            print("Workout started!")
+        }
         
         // Synthesize speech
         //               let speechUtterance = AVSpeechUtterance(string: "Workout started")
@@ -96,6 +106,10 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, SFSpeechRecognizerD
         
     }
     private func stopWorkout(){
-        print("Workout Stopped!")
+       if workoutInProgress {
+            workoutInProgress = false
+            print("Workout stopped!")
+        }
+        
     }
 }
