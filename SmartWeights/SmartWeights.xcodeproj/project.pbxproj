@@ -29,7 +29,6 @@
 		6B98A7242BAA223F00856271 /* TestDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B98A7232BAA223F00856271 /* TestDB.swift */; };
 		6BA2DC482B90FCF500A998FC /* CloudKitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */; };
 		6BC8E5722BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */; };
-		6BC8E5742BB0989D00A9CB8C /* VoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E5732BB0989D00A9CB8C /* VoiceView.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
 		91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7E2B7A7E4700BC62E6 /* ContentView.swift */; };
 		91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91065F802B7A7E4900BC62E6 /* Assets.xcassets */; };
@@ -91,7 +90,6 @@
 		6B98A7232BAA223F00856271 /* TestDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDB.swift; sourceTree = "<group>"; };
 		6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitTest.swift; sourceTree = "<group>"; };
 		6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecognitionViewModel.swift; sourceTree = "<group>"; };
-		6BC8E5732BB0989D00A9CB8C /* VoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceView.swift; sourceTree = "<group>"; };
 		91065F792B7A7E4700BC62E6 /* SmartWeights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWeights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsApp.swift; sourceTree = "<group>"; };
 		91065F7E2B7A7E4700BC62E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -239,7 +237,6 @@
 				01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */,
 				32BDE8EF2B8C1381003A5F5A /* Homepage.swift */,
 				6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */,
-				6BC8E5732BB0989D00A9CB8C /* VoiceView.swift */,
 			);
 			path = SmartWeights;
 			sourceTree = "<group>";
@@ -485,7 +482,6 @@
 				320276222B892D55001A86B8 /* Pet_page.swift in Sources */,
 				327C4B022BA9C38800E160EE /* Inventory_Customize_page.swift in Sources */,
 				9118993A2B8CE1300071232A /* StartWorkout.swift in Sources */,
-				6BC8E5742BB0989D00A9CB8C /* VoiceView.swift in Sources */,
 				32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */,
 				6B98A7182BA8952500856271 /* ItemModel.swift in Sources */,
 				32BDE8F02B8C1381003A5F5A /* Homepage.swift in Sources */,
