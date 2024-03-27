@@ -4,7 +4,7 @@ import CoreBluetooth
 //WILL ONLY WORK IF BUILT ON AN EXTERNAL DEVICE WITH BLUETOOTH
 
 //let phone act as GATT central device
-class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, ObservableObject {
+class BLEManagerV2: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, ObservableObject {
     private var centralManager: CBCentralManager! //handle ble scanning. state, connecting, disconnecting
     private var peripheral: CBPeripheral!
     private var xCharacteristic: CBCharacteristic!
@@ -109,8 +109,8 @@ class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Obse
     }
 }
 
-struct bluetoothView: View {
-    @StateObject var bleManager = BLEManager()
+struct bluetoothViewV2: View {
+    @StateObject var bleManager = BLEManagerV2()
     
     
     var body: some View {
@@ -145,5 +145,5 @@ struct bluetoothView: View {
     }
 }
 #Preview {
-    bluetoothView()
+    bluetoothViewV2()
 }
