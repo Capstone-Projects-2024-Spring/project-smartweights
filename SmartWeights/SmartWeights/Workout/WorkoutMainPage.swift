@@ -4,7 +4,7 @@ import Combine
 struct WorkoutMainPage: View {
     ///created an instance of the view model
     @StateObject var viewModel = WorkoutViewModel()
-//    @StateObject var voiceVM = VoiceRecognitionViewModel()
+    //    @StateObject var voiceVM = VoiceRecognitionViewModel()
     @StateObject var bleManager = BLEManager()
     
     @State private var workoutSubscription: AnyCancellable?
@@ -16,7 +16,7 @@ struct WorkoutMainPage: View {
     
     var body: some View {
         ZStack{
-           
+            
             
             VStack {
                 ZStack { //Title
@@ -69,16 +69,16 @@ struct WorkoutMainPage: View {
                             //                                    }
                             //                                }
                             //                            }
-//                            .onReceive(voiceVM.workoutInProgressPublisher
-//                                .debounce(for: .milliseconds(200), scheduler: RunLoop.main)) { inProgress in
-//                                    if inProgress {
-//                                        viewModel.startTimer()
-//                                        print("startTimer called")
-//                                    } else {
-//                                        viewModel.stopTimer()
-//                                        print("stopTimer Called")
-//                                    }
-//                                }
+                            //                            .onReceive(voiceVM.workoutInProgressPublisher
+                            //                                .debounce(for: .milliseconds(200), scheduler: RunLoop.main)) { inProgress in
+                            //                                    if inProgress {
+                            //                                        viewModel.startTimer()
+                            //                                        print("startTimer called")
+                            //                                    } else {
+                            //                                        viewModel.stopTimer()
+                            //                                        print("stopTimer Called")
+                            //                                    }
+                            //                                }
                         }
                         
                         .padding(.leading,300)
@@ -157,6 +157,7 @@ struct StartWorkout: View {
     // Create an instance of the shared view model
     @ObservedObject var viewModel: WorkoutViewModel
     @ObservedObject var bleManager: BLEManager
+    @State private var hasWorkoutStarted = false
     
     var body: some View {
         //user inputting their desired weights, reps and sets
@@ -210,13 +211,13 @@ struct StartWorkout: View {
                     .textFieldStyle(.roundedBorder)
                     .frame(width:80)
                     .font(.system(size: 14))
-                    
+                
                 
             }
         }
         .padding(.top)
         .padding(.bottom,45)
-       
+        
         Spacer()
         
         //to create the four boxes
@@ -224,122 +225,94 @@ struct StartWorkout: View {
             VStack{
                 ZStack{
                     ZStack{
+                        // Time rectangel box
                         RoundedRectangle(cornerRadius:  25)
-                            .frame(width: 100, height: 100)
+                            .frame(width: 150, height: 150)
                             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                         Text("Time")
                             .font(.system(size: 14))
                             .bold()
                             .padding(.bottom,70)
                             .foregroundColor(.white)
-                        
                     }
                     Text("\(viewModel.hours):\(viewModel.minutes):\(viewModel.seconds)")
                         .bold()
                         .monospaced()
                         .foregroundStyle(.green)
-                    
-                Spacer()
                 }
                 ZStack{
+                    // Remaining set box
                     RoundedRectangle(cornerRadius:  25)
-                        .frame(width: 100, height: 100)
+                        .frame(width: 150, height: 150)
                         .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                   
                     
-                        Text("Remaining\n      Sets")
-                            .font(.system(size: 14))
-                            .bold()
-                            .padding(.bottom, 50)
-                            .foregroundColor(.white)
-                            
-                        Text("\(viewModel.inputtedSets)")
+                    Text("Remaining\n      Sets")
+                        .font(.system(size: 14))
+                        .bold()
+                        .padding(.bottom, 50)
+                        .foregroundColor(.white)
+                    
+                    Text("\(viewModel.inputtedSets)")
                         .padding(.top, 20)
                         .bold()
                         .foregroundColor(.white)
-                    
                 }
-               
-                
             }
-            Spacer()
-            ZStack {
-                Image("dog")
-                    .resizable()
-                .frame(width: 140, height: 140)
-                /*
-                Image("jetpack")
-                    .resizable()
-                .frame(width: 140, height: 140)
-                
-                Image("dog")
-                    .resizable()
-                .frame(width: 140, height: 140)
-                
-                Image("glasses")
-                    .resizable()
-                .frame(width: 140, height: 140)
-                */
-                
-            }
-            Spacer()
             
             VStack{
                 ZStack{
+                    // Form Rectangle box
                     RoundedRectangle(cornerRadius:  25)
-                        .frame(width: 100, height: 100)
+                        .frame(width: 150, height: 150)
                         .foregroundColor(.gray)
                     Text("Form")
                         .font(.system(size: 14))
                         .bold()
                         .foregroundColor(.white)
                     CircularProgressView(progress: viewModel.progress)
-                        .frame(width: 100, height: 100)
                     
                 }
                 ZStack{
+                    // Accel Rectange box
                     RoundedRectangle(cornerRadius:  25)
-                        .frame(width: 100, height: 100)
+                        .frame(width: 150, height: 150)
                         .foregroundColor(.gray)
                     Text("Accel")
                         .font(.system(size: 14))
                         .bold()
                         .foregroundColor(.white)
                     CircularProgressView(progress: viewModel.progress)
-                        .frame(width: 100, height: 100)
                 }
-                
             }
         }
-        .padding(.leading,10)
-        .padding(.trailing, 10)
-        .padding(.bottom,10)
         
-        //new workout button to reset everything
-        ZStack{
-            ZStack{
-                Button(action: { // Back Arrow
-                    print("Button tapped (temp)")
-                    viewModel.resetProgress()
-                    viewModel.restartTimer()
-                    viewModel.stopTimer()
-                    
-                })
-                {
-                    ZStack{
-                        RoundedRectangle(cornerRadius:  25)
-                            .frame(width: 300, height: 80)
-                            .foregroundColor(.gray)
-                        Text("New workout")
-                            .bold()
-                            .foregroundStyle(.white)
-                    }
-                }
-                .accessibilityLabel("NewWorkoutButton")
-                
+        
+        // Button to Start or Reset Workout
+        Button(action: {
+            if hasWorkoutStarted {
+                // Reset for a new workout
+                viewModel.resetProgress()
+                viewModel.restartTimer()
+                viewModel.stopTimer()
+                // Any additional reset logic here
+            } else {
+                // Start the workout
+                viewModel.startListening() // Start listening or any initial setup
+                viewModel.startTimer() // Start the workout timer
+                // Include any other actions to initialize the workout
             }
-            
+            hasWorkoutStarted.toggle() // Toggle the workout state
+        }) {
+            RoundedRectangle(cornerRadius: 25)
+                .frame(width: 300, height: 80)
+                .foregroundColor(.gray)
+                .overlay(
+                    Text(hasWorkoutStarted ? "New Workout" : "Start Workout")
+                        .bold()
+                        .foregroundColor(.white)
+                )
         }
+        .accessibilityLabel(hasWorkoutStarted ? "NewWorkoutButton" : "StartWorkoutButton")
         
         if bleManager.isConnected{
             Text("Sensor connected")
@@ -350,9 +323,7 @@ struct StartWorkout: View {
         Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])") // Display the last temperature in the array
             .padding()
         Spacer()
-        
     }
-    
 }
 
 #Preview {
