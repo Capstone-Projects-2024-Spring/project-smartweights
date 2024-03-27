@@ -4,9 +4,12 @@ import CoreBluetooth
 //WILL ONLY WORK IF BUILT ON AN EXTERNAL DEVICE WITH BLUETOOTH
 
 //let phone act as GATT central device
-class BLEManagerV2: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, ObservableObject {
+class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, ObservableObject {
     private var centralManager: CBCentralManager! //handle ble scanning. state, connecting, disconnecting
-    private var peripheral: CBPeripheral!
+    //private var peripheral: CBPeripheral!
+    
+    private var peripherals = [CBPeripheral]()
+    
     private var xCharacteristic: CBCharacteristic!
     private var yCharacteristic: CBCharacteristic!
     private var zCharacteristic: CBCharacteristic!
@@ -19,54 +22,72 @@ class BLEManagerV2: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Ob
     
     
     @Published var accelerations: [Int] = [0, 0, 0] // Array to store current acceleration
-    @Published var AllAccelerations: [[Int]] = []
+    @Published var MPU6050_1: [Int] = [0, 0, 0] // Array to store current acceleration
+    @Published var MPU6050_2: [Int] = [0, 0, 0] // Array to store current acceleration
+    @Published var AllAccelerations: [[Int]] = [] //stores all the acceleration
     @Published var scanningToggle = false
     @Published var isConnected = false
+    
+    @Published var listOfPeripherals = []
+    @Published var peripheralData: [UUID: [Int]] = [:]
     
     override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
-    
+    //scans for devices with the serviceUUID
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn{
             centralManager.scanForPeripherals(withServices: [serviceUUID], options: nil)
         }
+        else{
+            print("no Bluetooth devices found")
+        }
     }
     
     
+    //connects to the device with the serviceUUID
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        self.peripheral = peripheral
-        self.peripheral.delegate = self
+        peripherals.append(peripheral)
         centralManager.connect(peripheral, options: nil)
+        peripheralData[peripheral.identifier] = []
+        
     }
     
+    //starts scanning once the peripheral is disconnected
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        // Restart scanning for peripherals when disconnected
         centralManager.scanForPeripherals(withServices: [serviceUUID], options: nil)
         self.isConnected = false
         
         
     }
-    
+    //initiates the discovery of services with a specific UUID on the connected peripheral after a successful connection
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheral.discoverServices([serviceUUID])
+        peripheral.delegate = self
         self.isConnected = true
+        listOfPeripherals.append(peripheral)
+        print(peripheral)
         
     }
     
+    
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+        print("Failed to connect to peripheral: \(peripheral), error: \(String(describing: error))")
+    }
+    
+    //discover the services from the device
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let services = peripheral.services {
             for service in services {
                 peripheral.discoverCharacteristics(nil, for: service)
             }
-            
         }
     }
     
+    //characteristics are discovered for a service offered by a peripheral
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
                 if characteristic.uuid == xCharacteristicUUID {
@@ -84,7 +105,12 @@ class BLEManagerV2: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Ob
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if let data = characteristic.value {
+        if let error = error {
+            print("Failed to read characteristic value: \(error)")
+            return
+        }
+        
+        if let data = characteristic.value{
             let acceleration: Int = data.withUnsafeBytes { bufferPointer in
                 guard let ptr = bufferPointer.baseAddress?.assumingMemoryBound(to: Int16.self) else {
                     return 0
@@ -92,6 +118,7 @@ class BLEManagerV2: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Ob
                 let floatValue = ptr.pointee
                 return Int(floatValue)
             }
+            
             DispatchQueue.main.async {
                 if characteristic == self.xCharacteristic {
                     self.accelerations[0] = acceleration
@@ -99,51 +126,43 @@ class BLEManagerV2: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, Ob
                     self.accelerations[1] = acceleration
                 } else if characteristic == self.zCharacteristic {
                     self.accelerations[2] = acceleration
+                    //adding the accerlation into the overall array
                     self.AllAccelerations.append(self.accelerations)
+                    print("\(self.AllAccelerations)")
+                    self.peripheralData[peripheral.identifier]?.append(contentsOf: self.accelerations)
                 }
                 
             }
             
-            
+        }
+    }
+    
+}
+
+struct bleView : View {
+    
+    @ObservedObject var ble = BLEcentral()
+    @State var counter = 0
+    
+    var body: some View {
+        Text("\(ble.listOfPeripherals)")
+        Text("\(ble.peripheralData)")
+        
+        List{
+            ForEach(ble.AllAccelerations, id: \.self) { acceleration in
+                HStack() {
+                    Text("Acceleration:")
+                    ForEach(0..<acceleration.count, id: \.self) { index in
+                        Text("\(index == 0 ? "X: " : index == 1 ? "Y: " : "Z: ")\(acceleration[index])")
+                    }
+                }
+                
+            }
         }
     }
 }
 
-struct bluetoothViewV2: View {
-    @StateObject var bleManager = BLEManagerV2()
-    
-    
-    var body: some View {
-        VStack {
-            if bleManager.isConnected{
-                Text("Sensor connected")
-            }
-            else{
-                Text("Sensor disconnected")
-            }
-            Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])") // Display the last temperature in the array
-                .padding()
-            
-            List {
-                ForEach(bleManager.AllAccelerations, id: \.self) { acceleration in
-                    VStack(alignment: .leading) {
-                        Text("Acceleration:")
-                            .font(.headline)
-                        ForEach(0..<acceleration.count, id: \.self) { index in
-                            Text("\(index == 0 ? "X: " : index == 1 ? "Y: " : "Z: ")\(acceleration[index])")
-                        }
-                    }
-                }
-            }
-            .listStyle(InsetGroupedListStyle())
-            
-            
-            
-            
-            
-        }
-    }
-}
 #Preview {
-    bluetoothViewV2()
+    bleView()
 }
+
