@@ -16,46 +16,7 @@ struct WorkoutMainPage: View {
     
     var body: some View {
         ZStack{
-            //temp for starting and ending workout until we implement Siri
-            //            VStack{
-            //                if(isExpanded && selectedTab == 0){
-            //                    ZStack{
-            //                        Rectangle()
-            //                            .frame(width: 70, height: 50)
-            //                            .foregroundColor(.white)
-            //                        VStack{
-            //                            Button(action:{
-            //
-            //                                bleManager.scanningToggle = true
-            //                                viewModel.startTimer()
-            //
-            //                                viewModel.progress = viewModel.generateRandomNumber()
-            //                            }){
-            //                                Text("Start")
-            //                            }
-            //                            .accessibilityLabel("startWorkoutButton")
-            //                            Button(action:{
-            //                                viewModel.stopTimer()
-            //                                bleManager.scanningToggle = false
-            //                            }){
-            //                                Text("Finish")
-            //
-            //                            }
-            //                            .accessibilityLabel("endWorkoutButton")
-            
-            //                        }
-            //                    }
-            //                }
-            //                else{
-            //
-            //                    Text("")
-            //
-            //                }
-            //            }
-            //            .padding(.bottom,500)
-            //            .padding(.leading, 280)
-            //
-            //
+           
             
             VStack {
                 ZStack { //Title
@@ -156,6 +117,240 @@ struct WorkoutMainPage: View {
         }
         .background(Color.black)
         .foregroundColor(.gray)
+    }
+    
+}
+
+
+///view to show the progress bar
+struct CircularProgressView: View {
+    
+    let progress: Double
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(
+                    Color.pink.opacity(0.5),
+                    lineWidth: 10
+                )
+                .frame(width: 80)
+            Circle()
+                .trim(from: 0, to: progress / 100) // Adjust this line if `progress` is a percentage
+                .stroke(
+                    Color.blue,
+                    style: StrokeStyle(
+                        lineWidth: 10,
+                        lineCap: .round
+                    )
+                )
+                .rotationEffect(.degrees(-90))
+                .animation(.easeOut, value: progress)
+                .frame(width: 80)
+        }
+    }
+}
+
+///view to show the start workout page
+struct StartWorkout: View {
+    /// Create an instance of the shared view model
+    // Create an instance of the shared view model
+    @ObservedObject var viewModel: WorkoutViewModel
+    @ObservedObject var bleManager: BLEManager
+    
+    var body: some View {
+        //user inputting their desired weights, reps and sets
+        Text((viewModel.inputtedReps.isEmpty || viewModel.inputtedSets.isEmpty) ? "BenchPress:" : "BenchPress: \(viewModel.inputtedSets) x \(viewModel.inputtedReps)")
+            .bold()
+        
+        Text(viewModel.inputtedWeights.isEmpty ? "Dumbell Weights: 0 lbs":"Dumbell Weights: \(viewModel.inputtedWeights) lbs")
+            .bold()
+        
+        HStack{
+            VStack{
+                TextField("Sets", text: $viewModel.inputtedSets)
+                    .keyboardType(.default)
+                    .onReceive(Just(viewModel.inputtedSets)) { newValue in
+                        let filtered = newValue.filter { "0123456789".contains($0) }
+                        if filtered != newValue {
+                            viewModel.inputtedSets = filtered
+                        }
+                    }
+                    .bold()
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width:80)
+                    .font(.system(size: 14))
+            }
+            
+            VStack{
+                TextField("Reps", text: $viewModel.inputtedReps)
+                    .keyboardType(.default)
+                    .onReceive(Just(viewModel.inputtedReps)) { newValue in
+                        let filtered = newValue.filter { "0123456789".contains($0) }
+                        if filtered != newValue {
+                            viewModel.inputtedReps = filtered
+                        }
+                    }
+                    .bold()
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width:80)
+                    .font(.system(size: 14))
+                
+            }
+            VStack{
+                TextField("lbs", text: $viewModel.inputtedWeights)
+                    .keyboardType(.default)
+                    .onReceive(Just(viewModel.inputtedWeights)) { newValue in
+                        let filtered = newValue.filter { "0123456789".contains($0) }
+                        if filtered != newValue {
+                            viewModel.inputtedWeights = filtered
+                        }
+                    }
+                    .bold()
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width:80)
+                    .font(.system(size: 14))
+                    
+                
+            }
+        }
+        .padding(.top)
+        .padding(.bottom,45)
+       
+        Spacer()
+        
+        //to create the four boxes
+        HStack{
+            VStack{
+                ZStack{
+                    ZStack{
+                        RoundedRectangle(cornerRadius:  25)
+                            .frame(width: 100, height: 100)
+                            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                        Text("Time")
+                            .font(.system(size: 14))
+                            .bold()
+                            .padding(.bottom,70)
+                            .foregroundColor(.white)
+                        
+                    }
+                    Text("\(viewModel.hours):\(viewModel.minutes):\(viewModel.seconds)")
+                        .bold()
+                        .monospaced()
+                        .foregroundStyle(.green)
+                    
+                Spacer()
+                }
+                ZStack{
+                    RoundedRectangle(cornerRadius:  25)
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                   
+                    
+                        Text("Remaining\n      Sets")
+                            .font(.system(size: 14))
+                            .bold()
+                            .padding(.bottom, 50)
+                            .foregroundColor(.white)
+                            
+                        Text("\(viewModel.inputtedSets)")
+                        .padding(.top, 20)
+                        .bold()
+                        .foregroundColor(.white)
+                    
+                }
+               
+                
+            }
+            Spacer()
+            ZStack {
+                Image("dog")
+                    .resizable()
+                .frame(width: 140, height: 140)
+                /*
+                Image("jetpack")
+                    .resizable()
+                .frame(width: 140, height: 140)
+                
+                Image("dog")
+                    .resizable()
+                .frame(width: 140, height: 140)
+                
+                Image("glasses")
+                    .resizable()
+                .frame(width: 140, height: 140)
+                */
+                
+            }
+            Spacer()
+            
+            VStack{
+                ZStack{
+                    RoundedRectangle(cornerRadius:  25)
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(.gray)
+                    Text("Form")
+                        .font(.system(size: 14))
+                        .bold()
+                        .foregroundColor(.white)
+                    CircularProgressView(progress: viewModel.progress)
+                        .frame(width: 100, height: 100)
+                    
+                }
+                ZStack{
+                    RoundedRectangle(cornerRadius:  25)
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(.gray)
+                    Text("Accel")
+                        .font(.system(size: 14))
+                        .bold()
+                        .foregroundColor(.white)
+                    CircularProgressView(progress: viewModel.progress)
+                        .frame(width: 100, height: 100)
+                }
+                
+            }
+        }
+        .padding(.leading,10)
+        .padding(.trailing, 10)
+        .padding(.bottom,10)
+        
+        //new workout button to reset everything
+        ZStack{
+            ZStack{
+                Button(action: { // Back Arrow
+                    print("Button tapped (temp)")
+                    viewModel.resetProgress()
+                    viewModel.restartTimer()
+                    viewModel.stopTimer()
+                    
+                })
+                {
+                    ZStack{
+                        RoundedRectangle(cornerRadius:  25)
+                            .frame(width: 300, height: 80)
+                            .foregroundColor(.gray)
+                        Text("New workout")
+                            .bold()
+                            .foregroundStyle(.white)
+                    }
+                }
+                .accessibilityLabel("NewWorkoutButton")
+                
+            }
+            
+        }
+        
+        if bleManager.isConnected{
+            Text("Sensor connected")
+        }
+        else{
+            Text("Sensor disconnected")
+        }
+        Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])") // Display the last temperature in the array
+            .padding()
+        Spacer()
+        
     }
     
 }
