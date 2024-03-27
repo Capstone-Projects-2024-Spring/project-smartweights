@@ -221,6 +221,7 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				E5297D242BB4588A0078A9E6 /* Homepage */,
 				7796EBD62BB1C8E600A96150 /* SmartWeightsML */,
 				E56BD7D92BAFB0D900863D4D /* Extensions */,
 				E56BD7D62BAFA29700863D4D /* Tab Bar */,
@@ -243,7 +244,6 @@
 				91065F872B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld */,
 				91065F822B7A7E4900BC62E6 /* Preview Content */,
 				01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */,
-				32BDE8EF2B8C1381003A5F5A /* Homepage.swift */,
 				6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */,
 			);
 			path = SmartWeights;
@@ -311,6 +311,14 @@
 				B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */,
 			);
 			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		E5297D242BB4588A0078A9E6 /* Homepage */ = {
+			isa = PBXGroup;
+			children = (
+				32BDE8EF2B8C1381003A5F5A /* Homepage.swift */,
+			);
+			path = Homepage;
 			sourceTree = "<group>";
 		};
 		E56BD7D62BAFA29700863D4D /* Tab Bar */ = {
