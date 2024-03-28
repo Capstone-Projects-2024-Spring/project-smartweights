@@ -7,6 +7,7 @@ import CoreBluetooth
 Bluetooth will only work if it being tested on an external device with Bluetooth capabilities
  
  current status - picos will automatically connect the moment the BLEcentral class is initialize.
+                    The picos will be kept turned on. (Have user turn all sensors on prior the starting workout)
                     The sensors will continuously send data. But only when collectedDataToggle == True will the app collect data.
                     This makes starting the workout easier, since sensors are always connected.
 
@@ -21,10 +22,7 @@ TODO: Read gyroscope data - done
 //let phone act as GATT central device
 class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, ObservableObject {
     private var centralManager: CBCentralManager! //handle ble scanning. state, connecting, disconnecting
-    private var peripherals = Array<CBPeripheral?>(repeating: nil, count: 5) //store all connected peripherals
-    //private var peripherals = [CBPeripheral]() //store all connected peripherals
-    
-    
+    private var peripherals = Array<CBPeripheral?>(repeating: nil, count: 5) //store all connected peripherals, initialize array with size 5
     
     
     //TODO: Get ID OF OTHER PICOS
@@ -53,10 +51,11 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     //predefined characteristics
     private var AccelServiceUUID = CBUUID(string: "4A40")
     private var GyroServiceUUID = CBUUID(string: "4A50")
-    
-    private var axCharacteristicUUID = CBUUID(string: "4A41") //need to change name
+    //accel characteristics
+    private var axCharacteristicUUID = CBUUID(string: "4A41")
     private var ayCharacteristicUUID = CBUUID(string: "4A42")
     private var azCharacteristicUUID = CBUUID(string: "4A43")
+    //gyro characteristics
     private var gxCharacteristicUUID = CBUUID(string: "4A51")
     private var gyCharacteristicUUID = CBUUID(string: "4A52")
     private var gzCharacteristicUUID = CBUUID(string: "4A53")
@@ -65,15 +64,15 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     
     
     //TODO: Clean up
-    @Published var MPU6050_1_Accel: [Int] = [0, 0, 0] // Array to store current acceleration
-    @Published var MPU6050_2_Accel: [Int] = [0, 0, 0] // Array to store current acceleration
-    @Published var MPU6050_1_Gyro: [Int] = [0, 0, 0] // Array to store current gyro
-    @Published var MPU6050_2_Gyro: [Int] = [0, 0, 0] // Array to store current gyro
-    @Published var MPU6050_1Accelerations: [[Int]] = [] //stores all the acceleration
-    @Published var MPU6050_2Accelerations: [[Int]] = [] //stores all the acceleration
-    @Published var MPU6050_1Gyros: [[Int]] = [] //stores all the gyro data
-    @Published var MPU6050_2Gyros: [[Int]] = [] //stores all the gyro data
-    @Published var collectDataToggle = false
+    @Published var MPU6050_1_Accel: [Int] = [0, 0, 0] // Array to store current acceleration of MPU6050-1
+    @Published var MPU6050_2_Accel: [Int] = [0, 0, 0] // Array to store current acceleration of MPU6050-2
+    @Published var MPU6050_1_Gyro: [Int] = [0, 0, 0] // Array to store current gyro rotation of MPU6050-1
+    @Published var MPU6050_2_Gyro: [Int] = [0, 0, 0] // Array to store current gyro rotation of MPU6050-2
+    @Published var MPU6050_1Accelerations: [[Int]] = [] //stores all the acceleration of MPU6050-1
+    @Published var MPU6050_2Accelerations: [[Int]] = [] //stores all the acceleration of MPU6050-2
+    @Published var MPU6050_1Gyros: [[Int]] = [] //stores all the gyro data of MPU6050-1
+    @Published var MPU6050_2Gyros: [[Int]] = [] //stores all the gyro data of MPU6050-2
+    @Published var collectDataToggle = false//
     @Published var isConnected = false
     
     @Published var listOfPeripherals = []
@@ -86,35 +85,38 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     
     //scans for devices with the AccelServiceUUID
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        
+        // check if SmartWeights' bluetooth is on
         if central.state == .poweredOn{
-            centralManager.scanForPeripherals(withServices: [AccelServiceUUID,GyroServiceUUID], options: nil)
+            centralManager.scanForPeripherals(withServices: [AccelServiceUUID,GyroServiceUUID], options: nil) //scanning for peripherals with specify services (predefined in MicroPython)
         }
         else{
-            print("no Bluetooth devices found")
+            print("bluetooth error")
         }
     }
     
         
     
-    //connects to the device with the AccelServiceUUID
+    //connects to peripherals with the specified service UUID
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        
+        //add MPU6050-1 in list of connected
         if peripheral.identifier.uuidString == "C6AE350F-CE7B-E617-CA34-811668D1E7CC"{
             peripherals.insert(peripheral, at: 0)
         }
+        //add MPU6050-2 in list of connected
         else if peripheral.identifier.uuidString == "4E4168A3-43AC-4B91-F952-F6712BF345FC"{
             peripherals.insert(peripheral, at: 1)
         }
+        //connecting the peripheral to the app
         centralManager.connect(peripheral, options: nil)
         peripheralData[peripheral.identifier] = []
         
     }
     
-    //starts scanning once the peripheral is disconnected
+    //starts scanning once a peripheral is disconnected
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         if peripheral == peripherals[0]{
             peripherals[0] = nil
-            
         }
         else if peripheral == peripherals[1]{
             peripherals[1] = nil
@@ -134,15 +136,14 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
         self.isConnected = true
         listOfPeripherals.append(peripheral)
         print(peripheral)
-        
     }
     
-    
+    //if a bluetooth device could not connect correctly
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         print("Failed to connect to peripheral: \(peripheral), error: \(String(describing: error))")
     }
     
-    //discover the services from the device
+    //discover the services from the peripheral
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let services = peripheral.services {
             for service in services {
@@ -233,13 +234,13 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
         }
         
     }
-    
+    //gets the updated data from the characteristic
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             print("Failed to read characteristic value: \(error)")
             return
         }
-        
+        //obtaining the data from the characeteristic
         if let incomingData = characteristic.value{
             let data: Int = incomingData.withUnsafeBytes { bufferPointer in
                 guard let ptr = bufferPointer.baseAddress?.assumingMemoryBound(to: Int16.self) else {
@@ -248,9 +249,8 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                 let floatValue = ptr.pointee
                 return Int(floatValue)
             }
-            
+            //updates the correct array based on the characteristic
             DispatchQueue.main.async {
-                
                 switch peripheral.identifier.uuidString{
                     case self.MPU6050_1_ID:
                         switch characteristic{
@@ -318,26 +318,31 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
 }
 
 struct bleView : View {
-    
+    //initialize bluetooth
     @ObservedObject var ble = BLEcentral()
     
     var body: some View {
-        Spacer()
+        //allow the app to start collecting data
         Button(action: {
             ble.collectDataToggle = true
         }, label: {
             Text("start workout")
         })
+        .padding(.top,20)
+        //stops the app from collecting data
         Button(action: {
             ble.collectDataToggle = false
         }, label: {
             Text("finish workout")
         })
         .padding(.top, 100)
+        //show peripheral connection
         Text("\(ble.listOfPeripherals)")
+        //show all data being sent by peripherals
         Text("\(ble.peripheralData)")
         
         HStack{
+            //list the accel and gyro data for MPU6050-1
             HStack{
                 List{
                     ForEach(ble.MPU6050_1Accelerations, id: \.self) { acceleration in
@@ -363,6 +368,7 @@ struct bleView : View {
                 }
                 
             }
+            //list the accel and gyro data for MPU6050-2
             HStack{
                 List{
                     ForEach(ble.MPU6050_2Accelerations, id: \.self) { acceleration in
