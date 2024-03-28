@@ -5,10 +5,14 @@ import CoreBluetooth
 
 /*
 Bluetooth will only work if it being tested on an external device with Bluetooth capabilities
+ 
+ current status - picos will automatically connect the moment the BLEcentral class is initialize.
+                    The sensors will continuously send data. But only when collectedDataToggle == True will the app collect data.
+                    This makes starting the workout easier, since sensors are always connected.
 
 
-TODO: Connect three more picos
-TODO: Refactor the code to handle three more picos
+TODO: Connect three more picos - in progress
+TODO: Refactor the code to handle three more picos - in progress
 TODO: Read gyroscope data - done
  */
 
@@ -29,7 +33,6 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     private var MPU6050_2_ID = "4E4168A3-43AC-4B91-F952-F6712BF345FC"
     
     
-    //TODO: Refactor to store in a dictionary
     //MPU6050_1
     private var axCharacteristic: CBCharacteristic!
     private var ayCharacteristic: CBCharacteristic!
@@ -70,7 +73,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     @Published var MPU6050_2Accelerations: [[Int]] = [] //stores all the acceleration
     @Published var MPU6050_1Gyros: [[Int]] = [] //stores all the gyro data
     @Published var MPU6050_2Gyros: [[Int]] = [] //stores all the gyro data
-    @Published var scanningToggle = false
+    @Published var collectDataToggle = false
     @Published var isConnected = false
     
     @Published var listOfPeripherals = []
@@ -91,6 +94,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
         }
     }
     
+        
     
     //connects to the device with the AccelServiceUUID
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
@@ -256,7 +260,9 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                                 self.MPU6050_1_Accel[1] = data
                             case self.azCharacteristic:
                                 self.MPU6050_1_Accel[2] = data
+                            if self.collectDataToggle{
                                 self.MPU6050_1Accelerations.append(self.MPU6050_1_Accel)
+                            }
                                 self.peripheralData[peripheral.identifier]?.append(contentsOf: self.MPU6050_1_Accel)
                             case self.gxCharacteristic:
                                 self.MPU6050_1_Gyro[0] = data
@@ -264,7 +270,9 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                                 self.MPU6050_1_Gyro[1] = data
                             case self.gzCharacteristic:
                                 self.MPU6050_1_Gyro[2] = data
+                            if self.collectDataToggle{
                                 self.MPU6050_1Gyros.append(self.MPU6050_1_Gyro)
+                            }
                                 print("MPU6050_1 gyro")
                                 print("\(self.MPU6050_1Gyros)")
                             default:
@@ -278,7 +286,9 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                                 self.MPU6050_2_Accel[1] = data
                             case self.azCharacteristic2:
                                 self.MPU6050_2_Accel[2] = data
+                            if self.collectDataToggle{
                                 self.MPU6050_2Accelerations.append(self.MPU6050_2_Accel)
+                            }
                                 self.peripheralData[peripheral.identifier]?.append(contentsOf: self.MPU6050_2_Accel)
                             case self.gxCharacteristic2:
                                 self.MPU6050_2_Gyro[0] = data
@@ -286,7 +296,9 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                                 self.MPU6050_2_Gyro[1] = data
                             case self.gzCharacteristic2:
                                 self.MPU6050_2_Gyro[2] = data
+                            if self.collectDataToggle{
                                 self.MPU6050_2Gyros.append(self.MPU6050_2_Gyro)
+                            }
                                 print("MPU6050_2 gyro")
                                 print("\(self.MPU6050_2Gyros)")
                             default:
@@ -297,70 +309,6 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                     default:
                         break
                 }
-                
-                
-                //                if peripheral.identifier.uuidString == self.MPU6050_2_ID{
-                //                    if characteristic == self.axCharacteristic2 {
-                //                        self.MPU6050_2_Accel[0] = data
-                //                    }
-                //                    else if characteristic == self.ayCharacteristic2 {
-                //                        self.MPU6050_2_Accel[1] = data
-                //                    }
-                //                    else if characteristic == self.azCharacteristic2 {
-                //                        self.MPU6050_2_Accel[2] = data
-                //                        //adding the acceleration into the overall array
-                //                        self.MPU6050_2Accelerations.append(self.MPU6050_2_Accel)
-                //                        self.peripheralData[peripheral.identifier]?.append(contentsOf: self.MPU6050_2_Accel)
-                //                        print("MPU6050_2 accel")
-                //                        print("\(self.MPU6050_2Accelerations)")
-                //                    }
-                //                    else if characteristic == self.gxCharacteristic2 {
-                //                        self.MPU6050_2_Gyro[0] = data
-                //                    }
-                //                    else if characteristic == self.gyCharacteristic2 {
-                //                        self.MPU6050_2_Gyro[1] = data
-                //                    }
-                //                    else if characteristic == self.gzCharacteristic2 {
-                //                        self.MPU6050_2_Gyro[2] = data
-                //                        //adding the gyroscope into the overall array
-                //                        self.MPU6050_2Gyros.append(self.MPU6050_2_Gyro)
-                //                        print("MPU6050_2 gyro")
-                //                        print("\(self.MPU6050_2Gyros)")
-                //                    }
-                //
-                //                }
-                
-                
-                //                else if peripheral.identifier.uuidString == self.MPU6050_1_ID{
-                //                    if characteristic == self.axCharacteristic {
-                //                        self.MPU6050_1_Accel[0] = data
-                //                    }
-                //                    else if characteristic == self.ayCharacteristic {
-                //                        self.MPU6050_1_Accel[1] = data
-                //                    }
-                //                    else if characteristic == self.azCharacteristic {
-                //                        self.MPU6050_1_Accel[2] = data
-                //                        //adding the accerlation into the overall array
-                //                        self.MPU6050_1Accelerations.append(self.MPU6050_1_Accel)
-                //                        self.peripheralData[peripheral.identifier]?.append(contentsOf: self.MPU6050_1_Accel)
-                //                        print("MPU6050_1 accel")
-                //                        print("\(self.MPU6050_1Accelerations)")
-                //                    }
-                //                    else if characteristic == self.gxCharacteristic {
-                //                        self.MPU6050_1_Gyro[0] = data
-                //                    }
-                //                    else if characteristic == self.gyCharacteristic {
-                //                        self.MPU6050_1_Gyro[1] = data
-                //                    }
-                //                    else if characteristic == self.gzCharacteristic {
-                //                        self.MPU6050_1_Gyro[2] = data
-                //                        //adding the gyroscope into the overall array
-                //                        self.MPU6050_1Gyros.append(self.MPU6050_1_Gyro)
-                //                        print("MPU6050_1 gyro")
-                //                        print("\(self.MPU6050_1Gyros)")
-                //                    }
-                //
-                //                }
                 
             }
             
@@ -374,6 +322,18 @@ struct bleView : View {
     @ObservedObject var ble = BLEcentral()
     
     var body: some View {
+        Spacer()
+        Button(action: {
+            ble.collectDataToggle = true
+        }, label: {
+            Text("start workout")
+        })
+        Button(action: {
+            ble.collectDataToggle = false
+        }, label: {
+            Text("finish workout")
+        })
+        .padding(.top, 100)
         Text("\(ble.listOfPeripherals)")
         Text("\(ble.peripheralData)")
         
