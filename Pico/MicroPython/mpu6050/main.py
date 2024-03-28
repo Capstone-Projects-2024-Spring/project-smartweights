@@ -18,6 +18,9 @@ _FLAG_INDICATE = const(0x0020)
 # custom bluetooth service for acceleration sensing
 _ACCEL_SENSE_UUID = bluetooth.UUID(0x4A40)
 
+# custom bluetooth service for gyro sensing
+_GYRO_SENSE_UUID = bluetooth.UUID(0x4A50)
+
 # custom bluetooth characteristics for x, y, and z axes
 _X_AXIS_CHAR = (
     bluetooth.UUID(0x4A41),
@@ -39,17 +42,38 @@ _ACCEL_SENSE_SERVICE = (
     (_X_AXIS_CHAR, _Y_AXIS_CHAR, _Z_AXIS_CHAR),
 )
 
+
+_X_GYRO_CHAR = (
+    bluetooth.UUID(0x4A51),
+    _FLAG_READ | _FLAG_NOTIFY | _FLAG_INDICATE,
+)
+
+_Y_GYRO_CHAR = (
+    bluetooth.UUID(0x4A52),
+    _FLAG_READ | _FLAG_NOTIFY | _FLAG_INDICATE,
+)
+_Z_GYRO_CHAR = (
+    bluetooth.UUID(0x4A53),
+    _FLAG_READ | _FLAG_NOTIFY | _FLAG_INDICATE,
+)
+
+_GYRO_SENSE_SERVICE = (
+    _GYRO_SENSE_UUID,
+    (_X_GYRO_CHAR, _Y_GYRO_CHAR, _Z_GYRO_CHAR),
+)
+
+
 class BLEAcceleration:
     def __init__(self, ble, id):
         self._mpu6050 = mpuData("MPU6050-1")
         self._ble = ble
         self._ble.active(True)
         self._ble.irq(self._irq)
-        ((self._handle_x, self._handle_y, self._handle_z),) = self._ble.gatts_register_services((_ACCEL_SENSE_SERVICE,))
+        ((self._handle_ax, self._handle_ay, self._handle_az), (self._handle_gx, self._handle_gy, self._handle_gz)) = self._ble.gatts_register_services((_ACCEL_SENSE_SERVICE,_GYRO_SENSE_SERVICE))
         self._connections = set()
         print('%s' % self._mpu6050.id)
         self._payload = advertising_payload(
-            name=id, services=[_ACCEL_SENSE_UUID]
+            name=id, services=[_ACCEL_SENSE_UUID, _GYRO_SENSE_UUID]
         )
         self._advertise()
         
@@ -69,30 +93,46 @@ class BLEAcceleration:
     def update_acceleration(self, notify=False, indicate=False):
         mpu6050 = self._mpu6050
         accelData = mpu6050.get_accel_data()
-        x,y,z = accelData[0],accelData[1],accelData[2]
-        x = int(x *100)
-        y = int(y *100)
-        z = int(z *100)
+        gyroData = mpu6050.get_gyro_data()
+        gx,gy,gz = gyroData[0],gyroData[1],gyroData[2]
+        ax,ay,az = accelData[0],accelData[1],accelData[2]
+        ax, ay, az = int(ax *100), int(ay*100), int(az*100)
+        gx, gy, gz = int(gx), int(gy), int(gz)
+        
         print('--------------------')
         print(accelData[0], accelData[1], accelData[2])
-        print("X: {}, Y: {}, Z: {}".format(x,y,z))
-        self._ble.gatts_write(self._handle_x, struct.pack("<h", x))
-        self._ble.gatts_write(self._handle_y, struct.pack("<h", y))
-        self._ble.gatts_write(self._handle_z, struct.pack("<h", z))
+        print("Accel - X: {}, Y: {}, Z: {}".format(ax,ay,az))
+        print('--------------------')
+        print(accelData[0], accelData[1], accelData[2])
+        print("Gyro - X: {}, Y: {}, Z: {}".format(gx,gy,gz))
+        
+        
+        self._ble.gatts_write(self._handle_ax, struct.pack("<h", ax))
+        self._ble.gatts_write(self._handle_ay, struct.pack("<h", ay))
+        self._ble.gatts_write(self._handle_az, struct.pack("<h", az))
+        self._ble.gatts_write(self._handle_gx, struct.pack("<h", gx))
+        self._ble.gatts_write(self._handle_gy, struct.pack("<h", gy))
+        self._ble.gatts_write(self._handle_gz, struct.pack("<h", gz))
         if notify or indicate:
             for conn_handle in self._connections:
                 if notify:
                     # Notify connected centrals.
-                    self._ble.gatts_notify(conn_handle, self._handle_x)
-                    self._ble.gatts_notify(conn_handle, self._handle_y)
-                    self._ble.gatts_notify(conn_handle, self._handle_z)
+                    self._ble.gatts_notify(conn_handle, self._handle_ax)
+                    self._ble.gatts_notify(conn_handle, self._handle_ay)
+                    self._ble.gatts_notify(conn_handle, self._handle_az)
+                    self._ble.gatts_notify(conn_handle, self._handle_gx)
+                    self._ble.gatts_notify(conn_handle, self._handle_gy)
+                    self._ble.gatts_notify(conn_handle, self._handle_gz)
                     print("i am connected and notifying")
                     
                 if indicate:
                     # Indicate connected centrals.
-                    self._ble.gatts_indicate(conn_handle, self._handle_x)
-                    self._ble.gatts_indicate(conn_handle, self._handle_y)
-                    self._ble.gatts_indicate(conn_handle, self._handle_z)
+                    self._ble.gatts_indicate(conn_handle, self._handle_ax)
+                    self._ble.gatts_indicate(conn_handle, self._handle_ay)
+                    self._ble.gatts_indicate(conn_handle, self._handle_az)
+                    self._ble.gatts_indicate(conn_handle, self._handle_gx)
+                    self._ble.gatts_indicate(conn_handle, self._handle_gy)
+                    self._ble.gatts_indicate(conn_handle, self._handle_gz)
                     print("i am connected")
                 
     

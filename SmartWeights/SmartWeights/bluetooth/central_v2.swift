@@ -1,7 +1,22 @@
 import SwiftUI
 import CoreBluetooth
 
-//WILL ONLY WORK IF BUILT ON AN EXTERNAL DEVICE WITH BLUETOOTH
+
+
+/*
+ Bluetooth will only work if it being tested on an external device with Bluetooth capabilities
+ 
+ 
+ TODO: TConnect three more picos
+ TODO: Refactor the code to handle three more picos
+ TODO: Read gyroscope data
+ TODO: Current data being sent is Int, might change to Float or byteArray
+ 
+ 
+ */
+
+
+
 
 //let phone act as GATT central device
 class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, ObservableObject {
@@ -9,13 +24,21 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     private var peripherals = [CBPeripheral]()
     
     
+    
+   
+    //TODO: Get ID OF OTHER PICOS
     //peripheral ID for the picos
     private var MPU6050_1_ID = "C6AE350F-CE7B-E617-CA34-811668D1E7CC"
     private var MPU6050_2_ID = "4E4168A3-43AC-4B91-F952-F6712BF345FC"
     
+    
+    //TODO: Refactor to store in a dictionary
+    //MPU6050_1
     private var xCharacteristic: CBCharacteristic!
     private var yCharacteristic: CBCharacteristic!
     private var zCharacteristic: CBCharacteristic!
+    
+    //MPU6050_2
     private var xCharacteristic2: CBCharacteristic!
     private var yCharacteristic2: CBCharacteristic!
     private var zCharacteristic2: CBCharacteristic!
@@ -30,11 +53,9 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     
     
     
-    
-    @Published var accelerations: [Int] = [0, 0, 0] // Array to store current acceleration
+    //TODO: Clean up    
     @Published var MPU6050_1: [Int] = [0, 0, 0] // Array to store current acceleration
     @Published var MPU6050_2: [Int] = [0, 0, 0] // Array to store current acceleration
-    @Published var AllAccelerations: [[Int]] = [] //stores all the acceleration
     @Published var MPU6050_1Accelerations: [[Int]] = [] //stores all the acceleration
     @Published var MPU6050_2Accelerations: [[Int]] = [] //stores all the acceleration
     @Published var scanningToggle = false
