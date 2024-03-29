@@ -248,7 +248,35 @@ struct TestView : View {
                 
             }
             Button("findInventory"){
-                vm.CKManager.fetchRecord(recordType: "Inventory", user: vm.userRecord!)
+                vm.CKManager.fetchRecord(recordType: "Inventory", user: vm.userRecord!) { records, error in
+                    if let error = error {
+                        print("Error fetching inventory: \(error)")
+                    } else if let letRecords = records {
+                        print("Inventory record exists in Inventory record type \(letRecords)")
+                    } else {
+                        print("Inventory record does not exist in Inventory record type")
+                    }
+                }
+            }
+            Button("get currency"){
+                vm.IManager.getCurrency(user: vm.userRecord!) { currency, error in
+                    if let error = error {
+                        print("Error fetching currency: \(error)")
+                    } else if let currency = currency {
+                        print("Currency: \(currency)")
+                    } else {
+                        print("Currency not found")
+                    }
+                }
+            }
+            Button("add 50 to currency"){
+                vm.IManager.updateCurrency(user: vm.userRecord!, newCurrency: 50){error in
+                    if let error = error {
+                        print("Error updating currency: \(error)")
+                    } else {
+                        print("Currency updated")
+                    }
+                }
             }
             Button("find private user"){
                 let predicate = NSPredicate(format: "Users == %@", vm.userRecord!)

@@ -69,26 +69,39 @@ class CloudKitManager {
             }
         }
     }
-    func fetchRecord(recordType: String, user: CKRecord.Reference) {
+    func fetchRecord(recordType: String, user: CKRecord.Reference, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+        // var fetchedRecords: [CKRecord] = []
+        
         let predicate = NSPredicate(format: "user == %@", user)
         let query = CKQuery(recordType: recordType, predicate: predicate)
         
-        privateDatabase.perform(query, inZoneWith: nil) { [weak self] records, error in
+        privateDatabase.perform(query, inZoneWith: nil) { records, error in
             if let error = error {
                 print("Error fetching record: \(error.localizedDescription)")
+                  completion(nil, error)
                 return
             }
             
             guard let records = records else {
                 print("No records found")
+                completion(nil, nil)
                 return
             }
-            
-            // Process fetched records
-            for record in records {
-                // Do something with the fetched record
-                print(record)
+            completion(records, nil)
+            // fetchedRecords = records
+        }
+        
+        // return fetchedRecords
+    }
+    func fetchPrivateItem(recordType: String, user: CKRecord.Reference, completion: @escaping (CKRecord?, Error?) -> Void) {
+        let predicate = NSPredicate(format: "user == %@", user)
+        let query = CKQuery(recordType: recordType, predicate: predicate)
+
+        privateDatabase.perform(query, inZoneWith: nil) { records, error in
+            DispatchQueue.main.async {
+                completion(records?.first, error)
             }
         }
     }
+    
 }
