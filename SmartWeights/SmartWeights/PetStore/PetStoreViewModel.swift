@@ -6,7 +6,7 @@ import CloudKit
 class storeViewModel: ObservableObject {
     
     var cloudKitManager = CloudKitManager()
-    
+    var inventoryDBManager = InventoryDBManager()
     
     /// Items available in store.
     @Published var items = [

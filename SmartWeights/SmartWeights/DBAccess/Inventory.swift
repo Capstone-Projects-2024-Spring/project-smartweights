@@ -76,10 +76,10 @@ class InventoryDBManager : ObservableObject{
         CKManager.savePrivateItem(record: inventoryRecord)
         
     }
-    func fetchInventory(user: CKRecord.Reference)  {
+    func fetchInventory(user: CKRecord.Reference, completion: @escaping (InventoryModel?, Error?) -> Void) {
         CKManager.fetchPrivateItem(recordType: "Inventory", user: user) { record, error in
             guard let record = record else {
-                // completion(nil, error)
+                completion(nil, error)
                 print("Error fetching inventory: \(error?.localizedDescription ?? "Unknown error")")
                 return
             }
@@ -95,22 +95,26 @@ class InventoryDBManager : ObservableObject{
             
             guard let userUnwrapped = user else {
                 print("User reference nil.")
+                 completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "User reference nil."]))
                 return
             }
             
             self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], currency: currency ?? 0, food: food ?? [], pets: pets ?? [], user: userUnwrapped)
-            
-            // completion(inventory, nil)
+            completion(self.inventory, nil)
+           
         }
     }
     func getCurrency(user: CKRecord.Reference, completion: @escaping (Int64?, Error?) -> Void) {
         if let inventory = inventory {
             completion(inventory.currency, nil)
         } else {
-            fetchInventory(user: user)
-            // As fetchInventory is asynchronous, inventory might still be nil at this point
-            // You might want to add some mechanism to call completion when fetchInventory finishes
-            completion(inventory?.currency, nil)
+            fetchInventory(user: user) { inventory, error in
+                if let error = error {
+                    completion(nil, error)
+                } else {
+                    completion(self.inventory?.currency, nil)
+                }
+            }
         }
     }
     //function should get the currency from the inventory and update it, not create a new inventory
