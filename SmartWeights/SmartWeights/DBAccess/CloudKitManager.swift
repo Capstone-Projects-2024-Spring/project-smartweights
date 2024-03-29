@@ -69,4 +69,26 @@ class CloudKitManager {
             }
         }
     }
+    func fetchRecord(recordType: String, user: CKRecord.Reference) {
+        let predicate = NSPredicate(format: "user == %@", user)
+        let query = CKQuery(recordType: recordType, predicate: predicate)
+        
+        privateDatabase.perform(query, inZoneWith: nil) { [weak self] records, error in
+            if let error = error {
+                print("Error fetching record: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let records = records else {
+                print("No records found")
+                return
+            }
+            
+            // Process fetched records
+            for record in records {
+                // Do something with the fetched record
+                print(record)
+            }
+        }
+    }
 }

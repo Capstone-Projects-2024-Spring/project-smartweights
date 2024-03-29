@@ -4,6 +4,7 @@ import SwiftUI
 class UserRecordManager : ObservableObject {
     
     let CKManager = CloudKitManager()
+    let IManager = InventoryDBManager()
     @Published var userRecord: CKRecord.Reference?
     @Published var userRecords: [CKRecord] = []
     @Published var permissionStatus: Bool = false
@@ -71,7 +72,7 @@ class UserRecordManager : ObservableObject {
     //                let database = CKContainer.default().privateCloudDatabase
     //                let predicate = NSPredicate(format: "%K == %@", UserRecordKeys.Users.rawValue, userRecord)
     //                let query = CKQuery(recordType: UserRecordKeys.type.rawValue, predicate: predicate)
-    //                
+    //
     //                database.perform(query, inZoneWith: nil) { (records, error) in
     //                    if let error = error {
     //                        print("Error fetching user record: \(error)")
@@ -92,7 +93,7 @@ class UserRecordManager : ObservableObject {
     //                let database = CKContainer.default().privateCloudDatabase
     //                let predicate = NSPredicate(format: "%K == %@", UserRecordKeys.Users.rawValue, userRecord)
     //                let query = CKQuery(recordType: UserRecordKeys.type.rawValue, predicate: predicate)
-    //                
+    //
     //                database.fetch(withQuery: query, inZoneWith: nil, desiredKeys: nil, resultsLimit: Int.max) { result in
     //                    switch result {
     //                    case .failure(let error):
@@ -127,15 +128,15 @@ class UserRecordManager : ObservableObject {
                 completion(true, nil) // userRecord exists in Users record type
                 print("exists")
                 print("ExistsRecord: \(records)")
-//                return true
+                //                return true
             } else {
                 completion(false, nil) // userRecord does not exist in Users record type
                 print("does not exist")
-//                return false
+                //                return false
             }
         }
     }
-
+    
     
     func fetchAllUserRecords(completion: @escaping ([CKRecord]?, Error?) -> Void) {
         let predicate = NSPredicate(value: true) // This predicate matches all records
@@ -147,23 +148,32 @@ class UserRecordManager : ObservableObject {
             }
         }
     }
- 
-//    //should use recordID from "User" not "Users" 
-//    func createPet() -> CKRecord{
-//        let newPetRecord = CKRecord(recordType: "Pet")
-//        newPetRecord["user"] =
-//        newPetRecord["health"]
-//        return newPetRecord
-//    }
+    
+    //    //should use recordID from "User" not "Users"
+    //    func createPet() -> CKRecord{
+    //        let newPetRecord = CKRecord(recordType: "Pet")
+    //        newPetRecord["user"] =
+    //        newPetRecord["health"]
+    //        return newPetRecord
+    //    }
+    
+    enum UserRecordError: Error {
+        case userRecordIsNull
+    }
     //will need to manually ask user input for name
-        func createUser(first: String, last: String) -> CKRecord{
-            let newUserRecord = CKRecord(recordType: "User")
-            newUserRecord["firstName"] = first
-            newUserRecord["lastName"] = last
-            newUserRecord["latestLogin"] = Date()
-            newUserRecord["Users"] = userRecord
-            return newUserRecord
+    func createUser(first: String, last: String) throws -> CKRecord {
+        guard let userR = userRecord else {
+            throw UserRecordError.userRecordIsNull
         }
+        let newUserRecord = CKRecord(recordType: "User")
+        newUserRecord["firstName"] = first
+        newUserRecord["lastName"] = last
+        newUserRecord["latestLogin"] = Date()
+        newUserRecord["Users"] = userR
+        return newUserRecord
+    }
+    
+    
 }
 struct TestView : View {
     
@@ -184,8 +194,17 @@ struct TestView : View {
                     } else {
                         userRecordExists = exists
                         if !userRecordExists {
-                            let newUser = vm.createUser(first: "Smart", last: "Weights")
-                            vm.CKManager.saveItem(record: newUser)
+                            do {
+                                let newUser = try vm.createUser(first: "Smart", last: "Weights")
+                                vm.CKManager.saveItem(record: newUser)
+                                //might need additional check if inventory was already created
+                                vm.IManager.createInventory(userR: vm.userRecord!)
+                                
+                                // Use newUser
+                            } catch {
+                                print("An error occurred: \(error)")
+                            }
+                            
                             print("did save")
                         }else{
                             print ("user record exists, not saving")
@@ -197,15 +216,21 @@ struct TestView : View {
                 print("userRecord \(vm.userRecords)")
             }
             Button("addPrivateUser"){
-                let newUser = vm.createUser(first: "Smart", last: "Weights")
-
-                vm.CKManager.savePrivateItem(record: newUser)
+                do {
+                    let newUser = try vm.createUser(first: "Smart", last: "Weights")
+                    vm.CKManager.savePrivateItem(record: newUser)
+                    
+                    // Use newUser
+                } catch {
+                    print("An error occurred: \(error)")
+                }
+                
                 print("did save")
             }
             Button("Print First name"){
                 for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
-    print("This is the key value\(key): \(value) \n")
-}
+                    print("This is the key value\(key): \(value) \n")
+                }
             }
             Button("Find User"){
                 let predicate = NSPredicate(format: "Users == %@", vm.userRecord!)
@@ -221,6 +246,9 @@ struct TestView : View {
                     }
                 }
                 
+            }
+            Button("findInventory"){
+                vm.CKManager.fetchRecord(recordType: "Inventory", user: vm.userRecord!)
             }
             Button("find private user"){
                 let predicate = NSPredicate(format: "Users == %@", vm.userRecord!)

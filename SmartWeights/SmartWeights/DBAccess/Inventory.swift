@@ -50,9 +50,9 @@ extension InventoryModel {
 
 class InventoryDBManager : ObservableObject{
     let CKManager = CloudKitManager()
-    var userM = UserRecordManager()
+//    var userM = UserRecordManager()
     //user userM to get userReference
-    func createInventory(){
+    func createInventory(userR : CKRecord.Reference){
         //        userM.fetchCurrentUserRecordID { error in
         //            if let error = error {
         //                print("Error fetching current user record ID: \(error)")
@@ -61,12 +61,8 @@ class InventoryDBManager : ObservableObject{
         //                print("successful call fetchCurrentUserRecordID: ")
         //            }
         //        }
-        guard let userRecord = userM.userRecord else {
-            // Handle the case where userM.userRecord is nil
-            print("Error: userRecord is nil")
-            return
-        }
-        let inventory = InventoryModel(activeBackground: nil, activePetClothing: nil, background: [], clothing: [], currency: 0, food: [], pets: [], user: userRecord)
+        
+        let inventory = InventoryModel(activeBackground: nil, activePetClothing: nil, background: [], clothing: [], currency: 0, food: [], pets: [], user: userR)
         let inventoryRecord = inventory.record
         // Save the record to the database
         CKManager.savePrivateItem(record: inventoryRecord)
