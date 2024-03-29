@@ -53,8 +53,17 @@ class CloudKitManager {
     }
     func saveItem(record: CKRecord){
         CKContainer.default().publicCloudDatabase.save(record){[weak self] returnedRecord, returnedError in
-            print("Record: \(returnedRecord)")
-            print("Error: \(returnedError)")
+            print("Record: \(String(describing: returnedRecord))")
+            print("Error: \(String(describing: returnedError))")
+            DispatchQueue.main.async{
+                self?.text = ""
+            }
+        }
+    }
+    func savePrivateItem(record: CKRecord){
+        CKContainer.default().privateCloudDatabase.save(record){[weak self] returnedRecord, returnedError in
+            print("Record: \(String(describing: returnedRecord))")
+            print("Error: \(String(describing: returnedError))")
             DispatchQueue.main.async{
                 self?.text = ""
             }

@@ -27,7 +27,7 @@ class storeViewModel: ObservableObject {
     @Published var sortByPrice = false // used for sorting
     @Published var selectedCategory = "Pets" // Default
     let categories = ["Pets", "Foods", "Backgrounds", "Outfits"]
-    @Published var userCur = 550 // Default currency
+    @Published var userCur = 1000 // Default currency
     
     /// Display items based on selected sorting method.
     func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem] {
