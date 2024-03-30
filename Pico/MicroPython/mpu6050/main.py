@@ -103,7 +103,7 @@ class BLEAcceleration:
         print(accelData[0], accelData[1], accelData[2])
         print("Accel - X: {}, Y: {}, Z: {}".format(ax,ay,az))
         print('--------------------')
-        print(accelData[0], accelData[1], accelData[2])
+        print(gyroData[0], gyroData[1], gyroData[2])
         print("Gyro - X: {}, Y: {}, Z: {}".format(gx,gy,gz))
         
         
