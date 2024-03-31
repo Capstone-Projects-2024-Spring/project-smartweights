@@ -180,7 +180,7 @@ title: CoreData Structure
 
 erDiagram
     Workout {
-        measurement_id INT
+        workout_id INT
         user_id INT
         speed FLOAT
         velocity FLOAT
