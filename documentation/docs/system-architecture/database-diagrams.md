@@ -3,11 +3,12 @@ sidebar_position: 9
 ---
 
 # Database Diagrams
-SmartWeights uses a NoSQL approach to the database design. It combines usage of both cloud based database (Firebase) and local storage database (CoreData). 
+SmartWeights uses a relation schema approach to the database design. It combines usage of both cloud based database (CloudKit) and local storage database (CoreData). 
 
 
-## Firebase Database Design, User 
-This section of the database shows the data the user themselves have and can manipulate. This is somewhat representative of a "snowflake schema". It represents data relevant to the user's:
+## CloudKit Database Design
+CloudKit uses a relational 
+
 - Profile
 - Achievements
 - Pet

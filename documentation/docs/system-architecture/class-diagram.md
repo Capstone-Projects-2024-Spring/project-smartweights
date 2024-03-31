@@ -545,25 +545,63 @@ IDK Which class is being used
 ``` mermaid
 classDiagram
 
-    class BLEAccelCentral{
-        UUID
-        scan()
-        read()
-        connect()
-        disconnect()
+   
+    class BLEAdvertisingPayload {
+        +advertising_payload(limited_disc: bool, br_edr: bool, name: str, services: List[UUID], appearance: int): bytearray
+        +decode_field(payload: bytearray, adv_type: int): List[bytearray]
+        +decode_name(payload: bytearray): str
+        +decode_services(payload: bytearray): List[UUID]
     }
-    class BLEAccelPeripheral{
-        get_data()
-        update_data()
+    class MPU6050 {
+        -address: int
+        -i2c: machine.I2C
+        +__init__(i2c: machine.I2C, address: int = 0x68): void
+        +wake(): void
+        +sl
+        eep(): void
+        +who_am_i(): int
+        +read_temperature(): float
+        +read_gyro_range(): int
+        +write_gyro_range(range: int): void
+        +read_gyro_data(): tuple[float, float, float]
+        +read_accel_range(): int
+        +write_accel_range(range: int): void
+        +read_accel_data(): tuple[float, float, float]
+        +read_lpf_range(): int
+        +write_lpf_range(range: int): void
+        +_translate_pair(high: int, low: int): int
+        +_hex_to_index(range: int): int
+        +_index_to_hex(index: int): int
     }
-    class MPU6050{
+    class mpuData {
+        -id: str
+        -mpu: MPU6050
+        +__init__(id: str): void
+        +get_accel_data(): tuple
+        +get_gyro_data(): tuple
+        +hello(): void
+    }
+    class BLEAcceleration {
+        -_mpu6050: mpuData
+        -_ble: bluetooth.BLE
+        -_handle_ax: int
+        -_handle_ay: int
+        -_handle_az: int
+        -_handle_gx: int
+        -_handle_gy: int
+        -_handle_gz: int
+        -_connections: set
+        -_payload: bytearray
+        +__init__(ble: bluetooth.BLE, id: str): void
+        +_irq(event: int, data: Any): void
+        +update_acceleration(notify: bool, indicate: bool): void
+        +_advertise(interval_us: int): void
+    }
+    class main{
 
     }
-    class Vector3D{
-        vector
-        calibrate()
-        magnitude()
-        inclination()
-        elevation()
-    }
-```
+    main <-- BLEAcceleration
+    main <-- mpuData
+    main <-- MPU6050
+    main <-- BLEAdvertisingPayload
+    ```
