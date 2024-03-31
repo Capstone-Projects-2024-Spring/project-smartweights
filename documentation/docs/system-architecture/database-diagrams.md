@@ -170,38 +170,36 @@ erDiagram
 
 ## CoreData Database Design
 
-The purpose of the CoreData database design is to be lightweight and to contain the information relevant to the machine learning that will take place to help provide relevant feedback for the user's workout. There are multiple sensor systems that will get measurement data.
+The purpose of the CoreData database design is to be lightweight and to contain the information that will be received from the multiple sensors attached to the user and dumbbells. This will help provide relevant feedback for the user's workout once the data has been processed through an algorithm. There will also be a history with each feedback to allow users to revisit and see their past feedback.
+
+There will be a form with as many workouts depending on how many sets the user is doing. The form will take all the data from several Workouts and process it through an algorithm to detect whether or not the user had good or bad form through a scoring system ( 1 to 100, 1 being worst to 100 being perfect). There will also be feedback correlated with the score and will consist of suggestions on how to fix up their form.
 
 ```mermaid
 ---
-title: CoreData Machine Learning 
+title: CoreData Structure
 ---
 
 erDiagram
-    SensorSystem{
-        sensor_ID INT
-    }
-    Measurement {
-        measurement_id INT
+    Workout {
+        workout_id INT
         user_id INT
         speed FLOAT
         velocity FLOAT
         angle FLOAT
         dateTime DATETIME
-    }
-    Exercise {
-        exercise_id INT
-        name VARCHAR
-        description VARCHAR
+        xCoord FLOAT
+        yCoord FLOAT
+        zCoord FLOAT
     }
     Form {
         form_id INT
-        exercise_id INT
-        technique VARCHAR
+        score INT
+        feedback STRING
+        dateTime DATETIME
     }
     
-    SensorSystem ||--o{ Measurement: has
-    Measurement }|--|| Exercise : has
-    Exercise ||--|| Form : has
+    Workout }o--|| Form : has
+
+
 
 ```
