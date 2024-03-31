@@ -66,6 +66,7 @@ _GYRO_SENSE_SERVICE = (
 class BLEAcceleration:
     def __init__(self, ble, id):
         self._mpu6050 = mpuData("MPU6050-1")
+        #change ID depending on the device
         self._ble = ble
         self._ble.active(True)
         self._ble.irq(self._irq)
@@ -142,13 +143,14 @@ class BLEAcceleration:
 def demo():
     ble = bluetooth.BLE()
     accel = BLEAcceleration(ble, id="MPU6050-1")
+    #change ID depending on the device
     counter = 0
     led = Pin('LED', Pin.OUT)
     while True:
         if counter % 10 == 0:
             accel.update_acceleration(notify=True, indicate=False)
         led.toggle()
-        time.sleep_ms(100)
+        time.sleep_ms(10)
         counter += 1
         
 if __name__ == "__main__":
