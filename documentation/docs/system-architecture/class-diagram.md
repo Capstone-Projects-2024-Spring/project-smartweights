@@ -23,6 +23,8 @@ There is also an API that connects to our hardware (Raspberry Pi Pico W). This A
 ## Connected
 
 ### App
+
+This is the App 
 ``` mermaid 
 classDiagram
  class SmartWeightsApp{
@@ -39,7 +41,7 @@ classDiagram
    SmartWeightsApp o-- NavBar
 ```
 ### Login
-Text about login
+The login page consists of a big image of a pet and the login button. The user would click on the login button which would then ask them to "Continue with Apple". This is done through Apple's OAuth services with Apple Login.
 ```mermaid
 
 classDiagram 
@@ -62,6 +64,7 @@ classDiagram
 ```
 
 ### Virtual Pet
+The pet page consists of an image of the pet, their stats (hp, exp, lvl) and whatever they have equipped (accessories or clothes). There are some interactive features for the user that involve the pet such as changing their appearance, feeding their pets, and buying things for their pets. There is an inventory button, shop button, and a customize button within a hamburger menu. 
 ``` mermaid
 
 
@@ -101,6 +104,7 @@ classDiagram
 
 
 ### Challenges
+The challenges page consists of a list of several achievements that can be unlocked through the user by various tasks completed. Once any challenge/achievement is completed, the user can then reap their rewards through a click of a button. The users could also view their own progress of certain challenges as well to see how much closer they are to completing it.
 ``` mermaid
 
 classDiagram
@@ -149,6 +153,7 @@ classDiagram
 
 
 ### Pet Store
+The pet store page consists of a bunch of items that can be bought with the user's hard-earned pet coins. With the pet coins, they can be achieved through rewards via challenges or completing workouts. Some of the items that can be bought within the pet store are things like food to restore hp for your pet, buy clothes/accessories to swag out your pet, new pets, and backgrounds.
 ``` mermaid
 
 classDiagram
@@ -210,6 +215,7 @@ classDiagram
 ```
 
 ### Profile
+The profile page consists of the user's profile pic, name, level, pet, and their achievements. The user can edit the showcase of their achievements, change their name, height, weight, and share their profile. Sharing their profile would create a new image that has the user's hard-earned accolades on display to show  their friends.
 ``` mermaid 
 
 classDiagram
@@ -251,6 +257,7 @@ classDiagram
 ```
 
 ### Settings
+The settings page allows users to customize their notifications
 ``` mermaid 
 
 classDiagram
@@ -271,7 +278,7 @@ SettingsVM <--SettingsM
 ```
 
 ### HomePage
-
+The home page is where the user will usually go to or see first after they login successfully. There will be a video carousel of workout forms, there will be a tab to allow navigation through the app. 
 ``` mermaid 
 
 classDiagram
@@ -323,6 +330,7 @@ class HomePage{
 ```
 
 ### Workout
+The workout page is where the user goes when they want to start working out or review their past feedback history. The user selects their workout and enters how many sets and reps they'll be doing in their desired workout. Once the user is ready to initiate their workout, they can either use a button or voice activation/recognition to start. While they are working out, after each set is completed the feedback will processed through an algorithm to detect whether their form is good or bad and the pet will give suggestions on how to fix their form. The data is received through sensors and raspberry pi's during the workout. There will also be graphs and past feedback histories that the user can access if they want to. The user should also be able to see the video carousel to have more insight on what correct form could look like.
 ``` mermaid 
 
 classDiagram
