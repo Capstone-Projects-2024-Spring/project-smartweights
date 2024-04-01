@@ -4,27 +4,21 @@ sidebar_position: 7
 
 # Class Diagram
 
-SmartWeights uses an MVVM architecture and the class diagrams reflect as such. The frontend represents the views and the backend represents the viewmodels and models. The following is separated in this manner. Every view has its own respective viewmodel.
+SmartWeights uses an MVVM architecture and the class diagrams reflect as such. 
 
-## Front End
-Our frontend is made with SwiftUI and the visual elements are made through its views. Views come from SwiftUI's View struct. The entry point into the application is through the SmartWeightsApp class. The elements within the views vary, but all are relevant to some graphical component. Some contain buttons, images, or components that we are creating that are not part of the SwiftUI library such as the WorkoutGraph or Calendar. The methods in the views represent any sort of user interaction with the view. The method itself calls to its respective ViewModel to handle the functionality. Many views are made up of the NavBar component and it allows users to view other key components. The NavBar is necessary in creating a simple but effective way for users to traverse the application.
+## Architecture 
+The SmartWeights application is made with SwiftUI and the visual elements are made through its views. The elements within the views vary, but all are relevant to some graphical component. Some contain buttons, images, or components that we are creating that are not part of the SwiftUI library such as the WorkoutGraph or Calendar. The methods in the views represent any sort of user interaction with the view. The method itself calls to its respective ViewModel to handle the functionality. ViewModels handle logic such as changing which view to redirect to, or update the current view with new data relevant to their reliant variables. The models are the classes that hold the data elements these views rely on.
 
-
-## Backend 
-The backend represents the ViewModel and Model portion of the architecture.
-The ViewModels's tasks are to handle any type of logic related to the application. Some are simple such as changing which view to redirect to, or update the current view with new data relevant to their reliant variables. The models are the classes that hold the data elements these views rely on.
-Additionally, there are classes to connect to external APIs these including: Firebase, SiriKit, AppleHealthKit. These classes establish the connection between the application and API and allow the transfer of data between the two.
-There is also an API that connects to our hardware (Raspberry Pi Pico W). This API class establishes the connection and requests data from the PI. The PI has its own classes of data that it is sending to the application.
+Additionally, there are classes to connect to external systems being CloudKit and the Raspberry Pi Pico. These classes establish the connection between the application and system and allow the transfer of data between the two. These classes are used in the relevant views where it would be needed. For example: The virtual pet page would require the CloudKit related classes, and the workout page would require the Raspberry Pi related classes.
 
 
 
-
-
-## Connected
+## Features of the SmartWeights App
+The following class diagrams show the main sections that the user can interact with in the app and the logic that comes with it.
 
 ### App
 
-This is the App 
+The SmartWeightsApp class acts as the entry point for the application. Pages in the app contain a NavBar component.
 ``` mermaid 
 classDiagram
  class SmartWeightsApp{
@@ -263,15 +257,15 @@ The settings page allows users to customize their notifications
 classDiagram
  class Settings{
     notificationSlider
-    connectHealthKitButton
+   
    }
  class SettingsVM{
         toggleNotifications()
-        toggleHealthKit()
+   
     }
     class SettingsM{
         notificationsAllowed: boolean
-        healthKitAllowed: boolean
+      
     }
     Settings o--SettingsVM
 SettingsVM <--SettingsM
@@ -457,9 +451,11 @@ classDiagram
 ```
 
 ## External Logic
+The external logic contains the classes that connect to external systems being CloudKit and the Raspberry Pi Pico W.
 
 ### DB Management
 
+The CloudKitManager class serves as the central manager for interacting with CloudKit. It provides methods for saving, fetching, and deleting records from the CloudKit databases. The other classes represent more specific uses for the DB and help facilitate the necessary parameters for the CloudKitManager to perform its operations.
 
 ``` mermaid 
 
@@ -500,6 +496,7 @@ classDiagram
 ```
 
 #### Example Implementation
+The Login view model will use the UserDB class in order to create a user with a successful login. The Virtual Pet view model will use the PetDB class to fetch the pet's health.
 ``` mermaid
 classDiagram
     class LoginVM{
@@ -521,6 +518,8 @@ classDiagram
 ```
 
 ### Bluetooth Low Energy Connector
+
+This represents the class that is in the application that is used to connect to the Raspberry Pi Pico W. It establishes connections with multiple sensors and determines the central and peripheral systems. It contains an integer array of the data that is being received from the Picos.
 ``` mermaid 
 
 classDiagram
@@ -532,6 +531,8 @@ classDiagram
     }
 ```
 #### Example Implementation
+
+The Workout View Model requires the BLEManager class in order to get the data and use it.
 ``` mermaid
 classDiagram
     class WorkoutVM{
@@ -544,11 +545,9 @@ classDiagram
     WorkoutVM o-- BLEManager
 ```
 
-## Raspberry Pi Pico W
+### Raspberry Pi Pico W
 
-MPU class is a driver https://github.com/micropython-IMU/micropython-mpu9150.git 
-class vector3D is for imu inertial measurement unit drivers Authors Peter Hinch, Sebastian Plamauer
-
+The Raspberry Pi Pico W has its own classes in order to function. The Pico W runs on a continuous loop, which is represented as main. The classes represent the logic and data for the sensors that are attached to the Pico for reading and writing data in order for the Pico to send to the application via Bluetooth Low Energy (BLE)
 IDK Which class is being used
 ``` mermaid
 classDiagram
