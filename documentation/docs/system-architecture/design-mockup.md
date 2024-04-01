@@ -4,6 +4,9 @@ sidebar_position: 6
 
 # Design Mockup
 
+<span style="color:yellow">Some images are provided by Figma and only serve as a placeholder. Any information in the images do not represent the actual data. </span>.
+
+
 ## Login Page
 ![Screenshot 2024-02-18 111427](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/6b6c8ab1-e913-4a76-8226-13b0e433f095)
 
@@ -40,4 +43,4 @@ This page is designed to show the user's profile summary of almost everything in
 ## Workout summaries
 ![Screenshot 2024-02-18 122235](https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/79390380/55c663a6-55f7-41c5-a613-c9fe6b77bb84)
 
-This page is designed to show the user's overall progress. They have the ability to see the feedback for each of the workout they have done. Clicking on 'form' or 'speed' will give the user more in-depth information about that particular data. This page will also display a graph that visually shows their overall progress. They will have the ability to see a graph for just form  or just speed or both. 
+This page is designed to show the user's overall progress. They have the ability to see the feedback for each of the workout they have done. Clicking on 'form' or 'speed' will give the user more in-depth information about that particular data. This page will also display a graph that visually shows their overall progress. They will have the ability to see a graph for just form  or just speed or both. <span style="color:yellow">The graph serves as a placeholder and do not represent actual data. </span>.
