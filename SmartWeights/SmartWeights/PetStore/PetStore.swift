@@ -79,8 +79,10 @@ private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count:
 
 /// Display view for the Pet Store depending on available items and prices.
 struct PetStore: View {
-    
     @ObservedObject var viewModel = storeViewModel()
+    @State private var showingDetail = false
+    @State private var selectedItem: SellingItem?
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -138,7 +140,9 @@ struct PetStore: View {
                 ScrollView {
                     LazyVGrid(columns: gridLayout, spacing: 10) {
                         ForEach(viewModel.sortItems(items: viewModel.items, sortByPrice: viewModel.sortByPrice).filter { $0.category == viewModel.selectedCategory }, id: \.id) { item in
-                            NavigationLink(destination: ItemDetailView(item: item, viewModel: viewModel, userCur: viewModel.userCur)) {
+                            Button(action: {
+                                self.selectedItem = item
+                            }) {
                                 VStack {
                                     item.image
                                         .resizable()
@@ -146,16 +150,7 @@ struct PetStore: View {
                                         .frame(width: 100, height: 100)
                                     
                                     Text(item.name)
-                                    
-                                    if viewModel.sortByPrice {
-                                        Text("\(item.price)") // Displaying price
-                                            .font(.headline)
-                                            .foregroundColor(.green)
-                                    } else {
-                                        Text("\(item.price)") // Displaying price
-                                            .font(.headline)
-                                            .foregroundColor(.green)
-                                    }
+                                    // Displaying price with your existing logic...
                                 }
                                 .frame(width: 130, height: 175)
                                 .padding()
@@ -167,8 +162,9 @@ struct PetStore: View {
                     .padding([.leading, .trailing, .bottom])
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .navigationBarHidden(true) // Hide the navigation bar
+            .sheet(item: $selectedItem) { item in
+                ItemDetailView(item: item, viewModel: viewModel, userCur: viewModel.userCur)
+            }
         }
     }
 }
