@@ -9,9 +9,8 @@ sidebar_position: 8
 ## Parts Included 
 - Raspberry Pico W
 - MPU-6050 3 Axis Gyroscope and Accelerometer
-- BMP390 Barometer / Altimeter
 - USB LiPo Battery
 
 ## Design Description
 
-This is the layout for the hardware connection between the microcontroller and the sensors that it will be receiving data from. This layout will be replicated for each dumbbell and arm sleeve attachment. The Pico W is intended to transmit its data to the SmartWeights Application via bluetooth.
+This is the layout for the hardware connection between the Raspberry Pi Pico W microcontroller and the MPU6050 sensor that it will be receiving data from. This layout will be replicated for each dumbbell and arm sleeve attachment as depicted in the [system block diagram](../requirements/system-block-diagram.md). The microcontroller transmits its data to the SmartWeights application via Bluetooth.
