@@ -12,6 +12,7 @@ class WorkoutViewModel: ObservableObject {
     @Published var inputtedSets = ""
     @Published var inputtedReps = ""
     @Published var inputtedWeights = ""
+    @Published var currentSets: Int = 0
     
     //timer
     @Published var hours: Int = 0
@@ -19,6 +20,7 @@ class WorkoutViewModel: ObservableObject {
     @Published var seconds: Int = 0
     @Published var timer: Timer? = nil
     @Published var progressInterval = 2.0
+    @Published var timerIsActive = true
     
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))!
     private let audioEngine = AVAudioEngine()
@@ -159,25 +161,27 @@ class WorkoutViewModel: ObservableObject {
     
     /// Function to start timer
     
-    func startTimer(){
-        // Stop any existing timer before starting a new one
+    func startTimer() {
         if let existingTimer = timer {
             existingTimer.invalidate()
         }
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { tempTimer in
-            if self.seconds == 59 {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] tempTimer in
+            guard let self = self else { return }
+            if !self.timerIsActive {
+                return
+            }
+            self.seconds += 1
+            if self.seconds == 60 {
                 self.seconds = 0
-                if self.minutes == 59 {
+                self.minutes += 1
+                if self.minutes == 60 {
                     self.minutes = 0
                     self.hours += 1
-                } else {
-                    self.minutes += 1
                 }
-            } else {
-                self.seconds += 1
             }
         }
     }
+
     
     /// Function to restart timer
     func restartTimer(){
@@ -191,6 +195,36 @@ class WorkoutViewModel: ObservableObject {
         timer?.invalidate()
         timer = nil
     }
+    
+    func pauseTimer() {
+            timerIsActive = false // Stop updating time without invalidating the timer
+        }
+    func resumeTimer() {
+            timerIsActive = true // Resume updating time
+        }
+    
+    func resetWorkoutState() {
+        // Reset progress
+        progress = 0
+        inputtedSets = ""
+        inputtedReps = ""
+        inputtedWeights = ""
+        currentSets = 0
+        
+        // Reset timer
+        resetTimer()
+    }
+    
+    func resetTimer() {
+        stopTimer() // Ensure the current timer is stopped
+        hours = 0
+        minutes = 0
+        seconds = 0
+        timerIsActive = false // Ensure timer is not active
+    }
+    
+    
+    
     /// Function to generate random number for the progress bar
     /// - Returns: random number between 0 and 1
     ///
@@ -203,5 +237,5 @@ class WorkoutViewModel: ObservableObject {
 
 
 #Preview{
-    StartWorkout(viewModel: WorkoutViewModel(), bleManager: BLEManager())
+    WorkoutMainPage(viewModel: WorkoutViewModel(), bleManager: BLEManager())
 }
