@@ -16,7 +16,6 @@ struct LoginView: View {
     @AppStorage("firstName") var firstName: String = ""
     @AppStorage("lastName") var lastName: String = ""
     @AppStorage("userID") var userID: String = ""
-    @State private var isLoggedIn = false // Tracking login status
     
     var body: some View {
         ZStack {
@@ -59,7 +58,6 @@ struct LoginView: View {
                                 self.firstName = credential.fullName?.givenName ?? ""
                                 self.lastName = credential.fullName?.familyName ?? ""
                                 self.userID = credential.user
-                                self.isLoggedIn = true
                             }
                         case .failure(let error):
                             print(error)
@@ -77,18 +75,15 @@ struct LoginView: View {
                     Spacer()
                 }
                 else{
-                    //signed in
+                    //signed in successfully or already
                     TabBar()
                 }
                     
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-//        // Show TabBar view upon successful login
-//        .fullScreenCover(isPresented: $isLoggedIn) {
-//            TabBar()
-        }
     }
+}
 
 
 #Preview {
