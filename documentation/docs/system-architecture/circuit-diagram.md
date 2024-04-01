@@ -4,7 +4,8 @@ sidebar_position: 8
 
 # Circuit Diagram
 
-<img width="539" alt="CircuitDiagram" src="https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/114025055/4ec8ed83-850b-425b-98fb-26231cb6fb6d"/>
+<img width="316" alt="circuit" src="https://github.com/Capstone-Projects-2024-Spring/project-smartweights/assets/114025055/df7efc74-adb6-4d99-bb61-7c2c03e17d86">
+
 
 ## Parts Included 
 - Raspberry Pico W
