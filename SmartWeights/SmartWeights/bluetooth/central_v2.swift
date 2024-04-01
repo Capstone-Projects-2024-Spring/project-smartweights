@@ -110,6 +110,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
         //connecting the peripheral to the app
         centralManager.connect(peripheral, options: nil)
         peripheralData[peripheral.identifier] = []
+        print(peripheral.name as Any)
         
     }
     
@@ -131,8 +132,8 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     }
     //initiates the discovery of services with a specific UUID on the connected peripheral after a successful connection
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        peripheral.discoverServices([AccelServiceUUID,GyroServiceUUID])
         peripheral.delegate = self
+        peripheral.discoverServices([AccelServiceUUID,GyroServiceUUID])
         self.isConnected = true
         listOfPeripherals.append(peripheral)
         print(peripheral)
