@@ -30,6 +30,12 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     private var MPU6050_1_ID = "C6AE350F-CE7B-E617-CA34-811668D1E7CC"
     private var MPU6050_2_ID = "4E4168A3-43AC-4B91-F952-F6712BF345FC"
     
+    //private var MPU_1_Name = "Optional(\"MPU6050-1\")"
+    private var MPU_1_Name = "MPU6050-1"
+    
+    private var MPU_2_Name = "Optional(\"MPU6050-2\")"
+    
+    
     
     //MPU6050_1
     private var axCharacteristic: CBCharacteristic!
@@ -76,7 +82,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     @Published var isConnected = false
     
     @Published var listOfPeripherals = []
-    @Published var peripheralData: [UUID: [Int]] = [:]
+    @Published var peripheralData = [:]
     
     override init() {
         super.init()
@@ -100,16 +106,18 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     //connects to peripherals with the specified service UUID
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         //add MPU6050-1 in list of connected
-        if peripheral.identifier.uuidString == "C6AE350F-CE7B-E617-CA34-811668D1E7CC"{
+        //if peripheral.identifier.uuidString == "C6AE350F-CE7B-E617-CA34-811668D1E7CC"
+        if peripheral.name == MPU_1_Name{
             peripherals.insert(peripheral, at: 0)
         }
         //add MPU6050-2 in list of connected
-        else if peripheral.identifier.uuidString == "4E4168A3-43AC-4B91-F952-F6712BF345FC"{
+        //else if peripheral.identifier.uuidString == "4E4168A3-43AC-4B91-F952-F6712BF345FC"
+        else if peripheral.name == MPU_2_Name{
             peripherals.insert(peripheral, at: 1)
         }
         //connecting the peripheral to the app
         centralManager.connect(peripheral, options: nil)
-        peripheralData[peripheral.identifier] = []
+        peripheralData[peripheral.name] = []
         print(peripheral.name as Any)
         
     }
@@ -164,7 +172,8 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                 for characteristic in characteristics {
                     
                     if characteristic.uuid == axCharacteristicUUID {
-                        if peripheral.identifier.uuidString == MPU6050_1_ID{
+                        //if peripheral.identifier.uuidString == MPU6050_1_ID
+                        if peripheral.name == MPU_1_Name{
                             axCharacteristic = characteristic
                         }
                         else if peripheral.identifier.uuidString == MPU6050_2_ID{
@@ -174,7 +183,8 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                         peripheral.setNotifyValue(true, for: characteristic)
                         
                     } else if characteristic.uuid == ayCharacteristicUUID {
-                        if peripheral.identifier.uuidString == MPU6050_1_ID{
+                        //if peripheral.identifier.uuidString == MPU6050_1_ID
+                        if peripheral.name == MPU_1_Name{
                             ayCharacteristic = characteristic
                         }
                         else if peripheral.identifier.uuidString == MPU6050_2_ID{
@@ -184,7 +194,8 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                         peripheral.setNotifyValue(true, for: characteristic)
                         
                     } else if characteristic.uuid == azCharacteristicUUID {
-                        if peripheral.identifier.uuidString == MPU6050_1_ID{
+                        //if peripheral.identifier.uuidString == MPU6050_1_ID
+                        if peripheral.name == MPU_1_Name{
                             azCharacteristic = characteristic
                         }
                         else if peripheral.identifier.uuidString == MPU6050_2_ID{
@@ -252,8 +263,8 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
             }
             //updates the correct array based on the characteristic
             DispatchQueue.main.async {
-                switch peripheral.identifier.uuidString{
-                    case self.MPU6050_1_ID:
+                switch peripheral.name{
+                    case self.MPU_1_Name:
                         switch characteristic{
                             case self.axCharacteristic:
                                 self.MPU6050_1_Accel[0] = data
@@ -264,7 +275,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                             if self.collectDataToggle{
                                 self.MPU6050_1Accelerations.append(self.MPU6050_1_Accel)
                             }
-                                self.peripheralData[peripheral.identifier]?.append(contentsOf: self.MPU6050_1_Accel)
+//                                self.peripheralData[peripheral.identifier]?.append(contentsOf: self.MPU6050_1_Accel)
                             case self.gxCharacteristic:
                                 self.MPU6050_1_Gyro[0] = data
                             case self.gyCharacteristic:
@@ -290,7 +301,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                             if self.collectDataToggle{
                                 self.MPU6050_2Accelerations.append(self.MPU6050_2_Accel)
                             }
-                                self.peripheralData[peripheral.identifier]?.append(contentsOf: self.MPU6050_2_Accel)
+//                                self.peripheralData[peripheral.identifier]?.append(contentsOf: self.MPU6050_2_Accel)
                             case self.gxCharacteristic2:
                                 self.MPU6050_2_Gyro[0] = data
                             case self.gyCharacteristic2:
