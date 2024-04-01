@@ -7,22 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0140238C2B91702300D6935D /* SettingsPageView.swift */; };
+		01A6B0BE2B88F16500D84920 /* MorePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A6B0BD2B88F16500D84920 /* MorePageView.swift */; };
 		01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */; };
+		3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202761D2B892D2C001A86B8 /* CustomProgressView.swift */; };
+		320276222B892D55001A86B8 /* Pet_page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320276212B892D55001A86B8 /* Pet_page.swift */; };
 		321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321EF0442B83AAFA000A2D02 /* LoginPage.swift */; };
+		322B4C052B90CACE00620F4F /* PetPageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322B4C042B90CACE00620F4F /* PetPageTest.swift */; };
+		322B4C082B90CB7500620F4F /* PetPageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322B4C072B90CB7500620F4F /* PetPageUITests.swift */; };
+		327C4B022BA9C38800E160EE /* Inventory_Customize_page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327C4B012BA9C38800E160EE /* Inventory_Customize_page.swift */; };
+		32BDE8F02B8C1381003A5F5A /* Homepage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BDE8EF2B8C1381003A5F5A /* Homepage.swift */; };
 		32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E288592B83CD2800458FB1 /* Calendar.swift */; };
-		32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */; };
-		32E2885E2B83CD6E00458FB1 /* PostWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */; };
-		6B9E32D52B86506500CA7868 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */; };
-		6B9E32D82B86526300CA7868 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32D72B86526300CA7868 /* FirebaseAnalytics */; };
-		6B9E32DA2B86526300CA7868 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32D92B86526300CA7868 /* FirebaseAnalyticsSwift */; };
-		6B9E32DC2B86526300CA7868 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32DB2B86526300CA7868 /* FirebaseAuth */; };
-		6B9E32DE2B86526300CA7868 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32DD2B86526300CA7868 /* FirebaseCrashlytics */; };
-		6B9E32E02B86526300CA7868 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32DF2B86526300CA7868 /* FirebaseFirestoreSwift */; };
-		6B9E32E22B86526300CA7868 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32E12B86526300CA7868 /* FirebaseFunctions */; };
-		6B9E32E42B86526300CA7868 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32E32B86526300CA7868 /* FirebasePerformance */; };
-		6B9E32E62B86526300CA7868 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32E52B86526300CA7868 /* FirebaseRemoteConfigSwift */; };
-		6B9E32E82B86526300CA7868 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 6B9E32E72B86526300CA7868 /* FirebaseStorage */; };
-		6B9E32EE2B865FD000CA7868 /* FirebaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9E32ED2B865FD000CA7868 /* FirebaseTests.swift */; };
+		32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */; };
+		32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */; };
+		6B8762AB2BA26891005627CE /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762A92BA26891005627CE /* CloudKitManager.swift */; };
+		6B8762AC2BA26891005627CE /* UserRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762AA2BA26891005627CE /* UserRecordManager.swift */; };
+		6B8762AE2BA485C7005627CE /* CloudKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762AD2BA485C7005627CE /* CloudKitService.swift */; };
+		6B98A7182BA8952500856271 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B98A7172BA8952500856271 /* ItemModel.swift */; };
+		6B98A71A2BA8956D00856271 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B98A7192BA8956D00856271 /* ItemViewModel.swift */; };
+		6B98A71C2BA895AB00856271 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B98A71B2BA895AB00856271 /* ItemView.swift */; };
+		6B98A7242BAA223F00856271 /* TestDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B98A7232BAA223F00856271 /* TestDB.swift */; };
+		6BA2DC482B90FCF500A998FC /* CloudKitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */; };
+		6BC8E5722BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
 		91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7E2B7A7E4700BC62E6 /* ContentView.swift */; };
 		91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91065F802B7A7E4900BC62E6 /* Assets.xcassets */; };
@@ -32,7 +38,16 @@
 		91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */; };
 		91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */; };
 		91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */; };
+		9118993A2B8CE1300071232A /* StartWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911899392B8CE1300071232A /* StartWorkout.swift */; };
+		9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993B2B8CE1400071232A /* WorkoutFeedback.swift */; };
+		9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993D2B8CE1570071232A /* WorkoutMainPage.swift */; };
+		912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912241702B90EA9F00D03638 /* WorkoutUITests.swift */; };
+		918037962BA9026700802D01 /* central.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037952BA9026700802D01 /* central.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
+		B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */; };
+		E56BD7D82BAFA2C300863D4D /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7D72BAFA2C300863D4D /* TabBar.swift */; };
+		E56BD7DB2BAFB0F400863D4D /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */; };
+		E5B86DB32B91033400A0AD04 /* navbarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B86DB22B91033400A0AD04 /* navbarUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,13 +68,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0140238C2B91702300D6935D /* SettingsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageView.swift; sourceTree = "<group>"; };
+		01A6B0BD2B88F16500D84920 /* MorePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorePageView.swift; sourceTree = "<group>"; };
 		01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesTab.swift; sourceTree = "<group>"; };
+		3202761D2B892D2C001A86B8 /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
+		320276212B892D55001A86B8 /* Pet_page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet_page.swift; sourceTree = "<group>"; };
 		321EF0442B83AAFA000A2D02 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
+		322B4C042B90CACE00620F4F /* PetPageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetPageTest.swift; sourceTree = "<group>"; };
+		322B4C072B90CB7500620F4F /* PetPageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetPageUITests.swift; sourceTree = "<group>"; };
+		327C4B012BA9C38800E160EE /* Inventory_Customize_page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inventory_Customize_page.swift; sourceTree = "<group>"; };
+		32BDE8EF2B8C1381003A5F5A /* Homepage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homepage.swift; sourceTree = "<group>"; };
 		32E288592B83CD2800458FB1 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
-		32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutGraph.swift; sourceTree = "<group>"; };
-		32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWorkout.swift; sourceTree = "<group>"; };
-		6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6B9E32ED2B865FD000CA7868 /* FirebaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTests.swift; sourceTree = "<group>"; };
+		32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallProgressGraph.swift; sourceTree = "<group>"; };
+		32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallProgress.swift; sourceTree = "<group>"; };
+		6B8762A92BA26891005627CE /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
+		6B8762AA2BA26891005627CE /* UserRecordManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRecordManager.swift; sourceTree = "<group>"; };
+		6B8762AD2BA485C7005627CE /* CloudKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitService.swift; sourceTree = "<group>"; };
+		6B98A7172BA8952500856271 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
+		6B98A7192BA8956D00856271 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
+		6B98A71B2BA895AB00856271 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
+		6B98A7232BAA223F00856271 /* TestDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDB.swift; sourceTree = "<group>"; };
+		6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitTest.swift; sourceTree = "<group>"; };
+		6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecognitionViewModel.swift; sourceTree = "<group>"; };
 		91065F792B7A7E4700BC62E6 /* SmartWeights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWeights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsApp.swift; sourceTree = "<group>"; };
 		91065F7E2B7A7E4700BC62E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -74,7 +104,16 @@
 		91065F9A2B7A7E4900BC62E6 /* SmartWeightsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartWeightsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITests.swift; sourceTree = "<group>"; };
 		91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		911899392B8CE1300071232A /* StartWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkout.swift; sourceTree = "<group>"; };
+		9118993B2B8CE1400071232A /* WorkoutFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedback.swift; sourceTree = "<group>"; };
+		9118993D2B8CE1570071232A /* WorkoutMainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMainPage.swift; sourceTree = "<group>"; };
+		912241702B90EA9F00D03638 /* WorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutUITests.swift; sourceTree = "<group>"; };
+		918037952BA9026700802D01 /* central.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = central.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
+		B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFirstPet.swift; sourceTree = "<group>"; };
+		E56BD7D72BAFA2C300863D4D /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		E5B86DB22B91033400A0AD04 /* navbarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = navbarUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,15 +121,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B9E32E42B86526300CA7868 /* FirebasePerformance in Frameworks */,
-				6B9E32E62B86526300CA7868 /* FirebaseRemoteConfigSwift in Frameworks */,
-				6B9E32E82B86526300CA7868 /* FirebaseStorage in Frameworks */,
-				6B9E32E02B86526300CA7868 /* FirebaseFirestoreSwift in Frameworks */,
-				6B9E32DA2B86526300CA7868 /* FirebaseAnalyticsSwift in Frameworks */,
-				6B9E32DE2B86526300CA7868 /* FirebaseCrashlytics in Frameworks */,
-				6B9E32E22B86526300CA7868 /* FirebaseFunctions in Frameworks */,
-				6B9E32DC2B86526300CA7868 /* FirebaseAuth in Frameworks */,
-				6B9E32D82B86526300CA7868 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,14 +141,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		32E288582B83CD0900458FB1 /* post-workout */ = {
+		0140238B2B91700300D6935D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0140238C2B91702300D6935D /* SettingsPageView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		01A6B0BC2B88F13F00D84920 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				01A6B0BD2B88F16500D84920 /* MorePageView.swift */,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
+		3202761C2B892D04001A86B8 /* pet-customize-page */ = {
+			isa = PBXGroup;
+			children = (
+				3202761D2B892D2C001A86B8 /* CustomProgressView.swift */,
+				320276212B892D55001A86B8 /* Pet_page.swift */,
+				327C4B012BA9C38800E160EE /* Inventory_Customize_page.swift */,
+			);
+			path = "pet-customize-page";
+			sourceTree = "<group>";
+		};
+		32E288582B83CD0900458FB1 /* WorkoutSummaries */ = {
 			isa = PBXGroup;
 			children = (
 				32E288592B83CD2800458FB1 /* Calendar.swift */,
-				32E2885B2B83CD4300458FB1 /* WorkoutGraph.swift */,
-				32E2885D2B83CD6E00458FB1 /* PostWorkout.swift */,
+				32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */,
+				32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */,
 			);
-			path = "post-workout";
+			path = WorkoutSummaries;
+			sourceTree = "<group>";
+		};
+		6B8762A82BA260C0005627CE /* DBAccess */ = {
+			isa = PBXGroup;
+			children = (
+				6B8762A92BA26891005627CE /* CloudKitManager.swift */,
+				6B8762AA2BA26891005627CE /* UserRecordManager.swift */,
+				6B8762AD2BA485C7005627CE /* CloudKitService.swift */,
+				6B98A7172BA8952500856271 /* ItemModel.swift */,
+				6B98A7192BA8956D00856271 /* ItemViewModel.swift */,
+				6B98A71B2BA895AB00856271 /* ItemView.swift */,
+				6B98A7232BAA223F00856271 /* TestDB.swift */,
+			);
+			path = DBAccess;
 			sourceTree = "<group>";
 		};
 		91065F702B7A7E4700BC62E6 = {
@@ -144,9 +214,17 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
-				6B9E32D42B86506500CA7868 /* GoogleService-Info.plist */,
+				E56BD7D92BAFB0D900863D4D /* Extensions */,
+				E56BD7D62BAFA29700863D4D /* Tab Bar */,
+				918037902BA09AD600802D01 /* bluetooth */,
+				B9A4764A2B8F86A70062CBB6 /* Tutorial */,
+				6B8762A82BA260C0005627CE /* DBAccess */,
+				911899382B8CE0D40071232A /* Workout */,
+				3202761C2B892D04001A86B8 /* pet-customize-page */,
+				0140238B2B91700300D6935D /* Settings */,
+				01A6B0BC2B88F13F00D84920 /* More */,
 				321EF0442B83AAFA000A2D02 /* LoginPage.swift */,
-				32E288582B83CD0900458FB1 /* post-workout */,
+				32E288582B83CD0900458FB1 /* WorkoutSummaries */,
 				B90B6FD82B7FACE2009866FD /* PetStore */,
 				91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */,
 				91065F7E2B7A7E4700BC62E6 /* ContentView.swift */,
@@ -157,6 +235,8 @@
 				91065F872B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld */,
 				91065F822B7A7E4900BC62E6 /* Preview Content */,
 				01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */,
+				32BDE8EF2B8C1381003A5F5A /* Homepage.swift */,
+				6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */,
 			);
 			path = SmartWeights;
 			sourceTree = "<group>";
@@ -173,7 +253,8 @@
 			isa = PBXGroup;
 			children = (
 				91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */,
-				6B9E32ED2B865FD000CA7868 /* FirebaseTests.swift */,
+				322B4C042B90CACE00620F4F /* PetPageTest.swift */,
+				6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */,
 			);
 			path = SmartWeightsTests;
 			sourceTree = "<group>";
@@ -183,8 +264,29 @@
 			children = (
 				91065F9E2B7A7E4900BC62E6 /* SmartWeightsUITests.swift */,
 				91065FA02B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift */,
+				322B4C072B90CB7500620F4F /* PetPageUITests.swift */,
+				912241702B90EA9F00D03638 /* WorkoutUITests.swift */,
+				E5B86DB22B91033400A0AD04 /* navbarUITests.swift */,
 			);
 			path = SmartWeightsUITests;
+			sourceTree = "<group>";
+		};
+		911899382B8CE0D40071232A /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				911899392B8CE1300071232A /* StartWorkout.swift */,
+				9118993B2B8CE1400071232A /* WorkoutFeedback.swift */,
+				9118993D2B8CE1570071232A /* WorkoutMainPage.swift */,
+			);
+			path = Workout;
+			sourceTree = "<group>";
+		};
+		918037902BA09AD600802D01 /* bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				918037952BA9026700802D01 /* central.swift */,
+			);
+			path = bluetooth;
 			sourceTree = "<group>";
 		};
 		B90B6FD82B7FACE2009866FD /* PetStore */ = {
@@ -193,6 +295,30 @@
 				B90B6FD92B7FAD1C009866FD /* PetStore.swift */,
 			);
 			path = PetStore;
+			sourceTree = "<group>";
+		};
+		B9A4764A2B8F86A70062CBB6 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		E56BD7D62BAFA29700863D4D /* Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
+				E56BD7D72BAFA2C300863D4D /* TabBar.swift */,
+			);
+			path = "Tab Bar";
+			sourceTree = "<group>";
+		};
+		E56BD7D92BAFB0D900863D4D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,15 +338,6 @@
 			);
 			name = SmartWeights;
 			packageProductDependencies = (
-				6B9E32D72B86526300CA7868 /* FirebaseAnalytics */,
-				6B9E32D92B86526300CA7868 /* FirebaseAnalyticsSwift */,
-				6B9E32DB2B86526300CA7868 /* FirebaseAuth */,
-				6B9E32DD2B86526300CA7868 /* FirebaseCrashlytics */,
-				6B9E32DF2B86526300CA7868 /* FirebaseFirestoreSwift */,
-				6B9E32E12B86526300CA7868 /* FirebaseFunctions */,
-				6B9E32E32B86526300CA7868 /* FirebasePerformance */,
-				6B9E32E52B86526300CA7868 /* FirebaseRemoteConfigSwift */,
-				6B9E32E72B86526300CA7868 /* FirebaseStorage */,
 			);
 			productName = SmartWeights;
 			productReference = 91065F792B7A7E4700BC62E6 /* SmartWeights.app */;
@@ -295,7 +412,6 @@
 			);
 			mainGroup = 91065F702B7A7E4700BC62E6;
 			packageReferences = (
-				6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 91065F7A2B7A7E4700BC62E6 /* Products */;
 			projectDirPath = "";
@@ -315,7 +431,6 @@
 			files = (
 				91065F842B7A7E4900BC62E6 /* Preview Assets.xcassets in Resources */,
 				91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */,
-				6B9E32D52B86506500CA7868 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,16 +455,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */,
+				6BC8E5722BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift in Sources */,
 				B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */,
+				01A6B0BE2B88F16500D84920 /* MorePageView.swift in Sources */,
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
-				32E2885E2B83CD6E00458FB1 /* PostWorkout.swift in Sources */,
+				32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */,
+				6B8762AC2BA26891005627CE /* UserRecordManager.swift in Sources */,
+				3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */,
+				918037962BA9026700802D01 /* central.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
-				32E2885C2B83CD4300458FB1 /* WorkoutGraph.swift in Sources */,
+				6B8762AE2BA485C7005627CE /* CloudKitService.swift in Sources */,
+				E56BD7DB2BAFB0F400863D4D /* ColorExtension.swift in Sources */,
+				32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */,
+				6B98A71C2BA895AB00856271 /* ItemView.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
+				6B8762AB2BA26891005627CE /* CloudKitManager.swift in Sources */,
+				9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */,
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
+				6B98A71A2BA8956D00856271 /* ItemViewModel.swift in Sources */,
+				0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
+				9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */,
+				6B98A7242BAA223F00856271 /* TestDB.swift in Sources */,
 				01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */,
+				320276222B892D55001A86B8 /* Pet_page.swift in Sources */,
+				327C4B022BA9C38800E160EE /* Inventory_Customize_page.swift in Sources */,
+				9118993A2B8CE1300071232A /* StartWorkout.swift in Sources */,
 				32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */,
+				6B98A7182BA8952500856271 /* ItemModel.swift in Sources */,
+				32BDE8F02B8C1381003A5F5A /* Homepage.swift in Sources */,
+				E56BD7D82BAFA2C300863D4D /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +493,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B9E32EE2B865FD000CA7868 /* FirebaseTests.swift in Sources */,
+				322B4C052B90CACE00620F4F /* PetPageTest.swift in Sources */,
+				6BA2DC482B90FCF500A998FC /* CloudKitTest.swift in Sources */,
 				91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,8 +503,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				322B4C082B90CB7500620F4F /* PetPageUITests.swift in Sources */,
+				E5B86DB32B91033400A0AD04 /* navbarUITests.swift in Sources */,
 				91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */,
 				91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */,
+				912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,12 +652,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SmartWeights/SmartWeights.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SmartWeights/Preview Content\"";
+				DEVELOPMENT_TEAM = YD9LWSGPPP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWeights/Info.plist;
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Please allow using bluetooth";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -530,6 +673,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CIS4398.SmartWeights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -542,12 +686,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SmartWeights/SmartWeights.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SmartWeights/Preview Content\"";
+				DEVELOPMENT_TEAM = YD9LWSGPPP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartWeights/Info.plist;
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Please allow using bluetooth";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -560,6 +707,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CIS4398.SmartWeights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -678,65 +826,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.21.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		6B9E32D72B86526300CA7868 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		6B9E32D92B86526300CA7868 /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsSwift;
-		};
-		6B9E32DB2B86526300CA7868 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		6B9E32DD2B86526300CA7868 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		6B9E32DF2B86526300CA7868 /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
-		};
-		6B9E32E12B86526300CA7868 /* FirebaseFunctions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFunctions;
-		};
-		6B9E32E32B86526300CA7868 /* FirebasePerformance */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebasePerformance;
-		};
-		6B9E32E52B86526300CA7868 /* FirebaseRemoteConfigSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseRemoteConfigSwift;
-		};
-		6B9E32E72B86526300CA7868 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B9E32D62B86526300CA7868 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		91065F872B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld */ = {

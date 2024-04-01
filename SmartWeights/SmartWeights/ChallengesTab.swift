@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ChallengesTab: View {
     let challenges = [
-        Challenge(title: "Challenge 1", description: "Description for Challenge 1.", currentProgress: 7, progressGoal: 10, reward: "+ 1000 XP"),
-        Challenge(title: "Challenge 2", description: "Description for Challenge 2.", currentProgress: 3, progressGoal: 10, reward: "+ 200 SP"),
-        Challenge(title: "Challenge 3", description: "Description for Challenge 3.", currentProgress: 5, progressGoal: 10, reward: "+ 100 XP"),
-        Challenge(title: "Challenge 4", description: "Description for Challenge 4.", currentProgress: 2, progressGoal: 10, reward: "+ 500 XP"),
-        Challenge(title: "Challenge 5", description: "Description for Challenge 5.", currentProgress: 8, progressGoal: 10, reward: "+ 500 SP"),
-        Challenge(title: "Challenge 6", description: "Description for Challenge 6.", currentProgress: 1, progressGoal: 10, reward: "+ 100 XP")
+        Challenge(title: "1st Sign In", description: "Sign in for the first time.", currentProgress: 0, progressGoal: 1, reward: "+ 1000 XP", image: Image("C-1stLogin")),
+        Challenge(title: "1st Workout", description: "Complete your first workout.", currentProgress: 0, progressGoal: 1, reward: "+ 200 SP", image: Image("C-1stWorkout")),
+        Challenge(title: "New Shopper", description: "Purchase your first item.", currentProgress: 0, progressGoal: 1, reward: "+ 100 XP", image: Image("C-1stItemBought")),
+        Challenge(title: "Outfit Change", description: "Customize your pet's outfit and background for the first time.", currentProgress: 1, progressGoal: 2, reward: "+ 500 XP", image: Image("C-1stOutfitChange"))
+        /*Challenge(title: "Challenge 5", description: "Description for Challenge 5.", currentProgress: 8, progressGoal: 10, reward: "+ 500 SP"),
+        Challenge(title: "Challenge 6", description: "Description for Challenge 6.", currentProgress: 1, progressGoal: 10, reward: "+ 100 XP") */
     ]
     
     var body: some View {
@@ -32,6 +32,7 @@ struct Challenge: Identifiable {
     var currentProgress: Int
     var progressGoal: Int
     var reward: String
+    var image: Image // added for custom images
     
     var progressPercent: Double {
         return Double(currentProgress) / Double(progressGoal)
@@ -44,7 +45,10 @@ struct ChallengeRow: View {
     var body: some View {
         VStack {
             HStack {
-                Image(systemName: "figure.strengthtraining.traditional")
+                challenge.image // display image for each challenge
+                    .resizable()
+                    .frame(width: 60, height: 60) // can change size if needed
+                //Image(systemName: "figure.strengthtraining.traditional")
                     .foregroundColor(.yellow)
                     .padding(.trailing, 8)
                 VStack(alignment: .leading) {

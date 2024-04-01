@@ -6,5 +6,13 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone to enable hands-free voice recognition for starting workouts.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>We need access to speech recognition to enable hands-free voice recognition for starting workouts.</string>
 </dict>
 </plist>
