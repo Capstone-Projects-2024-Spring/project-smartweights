@@ -64,14 +64,18 @@ class storeViewModel: ObservableObject {
     }
     
     /// Function to handle item purchase
+    /// Function to handle item purchase
     func purchaseItem(item: SellingItem) {
         if let index = items.firstIndex(where: { $0.id == item.id }) {
+            var updatedItems = items // Create a mutable copy of items
             if item.category != "Foods" {
-                items[index].isBought = true
+                updatedItems[index].isBought = true // Update the isBought property
             }
             subtractFunds(price: Int(item.price) ?? 0)
+            items = updatedItems // Re-assign the modified array to trigger the @Published change notification
         }
     }
+
 }
 
 /// Grid for displaying items.
@@ -247,10 +251,12 @@ struct ItemDetailView: View {
             
             Button(action: {
                 // Handle purchase action
-                print("Purchase \(item.name)")
                 viewModel.purchaseItem(item: item)
+                // This is to force SwiftUI to reevaluate the `isBought` state of our item.
+                // SwiftUI will now check the `isBought` property again to determine the correct label and color for the button.
             }) {
-                if item.isBought {
+                // Dynamically checking `isBought` status from the viewModel's items to ensure it's up-to-date
+                if viewModel.items.first(where: { $0.id == item.id })?.isBought ?? false {
                     Text("Purchased")
                         .padding()
                         .background(Color.gray)
@@ -258,7 +264,7 @@ struct ItemDetailView: View {
                         .cornerRadius(10)
                         .font(.system(size: 20))
                 } else {
-                    Text("Purchase") // Purchase
+                    Text("Purchase")
                         .padding()
                         .background(userCur >= Int(item.price) ?? 0 ? Color.blue : Color.gray)
                         .foregroundColor(.white)
@@ -266,7 +272,7 @@ struct ItemDetailView: View {
                         .font(.system(size: 20))
                 }
             }
-            .disabled(userCur < Int(item.price) ?? 0 || item.isBought == true) // Disable button if userCur is less than item price
+            .disabled(userCur < Int(item.price) ?? 0 || viewModel.items.first(where: { $0.id == item.id })?.isBought ?? false)
             .padding()
         }
     }
