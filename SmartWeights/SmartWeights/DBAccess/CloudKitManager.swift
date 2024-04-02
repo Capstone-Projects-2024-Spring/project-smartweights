@@ -111,6 +111,18 @@ class CloudKitManager {
     func fetchRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
         p_fetchRecord(recordType: recordType, user: nil, completion: completion)
     }
+    // fetch private record with user reference
+    func fetchPrivateRecord(recordType: String, user: CKRecord.Reference, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+        p_fetchRecord(recordType: recordType, user: user, completion: completion)
+    }
+
+    // fetch private record without user reference
+    func fetchPrivateRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+        p_fetchRecord(recordType: recordType, user: nil, completion: completion)
+    }
+
+
+    //deprecate this func
     func fetchPrivateItem(recordType: String, user: CKRecord.Reference, completion: @escaping (CKRecord?, Error?) -> Void) {
         let predicate = NSPredicate(format: "user == %@", user)
         let query = CKQuery(recordType: recordType, predicate: predicate)
