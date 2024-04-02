@@ -60,6 +60,16 @@ class storeViewModel: ObservableObject {
     }
     /// Function to return amount of currrency after item is bought
     func subtractFunds(price: Int) {
+        print("Subtracting \(price) from \(userCur)")
+       
+        
+        print("userCur: \(self.userCur - price)")
+        inventoryDBManager.updateCurrency(newCurrency: Int64(userCur-price)){
+            error in
+            if let error = error {
+                print("Error updating currency: \(error.localizedDescription)")
+            }
+        }
         return userCur = userCur - price
     }
 }

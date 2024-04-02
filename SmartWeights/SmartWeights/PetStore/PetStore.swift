@@ -83,7 +83,7 @@ struct PetStore: View {
                 ScrollView {
                     LazyVGrid(columns: gridLayout, spacing: 10) {
                         ForEach(viewModel.sortItems(items: viewModel.items, sortByPrice: viewModel.sortByPrice).filter { $0.category == viewModel.selectedCategory }, id: \.id) { item in
-                            NavigationLink(destination: ItemDetailView(item: item, userCur: viewModel.userCur)) {
+                            NavigationLink(destination: ItemDetailView(item: item, userCur: viewModel.userCur,viewModel:viewModel)) {
                                 VStack {
                                     item.image
                                         .resizable()
@@ -123,6 +123,7 @@ struct ItemDetailView: View {
     let item: SellingItem
     @State private var canPurchase = false
     let userCur: Int // Add user currency variable
+    let viewModel: storeViewModel
     
     var body: some View {
         VStack {
@@ -171,6 +172,7 @@ struct ItemDetailView: View {
             Button(action: {
                 // Handle purchase action
                 print("Purchase \(item.name)")
+                viewModel.subtractFunds(price: Int(item.price) ?? 0)
             }) {
                 Text("Purchase")
                     .padding()

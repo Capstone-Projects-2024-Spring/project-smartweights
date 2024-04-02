@@ -95,16 +95,16 @@ class InventoryDBManager : ObservableObject{
             
             guard let userUnwrapped = user else {
                 print("User reference nil.")
-                 completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "User reference nil."]))
+                completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "User reference nil."]))
                 return
             }
             
             self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], currency: currency ?? 0, food: food ?? [], pets: pets ?? [], user: userUnwrapped)
             completion(self.inventory, nil)
-           
+            
         }
     }
-
+    
     func fetchInventory(completion: @escaping (InventoryModel?, Error?) -> Void) {
         CKManager.fetchRecord(recordType: "Inventory") { records, error in
             guard let record = records?.first else {
@@ -170,6 +170,20 @@ class InventoryDBManager : ObservableObject{
             record[InventoryModelRecordKeys.currency.rawValue] = newCurrency as CKRecordValue
             self.CKManager.savePrivateItem(record: record)
             print ("Currency updated")
+            completion(nil)
+        }
+    }
+    func updateCurrency(newCurrency: Int64, completion: @escaping (Error?) -> Void) {
+        CKManager.fetchRecord(recordType: "Inventory") { records, error in
+            guard let record = records?.first else {
+                print("Error fetching inventory: \(error?.localizedDescription ?? "Unknown error")")
+                completion(error)
+                return
+            }
+            
+            let currencyValue = NSNumber(value: newCurrency)
+            record[InventoryModelRecordKeys.currency.rawValue] = currencyValue as CKRecordValue
+            self.CKManager.savePrivateItem(record: record)
             completion(nil)
         }
     }
