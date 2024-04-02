@@ -36,7 +36,7 @@ class storeViewModel: ObservableObject {
     }
 
     func updateCurrency() {
-        inventoryDBManager.getCurrency { (currency, error) in
+        userDBManager.getCurrency { (currency, error) in
             if let error = error {
                 print("Error getting currency: \(error.localizedDescription)")
             } else if let currency = currency {
@@ -65,7 +65,7 @@ class storeViewModel: ObservableObject {
        
         
         print("userCur: \(self.userCur - price)")
-        inventoryDBManager.updateCurrency(newCurrency: Int64(userCur-price)){
+        userDBManager.updateCurrency(newCurrency: Int64(userCur-price)){
             error in
             if let error = error {
                 print("Error updating currency: \(error.localizedDescription)")
