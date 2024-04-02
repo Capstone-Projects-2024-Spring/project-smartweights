@@ -108,7 +108,7 @@ class UserDBManager : ObservableObject{
         }
     }   
     func updateCurrency(newCurrency: Int64, completion: @escaping (Error?) -> Void) {
-        CKManager.fetchRecord(recordType: "User") { records, error in
+        CKManager.fetchPrivateRecord(recordType: "User") { records, error in
             guard let record = records?.first else {
                 print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
                 completion(error)
@@ -121,4 +121,32 @@ class UserDBManager : ObservableObject{
             completion(nil)
         }
     }
+    
+    // function to help check if User (not Users) exists already
+    //    func userRecordExistsInUsers(completion: @escaping (Bool, Error?) -> Void) {
+    //        guard let userRecord = userRecord else {
+    //            completion(false, nil) // userRecord not fetched yet
+    //            return
+    //        }
+    //
+    //        let database = CKContainer.default().publicCloudDatabase
+    //        let predicate = NSPredicate(format: "Users == %@", userRecord)
+    //        let query = CKQuery(recordType: "User", predicate: predicate)
+    //
+    //        database.perform(query, inZoneWith: nil) { (records, error) in
+    //            if let error = error {
+    //                completion(false, error)
+    //            } else if let records = records, !records.isEmpty {
+    //                completion(true, nil) // userRecord exists in Users record type
+    //                print("exists")
+    //                print("ExistsRecord: \(records)")
+    //                //                return true
+    //            } else {
+    //                completion(false, nil) // userRecord does not exist in Users record type
+    //                print("does not exist")
+    //                //                return false
+    //            }
+    //        }
+    //    }
+    //
 }

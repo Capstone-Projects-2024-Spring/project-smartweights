@@ -11,10 +11,8 @@ import CloudKit
 
 class LoginViewModel: ObservableObject {
     
-    
-    let userRecordManager = UserRecordManager()
 
-    
+//TODO: functionality for creating a userRecord if not exists, by calling userManager.createUser()
     
 //    func addUserRecordIfNotExists() {
 //        // Fetch the current user's record ID

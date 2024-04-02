@@ -106,7 +106,7 @@ class InventoryDBManager : ObservableObject{
     }
     
     func fetchInventory(completion: @escaping (InventoryModel?, Error?) -> Void) {
-        CKManager.fetchRecord(recordType: "Inventory") { records, error in
+        CKManager.fetchPrivateRecord(recordType: "Inventory") { records, error in
             guard let record = records?.first else {
                 completion(nil, error)
                 print("Error fetching inventory: \(error?.localizedDescription ?? "Unknown error")")
@@ -174,7 +174,7 @@ class InventoryDBManager : ObservableObject{
         }
     }
     func updateCurrency(newCurrency: Int64, completion: @escaping (Error?) -> Void) {
-        CKManager.fetchRecord(recordType: "Inventory") { records, error in
+        CKManager.fetchPrivateRecord(recordType: "Inventory") { records, error in
             guard let record = records?.first else {
                 print("Error fetching inventory: \(error?.localizedDescription ?? "Unknown error")")
                 completion(error)

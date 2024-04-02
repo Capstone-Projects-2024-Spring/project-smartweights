@@ -52,35 +52,36 @@ class CloudKitManager {
         case iCloudAccountRestricted
         case iCloudAccountUnknown
     }
-    func saveItem(record: CKRecord){
-        CKContainer.default().publicCloudDatabase.save(record){[weak self] returnedRecord, returnedError in
-            print("Record: \(String(describing: returnedRecord))")
-            print("Error: \(String(describing: returnedError))")
-            DispatchQueue.main.async{
-                self?.text = ""
-            }
-        }
+    func saveItem(record: CKRecord) {
+        p_saveRecord(record: record, usePrivateDatabase: false)
     }
-    func savePrivateItem(record: CKRecord){
-        CKContainer.default().privateCloudDatabase.save(record){[weak self] returnedRecord, returnedError in
+
+    func savePrivateItem(record: CKRecord) {
+        p_saveRecord(record: record, usePrivateDatabase: true)
+    }
+
+    private func p_saveRecord(record: CKRecord, usePrivateDatabase: Bool) {
+        let database = usePrivateDatabase ? CKContainer.default().privateCloudDatabase : CKContainer.default().publicCloudDatabase
+        database.save(record) { [weak self] returnedRecord, returnedError in
             print("Record: \(String(describing: returnedRecord))")
             print("Error: \(String(describing: returnedError))")
-            DispatchQueue.main.async{
+            DispatchQueue.main.async {
                 self?.text = ""
             }
         }
     }
     // fetch record, user reference is optional, 
-    private func p_fetchRecord(recordType: String, user: CKRecord.Reference? = nil, completion: @escaping ([CKRecord]?, Error?) -> Void) {
+    private func p_fetchRecord(recordType: String, usePrivateDatabase: Bool, user: CKRecord.Reference? = nil, completion: @escaping ([CKRecord]?, Error?) -> Void) {
         let predicate: NSPredicate
         if let user = user {
             predicate = NSPredicate(format: "user == %@", user)
         } else {
             predicate = NSPredicate(value: true)
         }
+        // if usePrivateDatabase is true, use private database, else use public database
+        let database = usePrivateDatabase ? privateDatabase : publicDatabase
         let query = CKQuery(recordType: recordType, predicate: predicate)
-        
-        privateDatabase.fetch(withQuery: query, inZoneWith: nil, desiredKeys: nil, resultsLimit: CKQueryOperation.maximumResults) { (result: Result<(matchResults: [(CKRecord.ID, Result<CKRecord, Error>)], queryCursor: CKQueryOperation.Cursor?), Error>) in
+        database.fetch(withQuery: query, inZoneWith: nil, desiredKeys: nil, resultsLimit: CKQueryOperation.maximumResults) { (result: Result<(matchResults: [(CKRecord.ID, Result<CKRecord, Error>)], queryCursor: CKQueryOperation.Cursor?), Error>) in
             switch result {
             case .failure(let error):
                 print("Error fetching record: \(error.localizedDescription)")
@@ -104,21 +105,21 @@ class CloudKitManager {
         }
     }
     // fetch record with user reference
-    func fetchRecord(recordType: String, user: CKRecord.Reference, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
-        p_fetchRecord(recordType: recordType, user: user, completion: completion)
+    func fetchPublicRecord(recordType: String, user: CKRecord.Reference, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: false, user: user, completion: completion)
     }
     // fetch record without user reference
-    func fetchRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
-        p_fetchRecord(recordType: recordType, user: nil, completion: completion)
+    func fetchPublicRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: false, user: nil, completion: completion)
     }
     // fetch private record with user reference
     func fetchPrivateRecord(recordType: String, user: CKRecord.Reference, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
-        p_fetchRecord(recordType: recordType, user: user, completion: completion)
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: true, user: user, completion: completion)
     }
 
     // fetch private record without user reference
     func fetchPrivateRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
-        p_fetchRecord(recordType: recordType, user: nil, completion: completion)
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: true, user: nil, completion: completion)
     }
 
 
@@ -148,7 +149,7 @@ struct testview : View{
                 cloudKitManager.saveItem(record: record)
             }
             Button("Fetch"){
-                cloudKitManager.fetchRecord(recordType: "Inventory"){ records, error in
+                cloudKitManager.fetchPrivateRecord(recordType: "Inventory"){ records, error in
                     if let error = error {
                         print("Error fetching record: \(error.localizedDescription)")
                     }
