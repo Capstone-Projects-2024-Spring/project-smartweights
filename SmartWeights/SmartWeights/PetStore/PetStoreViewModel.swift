@@ -5,7 +5,7 @@ import CloudKit
 
 class storeViewModel: ObservableObject {
     
-    var cloudKitManager = CloudKitManager()
+//    var cloudKitManager = CloudKitManager()
     var inventoryDBManager = InventoryDBManager()
     
     /// Items available in store.
@@ -27,8 +27,25 @@ class storeViewModel: ObservableObject {
     @Published var sortByPrice = false // used for sorting
     @Published var selectedCategory = "Pets" // Default
     let categories = ["Pets", "Foods", "Backgrounds", "Outfits"]
-    @Published var userCur = 1000 // Default currency
+    @Published var userCur = 0 // Default currency
+    var inventory: InventoryModel?
     
+    init() {
+        updateCurrency()
+    }
+
+    func updateCurrency() {
+        inventoryDBManager.getCurrency { (currency, error) in
+            if let error = error {
+                print("Error getting currency: \(error.localizedDescription)")
+            } else if let currency = currency {
+                DispatchQueue.main.async {
+                    self.userCur = Int(currency)
+                }
+            }
+        }
+    }
+
     /// Display items based on selected sorting method.
     func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem] {
         if sortByPrice {

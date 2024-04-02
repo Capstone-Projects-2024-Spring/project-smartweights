@@ -104,6 +104,34 @@ class InventoryDBManager : ObservableObject{
            
         }
     }
+
+    func fetchInventory(completion: @escaping (InventoryModel?, Error?) -> Void) {
+        CKManager.fetchRecord(recordType: "Inventory") { records, error in
+            guard let record = records?.first else {
+                completion(nil, error)
+                print("Error fetching inventory: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            let activeBackground = record[InventoryModelRecordKeys.activeBackground.rawValue] as? CKRecord.Reference
+            let activePetClothing = record[InventoryModelRecordKeys.activePetClothing.rawValue] as? CKRecord.Reference
+            let background = record[InventoryModelRecordKeys.background.rawValue] as? [CKRecord.Reference]
+            let clothing = record[InventoryModelRecordKeys.clothing.rawValue] as? [CKRecord.Reference]
+            let currency = record[InventoryModelRecordKeys.currency.rawValue] as? Int64
+            let food = record[InventoryModelRecordKeys.food.rawValue] as? [CKRecord.Reference]
+            let pets = record[InventoryModelRecordKeys.pets.rawValue] as? [CKRecord.Reference]
+            let user = record[InventoryModelRecordKeys.user.rawValue] as? CKRecord.Reference
+            
+            guard let userUnwrapped = user else {
+                print("User reference nil.")
+                completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "User reference nil."]))
+                return
+            }
+            
+            self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], currency: currency ?? 0, food: food ?? [], pets: pets ?? [], user: userUnwrapped)
+            completion(self.inventory, nil)
+        }
+    }
     func getCurrency(user: CKRecord.Reference, completion: @escaping (Int64?, Error?) -> Void) {
         if let inventory = inventory {
             completion(inventory.currency, nil)
@@ -117,6 +145,19 @@ class InventoryDBManager : ObservableObject{
             }
         }
     }
+    func getCurrency(completion: @escaping (Int64?, Error?) -> Void) {
+        if let inventory = inventory {
+            completion(inventory.currency, nil)
+        } else {
+            fetchInventory { inventory, error in
+                if let error = error {
+                    completion(nil, error)
+                } else {
+                    completion(self.inventory?.currency, nil)
+                }
+            }
+        }
+    }   
     //function should get the currency from the inventory and update it, not create a new inventory
     func updateCurrency(user: CKRecord.Reference, newCurrency: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateItem(recordType: "Inventory", user: user) { record, error in
