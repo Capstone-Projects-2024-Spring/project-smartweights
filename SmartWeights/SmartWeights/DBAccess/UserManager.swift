@@ -40,6 +40,7 @@ extension User {
 class UserDBManager : ObservableObject{
     @Published var user: User?
     @Published var userRecord: CKRecord.Reference?
+    var userExists: Bool = false
     let CKManager = CloudKitManager()
     
     // func fetchUser(completion: @escaping (User?, Error?) -> Void) {
@@ -67,6 +68,11 @@ class UserDBManager : ObservableObject{
                 print("Error fetching current user record ID: \(error.localizedDescription)")
             }
         }
+        fetchUser{ user, error in
+            if let error = error {
+                print("Error fetching user: \(error.localizedDescription)")
+            } 
+        }
     }
     // this function grabs the record name of the current user found in the "Users" record type
     func fetchCurrentUserRecordID(completion: @escaping (Error?) -> Void) {
@@ -84,6 +90,11 @@ class UserDBManager : ObservableObject{
     }
     
     func createUser(firstName: String?, lastName: String?){
+        if userExists {
+            print("User already exists, not creating new user")
+            return
+        }
+
         let user = User(recordId: nil, firstName: firstName ?? "", lastName: lastName ?? "", latestLogin: Date(), currency: 0, Users: userRecord!)
         let userRecord = user.record
         CKManager.savePrivateItem(record: userRecord)
@@ -99,12 +110,14 @@ class UserDBManager : ObservableObject{
             }
             guard let record = records?.first else {
                 // Handle the case where no records were found
+                self.userExists = false
                 print("No user record found")
                 completion(nil, nil)
                 return
             }
             
             // Handle the case where a record was found
+            self.userExists = true
             let firstName = record[UserRecordKeys.firstName.rawValue] as? String ?? ""
             let lastName = record[UserRecordKeys.lastName.rawValue] as? String ?? ""
             let latestLogin = record[UserRecordKeys.latestLogin.rawValue] as? Date ?? Date()
@@ -113,6 +126,7 @@ class UserDBManager : ObservableObject{
             
             self.user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, Users: users)
             completion(self.user, nil)
+            
             
         }
     }
@@ -146,6 +160,42 @@ class UserDBManager : ObservableObject{
         }
     }
     
+    func getName(completion: @escaping (String?, Error?) -> Void) {
+        if let user = user {
+            let name = "\(user.firstName) \(user.lastName)"
+            completion(name, nil)
+        } else {
+            fetchUser { user, error in
+                if let error = error {
+                    completion(nil, error)
+                } else {
+                    let name = "\(self.user?.firstName ?? "") \(self.user?.lastName ?? "")"
+                    completion(name, nil)
+                }
+            }
+        }
+    }
+    func updateName(newFirstName: String?, newLastName: String?, completion: @escaping (Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "User") { records, error in
+            guard let record = records?.first else {
+                print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
+                completion(error)
+                return
+            }
+            
+            if(newFirstName != nil)
+            {
+                record[UserRecordKeys.firstName.rawValue] = newFirstName as CKRecordValue?
+            }
+            if(newLastName != nil)
+            {
+                record[UserRecordKeys.lastName.rawValue] = newLastName as CKRecordValue?
+            }
+            self.CKManager.savePrivateItem(record: record)
+            completion(nil)
+        }
+    }
+
     //     function to help check if User (not Users) exists already
     func userRecordExistsInUsers(completion: @escaping (Bool, Error?) -> Void) {
         guard let userRecord = userRecord else {
