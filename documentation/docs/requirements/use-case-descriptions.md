@@ -94,14 +94,14 @@ A user wants to customize their virtual pet.
 3. The user will then select any costume/accessory they want to equip for their pet.
 4. The user will see their pet change according to the costumes/accessories they picked.
 
-## Use Case 11 - Participating in Weekly Challenge
-The SmartWeight app introduces a weekly challenge feature to engage users in varied fitness activities, encouraging consistency and community interaction.
+## Use Case 11 - Completing an achievement
+The SmartWeight app contains an achievement feature to engage users in varied fitness activities, encouraging consistency and community interaction.
 
-1. The user navigates to the challenges section within the app and opts into the weekly challenge.
-2. Once opted in, the user can view detailed information about the challenge, which includes details of the challenge (e.g. total weight lifted, number of workouts completed) and potential reward (e.g. digital currency, virtual pet accessories).
-3. Throughout the week, the user engages in their regular workouts, with the app automatically tracking their progress toward the challenge goals using the integrated sensors.
-4. The user can check their current standings in the challenge via the app(challenge tab), which updates in real time, showing their progress.
-5. At the end of the week, the app notifies the user of the challenge outcome. If they have met the challenge criteria, they receive their reward.
+1. The user navigates to the achievements section within the app and views the list of achievements.
+2. The user then views detailed information about the achievement, which includes details of the achievement completion requirement (e.g. total weight lifted, number of workouts completed) and potential reward (e.g. digital currency, virtual pet accessories).
+3. Throughout the week, the user progresses through the requirement, with the app automatically tracking their progress.
+4. The user can check their current standings in the achievement via the app(achievement tab), which updates in real time, showing their progress.
+5. Once the completion requirement has been fully met, the app now allows for the user to claim their reward. The user clicks on the achievement icon, claims their reward, and updates their list of completed achievements.
 
 ## Use Case 12 - Share with Friends
 A user wants to share their pet/achievements with their friends.
