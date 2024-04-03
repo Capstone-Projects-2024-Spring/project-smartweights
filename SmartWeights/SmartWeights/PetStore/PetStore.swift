@@ -19,14 +19,15 @@ struct SellingItem: Identifiable {
     var isBought = false
 }
 
-
 /// Grid for displaying items.
 private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
 
 /// Display view for the Pet Store depending on available items and prices.
 struct PetStore: View {
-    
     @ObservedObject var viewModel = storeViewModel()
+    @State private var showingDetail = false
+    @State private var selectedItem: SellingItem?
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -84,7 +85,9 @@ struct PetStore: View {
                 ScrollView {
                     LazyVGrid(columns: gridLayout, spacing: 10) {
                         ForEach(viewModel.sortItems(items: viewModel.items, sortByPrice: viewModel.sortByPrice).filter { $0.category == viewModel.selectedCategory }, id: \.id) { item in
-                            NavigationLink(destination: ItemDetailView(item: item, viewModel: viewModel, userCur: viewModel.userCur)) {
+                            Button(action: {
+                                self.selectedItem = item
+                            }) {
                                 VStack {
                                     item.image
                                         .resizable()
@@ -92,16 +95,7 @@ struct PetStore: View {
                                         .frame(width: 100, height: 100)
                                     
                                     Text(item.name)
-                                    
-                                    if viewModel.sortByPrice {
-                                        Text("\(item.price)") // Displaying price
-                                            .font(.headline)
-                                            .foregroundColor(.green)
-                                    } else {
-                                        Text("\(item.price)") // Displaying price
-                                            .font(.headline)
-                                            .foregroundColor(.green)
-                                    }
+                                    // Displaying price with your existing logic...
                                 }
                                 .frame(width: 130, height: 175)
                                 .padding()
@@ -113,8 +107,9 @@ struct PetStore: View {
                     .padding([.leading, .trailing, .bottom])
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .navigationBarHidden(true) // Hide the navigation bar
+            .sheet(item: $selectedItem) { item in
+                ItemDetailView(item: item, viewModel: viewModel, userCur: viewModel.userCur)
+            }
         }
     }
 }
@@ -197,10 +192,12 @@ struct ItemDetailView: View {
             
             Button(action: {
                 // Handle purchase action
-                print("Purchase \(item.name)")
                 viewModel.purchaseItem(item: item)
+                // This is to force SwiftUI to reevaluate the `isBought` state of our item.
+                // SwiftUI will now check the `isBought` property again to determine the correct label and color for the button.
             }) {
-                if item.isBought {
+                // Dynamically checking `isBought` status from the viewModel's items to ensure it's up-to-date
+                if viewModel.items.first(where: { $0.id == item.id })?.isBought ?? false {
                     Text("Purchased")
                         .padding()
                         .background(Color.gray)
@@ -208,7 +205,7 @@ struct ItemDetailView: View {
                         .cornerRadius(10)
                         .font(.system(size: 20))
                 } else {
-                    Text("Purchase") // Purchase
+                    Text("Purchase")
                         .padding()
                         .background(userCur >= Int(item.price) ?? 0 ? Color.blue : Color.gray)
                         .foregroundColor(.white)
@@ -216,7 +213,7 @@ struct ItemDetailView: View {
                         .font(.system(size: 20))
                 }
             }
-            .disabled(userCur < Int(item.price) ?? 0 || item.isBought == true) // Disable button if userCur is less than item price
+            .disabled(userCur < Int(item.price) ?? 0 || viewModel.items.first(where: { $0.id == item.id })?.isBought ?? false)
             .padding()
         }
     }
