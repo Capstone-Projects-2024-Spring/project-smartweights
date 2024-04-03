@@ -211,7 +211,7 @@ struct WorkoutMainPage: View {
                     if buttonText == "Finish Workout" {
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
-                        storeModel.addFundtoUser(price: 500)
+                        storeModel.addFundtoUser(price: 50)
                         viewModel.resetWorkoutState()
                         hasWorkoutStarted = false
                         isWorkoutPaused = false
