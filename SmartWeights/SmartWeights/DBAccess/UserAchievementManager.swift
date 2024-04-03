@@ -8,7 +8,7 @@ enum UserAchievementRecordKeys: String {
     case achievement
     case currentProgress
     case isCompleted
-    case user
+    // case user
 }
 
 struct UserAchievement {
@@ -16,7 +16,7 @@ struct UserAchievement {
     var achievement: CKRecord.Reference
     var currentProgress: Int64
     var isCompleted: Int64
-    var user: CKRecord.Reference
+    // var user: CKRecord.Reference
 
     //potential implementation just to have isCompleted be a boolean
     //  var isCompletedInt: Int64
@@ -33,7 +33,7 @@ extension UserAchievement {
         record[UserAchievementRecordKeys.achievement.rawValue] = achievement
         record[UserAchievementRecordKeys.currentProgress.rawValue] = currentProgress
         record[UserAchievementRecordKeys.isCompleted.rawValue] = isCompleted
-        record[UserAchievementRecordKeys.user.rawValue] = user
+        // record[UserAchievementRecordKeys.user.rawValue] = user
         return record
     }
 }
@@ -43,8 +43,8 @@ class UserAchievementDBManager: ObservableObject {
     @Published var userAchievement: UserAchievement?
     let CKManager = CloudKitManager()
 
-    func createUserAchievement(achievement: CKRecord.Reference, user: CKRecord.Reference) {
-        let userAchievement = UserAchievement(achievement: achievement, currentProgress: 0, isCompleted: 0, user: user)
+    func createUserAchievement(achievement: CKRecord.Reference) {
+        let userAchievement = UserAchievement(achievement: achievement, currentProgress: 0, isCompleted: 0)
         let userAchievementRecord = userAchievement.record
         CKManager.savePrivateItem(record: userAchievementRecord)
     }

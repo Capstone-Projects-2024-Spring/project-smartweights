@@ -6,7 +6,7 @@ enum PetRecordKeys: String {
     case level
     case petImage
     case totalXP
-    case user
+    // case user
 }
 
 struct PetModel {
@@ -15,7 +15,7 @@ struct PetModel {
     var level: Int64
     var petImage: CKAsset?
     var totalXP: Int64
-    var user: CKRecord.Reference
+    // var user: CKRecord.Reference
 }
 
 extension PetModel {
@@ -25,7 +25,7 @@ extension PetModel {
         record[PetRecordKeys.level.rawValue] = level
         record[PetRecordKeys.petImage.rawValue] = petImage
         record[PetRecordKeys.totalXP.rawValue] = totalXP
-        record[PetRecordKeys.user.rawValue] = user
+        // record[PetRecordKeys.user.rawValue] = user
         return record
     }
 }
@@ -35,7 +35,7 @@ class PetDBManager: ObservableObject{
     let CKManager = CloudKitManager()
 
     func createPet(){
-        let pet = PetModel(health: 100, level: 1, petImage: nil, totalXP: 0, user: CKRecord.Reference(recordID: CKRecord.ID(recordName: ""), action: .none))
+        let pet = PetModel(health: 100, level: 1, petImage: nil, totalXP: 0)
         let petRecord = pet.record
         CKManager.savePrivateItem(record: petRecord)
     }

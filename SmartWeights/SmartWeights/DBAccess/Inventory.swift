@@ -19,7 +19,7 @@ enum InventoryModelRecordKeys: String{
     case clothing
     case food
     case pets
-    case user
+    // case user
 }
 struct InventoryModel {
     var recordId: CKRecord.ID?
@@ -29,7 +29,7 @@ struct InventoryModel {
     var clothing: [CKRecord.Reference]
     var food: [CKRecord.Reference]
     var pets: [CKRecord.Reference]
-    var user: CKRecord.Reference
+    // var user: CKRecord.Reference
 }
 extension InventoryModel {
     var record : CKRecord{
@@ -47,7 +47,7 @@ extension InventoryModel {
         record[InventoryModelRecordKeys.clothing.rawValue] = clothing
         record[InventoryModelRecordKeys.food.rawValue] = food
         record[InventoryModelRecordKeys.pets.rawValue] = pets
-        record[InventoryModelRecordKeys.user.rawValue] = user
+        // record[InventoryModelRecordKeys.user.rawValue] = user
         return record
     }
 }
@@ -57,17 +57,9 @@ class InventoryDBManager : ObservableObject{
     let CKManager = CloudKitManager()
     //    var userM = UserRecordManager()
     //user userM to get userReference
-    func createInventory(userR : CKRecord.Reference){
-        //        userM.fetchCurrentUserRecordID { error in
-        //            if let error = error {
-        //                print("Error fetching current user record ID: \(error)")
-        //                return
-        //            } else {
-        //                print("successful call fetchCurrentUserRecordID: ")
-        //            }
-        //        }
+    func createInventory(){
         
-        let inventory = InventoryModel(activeBackground: nil, activePetClothing: nil, background: [], clothing: [], food: [], pets: [], user: userR)
+        let inventory = InventoryModel(activeBackground: nil, activePetClothing: nil, background: [], clothing: [], food: [], pets: [])
         let inventoryRecord = inventory.record
         // Save the record to the database
         CKManager.savePrivateItem(record: inventoryRecord)
@@ -115,15 +107,15 @@ class InventoryDBManager : ObservableObject{
             let clothing = record[InventoryModelRecordKeys.clothing.rawValue] as? [CKRecord.Reference]
             let food = record[InventoryModelRecordKeys.food.rawValue] as? [CKRecord.Reference]
             let pets = record[InventoryModelRecordKeys.pets.rawValue] as? [CKRecord.Reference]
-            let user = record[InventoryModelRecordKeys.user.rawValue] as? CKRecord.Reference
+            // let user = record[InventoryModelRecordKeys.user.rawValue] as? CKRecord.Reference
             
-            guard let userUnwrapped = user else {
-                print("User reference nil.")
-                completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "User reference nil."]))
-                return
-            }
+            // guard let userUnwrapped = user else {
+            //     print("User reference nil.")
+            //     completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "User reference nil."]))
+            //     return
+            // }
             
-            self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], food: food ?? [], pets: pets ?? [], user: userUnwrapped)
+            self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], food: food ?? [], pets: pets ?? [])
             completion(self.inventory, nil)
         }
     }

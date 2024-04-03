@@ -18,7 +18,7 @@ enum UserFeedbackDataRecordKeys: String{
     case reps
     case sets
     case speedValue
-    case user
+    // case user
 }
 
 struct UserFeedbackDataModel {
@@ -29,7 +29,7 @@ struct UserFeedbackDataModel {
     var reps: Int64
     var sets: Int64
     var speedValue: Int64
-    var user: CKRecord.Reference
+    // var user: CKRecord.Reference
 }
 
 extension UserFeedbackDataModel {
@@ -41,17 +41,17 @@ extension UserFeedbackDataModel {
         record[UserFeedbackDataRecordKeys.reps.rawValue] = reps
         record[UserFeedbackDataRecordKeys.sets.rawValue] = sets
         record[UserFeedbackDataRecordKeys.speedValue.rawValue] = speedValue
-        record[UserFeedbackDataRecordKeys.user.rawValue] = user
+        // record[UserFeedbackDataRecordKeys.user.rawValue] = user
         return record
     }
 }
 
-class UserFeedbackDataManager : ObservableObject{
+class UserFeedbackDataDBManager : ObservableObject{
     @Published var userFeedback: UserFeedbackDataModel?
     let CKManager = CloudKitManager()
     
-    func createUserFeedback(dateRecorded: Date, dumbbellWeight: Int64, formValue: Int64, reps: Int64, sets: Int64, speedValue: Int64, user: CKRecord.Reference){
-        let userFeedback = UserFeedbackDataModel(dateRecorded: dateRecorded, dumbbellWeight: dumbbellWeight, formValue: formValue, reps: reps, sets: sets, speedValue: speedValue, user: user)
+    func createUserFeedback(dateRecorded: Date, dumbbellWeight: Int64, formValue: Int64, reps: Int64, sets: Int64, speedValue: Int64){
+        let userFeedback = UserFeedbackDataModel(dateRecorded: dateRecorded, dumbbellWeight: dumbbellWeight, formValue: formValue, reps: reps, sets: sets, speedValue: speedValue)
         let userFeedbackRecord = userFeedback.record
         CKManager.savePrivateItem(record: userFeedbackRecord)
     }

@@ -128,7 +128,7 @@ class UserDBManager : ObservableObject{
             let email = record[UserRecordKeys.email.rawValue] as? String ?? ""
             let users = record[UserRecordKeys.Users.rawValue] as? CKRecord.Reference ?? CKRecord.Reference(recordID: CKRecord.ID(recordName: ""), action: .none)
             
-            self.user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, Users: users)
+            self.user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, email: email, Users: users)
             completion(self.user, nil)
             
             

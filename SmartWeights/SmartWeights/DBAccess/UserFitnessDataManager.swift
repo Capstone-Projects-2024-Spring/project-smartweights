@@ -14,7 +14,7 @@ enum UserFitnessDataRecordKeys: String{
     case type = "UserFitnessData"
     case age
     case height
-    case user
+    // case user
     case weight
 }
 
@@ -22,7 +22,7 @@ struct UserFitnessDataModel {
     var recordId: CKRecord.ID?
     var age: Int64
     var height: Int64
-    var user: CKRecord.Reference
+    // var user: CKRecord.Reference
     var weight: Int64
 }
 
@@ -32,18 +32,18 @@ extension UserFitnessDataModel {
         let record = CKRecord(recordType: UserFitnessDataRecordKeys.type.rawValue)
         record[UserFitnessDataRecordKeys.age.rawValue] = age
         record[UserFitnessDataRecordKeys.height.rawValue] = height
-        record[UserFitnessDataRecordKeys.user.rawValue] = user
+        // record[UserFitnessDataRecordKeys.user.rawValue] = user
         record[UserFitnessDataRecordKeys.weight.rawValue] = weight
         return record
     }
 }
 
-class UserFitnessDataManager : ObservableObject{
+class UserFitnessDataDBManager : ObservableObject{
     @Published var userFitness: UserFitnessDataModel?
     let CKManager = CloudKitManager()
     
-    func createUserFitness(age: Int64, height: Int64, user: CKRecord.Reference, weight: Int64){
-        let userFitness = UserFitnessDataModel(age: age, height: height, user: user, weight: weight)
+    func createUserDataFitness(){
+        let userFitness = UserFitnessDataModel(age: 0, height: 0, weight: 0)
         let userFitnessRecord = userFitness.record
         CKManager.savePrivateItem(record: userFitnessRecord)
     }
