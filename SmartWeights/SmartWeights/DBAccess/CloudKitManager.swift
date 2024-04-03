@@ -121,19 +121,6 @@ class CloudKitManager {
     func fetchPrivateRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
         p_fetchRecord(recordType: recordType, usePrivateDatabase: true, user: nil, completion: completion)
     }
-
-
-    //deprecate this func
-    func fetchPrivateItem(recordType: String, user: CKRecord.Reference, completion: @escaping (CKRecord?, Error?) -> Void) {
-        let predicate = NSPredicate(format: "user == %@", user)
-        let query = CKQuery(recordType: recordType, predicate: predicate)
-        
-        privateDatabase.perform(query, inZoneWith: nil) { records, error in
-            DispatchQueue.main.async {
-                completion(records?.first, error)
-            }
-        }
-    }
     
 }
 
