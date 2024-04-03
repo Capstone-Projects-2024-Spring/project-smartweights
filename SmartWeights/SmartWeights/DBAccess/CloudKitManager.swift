@@ -122,6 +122,48 @@ class CloudKitManager {
         p_fetchRecord(recordType: recordType, usePrivateDatabase: true, user: nil, completion: completion)
     }
     
+    
+    
+    
+    
+    
+    // possible deprecated funcs
+    /*private func getiCloudStatus(){
+        CKContainer.default().accountStatus{[weak self] returnedStatus, returnedError in
+            DispatchQueue.main.async{
+                switch returnedStatus{
+                case .available:
+                    self?.isSignedInToiCloud = true
+                case .noAccount:
+                    self?.error = CloudKitError.iCloudAccountNotFound.localizedDescription
+                case .couldNotDetermine:
+                    self?.error = CloudKitError.iCloudAccountNotDetermined.localizedDescription
+                case .restricted:
+                    self?.error = CloudKitError.iCloudAccountRestricted.localizedDescription
+                default:
+                    self?.error = CloudKitError.iCloudAccountUnknown.localizedDescription
+                }
+            }
+            
+        }
+    }
+    enum CloudKitError: LocalizedError{
+        case iCloudAccountNotFound
+        case iCloudAccountNotDetermined
+        case iCloudAccountRestricted
+        case iCloudAccountUnknown
+    }
+    func requestPermission(){
+        CKContainer.default().requestApplicationPermission([.userDiscoverability]){
+            [weak self] returnedStatus, returnedError in
+            DispatchQueue.main.async{
+                if returnedStatus == .granted{
+                    self?.permissionStatus = true
+                }
+            }
+        }
+    }*/
+    
 }
 
 

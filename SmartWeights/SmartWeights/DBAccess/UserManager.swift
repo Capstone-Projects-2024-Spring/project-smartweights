@@ -49,18 +49,18 @@ class UserDBManager : ObservableObject{
     //             print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
     //             return
     //         }
-            
+    
     //         let firstName = record[UserRecordKeys.firstName.rawValue] as? String ?? ""
     //         let lastName = record[UserRecordKeys.lastName.rawValue] as? String ?? ""
     //         let latestLogin = record[UserRecordKeys.latestLogin.rawValue] as? Date ?? Date()
     //         let currency = record[UserRecordKeys.currency.rawValue] as? Int64 ?? 0
     //         let users = record[UserRecordKeys.Users.rawValue] as? CKRecord.Reference ?? CKRecord.Reference(recordID: CKRecord.ID(recordName: ""), action: .none)
-            
+    
     //         let user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, Users: users)
     //         completion(user, nil)
     //     }
     // }
-
+    
     init(){
         fetchCurrentUserRecordID { error in
             if let error = error {
@@ -91,20 +91,29 @@ class UserDBManager : ObservableObject{
     
     func fetchUser(completion: @escaping (User?, Error?) -> Void){
         CKManager.fetchPrivateRecord(recordType: "User"){ records, error in
-            guard let record = records?.first else {
+            if let error = error {
+                // Handle the case where there was an error fetching the records
+                print("Error fetching user: \(error.localizedDescription)")
                 completion(nil, error)
-                print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
                 return
             }
+            guard let record = records?.first else {
+                // Handle the case where no records were found
+                print("No user record found")
+                completion(nil, nil)
+                return
+            }
+            
+            // Handle the case where a record was found
             let firstName = record[UserRecordKeys.firstName.rawValue] as? String ?? ""
             let lastName = record[UserRecordKeys.lastName.rawValue] as? String ?? ""
             let latestLogin = record[UserRecordKeys.latestLogin.rawValue] as? Date ?? Date()
             let currency = record[UserRecordKeys.currency.rawValue] as? Int64 ?? 0
             let users = record[UserRecordKeys.Users.rawValue] as? CKRecord.Reference ?? CKRecord.Reference(recordID: CKRecord.ID(recordName: ""), action: .none)
-
+            
             self.user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, Users: users)
             completion(self.user, nil)
-
+            
         }
     }
     
@@ -137,32 +146,32 @@ class UserDBManager : ObservableObject{
         }
     }
     
-//     function to help check if User (not Users) exists already
-        func userRecordExistsInUsers(completion: @escaping (Bool, Error?) -> Void) {
-            guard let userRecord = userRecord else {
-                completion(false, nil) // userRecord not fetched yet
-                return
-            }
-    
-            let database = CKContainer.default().publicCloudDatabase
-            let predicate = NSPredicate(format: "Users == %@", userRecord)
-            let query = CKQuery(recordType: "User", predicate: predicate)
-    
-            database.perform(query, inZoneWith: nil) { (records, error) in
-                if let error = error {
-                    completion(false, error)
-                } else if let records = records, !records.isEmpty {
-                    completion(true, nil) // userRecord exists in Users record type
-                    print("exists")
-                    print("ExistsRecord: \(records)")
-                    //                return true
-                } else {
-                    completion(false, nil) // userRecord does not exist in Users record type
-                    print("does not exist")
-                    //                return false
-                }
+    //     function to help check if User (not Users) exists already
+    func userRecordExistsInUsers(completion: @escaping (Bool, Error?) -> Void) {
+        guard let userRecord = userRecord else {
+            completion(false, nil) // userRecord not fetched yet
+            return
+        }
+        
+        let database = CKContainer.default().publicCloudDatabase
+        let predicate = NSPredicate(format: "Users == %@", userRecord)
+        let query = CKQuery(recordType: "User", predicate: predicate)
+        
+        database.perform(query, inZoneWith: nil) { (records, error) in
+            if let error = error {
+                completion(false, error)
+            } else if let records = records, !records.isEmpty {
+                completion(true, nil) // userRecord exists in Users record type
+                print("exists")
+                print("ExistsRecord: \(records)")
+                //                return true
+            } else {
+                completion(false, nil) // userRecord does not exist in Users record type
+                print("does not exist")
+                //                return false
             }
         }
+    }
     
     
 }
