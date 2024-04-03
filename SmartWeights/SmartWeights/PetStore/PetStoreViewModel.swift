@@ -85,10 +85,10 @@ class storeViewModel: ObservableObject {
         }
     
     func addFundtoUser(price: Int) {
-        print("Subtracting \(price) from \(userCur)")
+        print("Adding \(price) to \(userCur)")
        
         
-        print("userCur: \(self.userCur - price)")
+        print("userCur: \(self.userCur + price)")
         userDBManager.updateCurrency(newCurrency: Int64(userCur+price)){
             error in
             if let error = error {
