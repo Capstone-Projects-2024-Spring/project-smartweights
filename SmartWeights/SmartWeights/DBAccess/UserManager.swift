@@ -61,6 +61,13 @@ class UserDBManager : ObservableObject{
     //     }
     // }
 
+    init(){
+        fetchCurrentUserRecordID { error in
+            if let error = error {
+                print("Error fetching current user record ID: \(error.localizedDescription)")
+            }
+        }
+    }
     // this function grabs the record name of the current user found in the "Users" record type
     func fetchCurrentUserRecordID(completion: @escaping (Error?) -> Void) {
         CKManager.container.fetchUserRecordID { [weak self] (recordID, error) in
@@ -75,7 +82,13 @@ class UserDBManager : ObservableObject{
             }
         }
     }
-
+    
+    func createUser(firstName: String?, lastName: String?){
+        let user = User(recordId: nil, firstName: firstName ?? "", lastName: lastName ?? "", latestLogin: Date(), currency: 0, Users: userRecord!)
+        let userRecord = user.record
+        CKManager.savePrivateItem(record: userRecord)
+    }
+    
     func fetchUser(completion: @escaping (User?, Error?) -> Void){
         CKManager.fetchPrivateRecord(recordType: "User"){ records, error in
             guard let record = records?.first else {
