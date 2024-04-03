@@ -34,6 +34,7 @@ struct WorkoutMainPage: View {
                     WorkoutFeedback(viewModel: viewModel)
                 }
             }
+            
             .popover(isPresented: $showGraphPopover) {
                 VStack {
                     HStack {
@@ -87,21 +88,6 @@ struct WorkoutMainPage: View {
             Text("Workout")
                 .font(.title)
                 .bold()
-            
-            if selectedTab == 0 {
-                VStack {
-                    Button(action: {
-                        viewModel.startListening()
-                    }) {
-                        Image(systemName: "mic.circle")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                    }
-                    .accessibilityLabel("micWorkoutButton")
-                    .padding(.trailing, 42)
-                }
-                .padding(.leading, 300)
-            }
         }
     }
     
@@ -320,7 +306,13 @@ struct WorkoutMainPage: View {
         @State private var countdownActive = false // Indicates if the countdown is active
         
         var body: some View {
+            
             ZStack {
+                RoundedRectangle(cornerRadius: 3)
+                    .frame(width: 60, height: 6)
+                    .foregroundColor(.gray)
+                    .opacity(0.5)
+                    .padding(.top, 5)
                 VStack {
                     if countdownActive {
                         // Countdown UI
@@ -332,9 +324,22 @@ struct WorkoutMainPage: View {
                             }
                     } else {
                         // Regular input form
-                        Text("Enter Workout Details")
-                            .font(.headline)
-                            .padding()
+                        HStack {
+                            Text("Enter Workout Details")
+                                .font(.headline)
+                            
+                            Button(action: {
+                                // Action to trigger voice input or start listening for commands
+                                viewModel.startListening()
+                            }) {
+                                Image(systemName: "mic.circle")
+                                    .resizable()
+                                    .frame(width: 25, height: 25) // Adjusted size for better fit
+                                    .padding(.leading, 5)
+                            }
+                            .accessibilityLabel("Start Voice Command")
+                        }
+                        .padding()
                         
                         TextField("Sets", text: $viewModel.inputtedSets)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -350,6 +355,7 @@ struct WorkoutMainPage: View {
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                             .padding()
+                        
                         
                         Button("Start Workout") {
                             if isValidInput(viewModel.inputtedSets) && isValidInput(viewModel.inputtedReps) && isValidInput(viewModel.inputtedWeights) {
