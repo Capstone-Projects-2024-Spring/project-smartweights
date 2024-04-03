@@ -4,7 +4,7 @@ import utime
 from machine import I2C,Pin
 
 
-
+from ctypes import *
 
 
 

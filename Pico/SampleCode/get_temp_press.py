@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*
-from BMP3XX import *
+#from BMP3XX import *
 
 '''
   # i2c_addr = 0x76: pin SDO is low
