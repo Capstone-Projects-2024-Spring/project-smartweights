@@ -33,10 +33,40 @@ extension PetModel {
 class PetDBManager: ObservableObject{
     @Published var pet: PetModel?
     let CKManager = CloudKitManager()
-
+    var petExists: Bool = false
     func createPet(){
+        if petExists {
+            print("Pet already exists.")
+            return
+        }
+
         let pet = PetModel(health: 100, level: 1, petImage: nil, totalXP: 0)
         let petRecord = pet.record
         CKManager.savePrivateItem(record: petRecord)
+        petExists = true
+    }
+
+    func fetchPet(completion: @escaping (PetModel?, Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
+            if let error = error {
+                print("Error fetching pet: \(error.localizedDescription)")
+                completion(nil, error)
+                return
+            }
+            guard let record = records?.first else {
+                self.petExists = false
+                print("No pet record found")
+                completion(nil, nil)
+                return
+            }
+            let health = record[PetRecordKeys.health.rawValue] as? Int64 ?? 0
+            let level = record[PetRecordKeys.level.rawValue] as? Int64 ?? 0
+            let petImage = record[PetRecordKeys.petImage.rawValue] as? CKAsset
+            let totalXP = record[PetRecordKeys.totalXP.rawValue] as? Int64 ?? 0
+
+            let pet = PetModel(recordId: record.recordID, health: health, level: level, petImage: petImage, totalXP: totalXP)
+            completion(pet, nil)
+            petExists = true
+        }
     }
 }

@@ -101,6 +101,7 @@ class UserDBManager : ObservableObject{
         let user = User(recordId: nil, firstName: firstName ?? "", lastName: lastName ?? "", latestLogin: Date(), currency: 0, email: email ?? "", Users: userRecord!)
         let userRecord = user.record
         CKManager.savePrivateItem(record: userRecord)
+        userExists = true
     }
     
     func fetchUser(completion: @escaping (User?, Error?) -> Void){
@@ -130,6 +131,7 @@ class UserDBManager : ObservableObject{
             
             self.user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, email: email, Users: users)
             completion(self.user, nil)
+            userExists = true
             
             
         }

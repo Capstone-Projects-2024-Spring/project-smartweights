@@ -55,14 +55,21 @@ extension InventoryModel {
 class InventoryDBManager : ObservableObject{
     @Published var inventory: InventoryModel?
     let CKManager = CloudKitManager()
+    var inventoryExists: Bool = false
     //    var userM = UserRecordManager()
     //user userM to get userReference
     func createInventory(){
         
+        if inventoryExists {
+            print("Inventory already exists.")
+            return
+        }
+
         let inventory = InventoryModel(activeBackground: nil, activePetClothing: nil, background: [], clothing: [], food: [], pets: [])
         let inventoryRecord = inventory.record
         // Save the record to the database
         CKManager.savePrivateItem(record: inventoryRecord)
+        inventoryExists = true
         
     }
 //    func fetchInventory(user: CKRecord.Reference, completion: @escaping (InventoryModel?, Error?) -> Void) {
@@ -95,9 +102,17 @@ class InventoryDBManager : ObservableObject{
     
     func fetchInventory(completion: @escaping (InventoryModel?, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "Inventory") { records, error in
-            guard let record = records?.first else {
+             if let error = error {
+                // Handle the case where there was an error fetching the records
+                print("Error fetching inventory: \(error.localizedDescription)")
                 completion(nil, error)
-                print("Error fetching inventory: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            guard let record = records?.first else {
+                // Handle the case where no records were found
+                self.inventoryExists = false
+                print("No inventory record found")
+                completion(nil, nil)
                 return
             }
             
@@ -117,6 +132,7 @@ class InventoryDBManager : ObservableObject{
             
             self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], food: food ?? [], pets: pets ?? [])
             completion(self.inventory, nil)
+            inventoryExists = true
         }
     }
    

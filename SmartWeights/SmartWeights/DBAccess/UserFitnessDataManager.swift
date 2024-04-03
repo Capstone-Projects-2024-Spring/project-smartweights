@@ -41,10 +41,40 @@ extension UserFitnessDataModel {
 class UserFitnessDataDBManager : ObservableObject{
     @Published var userFitness: UserFitnessDataModel?
     let CKManager = CloudKitManager()
+    var userFitnessDataExists: Bool = false
     
-    func createUserDataFitness(){
+    func createUserFitnessData(){
         let userFitness = UserFitnessDataModel(age: 0, height: 0, weight: 0)
         let userFitnessRecord = userFitness.record
         CKManager.savePrivateItem(record: userFitnessRecord)
+        userFitnessDataExists = true
     }
+    
+    func fetchUserFitnessData(completion: @escaping (UserFitnessDataModel?, Error?) -> Void) {
+         CKManager.fetchPrivateRecord(recordType: "UserFitnessData"){ records, error in
+            if let error = error {
+                // Handle the case where there was an error fetching the records
+                print("Error fetching user fitness data: \(error.localizedDescription)")
+                completion(nil, error)
+                return
+            }
+            guard let record = records?.first else {
+                // Handle the case where no records were found
+                self.userFitnessDataExists = false
+                print("No user fitness data record found")
+                completion(nil, nil)
+                return
+            }
+            
+            self.userFitnessDataExists = true
+            let age = record[UserFitnessDataRecordKeys.age.rawValue] as? Int64 ?? 0
+            let height = record[UserFitnessDataRecordKeys.height.rawValue] as? Int64 ?? 0
+            let weight = record[UserFitnessDataRecordKeys.weight.rawValue] as? Int64 ?? 0
+            
+            let userFitnessData = UserFitnessDataModel(age: age, height: height, weight: weight)
+            completion(userFitnessData, nil)
+        }
+    }
+    
 }
+
