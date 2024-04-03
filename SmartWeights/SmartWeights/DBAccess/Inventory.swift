@@ -10,14 +10,13 @@ import CloudKit
 
 
 
-// activeBackground, activePetClothing, background, clothing, currency, food, pets, user
+// activeBackground, activePetClothing, background, clothing, food, pets, user
 enum InventoryModelRecordKeys: String{
     case type = "Inventory"
     case activeBackground
     case activePetClothing
     case background
     case clothing
-    case currency
     case food
     case pets
     case user
@@ -28,7 +27,6 @@ struct InventoryModel {
     var activePetClothing: CKRecord.Reference?
     var background: [CKRecord.Reference]
     var clothing: [CKRecord.Reference]
-    var currency: Int64
     var food: [CKRecord.Reference]
     var pets: [CKRecord.Reference]
     var user: CKRecord.Reference
@@ -47,7 +45,6 @@ extension InventoryModel {
         record[InventoryModelRecordKeys.activePetClothing.rawValue] = activePetClothing
         record[InventoryModelRecordKeys.background.rawValue] = background
         record[InventoryModelRecordKeys.clothing.rawValue] = clothing
-        record[InventoryModelRecordKeys.currency.rawValue] = currency
         record[InventoryModelRecordKeys.food.rawValue] = food
         record[InventoryModelRecordKeys.pets.rawValue] = pets
         record[InventoryModelRecordKeys.user.rawValue] = user
@@ -70,7 +67,7 @@ class InventoryDBManager : ObservableObject{
         //            }
         //        }
         
-        let inventory = InventoryModel(activeBackground: nil, activePetClothing: nil, background: [], clothing: [], currency: 0, food: [], pets: [], user: userR)
+        let inventory = InventoryModel(activeBackground: nil, activePetClothing: nil, background: [], clothing: [], food: [], pets: [], user: userR)
         let inventoryRecord = inventory.record
         // Save the record to the database
         CKManager.savePrivateItem(record: inventoryRecord)
@@ -88,7 +85,6 @@ class InventoryDBManager : ObservableObject{
             let activePetClothing = record[InventoryModelRecordKeys.activePetClothing.rawValue] as? CKRecord.Reference
             let background = record[InventoryModelRecordKeys.background.rawValue] as? [CKRecord.Reference]
             let clothing = record[InventoryModelRecordKeys.clothing.rawValue] as? [CKRecord.Reference]
-            let currency = record[InventoryModelRecordKeys.currency.rawValue] as? Int64
             let food = record[InventoryModelRecordKeys.food.rawValue] as? [CKRecord.Reference]
             let pets = record[InventoryModelRecordKeys.pets.rawValue] as? [CKRecord.Reference]
             let user = record[InventoryModelRecordKeys.user.rawValue] as? CKRecord.Reference
@@ -99,7 +95,7 @@ class InventoryDBManager : ObservableObject{
                 return
             }
             
-            self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], currency: currency ?? 0, food: food ?? [], pets: pets ?? [], user: userUnwrapped)
+            self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], food: food ?? [], pets: pets ?? [], user: userUnwrapped)
             completion(self.inventory, nil)
             
         }
@@ -117,7 +113,6 @@ class InventoryDBManager : ObservableObject{
             let activePetClothing = record[InventoryModelRecordKeys.activePetClothing.rawValue] as? CKRecord.Reference
             let background = record[InventoryModelRecordKeys.background.rawValue] as? [CKRecord.Reference]
             let clothing = record[InventoryModelRecordKeys.clothing.rawValue] as? [CKRecord.Reference]
-            let currency = record[InventoryModelRecordKeys.currency.rawValue] as? Int64
             let food = record[InventoryModelRecordKeys.food.rawValue] as? [CKRecord.Reference]
             let pets = record[InventoryModelRecordKeys.pets.rawValue] as? [CKRecord.Reference]
             let user = record[InventoryModelRecordKeys.user.rawValue] as? CKRecord.Reference
@@ -128,65 +123,11 @@ class InventoryDBManager : ObservableObject{
                 return
             }
             
-            self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], currency: currency ?? 0, food: food ?? [], pets: pets ?? [], user: userUnwrapped)
+            self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], food: food ?? [], pets: pets ?? [], user: userUnwrapped)
             completion(self.inventory, nil)
         }
     }
-    func getCurrency(user: CKRecord.Reference, completion: @escaping (Int64?, Error?) -> Void) {
-        if let inventory = inventory {
-            completion(inventory.currency, nil)
-        } else {
-            fetchInventory(user: user) { inventory, error in
-                if let error = error {
-                    completion(nil, error)
-                } else {
-                    completion(self.inventory?.currency, nil)
-                }
-            }
-        }
-    }
-    func getCurrency(completion: @escaping (Int64?, Error?) -> Void) {
-        if let inventory = inventory {
-            completion(inventory.currency, nil)
-        } else {
-            fetchInventory { inventory, error in
-                if let error = error {
-                    completion(nil, error)
-                } else {
-                    completion(self.inventory?.currency, nil)
-                }
-            }
-        }
-    }
-    //function should get the currency from the inventory and update it, not create a new inventory
-    func updateCurrency(user: CKRecord.Reference, newCurrency: Int64, completion: @escaping (Error?) -> Void) {
-        CKManager.fetchPrivateItem(recordType: "Inventory", user: user) { record, error in
-            guard let record = record else {
-                print("Error fetching inventory: \(error?.localizedDescription ?? "Unknown error")")
-                completion(error)
-                return
-            }
-            
-            record[InventoryModelRecordKeys.currency.rawValue] = newCurrency as CKRecordValue
-            self.CKManager.savePrivateItem(record: record)
-            print ("Currency updated")
-            completion(nil)
-        }
-    }
-    func updateCurrency(newCurrency: Int64, completion: @escaping (Error?) -> Void) {
-        CKManager.fetchPrivateRecord(recordType: "Inventory") { records, error in
-            guard let record = records?.first else {
-                print("Error fetching inventory: \(error?.localizedDescription ?? "Unknown error")")
-                completion(error)
-                return
-            }
-            
-            let currencyValue = NSNumber(value: newCurrency)
-            record[InventoryModelRecordKeys.currency.rawValue] = currencyValue as CKRecordValue
-            self.CKManager.savePrivateItem(record: record)
-            completion(nil)
-        }
-    }
+   
     
     
 }
