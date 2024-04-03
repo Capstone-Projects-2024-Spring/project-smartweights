@@ -5,7 +5,7 @@ import random
 import struct
 import time
 import micropython
-from ble_advertising import decode_services, decode_name
+from Pico.SampleCode.ble_advertising import decode_services, decode_name
 from micropython import const
 from machine import Pin
 
@@ -34,56 +34,19 @@ _ADV_DIRECT_IND = const(0x01)
 _ADV_SCAN_IND = const(0x02)
 _ADV_NONCONN_IND = const(0x03)
 
-
-_FLAG_READ = const(0x0002)
-_FLAG_NOTIFY = const(0x0010)
-_FLAG_INDICATE = const(0x0020)
-
 #Will only receive data from a bluetooth peripheral with the same UUID and service.
 
-#using the Custom UUID
+_PHYSICAL_UUID = bluetooth.UUID(0x183E)
 
-_ACCEL_SENSE_UUID = bluetooth.UUID(0x4A40)
-
-# custom bluetooth characteristics for x, y, and z axes
-_X_AXIS_CHAR = (
-    bluetooth.UUID(0x4A41),
-    _FLAG_READ | _FLAG_NOTIFY
+_ACCEL_UUID = bluetooth.UUID(0x2713)
+_ACCEL_DATA = (
+    _ACCEL_UUID,
+    bluetooth.FLAG_READ | bluetooth.FLAG_NOTIFY,
 )
-
-_Y_AXIS_CHAR = (
-    bluetooth.UUID(0x4A42),
-    _FLAG_READ | _FLAG_NOTIFY
-    )
-
-_Z_AXIS_CHAR = (
-    bluetooth.UUID(0x4A43),
-    _FLAG_READ | _FLAG_NOTIFY
+_ACCEL_SERVICE = (
+    _PHYSICAL_UUID,
+    (_ACCEL_DATA,),
 )
-
-_ACCEL_SENSE_SERVICE = (
-    _ACCEL_SENSE_UUID,
-    (_X_AXIS_CHAR, _Y_AXIS_CHAR, _Z_AXIS_CHAR),
-)
-
-
-'''original service UUID'''
-
-# _PHYSICAL_UUID = bluetooth.UUID(0x183E)
-
-# _ACCEL_UUID = bluetooth.UUID(0x2713)
-# _ACCEL_DATA = (
-#     _ACCEL_UUID,
-#     bluetooth.FLAG_READ | bluetooth.FLAG_NOTIFY,
-# )
-# _ACCEL_SERVICE = (
-#     _PHYSICAL_UUID,
-#     (_ACCEL_DATA,),
-# )
-
-
-
-
 
 class BLEAccelCentral:
     def __init__(self, ble):
@@ -122,7 +85,7 @@ class BLEAccelCentral:
             addr_type, addr, adv_type, rssi, adv_data = data
             if adv_type in (_ADV_IND, _ADV_DIRECT_IND):
                 type_list = decode_services(adv_data)
-                if _ACCEL_SENSE_UUID in type_list:
+                if _PHYSICAL_UUID in type_list:
                     # Found a potential device, remember it and stop scanning.
                     self._addr_type = addr_type
                     self._addr = bytes(addr)  # Note: addr buffer is owned by caller so need to copy it.
@@ -156,7 +119,7 @@ class BLEAccelCentral:
         elif event == _IRQ_GATTC_SERVICE_RESULT:
             # Connected device returned a service.
             conn_handle, start_handle, end_handle, uuid = data
-            if conn_handle == self._conn_handle and uuid == _ACCEL_SENSE_UUID:
+            if conn_handle == self._conn_handle and uuid == _PHYSICAL_UUID:
                 self._start_handle, self._end_handle = start_handle, end_handle
 
         elif event == _IRQ_GATTC_SERVICE_DONE:
@@ -166,13 +129,12 @@ class BLEAccelCentral:
                     self._conn_handle, self._start_handle, self._end_handle
                 )
             else:
-                print("Failed to find ACCEL_SENSE service.")
+                print("Failed to find physical sensing service.")
 
         elif event == _IRQ_GATTC_CHARACTERISTIC_RESULT:
             # Connected device returned a characteristic.
             conn_handle, def_handle, value_handle, properties, uuid = data
-            # this  can only read one chracteristics, it needs to read at least 6
-            if conn_handle == self._conn_handle and uuid == bluetooth.UUID(0x4A41): 
+            if conn_handle == self._conn_handle and uuid == _ACCEL_UUID:
                 self._value_handle = value_handle
 
         elif event == _IRQ_GATTC_CHARACTERISTIC_DONE:
@@ -182,7 +144,6 @@ class BLEAccelCentral:
                 if self._conn_callback:
                     self._conn_callback()
             else:
-                
                 print("Failed to find accelerometer characteristic.")
 
         elif event == _IRQ_GATTC_READ_RESULT:
@@ -251,7 +212,7 @@ class BLEAccelCentral:
     def _update_value(self, data):
         
         try:
-            self._value = struct.unpack("<h", data)[0]
+            self._value = struct.unpack("<h", data)[0] / 100
             ##self._value = 230
         except OSError as error:
             print(error)
@@ -308,5 +269,4 @@ if __name__ == "__main__":
     central = BLEAccelCentral(ble)
     while(True):
         demo(ble, central)
-        sleep_ms_flash_led(central, 1, 100)
-
+        sleep_ms_flash_led(central, 1, 1000)

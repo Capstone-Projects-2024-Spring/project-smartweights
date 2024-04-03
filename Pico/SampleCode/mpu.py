@@ -3,7 +3,7 @@
 LED = machine.Pin("LED", machine.Pin.OUT)
 LED.on()
 
-from imu import MPU6050
+import MPU6050
 from time import sleep
 from machine import Pin, I2C
 
