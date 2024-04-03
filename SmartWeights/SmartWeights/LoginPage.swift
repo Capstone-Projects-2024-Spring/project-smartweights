@@ -17,6 +17,8 @@ struct LoginView: View {
     @AppStorage("lastName") var lastName: String = ""
     @AppStorage("userID") var userID: String = ""
     
+    var userDBManager = UserDBManager()
+    
     var body: some View {
         ZStack {
             // Background gradient
@@ -58,6 +60,7 @@ struct LoginView: View {
                                 self.firstName = credential.fullName?.givenName ?? ""
                                 self.lastName = credential.fullName?.familyName ?? ""
                                 self.userID = credential.user
+                                userDBManager.createUser(firstName: firstName, lastName: lastName, email: email)
                             }
                         case .failure(let error):
                             print(error)

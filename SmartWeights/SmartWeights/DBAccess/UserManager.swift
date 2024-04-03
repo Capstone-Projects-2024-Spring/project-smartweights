@@ -15,6 +15,7 @@ enum UserRecordKeys: String{
     case lastName
     case latestLogin
     case currency
+    case email
     case Users
 }
 struct User {
@@ -23,6 +24,7 @@ struct User {
     var lastName: String
     var latestLogin: Date
     var currency: Int64
+    var email: String
     var Users: CKRecord.Reference
 }
 extension User {
@@ -32,6 +34,7 @@ extension User {
         record[UserRecordKeys.lastName.rawValue] = lastName
         record[UserRecordKeys.latestLogin.rawValue] = latestLogin
         record[UserRecordKeys.currency.rawValue] = currency
+        record[UserRecordKeys.email.rawValue] = email
         record[UserRecordKeys.Users.rawValue] = Users
         return record
     }
@@ -89,13 +92,13 @@ class UserDBManager : ObservableObject{
         }
     }
     
-    func createUser(firstName: String?, lastName: String?){
+    func createUser(firstName: String?, lastName: String?, email: String?){
         if userExists {
             print("User already exists, not creating new user")
             return
         }
 
-        let user = User(recordId: nil, firstName: firstName ?? "", lastName: lastName ?? "", latestLogin: Date(), currency: 0, Users: userRecord!)
+        let user = User(recordId: nil, firstName: firstName ?? "", lastName: lastName ?? "", latestLogin: Date(), currency: 0, email: email ?? "", Users: userRecord!)
         let userRecord = user.record
         CKManager.savePrivateItem(record: userRecord)
     }
@@ -122,6 +125,7 @@ class UserDBManager : ObservableObject{
             let lastName = record[UserRecordKeys.lastName.rawValue] as? String ?? ""
             let latestLogin = record[UserRecordKeys.latestLogin.rawValue] as? Date ?? Date()
             let currency = record[UserRecordKeys.currency.rawValue] as? Int64 ?? 0
+            let email = record[UserRecordKeys.email.rawValue] as? String ?? ""
             let users = record[UserRecordKeys.Users.rawValue] as? CKRecord.Reference ?? CKRecord.Reference(recordID: CKRecord.ID(recordName: ""), action: .none)
             
             self.user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, Users: users)
