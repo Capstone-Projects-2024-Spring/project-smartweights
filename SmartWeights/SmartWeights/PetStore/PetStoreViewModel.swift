@@ -83,5 +83,19 @@ class storeViewModel: ObservableObject {
                 subtractFunds(price: Int(item.price) ?? 0)
             }
         }
+    
+    func addFundtoUser(price: Int) {
+        print("Subtracting \(price) from \(userCur)")
+       
+        
+        print("userCur: \(self.userCur - price)")
+        userDBManager.updateCurrency(newCurrency: Int64(userCur+price)){
+            error in
+            if let error = error {
+                print("Error updating currency: \(error.localizedDescription)")
+            }
+        }
+        return userCur = userCur + price
+    }
 }
 

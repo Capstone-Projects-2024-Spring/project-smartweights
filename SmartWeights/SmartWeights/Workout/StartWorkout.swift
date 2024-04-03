@@ -181,7 +181,6 @@ class WorkoutViewModel: ObservableObject {
             }
         }
     }
-
     
     /// Function to restart timer
     func restartTimer(){
@@ -197,11 +196,11 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func pauseTimer() {
-            timerIsActive = false // Stop updating time without invalidating the timer
-        }
+        timerIsActive = false // Stop updating time without invalidating the timer
+    }
     func resumeTimer() {
-            timerIsActive = true // Resume updating time
-        }
+        timerIsActive = true // Resume updating time
+    }
     
     func resetWorkoutState() {
         // Reset progress

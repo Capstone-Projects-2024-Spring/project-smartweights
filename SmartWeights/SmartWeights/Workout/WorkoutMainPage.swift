@@ -5,6 +5,7 @@ import Combine
 struct WorkoutMainPage: View {
     @StateObject var viewModel = WorkoutViewModel()
     @StateObject var bleManager = BLEManager()
+    @StateObject var storeModel = storeViewModel()
     
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
@@ -86,6 +87,21 @@ struct WorkoutMainPage: View {
             Text("Workout")
                 .font(.title)
                 .bold()
+            
+            if selectedTab == 0 {
+                VStack {
+                    Button(action: {
+                        viewModel.startListening()
+                    }) {
+                        Image(systemName: "mic.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                    }
+                    .accessibilityLabel("micWorkoutButton")
+                    .padding(.trailing, 42)
+                }
+                .padding(.leading, 300)
+            }
         }
     }
     
@@ -195,6 +211,7 @@ struct WorkoutMainPage: View {
                     if buttonText == "Finish Workout" {
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
+                        storeModel.addFundtoUser(price: 500)
                         viewModel.resetWorkoutState()
                         hasWorkoutStarted = false
                         isWorkoutPaused = false
@@ -221,8 +238,10 @@ struct WorkoutMainPage: View {
                     }
                 } else {
                     // Start the workout
+                    viewModel.resumeTimer()
                     showingWorkoutSheet = true
                     showGraphPopover = false
+                    
                     
                 }
             }) {
@@ -302,25 +321,7 @@ struct WorkoutMainPage: View {
         
         var body: some View {
             ZStack {
-                VStack(spacing: 20) { // Adjusted for layout consistency
-                    // Use an HStack for alignment of the microphone button to the right
-                    HStack {
-                        Text("Enter Workout Details")
-                            .font(.system(size: 30))
-                            .bold()
-                            .frame(maxWidth: .infinity) // This will push the text to the center
-                        
-                        Button(action: {
-                            viewModel.startListening()
-                            print("Microphone tapped")
-                        }) {
-                            Image(systemName: "mic.circle")
-                                .resizable()
-                                .frame(width: 35, height: 35)
-                        }
-                    }
-                    .padding(.horizontal) // Add horizontal padding to the HStack
-                    
+                VStack {
                     if countdownActive {
                         // Countdown UI
                         Text("Starting in \(countdown)")
@@ -330,41 +331,45 @@ struct WorkoutMainPage: View {
                                 startCountdown()
                             }
                     } else {
-                        // Regular input form now includes the microphone button at the top
-                        Group {
-                            TextField("Sets", text: $viewModel.inputtedSets)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .keyboardType(.numberPad)
-                            
-                            TextField("Reps", text: $viewModel.inputtedReps)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .keyboardType(.numberPad)
-                            
-                            TextField("Weight (lbs)", text: $viewModel.inputtedWeights)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .keyboardType(.numberPad)
-                            
-                            Button("Start Workout") {
-                                if isValidInput(viewModel.inputtedSets) && isValidInput(viewModel.inputtedReps) && isValidInput(viewModel.inputtedWeights) {
-                                    // Initiate countdown
-                                    countdownActive = true
-                                } else {
-                                    alertMessage = "Please enter valid numbers for sets, reps, and lbs."
-                                    showingAlert = true
-                                }
-                            }
+                        // Regular input form
+                        Text("Enter Workout Details")
+                            .font(.headline)
                             .padding()
-                            .foregroundColor(.white)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                            .alert(isPresented: $showingAlert) {
-                                Alert(title: Text("Invalid Input"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                        
+                        TextField("Sets", text: $viewModel.inputtedSets)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .keyboardType(.numberPad)
+                            .padding()
+                        
+                        TextField("Reps", text: $viewModel.inputtedReps)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .keyboardType(.numberPad)
+                            .padding()
+                        
+                        TextField("Weight (lbs)", text: $viewModel.inputtedWeights)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .keyboardType(.numberPad)
+                            .padding()
+                        
+                        Button("Start Workout") {
+                            if isValidInput(viewModel.inputtedSets) && isValidInput(viewModel.inputtedReps) && isValidInput(viewModel.inputtedWeights) {
+                                // Initiate countdown
+                                countdownActive = true
+                            } else {
+                                alertMessage = "Please enter valid numbers for sets, reps, and lbs."
+                                showingAlert = true
                             }
                         }
-                        .padding(.horizontal) // Ensure consistent horizontal padding for the input form
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .alert(isPresented: $showingAlert) {
+                            Alert(title: Text("Invalid Input"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                        }
                     }
                 }
-                .frame(width: 400, height: 400)
+                .frame(width: 400, height: 350)
                 .background(Color.white.opacity(0.9))
                 .cornerRadius(20)
                 .shadow(radius: 10)
