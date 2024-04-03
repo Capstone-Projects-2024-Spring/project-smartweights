@@ -3,8 +3,9 @@ import CoreBluetooth
 
 //WILL ONLY WORK IF BUILT ON AN EXTERNAL DEVICE WITH BLUETOOTH
 
+//let phone act as GATT central device
 class BLEManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, ObservableObject {
-    private var centralManager: CBCentralManager!
+    private var centralManager: CBCentralManager! //handle ble scanning. state, connecting, disconnecting
     private var peripheral: CBPeripheral!
     private var xCharacteristic: CBCharacteristic!
     private var yCharacteristic: CBCharacteristic!
