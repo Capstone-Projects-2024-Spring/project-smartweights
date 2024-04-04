@@ -18,6 +18,7 @@ struct Pet_Page: View {
                     .font(.system(size: 45))
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
+                
                 /*
                 // XP Increase Button for testing purpose
                 Button(action: {
@@ -35,8 +36,8 @@ struct Pet_Page: View {
                 }
                 .accessibilityIdentifier("IncreaseXPButton")
                 .padding(.top, 10) // Add some padding on top to separate it from the pet name
-                
                 */
+                
                 HStack {
                     HamburgerMenu(
                         navigateToShop: { viewModel.showShop = true },
@@ -106,7 +107,7 @@ struct Pet_Page: View {
                         .padding(.top, 10)
                     CustomProgressView(value: viewModel.levelProgress, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                         .frame(height: 20)
-                        
+                    
                 }
                 .padding(.top, -20)
                 Spacer()
@@ -179,42 +180,50 @@ class PetPageFunction: ObservableObject {
         // Calculate new progress to see if it exceeds 100
         let newProgress = levelProgress + value
         
-        // Check if current level is less than 10
         if currentLevel < 10 {
-            // If adding XP will exceed 100, level up and adjust XP
+            // If adding XP will exceed or reach 100, level up and adjust XP
             if newProgress >= 100 {
                 withAnimation {
                     // Increase level by 1
                     currentLevel += 1
+                    
                     // Reset levelProgress to 0 or to the remainder if exceeding 100
-                    // This carries over excess XP to the next level
                     levelProgress = newProgress % 100
                 }
+                
+                showAlert(title: "Level Up!", message: "You've reached Level \(currentLevel)!")
+                
             } else {
                 withAnimation {
                     // If not exceeding 100, just add the XP to the current progress
                     levelProgress = newProgress
                 }
             }
-        } else {
-            // For level 10, allow XP gain up to 100 but prevent level increase
+        } else if currentLevel == 10 {
+            // Allow XP gain up to 100 but prevent level increase
             if newProgress <= 100 {
                 withAnimation {
                     levelProgress = newProgress
                 }
+                
+                // Check if the user has exactly reached 100 XP at level 10
+                if levelProgress == 100 {
+                    // Show congratulatory alert for reaching max level at 100/100 XP
+                    showAlert(title: "Congratulations!", message: "You've reached the maximum Level!")
+                }
             } else {
-                // If XP would exceed 100, either cap at 100 or reset; adjust as needed
+                // If XP would exceed 100, cap at 100
                 withAnimation {
                     levelProgress = 100 // Cap XP at 100 for level 10
                 }
             }
         }
+        
         // Ensure current level doesn't exceed 10
         if currentLevel > 10 {
             currentLevel = 10 // Cap the level at 10
         }
     }
-    
     
     
     func showAlert(title: String, message: String) {
