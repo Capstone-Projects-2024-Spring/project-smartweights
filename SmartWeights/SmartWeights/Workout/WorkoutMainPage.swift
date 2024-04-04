@@ -107,18 +107,25 @@ struct WorkoutMainPage: View {
         let totalSets = Int(viewModel.inputtedSets) ?? 0
         if hasWorkoutStarted {
             if viewModel.currentSets >= totalSets {
-                return "Finish Workout" // Changes here to ensure "Finish Workout" shows up right after the final set
+                return "Finish Workout" // When all sets are completed, regardless of the number of sets
+            } else if totalSets == 1 {
+                // If there is only 1 set, the button should immediately suggest finishing the workout
+                // This case is handled upfront to ensure "Finish Workout" is shown for a single set scenario
+                return "Finish Workout"
             } else if viewModel.currentSets == totalSets - 1 {
+                // For more than one set, this becomes the "Final Set" before "Finish Workout"
                 return "Final Set"
-            } else if viewModel.currentSets < totalSets {
-                return isWorkoutPaused ? "Next Set" : "Finish Set"
             } else {
-                return "Complete Workout"
+                // Default case for any sets that are not the last or only set
+                return isWorkoutPaused ? "Resume Set" : "Finish Set"
             }
         } else {
+            // Before the workout starts
             return "Start Workout"
         }
     }
+
+
     
     
     
