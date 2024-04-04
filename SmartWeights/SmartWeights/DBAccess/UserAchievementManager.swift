@@ -1,8 +1,6 @@
-
 import CloudKit
 
-// achievement, currentProgress, isCompleted, user
-
+/// Keys used to access the fields in the UserAchievement record.
 enum UserAchievementRecordKeys: String {
     case type = "UserAchievement"
     case achievement
@@ -11,6 +9,7 @@ enum UserAchievementRecordKeys: String {
     // case user
 }
 
+/// Represents a user achievement.
 struct UserAchievement {
     var recordId: CKRecord.ID?
     var achievement: CKRecord.Reference
@@ -28,6 +27,7 @@ struct UserAchievement {
 }
 
 extension UserAchievement {
+    /// Returns the CloudKit record representation of the user achievement.
     var record: CKRecord {
         let record = CKRecord(recordType: UserAchievementRecordKeys.type.rawValue)
         record[UserAchievementRecordKeys.achievement.rawValue] = achievement
@@ -38,11 +38,13 @@ extension UserAchievement {
     }
 }
 
-
+/// Manages the user achievements in the database.
 class UserAchievementDBManager: ObservableObject {
     @Published var userAchievement: UserAchievement?
     let CKManager = CloudKitManager()
 
+    /// Creates a new user achievement and saves it to the database.
+    /// - Parameter achievement: The reference to the achievement.
     func createUserAchievement(achievement: CKRecord.Reference) {
         let userAchievement = UserAchievement(achievement: achievement, currentProgress: 0, isCompleted: 0)
         let userAchievementRecord = userAchievement.record

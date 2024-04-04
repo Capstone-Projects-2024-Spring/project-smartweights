@@ -8,8 +8,8 @@
 import Foundation
 import CloudKit
 
-
-enum UserRecordKeys: String{
+/// Enum defining the keys for the User record type.
+enum UserRecordKeys: String {
     case type = "User"
     case firstName
     case lastName
@@ -18,6 +18,8 @@ enum UserRecordKeys: String{
     case email
     case Users
 }
+
+/// Struct representing a User.
 struct User {
     var recordId: CKRecord.ID?
     var firstName: String
@@ -27,8 +29,10 @@ struct User {
     var email: String
     var Users: CKRecord.Reference
 }
+
 extension User {
-    var record : CKRecord{
+    /// Computed property that returns the CKRecord representation of the User.
+    var record: CKRecord {
         let record = CKRecord(recordType: UserRecordKeys.type.rawValue)
         record[UserRecordKeys.firstName.rawValue] = firstName
         record[UserRecordKeys.lastName.rawValue] = lastName
@@ -40,47 +44,31 @@ extension User {
     }
 }
 
-class UserDBManager : ObservableObject{
+/// Class responsible for managing User records in the database.
+class UserDBManager: ObservableObject {
     @Published var user: User?
     @Published var userRecord: CKRecord.Reference?
     var userExists: Bool = false
     let CKManager = CloudKitManager()
     
-    // func fetchUser(completion: @escaping (User?, Error?) -> Void) {
-    //     CKManager.fetchRecord(recordType: UserRecordKeys.type.rawValue) { records, error in
-    //         guard let record = records?.first else {
-    //             completion(nil, error)
-    //             print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
-    //             return
-    //         }
-    
-    //         let firstName = record[UserRecordKeys.firstName.rawValue] as? String ?? ""
-    //         let lastName = record[UserRecordKeys.lastName.rawValue] as? String ?? ""
-    //         let latestLogin = record[UserRecordKeys.latestLogin.rawValue] as? Date ?? Date()
-    //         let currency = record[UserRecordKeys.currency.rawValue] as? Int64 ?? 0
-    //         let users = record[UserRecordKeys.Users.rawValue] as? CKRecord.Reference ?? CKRecord.Reference(recordID: CKRecord.ID(recordName: ""), action: .none)
-    
-    //         let user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, Users: users)
-    //         completion(user, nil)
-    //     }
-    // }
-    
-    init(){
+    /// Initializes the UserDBManager and fetches the current user record ID and user data.
+    init() {
         fetchCurrentUserRecordID { error in
             if let error = error {
                 print("Error fetching current user record ID: \(error.localizedDescription)")
             }
         }
-        fetchUser{ user, error in
+        fetchUser { user, error in
             if let error = error {
                 print("Error fetching user: \(error.localizedDescription)")
-            } 
+            }
         }
     }
-    // this function grabs the record name of the current user found in the "Users" record type
+    
+    /// Fetches the record ID of the current user.
     func fetchCurrentUserRecordID(completion: @escaping (Error?) -> Void) {
         CKManager.container.fetchUserRecordID { [weak self] (recordID, error) in
-            DispatchQueue.main.async{
+            DispatchQueue.main.async {
                 if let recordID = recordID {
                     let userRecordReference = CKRecord.Reference(recordID: recordID, action: .none)
                     self?.userRecord = userRecordReference
@@ -92,20 +80,22 @@ class UserDBManager : ObservableObject{
         }
     }
     
-    func createUser(firstName: String?, lastName: String?, email: String?){
+    /// Creates a new user with the given information.
+    func createUser(firstName: String?, lastName: String?, email: String?) {
         if userExists {
             print("User already exists, not creating new user")
             return
         }
-
+        
         let user = User(recordId: nil, firstName: firstName ?? "", lastName: lastName ?? "", latestLogin: Date(), currency: 0, email: email ?? "", Users: userRecord!)
         let userRecord = user.record
         CKManager.savePrivateItem(record: userRecord)
         userExists = true
     }
     
-    func fetchUser(completion: @escaping (User?, Error?) -> Void){
-        CKManager.fetchPrivateRecord(recordType: "User"){ records, error in
+    /// Fetches the user data from the database.
+    func fetchUser(completion: @escaping (User?, Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "User") { records, error in
             if let error = error {
                 // Handle the case where there was an error fetching the records
                 print("Error fetching user: \(error.localizedDescription)")
@@ -121,7 +111,7 @@ class UserDBManager : ObservableObject{
             }
             
             // Handle the case where a record was found
-           
+            
             let firstName = record[UserRecordKeys.firstName.rawValue] as? String ?? ""
             let lastName = record[UserRecordKeys.lastName.rawValue] as? String ?? ""
             let latestLogin = record[UserRecordKeys.latestLogin.rawValue] as? Date ?? Date()
@@ -132,11 +122,10 @@ class UserDBManager : ObservableObject{
             self.user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, email: email, Users: users)
             completion(self.user, nil)
             self.userExists = true
-            
         }
     }
     
-    
+    /// Retrieves the currency value of the user.
     func getCurrency(completion: @escaping (Int64?, Error?) -> Void) {
         if let user = user {
             completion(user.currency, nil)
@@ -150,6 +139,8 @@ class UserDBManager : ObservableObject{
             }
         }
     }
+    
+    /// Updates the currency value of the user.
     func updateCurrency(newCurrency: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "User") { records, error in
             guard let record = records?.first else {
@@ -165,6 +156,7 @@ class UserDBManager : ObservableObject{
         }
     }
     
+    /// Retrieves the full name of the user.
     func getName(completion: @escaping (String?, Error?) -> Void) {
         if let user = user {
             let name = "\(user.firstName) \(user.lastName)"
@@ -180,6 +172,8 @@ class UserDBManager : ObservableObject{
             }
         }
     }
+    
+    /// Updates the first name and/or last name of the user.
     func updateName(newFirstName: String?, newLastName: String?, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "User") { records, error in
             guard let record = records?.first else {
@@ -188,20 +182,18 @@ class UserDBManager : ObservableObject{
                 return
             }
             
-            if(newFirstName != nil)
-            {
+            if let newFirstName = newFirstName {
                 record[UserRecordKeys.firstName.rawValue] = newFirstName as CKRecordValue?
             }
-            if(newLastName != nil)
-            {
+            if let newLastName = newLastName {
                 record[UserRecordKeys.lastName.rawValue] = newLastName as CKRecordValue?
             }
             self.CKManager.savePrivateItem(record: record)
             completion(nil)
         }
     }
-
-    //     function to help check if User (not Users) exists already
+    
+    /// Checks if the user record exists in the "Users" record type.
     func userRecordExistsInUsers(completion: @escaping (Bool, Error?) -> Void) {
         guard let userRecord = userRecord else {
             completion(false, nil) // userRecord not fetched yet
@@ -219,15 +211,10 @@ class UserDBManager : ObservableObject{
                 completion(true, nil) // userRecord exists in Users record type
                 print("exists")
                 print("ExistsRecord: \(records)")
-                //                return true
             } else {
                 completion(false, nil) // userRecord does not exist in Users record type
                 print("does not exist")
-                //                return false
             }
         }
     }
-    
-    
 }
-

@@ -1,5 +1,6 @@
 import CloudKit
 
+/// Enum representing the keys used in the Pet record.
 enum PetRecordKeys: String {
     case type = "Pet"
     case health
@@ -9,6 +10,7 @@ enum PetRecordKeys: String {
     // case user
 }
 
+/// Struct representing the Pet model.
 struct PetModel {
     var recordId: CKRecord.ID?
     var health: Int64
@@ -19,6 +21,7 @@ struct PetModel {
 }
 
 extension PetModel {
+    /// Computed property that returns the CKRecord representation of the Pet model.
     var record: CKRecord {
         let record = CKRecord(recordType: PetRecordKeys.type.rawValue)
         record[PetRecordKeys.health.rawValue] = health
@@ -30,11 +33,29 @@ extension PetModel {
     }
 }
 
-class PetDBManager: ObservableObject{
+/// Class responsible for managing the Pet database operations.
+class PetDBManager: ObservableObject {
     @Published var pet: PetModel?
     let CKManager = CloudKitManager()
     var petExists: Bool = false
-    func createPet(){
+    
+    /// Initializes the PetDBManager and fetches the pet from the database.
+    init() {
+        fetchPet { pet, error in
+            if let error = error {
+                print("Error fetching pet: \(error.localizedDescription)")
+                return
+            }
+            // guard let pet = pet else {
+            //     print("No pet found")
+            //     return
+            // }
+            // self.pet = pet
+        }
+    }
+    
+    /// Creates a new pet in the database.
+    func createPet() {
         if petExists {
             print("Pet already exists.")
             return
@@ -46,6 +67,8 @@ class PetDBManager: ObservableObject{
         petExists = true
     }
 
+    /// Fetches the pet from the database.
+    /// - Parameter completion: A closure to be called when the fetch operation is complete.
     func fetchPet(completion: @escaping (PetModel?, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
             if let error = error {
