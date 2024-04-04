@@ -66,7 +66,7 @@ class PetDBManager: ObservableObject{
 
             let pet = PetModel(recordId: record.recordID, health: health, level: level, petImage: petImage, totalXP: totalXP)
             completion(pet, nil)
-            petExists = true
+            self.petExists = true
         }
     }
 }

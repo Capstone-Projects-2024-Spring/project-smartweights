@@ -132,7 +132,7 @@ class InventoryDBManager : ObservableObject{
             
             self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], food: food ?? [], pets: pets ?? [])
             completion(self.inventory, nil)
-            inventoryExists = true
+            self.inventoryExists = true
         }
     }
    

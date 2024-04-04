@@ -121,7 +121,7 @@ class UserDBManager : ObservableObject{
             }
             
             // Handle the case where a record was found
-            self.userExists = true
+           
             let firstName = record[UserRecordKeys.firstName.rawValue] as? String ?? ""
             let lastName = record[UserRecordKeys.lastName.rawValue] as? String ?? ""
             let latestLogin = record[UserRecordKeys.latestLogin.rawValue] as? Date ?? Date()
@@ -131,8 +131,7 @@ class UserDBManager : ObservableObject{
             
             self.user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, email: email, Users: users)
             completion(self.user, nil)
-            userExists = true
-            
+            self.userExists = true
             
         }
     }
