@@ -337,7 +337,6 @@ struct bleView : View {
         //show peripheral connection
         Text("\(ble.listOfPeripherals)")
         //show all data being sent by peripherals
-        Text("\(ble.peripheralData)")
         
         HStack{
             //list the accel and gyro data for MPU6050-1
