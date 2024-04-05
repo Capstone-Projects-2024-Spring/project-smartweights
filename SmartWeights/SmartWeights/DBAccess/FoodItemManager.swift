@@ -48,6 +48,7 @@ class FoodItemDBManager: ObservableObject{
             // self.foodItems = foodItems
         }
     }
+    //gets all 
     func fetchFoodItems(completion: @escaping ([FoodItemModel]?, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue) { records, error in
             if let error = error {
@@ -76,6 +77,24 @@ class FoodItemDBManager: ObservableObject{
             self.foodItems.append(foodItem)
             CKManager.savePrivateItem(record: foodItemRecord)
   
+    }
+    
+
+    func fetchSpecificFoodItem(name: String, completion: @escaping (FoodItemModel?, Error?) -> Void) {
+        let predicate = NSPredicate(format: "\(FoodItemRecordKeys.name.rawValue) = %@", name)
+        let query = CKQuery(recordType: FoodItemRecordKeys.type.rawValue, predicate: predicate)
+    }
+    func updateQuantity(foodItem: FoodItemModel, newQuantity: Int64, completion: @escaping (Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue) { records, error in
+            guard let record = records?.first else {
+                print("Error fetching food item: \(error?.localizedDescription ?? "Unknown error")")
+                completion(error)
+                return
+            }
+            record[FoodItemRecordKeys.quantity.rawValue] = NSNumber(value: newQuantity)
+            self.CKManager.savePrivateItem(record: record)
+            completion(nil)
+        }
     }
     
 

@@ -205,6 +205,7 @@ struct testview : View{
     var cloudKitManager = CloudKitManager.shared
     @State var record = CKRecord(recordType: "Test")
     @State var user = CKRecord.Reference(recordID: CKRecord.ID(recordName: "Test"), action: .none)
+    var foodItemDBManager = FoodItemDBManager()
     var body: some View{
         VStack{
             Button("Save"){
@@ -222,6 +223,25 @@ struct testview : View{
                     print("Records: \(records)")
                 }
             }
+            Button("Fetch food items"){
+                foodItemDBManager.fetchFoodItems { foodItems, error in
+                    if let error = error {
+                        print("Error fetching food items: \(error.localizedDescription)")
+                        return
+                    }
+                    guard let foodItems = foodItems else {
+                        print("No food items found")
+                        return
+                    }
+                    print("Food items HERE: \(foodItems)")
+                }
+            }
+        }
+    }
+    // preview
+    struct testview_Previews: PreviewProvider {
+        static var previews: some View {
+            testview()
         }
     }
 }
