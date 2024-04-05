@@ -9,7 +9,8 @@ import SwiftUI
 
 
 struct Pet_Page: View {
-    @StateObject private var viewModel = PetPageFunction() // ViewModel integration
+    @StateObject var viewModel = PetPageFunction()
+
     
     var body: some View {
         NavigationView {
@@ -18,12 +19,13 @@ struct Pet_Page: View {
                     .font(.system(size: 45))
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
-                
+                // Text("USERXP: \(viewModel.levelProgress)")
+                    
                 /*
                 // XP Increase Button for testing purpose
                 Button(action: {
                     // Assuming you want to increase XP by a fixed amount, e.g., 5
-                    viewModel.increaseXP(by: 50)
+                    viewModel.AddXP(value: 50)
                     
                 }) {
                     Text("Increase XP")
@@ -36,7 +38,7 @@ struct Pet_Page: View {
                 }
                 .accessibilityIdentifier("IncreaseXPButton")
                 .padding(.top, 10) // Add some padding on top to separate it from the pet name
-                */
+                 */
                 
                 HStack {
                     HamburgerMenu(
@@ -99,12 +101,14 @@ struct Pet_Page: View {
                         .frame(height: 20)
                         .padding()
                     
+                    /*
                     // Display Current Level
                     Text("Level \(viewModel.currentLevel)")
                         .font(.system(size: 20))
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 10)
+                     */
                     CustomProgressView(value: viewModel.levelProgress, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                         .frame(height: 20)
                     
@@ -136,10 +140,15 @@ struct FoodItem: Identifiable {
 }
 
 class PetPageFunction: ObservableObject {
+    
+    var inventoryDBManager = InventoryDBManager()
+    var userDBManager = UserDBManager()
+    var petDBManager = PetDBManager()
+    
     @Published var showShop = false
     @Published var showCustomize = false
     @Published var healthBar: Int = 50
-    @Published var levelProgress: Int = 0
+    @Published var levelProgress = 0
     @Published var currentLevel = 1
     @Published var showFoodSelection = false
     @Published var selectedFoodIndex = 0
@@ -151,7 +160,9 @@ class PetPageFunction: ObservableObject {
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
+    // Initializer
     
+
     func handleFoodUse(selectedFoodIndex: Int) {
         guard selectedFoodIndex < foodItems.count else { return }
         var foodItem = foodItems[selectedFoodIndex]
@@ -176,53 +187,17 @@ class PetPageFunction: ObservableObject {
         }
     }
     
-    func increaseXP(by value: Int) {
-        // Calculate new progress to see if it exceeds 100
-        let newProgress = levelProgress + value
-        
-        if currentLevel < 10 {
-            // If adding XP will exceed or reach 100, level up and adjust XP
-            if newProgress >= 100 {
-                withAnimation {
-                    // Increase level by 1
-                    currentLevel += 1
-                    
-                    // Reset levelProgress to 0 or to the remainder if exceeding 100
-                    levelProgress = newProgress % 100
-                }
-                
-                showAlert(title: "Level Up!", message: "You've reached Level \(currentLevel)!")
-                
-            } else {
-                withAnimation {
-                    // If not exceeding 100, just add the XP to the current progress
-                    levelProgress = newProgress
-                }
-            }
-        } else if currentLevel == 10 {
-            // Allow XP gain up to 100 but prevent level increase
-            if newProgress <= 100 {
-                withAnimation {
-                    levelProgress = newProgress
-                }
-                
-                // Check if the user has exactly reached 100 XP at level 10
-                if levelProgress == 100 {
-                    // Show congratulatory alert for reaching max level at 100/100 XP
-                    showAlert(title: "Congratulations!", message: "You've reached the maximum Level!")
-                }
-            } else {
-                // If XP would exceed 100, cap at 100
-                withAnimation {
-                    levelProgress = 100 // Cap XP at 100 for level 10
-                }
+    
+    func AddXP(value: Int) {
+        print("Adding \(value) to \(levelProgress)")
+        print("UserXP: \(self.levelProgress + value)")
+        petDBManager.updateUserXP(newXP: Int64(levelProgress + value)){
+            error in
+            if let error = error {
+                print("Error updating currency: \(error.localizedDescription)")
             }
         }
-        
-        // Ensure current level doesn't exceed 10
-        if currentLevel > 10 {
-            currentLevel = 10 // Cap the level at 10
-        }
+        return levelProgress = levelProgress + value
     }
     
     
@@ -231,9 +206,7 @@ class PetPageFunction: ObservableObject {
         alertMessage = message
         showAlert = true
     }
-    
 }
-
 // FoodSelectionView definition
 struct FoodSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -302,4 +275,5 @@ struct PetPage_Previews: PreviewProvider {
         Pet_Page()
     }
 }
+
 
