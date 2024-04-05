@@ -17,7 +17,7 @@ class CloudKitManager {
     /// Initializes the `CloudKitManager` singleton instance.
     init() {
         container = CKContainer.default()
-        publicDatabase = container.publicCloudDatabase 
+        publicDatabase = container.publicCloudDatabase
         privateDatabase = container.privateCloudDatabase
         getiCloudStatus()
     }
@@ -102,7 +102,7 @@ class CloudKitManager {
                 print("Error fetching record: \(error.localizedDescription)")
                 completion(nil, error)
             case .success((let matchResults, _)):
-                if matchResults.isEmpty { 
+                if matchResults.isEmpty {
                     print("No records found")
                     completion(nil, nil)
                 } else {
@@ -120,8 +120,8 @@ class CloudKitManager {
             }
         }
     }
-
-  
+    
+    
     /// Fetches public records from the CloudKit database based on a specified field name and value.
     /// - Parameters:
     ///   - recordType: The type of record to fetch.
@@ -131,7 +131,7 @@ class CloudKitManager {
     func fetchPublicRecord(recordType: String, fieldName: String, fieldValue: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
         p_fetchRecord(recordType: recordType, usePrivateDatabase: false, fieldName: fieldName, fieldValue: fieldValue, completion: completion)
     }
-
+    
     /// Fetches public records from the CloudKit database of a specified record type.
     /// - Parameters:
     ///   - recordType: The type of record to fetch.
@@ -139,7 +139,7 @@ class CloudKitManager {
     func fetchPublicRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void) {
         p_fetchRecord(recordType: recordType, usePrivateDatabase: false, fieldName: nil, fieldValue: nil, completion: completion)
     }
-
+    
     /// Fetches private records from the CloudKit database based on a specified field name and value.
     /// - Parameters:
     ///   - recordType: The type of record to fetch.
@@ -149,7 +149,7 @@ class CloudKitManager {
     func fetchPrivateRecord(recordType: String, fieldName: String, fieldValue: String, completion: @escaping ([CKRecord]?, Error?) -> Void) {
         p_fetchRecord(recordType: recordType, usePrivateDatabase: true, fieldName: fieldName, fieldValue: fieldValue, completion: completion)
     }
-
+    
     /// Fetches private records from the CloudKit database of a specified record type.
     /// - Parameters:
     ///   - recordType: The type of record to fetch.
@@ -158,48 +158,48 @@ class CloudKitManager {
         p_fetchRecord(recordType: recordType, usePrivateDatabase: true, fieldName: nil, fieldValue: nil, completion: completion)
     }
 }
-    
-    
-    
-    
-    
-    // possible deprecated funcs
-    /*private func getiCloudStatus(){
-        CKContainer.default().accountStatus{[weak self] returnedStatus, returnedError in
-            DispatchQueue.main.async{
-                switch returnedStatus{
-                case .available:
-                    self?.isSignedInToiCloud = true
-                case .noAccount:
-                    self?.error = CloudKitError.iCloudAccountNotFound.localizedDescription
-                case .couldNotDetermine:
-                    self?.error = CloudKitError.iCloudAccountNotDetermined.localizedDescription
-                case .restricted:
-                    self?.error = CloudKitError.iCloudAccountRestricted.localizedDescription
-                default:
-                    self?.error = CloudKitError.iCloudAccountUnknown.localizedDescription
-                }
-            }
-            
-        }
-    }
-    enum CloudKitError: LocalizedError{
-        case iCloudAccountNotFound
-        case iCloudAccountNotDetermined
-        case iCloudAccountRestricted
-        case iCloudAccountUnknown
-    }
-    func requestPermission(){
-        CKContainer.default().requestApplicationPermission([.userDiscoverability]){
-            [weak self] returnedStatus, returnedError in
-            DispatchQueue.main.async{
-                if returnedStatus == .granted{
-                    self?.permissionStatus = true
-                }
-            }
-        }
-    }*/
-    
+
+
+
+
+
+// possible deprecated funcs
+/*private func getiCloudStatus(){
+ CKContainer.default().accountStatus{[weak self] returnedStatus, returnedError in
+ DispatchQueue.main.async{
+ switch returnedStatus{
+ case .available:
+ self?.isSignedInToiCloud = true
+ case .noAccount:
+ self?.error = CloudKitError.iCloudAccountNotFound.localizedDescription
+ case .couldNotDetermine:
+ self?.error = CloudKitError.iCloudAccountNotDetermined.localizedDescription
+ case .restricted:
+ self?.error = CloudKitError.iCloudAccountRestricted.localizedDescription
+ default:
+ self?.error = CloudKitError.iCloudAccountUnknown.localizedDescription
+ }
+ }
+ 
+ }
+ }
+ enum CloudKitError: LocalizedError{
+ case iCloudAccountNotFound
+ case iCloudAccountNotDetermined
+ case iCloudAccountRestricted
+ case iCloudAccountUnknown
+ }
+ func requestPermission(){
+ CKContainer.default().requestApplicationPermission([.userDiscoverability]){
+ [weak self] returnedStatus, returnedError in
+ DispatchQueue.main.async{
+ if returnedStatus == .granted{
+ self?.permissionStatus = true
+ }
+ }
+ }
+ }*/
+
 
 
 
@@ -251,6 +251,40 @@ struct testview : View{
                     }
                     print("Food item: \(foodItem)")
                 }
+            }
+            Button("Fetch quantity Orange"){
+                foodItemDBManager.fetchQuantity(name: "Orange"){ quantity, error in
+                    if let error = error {
+                        print("Error fetching quantity: \(error.localizedDescription)")
+                        return
+                    }
+                    guard let quantity = quantity else {
+                        print("No quantity found")
+                        return
+                    }
+                    print("Quantity: \(quantity)")
+                }
+                
+                
+            }
+            Button("Add new orange"){
+                foodItemDBManager.createFoodItem(name: "Orange", quantity: 5){ error in
+                    if let error = error {
+                        print("Error creating food item: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Food item created")
+                }
+            }
+            Button("add four to orange quantity"){
+                foodItemDBManager.updateQuantity(name: "Orange", newQuantity: 4){ error in
+                    if let error = error {
+                        print("Error updating quantity: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Quantity updated")
+                }
+                
             }
         }
     }
