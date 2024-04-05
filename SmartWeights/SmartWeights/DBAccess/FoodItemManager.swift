@@ -81,8 +81,15 @@ class FoodItemDBManager: ObservableObject{
     
 
     func fetchSpecificFoodItem(name: String, completion: @escaping (FoodItemModel?, Error?) -> Void) {
-        let predicate = NSPredicate(format: "\(FoodItemRecordKeys.name.rawValue) = %@", name)
-        let query = CKQuery(recordType: FoodItemRecordKeys.type.rawValue, predicate: predicate)
+        CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue, fieldName: "name", fieldValue: name) { records, error in
+            guard let record = records?.first else {
+                completion(nil, error)
+                return
+            }
+            let foodItem = FoodItemModel(recordId: record.recordID, name: record[FoodItemRecordKeys.name.rawValue] as? String ?? "", quantity: record[FoodItemRecordKeys.quantity.rawValue] as? Int64 ?? 0)
+            print(" food item abcd HERE HERE: \(foodItem)")
+            completion(foodItem, nil)
+        }
     }
     func updateQuantity(foodItem: FoodItemModel, newQuantity: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue) { records, error in

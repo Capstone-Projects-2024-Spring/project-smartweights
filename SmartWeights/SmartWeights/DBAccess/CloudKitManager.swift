@@ -84,11 +84,11 @@ class CloudKitManager {
     ///   - usePrivateDatabase: A flag indicating whether to use the private database or not.
     ///   - user: An optional user reference to filter the records.
     ///   - completion: A closure to be called with the fetched records or an error.
-    private func p_fetchRecord(recordType: String, usePrivateDatabase: Bool, user: CKRecord.Reference? = nil, completion: @escaping ([CKRecord]?, Error?) -> Void) {
+    private func p_fetchRecord(recordType: String, usePrivateDatabase: Bool, fieldName: String? = nil, fieldValue: String? = nil, completion: @escaping ([CKRecord]?, Error?) -> Void) {
         let predicate: NSPredicate
         // set the predicate to user if not nil, otherwise true
-        if let user = user {
-            predicate = NSPredicate(format: "user == %@", user)
+        if let fieldName = fieldName, let fieldValue = fieldValue {
+            predicate = NSPredicate(format: "%K == %@", fieldName, fieldValue)
         } else {
             predicate = NSPredicate(value: true)
         }
@@ -120,39 +120,42 @@ class CloudKitManager {
             }
         }
     }
-    
-    /// Fetches public records with a user reference.
+
+  
+    /// Fetches public records from the CloudKit database based on a specified field name and value.
     /// - Parameters:
-    ///   - recordType: The type of records to fetch.
-    ///   - user: The user reference to filter the records.
-    ///   - completion: A closure to be called with the fetched records or an error.
-    func fetchPublicRecord(recordType: String, user: CKRecord.Reference, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
-        p_fetchRecord(recordType: recordType, usePrivateDatabase: false, user: user, completion: completion)
+    ///   - recordType: The type of record to fetch.
+    ///   - fieldName: The name of the field to filter the records by.
+    ///   - fieldValue: The value of the field to filter the records by.
+    ///   - completion: The completion handler that is called when the fetch operation is complete. It returns an array of fetched CKRecords and an optional error.
+    func fetchPublicRecord(recordType: String, fieldName: String, fieldValue: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: false, fieldName: fieldName, fieldValue: fieldValue, completion: completion)
     }
-    
-    /// Fetches public records without a user reference.
+
+    /// Fetches public records from the CloudKit database of a specified record type.
     /// - Parameters:
-    ///   - recordType: The type of records to fetch.
-    ///   - completion: A closure to be called with the fetched records or an error.
-    func fetchPublicRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
-        p_fetchRecord(recordType: recordType, usePrivateDatabase: false, user: nil, completion: completion)
+    ///   - recordType: The type of record to fetch.
+    ///   - completion: The completion handler that is called when the fetch operation is complete. It returns an array of fetched CKRecords and an optional error.
+    func fetchPublicRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void) {
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: false, fieldName: nil, fieldValue: nil, completion: completion)
     }
-    
-    /// Fetches private records with a user reference.
+
+    /// Fetches private records from the CloudKit database based on a specified field name and value.
     /// - Parameters:
-    ///   - recordType: The type of records to fetch.
-    ///   - user: The user reference to filter the records.
-    ///   - completion: A closure to be called with the fetched records or an error.
-    func fetchPrivateRecord(recordType: String, user: CKRecord.Reference, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
-        p_fetchRecord(recordType: recordType, usePrivateDatabase: true, user: user, completion: completion)
+    ///   - recordType: The type of record to fetch.
+    ///   - fieldName: The name of the field to filter the records by.
+    ///   - fieldValue: The value of the field to filter the records by.
+    ///   - completion: The completion handler that is called when the fetch operation is complete. It returns an array of fetched CKRecords and an optional error.
+    func fetchPrivateRecord(recordType: String, fieldName: String, fieldValue: String, completion: @escaping ([CKRecord]?, Error?) -> Void) {
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: true, fieldName: fieldName, fieldValue: fieldValue, completion: completion)
     }
-    
-    /// Fetches private records without a user reference.
+
+    /// Fetches private records from the CloudKit database of a specified record type.
     /// - Parameters:
-    ///   - recordType: The type of records to fetch.
-    ///   - completion: A closure to be called with the fetched records or an error.
-    func fetchPrivateRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
-        p_fetchRecord(recordType: recordType, usePrivateDatabase: true, user: nil, completion: completion)
+    ///   - recordType: The type of record to fetch.
+    ///   - completion: The completion handler that is called when the fetch operation is complete. It returns an array of fetched CKRecords and an optional error.
+    func fetchPrivateRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void) {
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: true, fieldName: nil, fieldValue: nil, completion: completion)
     }
 }
     
@@ -234,6 +237,19 @@ struct testview : View{
                         return
                     }
                     print("Food items HERE: \(foodItems)")
+                }
+            }
+            Button("Fetch food item Orange"){
+                foodItemDBManager.fetchSpecificFoodItem(name: "Orange"){ foodItem, error in
+                    if let error = error {
+                        print("Error fetching food item: \(error.localizedDescription)")
+                        return
+                    }
+                    guard let foodItem = foodItem else {
+                        print("No food item found")
+                        return
+                    }
+                    print("Food item: \(foodItem)")
                 }
             }
         }
