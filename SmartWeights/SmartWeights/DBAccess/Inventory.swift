@@ -89,6 +89,28 @@ class InventoryDBManager: ObservableObject {
         inventoryExists = true
     }
     
+   
+    func fetchInventory(completion: @escaping (InventoryModel?, Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "Inventory") { records, error in
+            guard let record = records?.first else {
+                completion(nil, error)
+                print("Error fetching inventory: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+
+            let activeBackground = record[InventoryModelRecordKeys.activeBackground.rawValue] as? CKRecord.Reference
+            let activePetClothing = record[InventoryModelRecordKeys.activePetClothing.rawValue] as? CKRecord.Reference
+            let background = record[InventoryModelRecordKeys.background.rawValue] as? [CKRecord.Reference]
+            let clothing = record[InventoryModelRecordKeys.clothing.rawValue] as? [CKRecord.Reference]
+            let food = record[InventoryModelRecordKeys.food.rawValue] as? [CKRecord.Reference]
+            let pets = record[InventoryModelRecordKeys.pets.rawValue] as? [CKRecord.Reference]
+           
+           
+
+            self.inventory = InventoryModel(recordId: record.recordID, activeBackground: activeBackground, activePetClothing: activePetClothing, background: background ?? [], clothing: clothing ?? [], food: food ?? [], pets: pets ?? [])
+            completion(self.inventory, nil)
+        }
+    }
     // ...
     // Rest of the code
     // ...
