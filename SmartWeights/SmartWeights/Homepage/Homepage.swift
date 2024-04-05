@@ -108,24 +108,28 @@ struct Homepage: View {
                     HStack {
                         let count = 1...4
                         ForEach(count, id: \.self) { number in
-                            VStack {
-                                Spacer()
-                                Image(systemName: "photo")
-                                    .foregroundStyle(Color.lightGray)
-                                Spacer()
-                                VStack (alignment: .leading){
-                                    Text("Video \(number)")
-                                        .font(.title3)
-                                    Text("Video Description")
+                            if number == 1 {
+                                VideoCard(videoId: "ykJmrZ5v0Oo", title: "How to Do a Dumbbell Bicep Curl", description: "Howcast")
+                            } else {
+                                VStack {
+                                    Spacer()
+                                    Image(systemName: "photo")
                                         .foregroundStyle(Color.lightGray)
-                                        .font(.subheadline)
+                                    Spacer()
+                                    VStack (alignment: .leading){
+                                        Text("Video \(number)")
+                                            .font(.title3)
+                                        Text("Video Description")
+                                            .foregroundStyle(Color.lightGray)
+                                            .font(.subheadline)
+                                    }
+                                    .padding(.bottom)
                                 }
-                                .padding(.bottom)
+                                .frame(width: 200, height: 250)
+                                .background(Color.darkGray)
+                                .cornerRadius(12)
+                                .padding()
                             }
-                            .frame(width: 200, height: 250)
-                            .background(Color.darkGray)
-                            .cornerRadius(12)
-                            .padding()
                         }
                         
                     }
