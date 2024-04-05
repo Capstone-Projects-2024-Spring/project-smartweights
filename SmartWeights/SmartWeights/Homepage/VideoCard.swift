@@ -17,8 +17,6 @@ struct VideoCard: View {
         VStack {
             Spacer()
             EmbeddedVideo(videoId: videoId)
-                .cornerRadius(12)
-                .padding(.horizontal, 8)
             Spacer()
             VStack (alignment: .leading) {
                 Text(title)
@@ -28,6 +26,7 @@ struct VideoCard: View {
                     .foregroundStyle(Color.lightGray)
                     .font(.subheadline)
             }
+            .padding(.horizontal, 8)
             .padding(.bottom)
         }
         .frame(width: 200, height: 250)
@@ -38,5 +37,5 @@ struct VideoCard: View {
 }
 
 #Preview {
-    VideoCard(videoId: "Y_7aHqXeCfQ", title: "How to Dumbbell Press", description: "Description here")
+    VideoCard(videoId: "ykJmrZ5v0Oo", title: "How to Do a Dumbbell Bicep Curl", description: "Howcast")
 }
