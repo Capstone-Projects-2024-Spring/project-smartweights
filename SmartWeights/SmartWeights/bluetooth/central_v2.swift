@@ -272,8 +272,8 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                             if self.collectDataToggle{
                                 self.MPU6050_1Gyros.append(self.MPU6050_1_Gyro)
                             }
-                                print("MPU6050_1 gyro")
-                                print("\(self.MPU6050_1Gyros)")
+                                //print("MPU6050_1 gyro")
+                                //print("\(self.MPU6050_1Gyros)")
                             default:
                                 break
                         }
@@ -297,8 +297,8 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                             if self.collectDataToggle{
                                 self.MPU6050_2Gyros.append(self.MPU6050_2_Gyro)
                             }
-                                print("MPU6050_2 gyro")
-                                print("\(self.MPU6050_2Gyros)")
+                                //print("MPU6050_2 gyro")
+                                //print("\(self.MPU6050_2Gyros)")
                             default:
                                 break
                             
@@ -363,7 +363,6 @@ struct bleView : View {
                         }
                     }
                 }
-                
             }
             //list the accel and gyro data for MPU6050-2
             HStack{
