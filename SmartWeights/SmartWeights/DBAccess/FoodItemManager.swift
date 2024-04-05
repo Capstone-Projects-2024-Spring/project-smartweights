@@ -49,7 +49,7 @@ class FoodItemDBManager: ObservableObject{
         }
     }
     func fetchFoodItems(completion: @escaping ([FoodItemModel]?, Error?) -> Void) {
-        CKManager.fetchRecords(recordType: FoodItemRecordKeys.type.rawValue) { records, error in
+        CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue) { records, error in
             if let error = error {
                 completion(nil, error)
                 return
@@ -69,5 +69,16 @@ class FoodItemDBManager: ObservableObject{
             self.foodItemExists = true
         }
     }
+
+    func createFoodItem(name: String, quantity: Int64, completion: @escaping (Error?) -> Void) {
+            let foodItem = FoodItemModel(recordId: nil, name: name, quantity: quantity)
+            let foodItemRecord = foodItem.record
+            self.foodItems.append(foodItem)
+            CKManager.savePrivateItem(record: foodItemRecord)
+  
+    }
+    
+
+
 
 }

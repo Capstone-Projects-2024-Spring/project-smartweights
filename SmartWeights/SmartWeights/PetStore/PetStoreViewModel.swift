@@ -8,6 +8,7 @@ class storeViewModel: ObservableObject {
 //    var cloudKitManager = CloudKitManager()
     var inventoryDBManager = InventoryDBManager()
     var userDBManager = UserDBManager()
+    var foodItemDBManager = FoodItemDBManager()
     
     /// Items available in store.
     @Published var items = [
@@ -81,8 +82,14 @@ class storeViewModel: ObservableObject {
                     items[index].isBought = true
                 }
                 subtractFunds(price: Int(item.price) ?? 0)
+                foodItemDBManager.createFoodItem(name: item.name, quantity: 1) { error in
+                    if let error = error {
+                        print("Error creating food item: \(error.localizedDescription)")
+                    }
+                }
             }
         }
+    
     
     func addFundtoUser(price: Int) {
         print("Adding \(price) to \(userCur)")
