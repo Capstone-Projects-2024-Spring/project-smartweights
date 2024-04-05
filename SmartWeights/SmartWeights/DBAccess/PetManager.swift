@@ -87,8 +87,8 @@ class PetDBManager: ObservableObject {
             let petImage = record[PetRecordKeys.petImage.rawValue] as? CKAsset
             let totalXP = record[PetRecordKeys.totalXP.rawValue] as? Int64 ?? 0
 
-            let pet = PetModel(recordId: record.recordID, health: health, level: level, petImage: petImage, totalXP: totalXP)
-            completion(pet, nil)
+            self.pet = PetModel(recordId: record.recordID, health: health, level: level, petImage: petImage, totalXP: totalXP)
+            completion(self.pet, nil)
             self.petExists = true
         }
     }
