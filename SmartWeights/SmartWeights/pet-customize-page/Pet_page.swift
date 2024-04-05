@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct Pet_Page: View {
-    @StateObject var viewModel = PetPageFunction()
+    @ObservedObject var viewModel = PetPageFunction()
 
     
     var body: some View {
@@ -19,7 +19,7 @@ struct Pet_Page: View {
                     .font(.system(size: 45))
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
-                // Text("USERXP: \(viewModel.levelProgress)")
+                Text("USERXP: \(viewModel.userTotalXP)")
                     
                 /*
                 // XP Increase Button for testing purpose
@@ -109,7 +109,7 @@ struct Pet_Page: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 10)
                      */
-                    CustomProgressView(value: viewModel.levelProgress, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                         .frame(height: 20)
                     
                 }

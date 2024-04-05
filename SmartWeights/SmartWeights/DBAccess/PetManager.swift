@@ -92,7 +92,23 @@ class PetDBManager: ObservableObject {
             self.petExists = true
         }
     }
-    
+    func getXP(completion: @escaping (Int64?, Error?) -> Void){
+        if let pet = pet {
+            completion(pet.totalXP, nil)
+        } else {
+            fetchPet { pet, error in
+                if let error = error {
+                    completion(nil, error)
+                    return
+                }
+                guard let pet = pet else {
+                    completion(nil, nil)
+                    return
+                }
+                completion(self.pet?.totalXP, nil)
+            }
+        }
+    }
     func updateUserXP(newXP: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
             guard let record = records?.first else {

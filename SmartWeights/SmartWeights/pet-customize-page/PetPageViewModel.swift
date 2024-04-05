@@ -26,7 +26,7 @@ class PetPageFunction: ObservableObject {
     @Published var showShop = false
     @Published var showCustomize = false
     @Published var healthBar: Int = 50
-    @Published var levelProgress = 0
+    // @Published var totalXP = 0
     @Published var currentLevel = 1
     @Published var showFoodSelection = false
     @Published var selectedFoodIndex = 0
@@ -38,8 +38,13 @@ class PetPageFunction: ObservableObject {
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
+
+    @Published var userTotalXP = 0
+    var pet: PetModel?
     // Initializer
-    
+    init(){
+        updateXP()
+    }
 
     func handleFoodUse(selectedFoodIndex: Int) {
         guard selectedFoodIndex < foodItems.count else { return }
@@ -65,17 +70,28 @@ class PetPageFunction: ObservableObject {
         }
     }
     
-    
+    func updateXP(){
+        petDBManager.getXP{ (totalXP, error) in
+            if let error = error {
+                print("Error getting currency: \(error.localizedDescription)")
+            } else if let totalXP = totalXP {
+                DispatchQueue.main.async {
+                    self.userTotalXP = Int(totalXP)
+                }
+            }
+        
+        }
+    }
     func AddXP(value: Int) {
-        print("Adding \(value) to \(levelProgress)")
-        print("UserXP: \(self.levelProgress + value)")
-        petDBManager.updateUserXP(newXP: Int64(levelProgress + value)){
+        print("Adding \(value) to \(userTotalXP)")
+        print("UserXP: \(self.userTotalXP + value)")
+        petDBManager.updateUserXP(newXP: Int64(userTotalXP + value)){
             error in
             if let error = error {
                 print("Error updating currency: \(error.localizedDescription)")
             }
         }
-        return levelProgress = levelProgress + value
+        return userTotalXP = userTotalXP + value
     }
     
     
