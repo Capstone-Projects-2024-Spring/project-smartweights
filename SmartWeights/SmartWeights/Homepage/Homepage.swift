@@ -71,7 +71,19 @@ struct Homepage: View {
                         let count = 1...6
                         ForEach(count, id: \.self) { number in
                             if number == 1 {
-                                
+                                VStack {
+                                    Image(systemName: "photo")
+                                        .foregroundStyle(Color.lightGray)
+                                        .background(Circle()
+                                            .frame(width: 60, height: 60)
+                                            .foregroundStyle(Color.darkGray)
+                                        )
+                                        .padding()
+                                    Text("Page \(number)")
+                                        .foregroundStyle(Color.lightGray)
+                                        .font(.subheadline)
+                                }
+                                .padding()
                             } else {
                                 VStack {
                                     Image(systemName: "photo")
