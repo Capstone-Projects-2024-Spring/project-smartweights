@@ -72,14 +72,15 @@ struct Homepage: View {
                         ForEach(count, id: \.self) { number in
                             if number == 1 {
                                 VStack {
-                                    Image(systemName: "photo")
-                                        .foregroundStyle(Color.lightGray)
+                                    Image(systemName: "chart.line.uptrend.xyaxis")
+                                        .foregroundStyle(Color.africanViolet
+                                        )
                                         .background(Circle()
                                             .frame(width: 60, height: 60)
                                             .foregroundStyle(Color.darkGray)
                                         )
                                         .padding()
-                                    Text("Page \(number)")
+                                    Text("Progress")
                                         .foregroundStyle(Color.lightGray)
                                         .font(.subheadline)
                                 }
