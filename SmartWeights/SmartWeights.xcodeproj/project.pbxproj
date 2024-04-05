@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0101C1722BBDF84F00DF087A /* MorePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0101C1712BBDF84E00DF087A /* MorePageViewModel.swift */; };
 		0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0140238C2B91702300D6935D /* SettingsPageView.swift */; };
 		01A6B0BE2B88F16500D84920 /* MorePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A6B0BD2B88F16500D84920 /* MorePageView.swift */; };
 		01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0101C1712BBDF84E00DF087A /* MorePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorePageViewModel.swift; sourceTree = "<group>"; };
 		0140238C2B91702300D6935D /* SettingsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageView.swift; sourceTree = "<group>"; };
 		01A6B0BD2B88F16500D84920 /* MorePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorePageView.swift; sourceTree = "<group>"; };
 		01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesTab.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				01A6B0BD2B88F16500D84920 /* MorePageView.swift */,
+				0101C1712BBDF84E00DF087A /* MorePageViewModel.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 				32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
 				6B8762AB2BA26891005627CE /* CloudKitManager.swift in Sources */,
+				0101C1722BBDF84F00DF087A /* MorePageViewModel.swift in Sources */,
 				9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */,
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
 				0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */,
