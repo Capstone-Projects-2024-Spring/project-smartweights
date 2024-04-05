@@ -9,8 +9,8 @@ import SwiftUI
 
 /// A custom progress view that displays the progress value and label.
 struct CustomProgressView: View {
-    var value: Float // Current progress value
-    var maxValue: Float // Maximum progress value to calculate the percentage
+    var value: Int // Current progress value
+    var maxValue: Int // Maximum progress value to calculate the percentage
     var label: String
     var displayMode: DisplayMode // Add this line
     var foregroundColor: Color
@@ -24,24 +24,24 @@ struct CustomProgressView: View {
     
     /// The formatted display value based on the display mode.
     private var displayValue: String {
-        switch displayMode {
-        case .percentage:
-            let percentageValue = (value / maxValue) * 100
-            return String(format: "%.0f%%", percentageValue)
-        case .rawValue:
-            let rawValue = value * maxValue // Assuming value is a fraction of the maxValue
-            return "\(Int(rawValue))/\(Int(maxValue))"
+            switch displayMode {
+            case .percentage:
+                let percentageValue = (value * 100) / maxValue
+                return "\(percentageValue)%"
+            case .rawValue:
+                return "\(value)/\(maxValue)"
+            }
         }
-    }
     
     /// The text color based on value for health bar.
     private var textColor: Color {
-        if label.lowercased() == "health" && value <= (0.25 * maxValue) {
+        if label.lowercased() == "health" && value <= (maxValue / 4) { // Assuming maxValue is 100, this checks if health is 25 or less
             return .red
         } else {
             return foregroundColor
         }
     }
+
     
     var body: some View {
         VStack {
@@ -51,12 +51,14 @@ struct CustomProgressView: View {
             
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
-                    Rectangle().frame(width: geometry.size.width , height: 20)
+                    Rectangle().frame(width: geometry.size.width, height: 20)
                         .opacity(0.3)
                         .foregroundColor(backgroundColor)
                     
-                    Rectangle().frame(width: min(CGFloat(self.value)*geometry.size.width, geometry.size.width), height: 20)
+                    // Correct the calculation of the filled portion's width
+                    Rectangle().frame(width: min(CGFloat(self.value) / CGFloat(self.maxValue) * geometry.size.width, geometry.size.width), height: 20)
                         .foregroundColor(foregroundColor)
+                        // Remove .animation() if it causes any deprecation warning or is not needed
                         .animation(.linear, value: value)
                 }
                 .cornerRadius(45.0)
