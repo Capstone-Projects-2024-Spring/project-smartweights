@@ -8,21 +8,13 @@
 import SwiftUI
 
 struct MorePageView: View {
+    @ObservedObject var viewModel = MorePageViewModel()
     let profile = Profile(firstName: "First", lastName: "Last", level: 1)
-    let achievements = [
-        Achievement(title: "Achievement 1", description: "", img: "trophy.circle"),
-        Achievement(title: "Achievement 2", description: "", img: "trophy.circle"),
-        Achievement(title: "Achievement 3", description: "", img: "trophy.circle"),
-        Achievement(title: "Achievement 4", description: "", img: "trophy.circle"),
-        Achievement(title: "Achievement 5", description: "", img: "trophy.circle"),
-        Achievement(title: "Achievement 6", description: "", img: "trophy.circle")
-    ]
-    @State private var showSettings = false
     
     var body: some View {
         NavigationStack {
             VStack {
-                Text("\(profile.firstName) \(profile.lastName)")
+                Text("\(viewModel.userDBManager.user?.firstName ?? "First") \(viewModel.userDBManager.user?.lastName ?? "Last")")
                 Image(systemName: "person.circle")
                     .resizable()
                     .frame(
@@ -35,6 +27,7 @@ struct MorePageView: View {
                     .frame(
                         width: 100
                     )
+                Text("\(viewModel.balance) Points")
                 Divider()
                 VStack {
                     Text("Achievements")
@@ -43,11 +36,16 @@ struct MorePageView: View {
                     ScrollView(.horizontal) {
                         HStack {
                             Spacer()
-                            ForEach(achievements) { achievement in
+                            ForEach(viewModel.achievements) { achievement in
                                 ZStack {
                                     RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                                        .fill(Color.green)
+                                        .fill(achievement.isClaimed ? Color.green : Color.gray)
                                         .frame(width: 120, height: 140)
+                                        .onTapGesture {
+                                            if (!achievement.isClaimed) {
+                                                viewModel.claimAchievement(id: achievement.id)
+                                            }
+                                        }
                                     VStack(spacing: 20) {
                                         Image(systemName: achievement.img)
                                             .resizable()
@@ -60,6 +58,11 @@ struct MorePageView: View {
                                                             Text(String(word))
                                                                 .font(.caption)
                                                         }
+                                            if (!achievement.isClaimed) {
+                                                Text("Reward: \(achievement.reward)")
+                                                    .bold()
+                                                    .font(.caption)
+                                            }
                                         }
                                     }
                                 }
@@ -73,11 +76,10 @@ struct MorePageView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(
-                        width: 300,
-                        height: 300
+                        width: 250,
+                        height: 250
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
-                Spacer()
             }
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
@@ -108,7 +110,13 @@ struct Achievement: Identifiable {
     var id = UUID()
     var title: String
     var description: String
-    var img: String    
+    var img: String
+    var reward: Int
+    var isClaimed: Bool = false
+    
+    mutating func claim() {
+        isClaimed = true
+    }
 }
 
 #Preview {

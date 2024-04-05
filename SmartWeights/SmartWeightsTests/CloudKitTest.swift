@@ -203,7 +203,7 @@ final class CloudKitTest: XCTestCase {
 //        waitForExpectations(timeout: 10, handler: nil)
 //    }
     
-    
+/*
     var viewModel: ItemViewModel!
     var expectation: XCTestExpectation!
     override func setUp() {
@@ -211,6 +211,8 @@ final class CloudKitTest: XCTestCase {
             viewModel = ItemViewModel()
             expectation = expectation(description: "Item saved to CloudKit")
     }
+*/
+    
 //    func testAddItem() {
 //            let name = "Test Name"
 //            let description = "Test Description"

@@ -46,14 +46,14 @@ final class PetPageTest: XCTestCase {
 
         func testMaxHealthNotExceeded() throws {
             // Given
-            viewModel.healthBar = 0.95 
+            viewModel.healthBar = 95
             let foodIndex = 0
 
             // When
             viewModel.handleFoodUse(selectedFoodIndex: foodIndex)
 
             // Then
-            XCTAssertLessThanOrEqual(viewModel.healthBar, 1.0, "Health should not exceed 1.0")
+            XCTAssertLessThanOrEqual(viewModel.healthBar, 100, "Health should not exceed 1.0")
         }
 
         func testAlertShownForInsufficientFood() throws {
@@ -71,8 +71,8 @@ final class PetPageTest: XCTestCase {
 
         func testAlertShownForMaxHealth() throws {
             // Given
-            viewModel.healthBar = 1.0 
-            let foodIndex = 0 
+            viewModel.healthBar = 100
+            let foodIndex = 0
 
             // When
             viewModel.handleFoodUse(selectedFoodIndex: foodIndex)
