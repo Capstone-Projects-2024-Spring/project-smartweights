@@ -73,6 +73,17 @@ class FormCriteria: ObservableObject{
         
     }
     
+    func giveFeedback(array: [[Int]]) -> (String,String,String){
+    
+
+        var overallAccel = "Overall acceleration going up and down is \(self.averageUpDownAcceleration(array: array)) %"
+        var upSpeed = " \(self.UpDownAcceleration(array: array).0  * 100)% of your reps are too fast going up"
+        var downSpeed = "\(self.UpDownAcceleration(array: array).1 * 100)% of your reps are too fast going down"
+        
+        return (overallAccel,upSpeed,downSpeed)
+        
+    }
+    
 }
 
 

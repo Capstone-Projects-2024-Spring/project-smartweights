@@ -4,7 +4,8 @@ import Combine
 /// Main structure to display the workout page with integrated UI components
 struct WorkoutMainPage: View {
     @StateObject var viewModel = WorkoutViewModel()
-    @StateObject var bleManager = BLEManager()
+    @ObservedObject var ble = BLEcentral()
+    @ObservedObject var formCriteria = FormCriteria()
     @StateObject var storeModel = storeViewModel()
     
     @State private var workoutSubscription: AnyCancellable?
@@ -50,15 +51,23 @@ struct WorkoutMainPage: View {
                         .accessibilityLabel("Close") // Accessibility label for better UX
                     }
                     .padding(.top, 10) // Give some space from the top edge
-                    
-                    Text("Workout Progress Graph")
+                
+                    //Text("workout Progress Graph")
+                    Text("Feedback")
                         .font(.headline)
                         .padding()
                     
-                    LineGraph(data: graphData) // Use the dynamic data for the line graph
-                        .stroke(Color.green, lineWidth: 2)
-                        .frame(height: 200)
-                        .padding()
+//                    LineGraph(data: graphData) // Use the dynamic data for the line graph
+//                        .stroke(Color.green, lineWidth: 2)
+//                        .frame(height: 200)
+//                        .padding()
+                    
+                    VStack{
+                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).0)")
+                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).1)")
+                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).2)")
+                    
+                    }
                 }
                 .frame(width: 400, height: 400)
                 .background(Color.white.opacity(0.9))
@@ -208,6 +217,10 @@ struct WorkoutMainPage: View {
                         viewModel.resetWorkoutState()
                         hasWorkoutStarted = false
                         isWorkoutPaused = false
+                        ble.collectDataToggle = false //stops collecting data
+                        //ble.MPU6050_1Gyros.removeAll()
+                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current set
+                        //need to add this data to another array to store for workout history
                         showGraphPopover = true
                     } else if buttonText == "Final Set" {
                         // Logic for transitioning from the final set to finishing the workout
@@ -215,6 +228,7 @@ struct WorkoutMainPage: View {
                         showGraphPopover = false
                         viewModel.resumeTimer()
                     } else if !isWorkoutPaused {
+                        ble.collectDataToggle = false // pauses the data collection
                         viewModel.pauseTimer()
                         generateRandomData(for: .perSet) // Generate per-set data
                         showGraphPopover = true
@@ -228,6 +242,8 @@ struct WorkoutMainPage: View {
                         viewModel.resumeTimer()
                         showGraphPopover = false
                         isWorkoutPaused = false
+                        ble.collectDataToggle = true //Stars collecting data again
+                        //ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
                     }
                 } else {
                     // Start the workout
@@ -249,7 +265,7 @@ struct WorkoutMainPage: View {
             }
             .accessibilityLabel(hasWorkoutStarted ? (isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
             .sheet(isPresented: $showingWorkoutSheet) {
-                WorkoutDetailsInputView(viewModel: viewModel, hasWorkoutStarted: $hasWorkoutStarted, showingWorkoutSheet: $showingWorkoutSheet)
+                WorkoutDetailsInputView(viewModel: viewModel, ble: ble, hasWorkoutStarted: $hasWorkoutStarted, showingWorkoutSheet: $showingWorkoutSheet)
             }
             
             
@@ -303,7 +319,9 @@ struct WorkoutMainPage: View {
     
     // Define a new view for the workout details input form
     struct WorkoutDetailsInputView: View {
+        
         @ObservedObject var viewModel: WorkoutViewModel
+        @ObservedObject var ble: BLEcentral
         @Binding var hasWorkoutStarted: Bool
         @Binding var showingWorkoutSheet: Bool
         @State private var showingAlert = false
@@ -404,6 +422,10 @@ struct WorkoutMainPage: View {
                         hasWorkoutStarted = true // Ensure this change is captured by the UI
                         showingWorkoutSheet = false // Dismiss or update UI as needed
                         viewModel.startTimer() // Start the main workout timer after countdown
+                        ble.MPU6050_1Gyros.removeAll() //Clear the collected Data for previous set
+                        ble.collectDataToggle = true //Start collecting data for the current workout
+                        
+                        
                     }
                 }
             }
