@@ -4,7 +4,7 @@ import CoreBluetooth
 
 
 /*
-Bluetooth will only work if it being tested on an external device with Bluetooth capabilities
+Bluetooth will only work if the app is being built.
  
  current status - picos will automatically connect the moment the BLEcentral class is initialize.
                     The picos will be kept turned on. (Have user turn all sensors on prior the starting workout)
@@ -317,7 +317,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
 
 struct bleView : View {
     //initialize bluetooth
-    @ObservedObject var ble = BLEcentral()
+    @ObservedObject var ble: BLEcentral
     
     var body: some View {
         //allow the app to start collecting data
@@ -398,6 +398,6 @@ struct bleView : View {
 
 
 #Preview {
-    bleView()
+    bleView(ble: BLEcentral())
 }
 

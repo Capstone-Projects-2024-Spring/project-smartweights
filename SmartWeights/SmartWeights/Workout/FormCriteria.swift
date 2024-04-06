@@ -9,99 +9,102 @@ import SwiftUI
 
 
 class FormCriteria: ObservableObject{
-
-    var ble: BLEcentral
-    @Published var xhighLow: (Int, Int) = (0, 0)
-    @Published var yhighLow: (Int, Int) = (0, 0)
-    @Published var zhighLow: (Int, Int) = (0, 0)
-
-    init(ble: BLEcentral) {
-        self.ble = ble
-    }
-
-    func updateHighLow() {
-        xhighLow = xRotationHighLow
-        yhighLow = yRotationHighLow
-        zhighLow = zRotationHighLow
-    }
     
-    //returns the high and low of X rotation
+    /*
+    read from the arrays that store the data
     
-    var xRotationHighLow: (Int, Int) {
-        var low = 0
-        var high = 0
+    calculate the form for one set (speed)
+        
+     */
 
-        for data in ble.MPU6050_1Gyros {
-            if data[0] < low {
-                low = data[0]
+    //read the Zaxis rotation
+    //make a function that reads from array
+    func averageUpDownAcceleration(array: [[Int]]) -> Double{
+
+        /*
+        good acceleration for going up and down -180°/s, 180°/s
+        bad - less than -180 or greater than 180
+        */
+        var count = 0
+        var good = 0
+        var fast = 0
+
+        array.forEach { (data) in
+            if data[2] > -180 && data[2] < 180{
+                good += 1
             }
-            else if data[0] > high {
-                high = data[0]
+            else if data[2] < 0{
+                fast += 1
             }
+            count += 1
         }
-        return (high, low)
+
+        return Double(good)/Double(count)
+        
     }
-    
-
-
-    
-    //returns the high and low of Y rotation
-
-    var yRotationHighLow: (Int, Int) {
-        var low = 0
-        var high = 0
-
-        for data in ble.MPU6050_1Gyros {
-            if data[1] < low {
-                low = data[1]
+    //tell the user if they going going up too fast or going down too fast
+    func UpDownAcceleration(array: [[Int]]) -> (Double,Double){
+        
+        var tooFastUp = 0
+        var tooFastDown = 0
+        
+        var upCount = 0
+        var downCount = 0
+        
+        array.forEach{ (data) in
+            
+            if data[2] > 180{
+                tooFastUp += 1
             }
-            else if data[1] > high {
-                high = data[1]
+            else if data[2] < -180{
+                tooFastDown += 1
             }
+            
+            if data[2] > 0{
+                upCount += 1
+            }
+            else if data[2] < 0{
+                downCount += 1
+            }
+
         }
-        return (high, low)
-    }
-
-    //returns the high and low of Z rotation
-
-    var zRotationHighLow: (Int, Int) {
-        var low = 0
-        var high = 0
-
-        for data in ble.MPU6050_1Gyros {
-            if data[2] < low {
-                low = data[2]
-            }
-            else if data[2] > high {
-                high = data[2]
-            }
-        }
-        return (high, low)
+        
+        return(Double(tooFastUp)/Double(upCount), Double(tooFastDown)/Double(downCount))
+        
     }
     
 }
 
-struct FormCriteriaView: View {
-    @ObservedObject var HighLow = FormCriteria(ble: BLEcentral())
 
+struct FormCriteriaView:View {
+    @ObservedObject var ble = BLEcentral()
+    @ObservedObject var form = FormCriteria()
+    
+    @State var z = 0.0
+    @State var up = 0.0
+    @State var down = 0.0
+    
     var body: some View {
-        VStack {
-            bleView()
-
-            VStack {
-                Text("X Rotation High: \(HighLow.xhighLow.0) Low: \(HighLow.xhighLow.1)")
-                Text("Y Rotation High: \(HighLow.yhighLow.0) Low: \(HighLow.yhighLow.1)")
-                Text("Z Rotation High: \(HighLow.zhighLow.0) Low: \(HighLow.zhighLow.1)")
-            }
-
-            Button(action: {
-                HighLow.updateHighLow()
-            }) {
-                Text("Update")
-            }
+        bleView(ble: ble)
+        
+        
+        Button(action: {
+            z = form.averageUpDownAcceleration(array: ble.MPU6050_1Gyros)
+            up = form.UpDownAcceleration(array: ble.MPU6050_1Gyros).0
+            down = form.UpDownAcceleration(array: ble.MPU6050_1Gyros).1
+        }){
+            Text("get feedback")
         }
+        Text("Overall acceleration going up and down is \(z*100)%")
+        Text("\(up * 100)% of your reps are too fast going up")
+        Text("\(down * 100)% of your reps are too fast going down")
+        
+    
+        
+        
     }
 }
-#Preview {
+
+#Preview{
     FormCriteriaView()
 }
