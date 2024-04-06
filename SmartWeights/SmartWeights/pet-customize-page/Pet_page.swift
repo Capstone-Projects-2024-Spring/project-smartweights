@@ -9,7 +9,8 @@ import SwiftUI
 
 
 struct Pet_Page: View {
-    @StateObject private var viewModel = PetPageFunction() // ViewModel integration
+    @ObservedObject var viewModel = PetPageFunction()
+
     
     var body: some View {
         NavigationView {
@@ -18,12 +19,13 @@ struct Pet_Page: View {
                     .font(.system(size: 45))
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
-                
+                Text("USERXP: \(viewModel.userTotalXP)")
+                    
                 /*
                 // XP Increase Button for testing purpose
                 Button(action: {
                     // Assuming you want to increase XP by a fixed amount, e.g., 5
-                    viewModel.increaseXP(by: 50)
+                    viewModel.AddXP(value: 50)
                     
                 }) {
                     Text("Increase XP")
@@ -36,7 +38,7 @@ struct Pet_Page: View {
                 }
                 .accessibilityIdentifier("IncreaseXPButton")
                 .padding(.top, 10) // Add some padding on top to separate it from the pet name
-                */
+                 */
                 
                 HStack {
                     HamburgerMenu(
@@ -99,13 +101,15 @@ struct Pet_Page: View {
                         .frame(height: 20)
                         .padding()
                     
+                    /*
                     // Display Current Level
                     Text("Level \(viewModel.currentLevel)")
                         .font(.system(size: 20))
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 10)
-                    CustomProgressView(value: viewModel.levelProgress, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                     */
+                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                         .frame(height: 20)
                     
                 }
@@ -127,112 +131,6 @@ struct Pet_Page: View {
     }
 }
 
-
-struct FoodItem: Identifiable {
-    var id = UUID()
-    var name: String
-    var quantity: Int
-    var imageName: String
-}
-
-class PetPageFunction: ObservableObject {
-    @Published var showShop = false
-    @Published var showCustomize = false
-    @Published var healthBar: Int = 50
-    @Published var levelProgress: Int = 0
-    @Published var currentLevel = 1
-    @Published var showFoodSelection = false
-    @Published var selectedFoodIndex = 0
-    @Published var foodItems = [
-        FoodItem(name: "Orange", quantity: 10, imageName: "orange"),
-        FoodItem(name: "Apple", quantity: 10, imageName: "apple"),
-        FoodItem(name: "Juice", quantity: 10, imageName: "juice")
-    ]
-    @Published var showAlert = false
-    @Published var alertTitle = ""
-    @Published var alertMessage = ""
-    
-    func handleFoodUse(selectedFoodIndex: Int) {
-        guard selectedFoodIndex < foodItems.count else { return }
-        var foodItem = foodItems[selectedFoodIndex]
-        
-        if healthBar >= 100 {
-            showAlert(title: "Max Health Reached", message: "Your pet is already at maximum health.")
-        } else if foodItem.quantity > 0 {
-            // Determine health increase amount
-            let healthIncrease: Int = foodItem.name == "Orange" ? 20 : 10 // Orange increases by 0.2, others by 0.1
-            increaseHealth(by: healthIncrease)
-            
-            foodItem.quantity -= 1
-            foodItems[selectedFoodIndex] = foodItem
-        } else {
-            showAlert(title: "Insufficient \(foodItem.name)", message: "You don't have enough \(foodItem.name).")
-        }
-    }
-    
-    func increaseHealth(by amount: Int) {
-        withAnimation {
-            healthBar = min(healthBar + amount, 100) // Assuming max health is 100
-        }
-    }
-    
-    func increaseXP(by value: Int) {
-        // Calculate new progress to see if it exceeds 100
-        let newProgress = levelProgress + value
-        
-        if currentLevel < 10 {
-            // If adding XP will exceed or reach 100, level up and adjust XP
-            if newProgress >= 100 {
-                withAnimation {
-                    // Increase level by 1
-                    currentLevel += 1
-                    
-                    // Reset levelProgress to 0 or to the remainder if exceeding 100
-                    levelProgress = newProgress % 100
-                }
-                
-                showAlert(title: "Level Up!", message: "You've reached Level \(currentLevel)!")
-                
-            } else {
-                withAnimation {
-                    // If not exceeding 100, just add the XP to the current progress
-                    levelProgress = newProgress
-                }
-            }
-        } else if currentLevel == 10 {
-            // Allow XP gain up to 100 but prevent level increase
-            if newProgress <= 100 {
-                withAnimation {
-                    levelProgress = newProgress
-                }
-                
-                // Check if the user has exactly reached 100 XP at level 10
-                if levelProgress == 100 {
-                    // Show congratulatory alert for reaching max level at 100/100 XP
-                    showAlert(title: "Congratulations!", message: "You've reached the maximum Level!")
-                }
-            } else {
-                // If XP would exceed 100, cap at 100
-                withAnimation {
-                    levelProgress = 100 // Cap XP at 100 for level 10
-                }
-            }
-        }
-        
-        // Ensure current level doesn't exceed 10
-        if currentLevel > 10 {
-            currentLevel = 10 // Cap the level at 10
-        }
-    }
-    
-    
-    func showAlert(title: String, message: String) {
-        alertTitle = title
-        alertMessage = message
-        showAlert = true
-    }
-    
-}
 
 // FoodSelectionView definition
 struct FoodSelectionView: View {
@@ -302,4 +200,5 @@ struct PetPage_Previews: PreviewProvider {
         Pet_Page()
     }
 }
+
 
