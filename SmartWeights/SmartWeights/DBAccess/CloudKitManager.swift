@@ -277,7 +277,7 @@ struct testview : View{
                 }
             }
             Button("add four to orange quantity"){
-                foodItemDBManager.updateQuantity(name: "Orange", newQuantity: 4){ error in
+                foodItemDBManager.updateQuantity(name: "Orange", quantity: 4){ error in
                     if let error = error {
                         print("Error updating quantity: \(error.localizedDescription)")
                         return

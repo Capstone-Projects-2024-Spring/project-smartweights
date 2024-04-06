@@ -82,9 +82,9 @@ class storeViewModel: ObservableObject {
                     items[index].isBought = true
                 }
                 subtractFunds(price: Int(item.price) ?? 0)
-                foodItemDBManager.createFoodItem(name: item.name, quantity: 1) { error in
+                foodItemDBManager.updateQuantity(name: item.name, quantity: 1) { error in
                     if let error = error {
-                        print("Error creating food item: \(error.localizedDescription)")
+                        print("Error updating quantity: \(error.localizedDescription)")
                     }
                 }
             }

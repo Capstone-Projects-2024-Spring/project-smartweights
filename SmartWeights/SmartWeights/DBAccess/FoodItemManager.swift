@@ -33,8 +33,8 @@ class FoodItemDBManager: ObservableObject{
     @Published var foodItems: [FoodItemModel] = []
     let CKManager = CloudKitManager()
     var foodItemExists: Bool = false
-
-
+    
+    
     init() {
         fetchFoodItems { foodItems, error in
             if let error = error {
@@ -48,7 +48,7 @@ class FoodItemDBManager: ObservableObject{
             // self.foodItems = foodItems
         }
     }
-    //gets all 
+    //gets all
     func fetchFoodItems(completion: @escaping ([FoodItemModel]?, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue) { records, error in
             if let error = error {
@@ -70,31 +70,31 @@ class FoodItemDBManager: ObservableObject{
             self.foodItemExists = true
         }
     }
-
+    
     func createFoodItem(name: String, quantity: Int64, completion: @escaping (Error?) -> Void) {
-            fetchSpecificFoodItem(name: name) { foodItem, error in
-                if let error = error {
-                    completion(error)
-                    return
-                }
-                if foodItem != nil {
-                    // If the food item exists, do not create a new one
-                    print("Food item already exists")
-                    completion(nil)
-                    return
-                }else{
-                    // If the food item does not exist, create a new one
-                    let foodItem = FoodItemModel(recordId: nil, name: name, quantity: quantity)
-                    let foodItemRecord = foodItem.record
-                    self.foodItems.append(foodItem)
-                    self.CKManager.savePrivateItem(record: foodItemRecord)
-                }
+        fetchSpecificFoodItem(name: name) { foodItem, error in
+            if let error = error {
+                completion(error)
+                return
             }
-          
-  
+            if foodItem != nil {
+                // If the food item exists, do not create a new one
+                print("Food item already exists")
+                completion(nil)
+                return
+            }else{
+                // If the food item does not exist, create a new one
+                let foodItem = FoodItemModel(recordId: nil, name: name, quantity: quantity)
+                let foodItemRecord = foodItem.record
+                self.foodItems.append(foodItem)
+                self.CKManager.savePrivateItem(record: foodItemRecord)
+            }
+        }
+        
+        
     }
     
-
+    
     func fetchSpecificFoodItem(name: String, completion: @escaping (FoodItemModel?, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue, fieldName: "name", fieldValue: name) { records, error in
             guard let record = records?.first else {
@@ -117,16 +117,25 @@ class FoodItemDBManager: ObservableObject{
         }
     }
     /// Updates the quantity of the food item.
-    func updateQuantity(name: String, newQuantity: Int64, completion: @escaping (Error?) -> Void) {
+    // TODO: make it call fetchSpecificFoodItem maybe
+    func updateQuantity(name: String, quantity: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "FoodItem",fieldName:"name", fieldValue: name) { records, error in
-            guard let record = records?.first else {
-                print("Error fetching food item: \(error?.localizedDescription ?? "Unknown error")")
+            if let error = error {
                 completion(error)
                 return
             }
             
-            let quantityValue = NSNumber(value: newQuantity)
-            record["quantity"] = quantityValue as CKRecordValue
+            var record: CKRecord
+            if let existingRecord = records?.first {
+                record = existingRecord
+            } else {
+                record = CKRecord(recordType: "FoodItem")
+                record["name"] = name as CKRecordValue
+            }
+            
+            let existingQuantity = record["quantity"] as? Int64 ?? 0
+            let newQuantity = existingQuantity + quantity
+            record["quantity"] = NSNumber(value: newQuantity) as CKRecordValue
             self.CKManager.savePrivateItem(record: record)
             completion(nil)
         }
@@ -144,7 +153,7 @@ class FoodItemDBManager: ObservableObject{
         }
     }
     
-
-
-
+    
+    
+    
 }
