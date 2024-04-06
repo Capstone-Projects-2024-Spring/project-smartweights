@@ -130,7 +130,7 @@ struct WorkoutMainPage: View {
                 return "Final Set"
             } else {
                 // Default case for any sets that are not the last or only set
-                return isWorkoutPaused ? "Resume Set" : "Finish Set"
+                return isWorkoutPaused ? "Start Next Set" : "Finish Set"
             }
         } else {
             // Before the workout starts
