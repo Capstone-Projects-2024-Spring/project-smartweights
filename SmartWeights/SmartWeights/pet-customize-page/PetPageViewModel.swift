@@ -73,6 +73,12 @@ class PetPageFunction: ObservableObject {
             
             foodItem.quantity -= 1
             foodItems[selectedFoodIndex] = foodItem
+            foodItemDBManager.updateQuantity(name: foodItem.name, newQuantity: Int64(foodItem.quantity)){
+                error in
+                if let error = error {
+                    print("Error updating food item quantity: \(error.localizedDescription)")
+                }
+            }
         } else {
             showAlert(title: "Insufficient \(foodItem.name)", message: "You don't have enough \(foodItem.name).")
         }

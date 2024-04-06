@@ -119,9 +119,9 @@ class FoodItemDBManager: ObservableObject{
             print("food quantity: \(String(describing: foodItem?.quantity))")
         }
     }
-    /// Updates the quantity of the food item.
+    /// Updates the quantity of the food item. Updates by adding the quantity to the existing quantity.
     // TODO: make it call fetchSpecificFoodItem maybe
-    func updateQuantity(name: String, quantity: Int64, completion: @escaping (Error?) -> Void) {
+    func updateQuantity_add(name: String, quantity: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "FoodItem",fieldName:"name", fieldValue: name) { records, error in
             if let error = error {
                 completion(error)
@@ -134,12 +134,34 @@ class FoodItemDBManager: ObservableObject{
             } else {
                 record = CKRecord(recordType: "FoodItem")
                 record["name"] = name as CKRecordValue
+                record["imageName"] = name as CKRecordValue
             }
             
             let existingQuantity = record["quantity"] as? Int64 ?? 0
             let newQuantity = existingQuantity + quantity
             record["quantity"] = NSNumber(value: newQuantity) as CKRecordValue
-            record["imageName"] = name as CKRecordValue
+            
+            self.CKManager.savePrivateItem(record: record)
+            completion(nil)
+        }
+    }
+    // Updates the quantity of the food item, directly replacing the existing quantity.
+    func updateQuantity(name: String, newQuantity: Int64, completion: @escaping (Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue, fieldName: "name", fieldValue: name) { records, error in
+             if let error = error {
+                completion(error)
+                return
+            }
+            
+            var record: CKRecord
+            if let existingRecord = records?.first {
+                record = existingRecord
+            } else {
+                record = CKRecord(recordType: "FoodItem")
+                record["name"] = name as CKRecordValue
+                record["imageName"] = name as CKRecordValue
+            }
+            record[FoodItemRecordKeys.quantity.rawValue] = NSNumber(value: newQuantity)
             self.CKManager.savePrivateItem(record: record)
             completion(nil)
         }

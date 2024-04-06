@@ -119,3 +119,12 @@ class InventoryDBManager: ObservableObject {
     // Rest of the code
     // ...
 }
+
+//class InventoryManager: ObservableObject{
+//    
+//    let foodItemDBManager = FoodItemDBManager()
+//    
+//    func fetchFoodItems(){
+//        foodItemDBManager.fetchFoodItems(completion: <#T##([FoodItemModel]?, (any Error)?) -> Void#>)
+//    }
+//}
