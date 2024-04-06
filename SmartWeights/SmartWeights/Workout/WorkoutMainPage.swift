@@ -63,11 +63,15 @@ struct WorkoutMainPage: View {
 //                        .padding()
                     
                     VStack{
-                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).0)")
-                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).1)")
-                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).2)")
+                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).0)") //gives overall accelertion
+                            .font(.subheadline)
+                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).1)") // gives overall accel going up
+                            .font(.subheadline)
+                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).2)") // gives ovverall aceel going down
+                            .font(.subheadline)
                     
                     }
+                    .padding(.bottom, 30)
                 }
                 .frame(width: 400, height: 400)
                 .background(Color.white.opacity(0.9))
