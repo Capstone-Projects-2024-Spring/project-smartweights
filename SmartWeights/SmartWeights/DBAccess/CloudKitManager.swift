@@ -267,25 +267,25 @@ struct testview : View{
                 
                 
             }
-            Button("Add new orange"){
-                foodItemDBManager.createFoodItem(name: "Orange", quantity: 5){ error in
-                    if let error = error {
-                        print("Error creating food item: \(error.localizedDescription)")
-                        return
-                    }
-                    print("Food item created")
-                }
-            }
-            Button("add four to orange quantity"){
-                foodItemDBManager.updateQuantity(name: "Orange", quantity: 4){ error in
-                    if let error = error {
-                        print("Error updating quantity: \(error.localizedDescription)")
-                        return
-                    }
-                    print("Quantity updated")
-                }
-                
-            }
+//            Button("Add new orange"){
+//                foodItemDBManager.createFoodItem(name: "Orange", quantity: 5){ error in
+//                    if let error = error {
+//                        print("Error creating food item: \(error.localizedDescription)")
+//                        return
+//                    }
+//                    print("Food item created")
+//                }
+//            }
+//            Button("add four to orange quantity"){
+//                foodItemDBManager.updateQuantity(name: "Orange", quantity: 4){ error in
+//                    if let error = error {
+//                        print("Error updating quantity: \(error.localizedDescription)")
+//                        return
+//                    }
+//                    print("Quantity updated")
+//                }
+//                
+//            }
         }
     }
     // preview

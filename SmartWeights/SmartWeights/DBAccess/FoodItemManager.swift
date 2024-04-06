@@ -12,12 +12,14 @@ enum FoodItemRecordKeys: String {
     case type = "FoodItem"
     case name
     case quantity
+    case imageName
 }
 
 struct FoodItemModel {
     var recordId: CKRecord.ID?
     var name: String
     var quantity: Int64
+    var imageName: String
 }
 
 extension FoodItemModel {
@@ -25,6 +27,7 @@ extension FoodItemModel {
         let record = CKRecord(recordType: FoodItemRecordKeys.type.rawValue)
         record[FoodItemRecordKeys.name.rawValue] = name
         record[FoodItemRecordKeys.quantity.rawValue] = quantity
+        record[FoodItemRecordKeys.imageName.rawValue] = imageName
         return record
     }
 }
@@ -63,7 +66,7 @@ class FoodItemDBManager: ObservableObject{
             }
             var foodItems: [FoodItemModel] = []
             for record in records {
-                let foodItem = FoodItemModel(recordId: record.recordID, name: record[FoodItemRecordKeys.name.rawValue] as? String ?? "", quantity: record[FoodItemRecordKeys.quantity.rawValue] as? Int64 ?? 0)
+                let foodItem = FoodItemModel(recordId: record.recordID, name: record[FoodItemRecordKeys.name.rawValue] as? String ?? "", quantity: record[FoodItemRecordKeys.quantity.rawValue] as? Int64 ?? 0, imageName: record[FoodItemRecordKeys.imageName.rawValue] as? String ?? "")
                 foodItems.append(foodItem)
             }
             completion(foodItems, nil)
@@ -84,7 +87,7 @@ class FoodItemDBManager: ObservableObject{
                 return
             }else{
                 // If the food item does not exist, create a new one
-                let foodItem = FoodItemModel(recordId: nil, name: name, quantity: quantity)
+                let foodItem = FoodItemModel(recordId: nil, name: name, quantity: quantity, imageName: name)
                 let foodItemRecord = foodItem.record
                 self.foodItems.append(foodItem)
                 self.CKManager.savePrivateItem(record: foodItemRecord)
@@ -101,7 +104,7 @@ class FoodItemDBManager: ObservableObject{
                 completion(nil, error)
                 return
             }
-            let foodItem = FoodItemModel(recordId: record.recordID, name: record[FoodItemRecordKeys.name.rawValue] as? String ?? "", quantity: record[FoodItemRecordKeys.quantity.rawValue] as? Int64 ?? 0)
+            let foodItem = FoodItemModel(recordId: record.recordID, name: record[FoodItemRecordKeys.name.rawValue] as? String ?? "", quantity: record[FoodItemRecordKeys.quantity.rawValue] as? Int64 ?? 0, imageName: record[FoodItemRecordKeys.imageName.rawValue] as? String ?? "")
             print(" food item abcd HERE HERE: \(foodItem)")
             completion(foodItem, nil)
         }
@@ -136,6 +139,7 @@ class FoodItemDBManager: ObservableObject{
             let existingQuantity = record["quantity"] as? Int64 ?? 0
             let newQuantity = existingQuantity + quantity
             record["quantity"] = NSNumber(value: newQuantity) as CKRecordValue
+            record["imageName"] = name as CKRecordValue
             self.CKManager.savePrivateItem(record: record)
             completion(nil)
         }
@@ -152,8 +156,4 @@ class FoodItemDBManager: ObservableObject{
             completion(nil)
         }
     }
-    
-    
-    
-    
 }

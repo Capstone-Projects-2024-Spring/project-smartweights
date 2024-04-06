@@ -22,7 +22,7 @@ class PetPageFunction: ObservableObject {
     var inventoryDBManager = InventoryDBManager()
     var userDBManager = UserDBManager()
     var petDBManager = PetDBManager()
-    
+    var foodItemDBManager = FoodItemDBManager()
     @Published var showShop = false
     @Published var showCustomize = false
     @Published var healthBar: Int = 50
@@ -30,11 +30,14 @@ class PetPageFunction: ObservableObject {
     @Published var currentLevel = 1
     @Published var showFoodSelection = false
     @Published var selectedFoodIndex = 0
-    @Published var foodItems = [
-        FoodItem(name: "Orange", quantity: 10, imageName: "orange"),
-        FoodItem(name: "Apple", quantity: 10, imageName: "apple"),
-        FoodItem(name: "Juice", quantity: 10, imageName: "juice")
-    ]
+    // @Published var foodItems = [
+    //     FoodItem(name: "Orange", quantity: 10, imageName: "orange"),
+    //     FoodItem(name: "Apple", quantity: 10, imageName: "apple"),
+    //     FoodItem(name: "Juice", quantity: 10, imageName: "juice")
+    // ]
+
+    @Published var foodItems: [FoodItemModel] = []
+
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
@@ -44,6 +47,17 @@ class PetPageFunction: ObservableObject {
     // Initializer
     init(){
         updateXP()
+        foodItemDBManager.fetchFoodItems { fetchedItems, error in
+            if let error = error {
+                print("Error fetching food items: \(error)")
+                return
+            }
+            if let fetchedItems = fetchedItems {
+                DispatchQueue.main.async {
+                    self.foodItems = fetchedItems
+                }
+            }
+        }
     }
 
     func handleFoodUse(selectedFoodIndex: Int) {

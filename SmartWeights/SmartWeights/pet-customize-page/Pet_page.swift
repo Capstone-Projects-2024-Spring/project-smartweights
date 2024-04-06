@@ -135,7 +135,7 @@ struct Pet_Page: View {
 // FoodSelectionView definition
 struct FoodSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var foodItems: [FoodItem]
+    @Binding var foodItems: [FoodItemModel]
     @Binding var selectedFoodIndex: Int
     
     var body: some View {
