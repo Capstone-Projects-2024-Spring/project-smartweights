@@ -209,6 +209,7 @@ struct testview : View{
     @State var record = CKRecord(recordType: "Test")
     @State var user = CKRecord.Reference(recordID: CKRecord.ID(recordName: "Test"), action: .none)
     var foodItemDBManager = FoodItemDBManager()
+    var petItemDBManager = PetItemDBManager()
     var body: some View{
         VStack{
             Button("Save"){
@@ -266,6 +267,59 @@ struct testview : View{
                 }
                 
                 
+            }
+            Button("Fetch pet items"){
+                petItemDBManager.fetchPetItems { petItems, error in
+                    if let error = error {
+                        print("Error fetching pet items: \(error.localizedDescription)")
+                        return
+                    }
+                    guard let petItems = petItems else {
+                        print("No pet items found")
+                        return
+                    }
+                    print("Pet items: \(petItems)")
+                }
+            }
+            Button("Fetch Specific Dog Item"){
+                petItemDBManager.fetchSpecificPetItem(imageName: "Dog"){ petItem, error in
+                    if let error = error {
+                        print("Error fetching pet item: \(error.localizedDescription)")
+                        return
+                    }
+                    guard let petItem = petItem else {
+                        print("No pet item found")
+                        return
+                    }
+                    print("Pet item: \(petItem)")
+                }
+            }
+            Button("Create new pet item"){
+                petItemDBManager.createPetItem(imageName: "Dog"){ error in
+                    if let error = error {
+                        print("Error creating pet item: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Pet item created")
+                }
+            }
+            Button("set dog active"){
+                petItemDBManager.setActivePetItem(imageName: "Dog"){ error in
+                    if let error = error {
+                        print("Error setting active: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Active set")
+                }
+            }
+            Button("set cat active"){
+                petItemDBManager.setActivePetItem(imageName: "Cat"){ error in
+                    if let error = error {
+                        print("Error setting active: \(error.localizedDescription)")
+                        return
+                    }
+                    print("Active set")
+                }
             }
 //            Button("Add new orange"){
 //                foodItemDBManager.createFoodItem(name: "Orange", quantity: 5){ error in
