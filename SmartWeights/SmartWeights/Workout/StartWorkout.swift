@@ -236,5 +236,5 @@ class WorkoutViewModel: ObservableObject {
 
 
 #Preview{
-    WorkoutMainPage(viewModel: WorkoutViewModel(), bleManager: BLEManager())
+    WorkoutMainPage(viewModel: WorkoutViewModel())
 }

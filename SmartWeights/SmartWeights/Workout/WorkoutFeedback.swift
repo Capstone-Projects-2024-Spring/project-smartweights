@@ -115,7 +115,7 @@ struct WorkoutFeedback: View {
                         Spacer()
                         ZStack(alignment: .trailing) {
                             
-                            Image("dinosaur")
+                            Image("Dinosaur")
                                 .resizable()
                                 .frame(width: 140, height: 140)
                             Image("chain")

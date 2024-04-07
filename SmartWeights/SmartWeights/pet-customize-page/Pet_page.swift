@@ -9,7 +9,8 @@ import SwiftUI
 
 
 struct Pet_Page: View {
-    @StateObject private var viewModel = PetPageFunction() // ViewModel integration
+    @ObservedObject var viewModel = PetPageFunction()
+
     
     var body: some View {
         NavigationView {
@@ -69,20 +70,29 @@ struct Pet_Page: View {
                 }
                 .padding(.horizontal, 25)
                 
-                Image("dog")
+                Image("Dog")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 500, height: 400, alignment: .center)
                     .padding(.bottom, 0)
                 
                 VStack {
-                    CustomProgressView(value: viewModel.healthBar, maxValue: 1.0, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
+                    CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
                         .frame(height: 20)
                         .padding()
                     
-                    CustomProgressView(value: viewModel.levelProgress, maxValue: 5000, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                    /*
+                    // Display Current Level
+                    Text("Level \(viewModel.currentLevel)")
+                        .font(.system(size: 20))
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, 10)
+                     */
+                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                         .frame(height: 20)
                         .padding()
+                    
                 }
                 .padding(.top, -20)
                 Spacer()
@@ -103,64 +113,10 @@ struct Pet_Page: View {
 }
 
 
-struct FoodItem: Identifiable {
-    var id = UUID()
-    var name: String
-    var quantity: Int
-    var imageName: String
-}
-
-class PetPageFunction: ObservableObject {
-    @Published var showShop = false
-    @Published var showCustomize = false
-    @Published var healthBar: Float = 0.25
-    @Published var levelProgress: Float = 0.55
-    @Published var showFoodSelection = false
-    @Published var selectedFoodIndex = 0
-    @Published var foodItems = [
-        FoodItem(name: "Orange", quantity: 10, imageName: "orange"),
-        FoodItem(name: "Apple", quantity: 10, imageName: "apple"),
-        FoodItem(name: "Juice", quantity: 10, imageName: "juice")
-    ]
-    @Published var showAlert = false
-    @Published var alertTitle = ""
-    @Published var alertMessage = ""
-    
-    func handleFoodUse(selectedFoodIndex: Int) {
-        guard selectedFoodIndex < foodItems.count else { return }
-        var foodItem = foodItems[selectedFoodIndex]
-        
-        if healthBar >= 1.0 {
-            showAlert(title: "Max Health Reached", message: "Your pet is already at maximum health.")
-        } else if foodItem.quantity > 0 {
-            // Determine health increase amount
-            let healthIncrease: Float = foodItem.name == "Orange" ? 0.2 : 0.1 // Orange increases by 0.2, others by 0.1
-            increaseHealth(by: healthIncrease)
-            
-            foodItem.quantity -= 1
-            foodItems[selectedFoodIndex] = foodItem
-        } else {
-            showAlert(title: "Insufficient \(foodItem.name)", message: "You don't have enough \(foodItem.name).")
-        }
-    }
-    
-    func increaseHealth(by amount: Float) {
-        withAnimation {
-            healthBar = min(healthBar + amount, 1.0)
-        }
-    }
-    
-    func showAlert(title: String, message: String) {
-        alertTitle = title
-        alertMessage = message
-        showAlert = true
-    }
-}
-
 // FoodSelectionView definition
 struct FoodSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var foodItems: [FoodItem]
+    @Binding var foodItems: [FoodItemModel]
     @Binding var selectedFoodIndex: Int
     
     var body: some View {
@@ -225,4 +181,5 @@ struct PetPage_Previews: PreviewProvider {
         Pet_Page()
     }
 }
+
 

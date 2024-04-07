@@ -4,8 +4,10 @@ import Combine
 /// Main structure to display the workout page with integrated UI components
 struct WorkoutMainPage: View {
     @StateObject var viewModel = WorkoutViewModel()
-    @StateObject var bleManager = BLEManager()
+    @ObservedObject var ble = BLEcentral()
+    @ObservedObject var formCriteria = FormCriteria()
     @StateObject var storeModel = storeViewModel()
+    @ObservedObject var workoutPageViewModel = WorkoutPageViewModel()
     
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
@@ -16,10 +18,17 @@ struct WorkoutMainPage: View {
     
     @State private var showGraphPopover = false
     @State private var graphData: [Double] = []
+    var feedback: (String, String, String, String) {
+           formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+       }
+    
+    @State private var currentMotivationalPhrase = "Let's get started!"
+
     
     
     var body: some View {
         ZStack {
+            
             VStack {
                 // Title and microphone button for workout voice control
                 workoutTitleView
@@ -34,6 +43,7 @@ struct WorkoutMainPage: View {
                     WorkoutFeedback(viewModel: viewModel)
                 }
             }
+            
             .popover(isPresented: $showGraphPopover) {
                 VStack {
                     HStack {
@@ -49,17 +59,45 @@ struct WorkoutMainPage: View {
                         .accessibilityLabel("Close") // Accessibility label for better UX
                     }
                     .padding(.top, 10) // Give some space from the top edge
-                    
-                    Text("Workout Progress Graph")
+                
+                    //Text("workout Progress Graph")
+                    Text("Feedback")
                         .font(.headline)
-                        .padding()
                     
-                    LineGraph(data: graphData) // Use the dynamic data for the line graph
-                        .stroke(Color.green, lineWidth: 2)
-                        .frame(height: 200)
-                        .padding()
+//                    LineGraph(data: graphData) // Use the dynamic data for the line graph
+//                        .stroke(Color.green, lineWidth: 2)
+//                        .frame(height: 200)
+//                        .padding()
+                    
+                    VStack{
+                        HStack {
+                            ZStack {
+                                Image("bubble")
+                                    .resizable()
+                                    .frame(width: 250, height: 150)
+                                Text("\(feedback.3)")
+                                    .foregroundStyle(Color.black)
+                            }
+                            .padding(.bottom, -40)
+                        }
+                        HStack{
+                            
+                            Image("Dog")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200, height: 175)
+                        }
+                        Text("\(feedback.0)") //gives overall acceleration
+                            .font(.subheadline)
+                        Text("\(feedback.1)") // gives overall accel going up
+                            .font(.subheadline)
+                        Text("\(feedback.2)") // gives overall accel going down
+                            .font(.subheadline)
+                    }
+                    .padding(.bottom, 30)
+                    
                 }
-                .frame(width: 400, height: 400)
+                .frame(width: 400, height: 500)
                 .background(Color.white.opacity(0.9))
                 .cornerRadius(20)
                 .shadow(radius: 10)
@@ -87,21 +125,6 @@ struct WorkoutMainPage: View {
             Text("Workout")
                 .font(.title)
                 .bold()
-            
-            if selectedTab == 0 {
-                VStack {
-                    Button(action: {
-                        viewModel.startListening()
-                    }) {
-                        Image(systemName: "mic.circle")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                    }
-                    .accessibilityLabel("micWorkoutButton")
-                    .padding(.trailing, 42)
-                }
-                .padding(.leading, 300)
-            }
         }
     }
     
@@ -121,18 +144,25 @@ struct WorkoutMainPage: View {
         let totalSets = Int(viewModel.inputtedSets) ?? 0
         if hasWorkoutStarted {
             if viewModel.currentSets >= totalSets {
-                return "Finish Workout" // Changes here to ensure "Finish Workout" shows up right after the final set
+                return "Finish Workout" // When all sets are completed, regardless of the number of sets
+            } else if totalSets == 1 {
+                // If there is only 1 set, the button should immediately suggest finishing the workout
+                // This case is handled upfront to ensure "Finish Workout" is shown for a single set scenario
+                return "Finish Workout"
             } else if viewModel.currentSets == totalSets - 1 {
+                // For more than one set, this becomes the "Final Set" before "Finish Workout"
                 return "Final Set"
-            } else if viewModel.currentSets < totalSets {
-                return isWorkoutPaused ? "Next Set" : "Finish Set"
             } else {
-                return "Complete Workout"
+                // Default case for any sets that are not the last or only set
+                return isWorkoutPaused ? "Start Next Set" : "Finish Set"
             }
         } else {
+            // Before the workout starts
             return "Start Workout"
         }
     }
+
+
     
     
     
@@ -159,50 +189,29 @@ struct WorkoutMainPage: View {
                         .bold()
                         .foregroundStyle(.green)
                 }
-                
             }
+            .padding(.bottom, -15)
             
-            // Reps count display
-            if hasWorkoutStarted {
-                HStack {
-                    Text("Sets: ")
-                        .font(.title2)
-                        .bold()
-                    
-                    Text("\(viewModel.currentSets) / \(viewModel.inputtedSets)")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(.orange)
+            
+            
+            HStack {
+                ZStack {
+                    Image("bubble")
+                        .resizable()
+                        .frame(width: 350, height: 150)
+                    Text(currentMotivationalPhrase)
+                        .foregroundStyle(Color.black)
                 }
-                .padding()
+                .padding(.bottom, -50)
             }
-            
-            
             HStack{
-                ZStack{
-                    // Form Rectangle box
-                    RoundedRectangle(cornerRadius:  25)
-                        .frame(width: 150, height: 150)
-                        .foregroundColor(.gray)
-                    Text("Form")
-                        .font(.system(size: 14))
-                        .bold()
-                        .foregroundColor(.white)
-                    CircularProgressView(progress: viewModel.progress)
-                    
-                }
-                ZStack{
-                    // Accel Rectange box
-                    RoundedRectangle(cornerRadius:  25)
-                        .frame(width: 150, height: 150)
-                        .foregroundColor(.gray)
-                    Text("Accel")
-                        .font(.system(size: 14))
-                        .bold()
-                        .foregroundColor(.white)
-                    CircularProgressView(progress: viewModel.progress)
-                }
+                
+                Image("Dog")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 400, height: 375)
             }
+
             
             
             // Start/Reset workout button
@@ -212,21 +221,34 @@ struct WorkoutMainPage: View {
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
                         storeModel.addFundtoUser(price: 50)
+                        workoutPageViewModel.AddXP(value: 25)
                         viewModel.resetWorkoutState()
                         hasWorkoutStarted = false
                         isWorkoutPaused = false
+                        ble.collectDataToggle = false //stops collecting data
+                        print("hello")
+                        //ble.MPU6050_1Gyros.removeAll()
+                        //need to add this data to another array to store for workout history
+                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
                         showGraphPopover = true
+                        currentMotivationalPhrase = "Let's get started with a New Workout!"
+
+                        
                     } else if buttonText == "Final Set" {
                         // Logic for transitioning from the final set to finishing the workout
                         viewModel.currentSets += 1 // This will push the state to "Finish Workout"
                         showGraphPopover = false
                         viewModel.resumeTimer()
+                        ble.MPU6050_1Gyros.removeAll()
+                        ble.collectDataToggle = true
+                        currentMotivationalPhrase = "Last Set! Push through!"
                     } else if !isWorkoutPaused {
+                        ble.collectDataToggle = false// continue the data collection
                         viewModel.pauseTimer()
                         generateRandomData(for: .perSet) // Generate per-set data
                         showGraphPopover = true
                         isWorkoutPaused = true
-                        
+                        currentMotivationalPhrase = "Take a breather, then keep going!"
                         if let totalSets = Int(viewModel.inputtedSets), viewModel.currentSets < totalSets {
                             viewModel.currentSets += 1
                         }
@@ -235,14 +257,17 @@ struct WorkoutMainPage: View {
                         viewModel.resumeTimer()
                         showGraphPopover = false
                         isWorkoutPaused = false
+                        ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
+                        ble.collectDataToggle = true //Stars collecting data again
+                        currentMotivationalPhrase = "You're doing great!"
                     }
                 } else {
                     // Start the workout
+                    currentMotivationalPhrase = "First set, let's go!"
                     viewModel.resumeTimer()
                     showingWorkoutSheet = true
                     showGraphPopover = false
-                    
-                    
+        
                 }
             }) {
                 RoundedRectangle(cornerRadius: 25)
@@ -256,7 +281,7 @@ struct WorkoutMainPage: View {
             }
             .accessibilityLabel(hasWorkoutStarted ? (isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
             .sheet(isPresented: $showingWorkoutSheet) {
-                WorkoutDetailsInputView(viewModel: viewModel, hasWorkoutStarted: $hasWorkoutStarted, showingWorkoutSheet: $showingWorkoutSheet)
+                WorkoutDetailsInputView(viewModel: viewModel, ble: ble, hasWorkoutStarted: $hasWorkoutStarted, showingWorkoutSheet: $showingWorkoutSheet)
             }
             
             
@@ -310,7 +335,9 @@ struct WorkoutMainPage: View {
     
     // Define a new view for the workout details input form
     struct WorkoutDetailsInputView: View {
+        
         @ObservedObject var viewModel: WorkoutViewModel
+        @ObservedObject var ble: BLEcentral
         @Binding var hasWorkoutStarted: Bool
         @Binding var showingWorkoutSheet: Bool
         @State private var showingAlert = false
@@ -320,7 +347,13 @@ struct WorkoutMainPage: View {
         @State private var countdownActive = false // Indicates if the countdown is active
         
         var body: some View {
+            
             ZStack {
+                RoundedRectangle(cornerRadius: 3)
+                    .frame(width: 60, height: 6)
+                    .foregroundColor(.gray)
+                    .opacity(0.5)
+                    .padding(.top, 5)
                 VStack {
                     if countdownActive {
                         // Countdown UI
@@ -332,9 +365,22 @@ struct WorkoutMainPage: View {
                             }
                     } else {
                         // Regular input form
-                        Text("Enter Workout Details")
-                            .font(.headline)
-                            .padding()
+                        HStack {
+                            Text("Enter Workout Details")
+                                .font(.headline)
+                            
+                            Button(action: {
+                                // Action to trigger voice input or start listening for commands
+                                viewModel.startListening()
+                            }) {
+                                Image(systemName: "mic.circle")
+                                    .resizable()
+                                    .frame(width: 25, height: 25) // Adjusted size for better fit
+                                    .padding(.leading, 5)
+                            }
+                            .accessibilityLabel("Start Voice Command")
+                        }
+                        .padding()
                         
                         TextField("Sets", text: $viewModel.inputtedSets)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -350,6 +396,7 @@ struct WorkoutMainPage: View {
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                             .padding()
+                        
                         
                         Button("Start Workout") {
                             if isValidInput(viewModel.inputtedSets) && isValidInput(viewModel.inputtedReps) && isValidInput(viewModel.inputtedWeights) {
@@ -391,6 +438,10 @@ struct WorkoutMainPage: View {
                         hasWorkoutStarted = true // Ensure this change is captured by the UI
                         showingWorkoutSheet = false // Dismiss or update UI as needed
                         viewModel.startTimer() // Start the main workout timer after countdown
+                        ble.MPU6050_1Gyros.removeAll() //Clear the collected Data for previous set
+                        ble.collectDataToggle = true //Start collecting data for the current workout
+                        
+                        
                     }
                 }
             }
