@@ -73,14 +73,27 @@ class FormCriteria: ObservableObject{
         
     }
     
-    func giveFeedback(array: [[Int]]) -> (String,String,String){
+    func giveFeedback(array: [[Int]]) -> (String,String,String,String){
     
+        let averageAcceleration = self.averageUpDownAcceleration(array: array)
+        let upDownAcceleration = self.UpDownAcceleration(array: array)
 
-        var overallAccel = "Overall acceleration: \(self.averageUpDownAcceleration(array: array)) %"
-        var upSpeed = " \(self.UpDownAcceleration(array: array).0  * 100)% of your reps are too fast going up"
-        var downSpeed = "\(self.UpDownAcceleration(array: array).1 * 100)% of your reps are too fast going down"
+        let overallAccel = String(format: "Overall acceleration: %.2f %% good", averageAcceleration)
+        let upSpeed = String(format: "%.2f%% of your reps are too fast going up", upDownAcceleration.0 * 100)
+        let downSpeed = String(format: "%.2f%% of your reps are too fast going down", upDownAcceleration.1 * 100)
+        var customTextFeedback = ""
         
-        return (overallAccel,upSpeed,downSpeed)
+        if self.averageUpDownAcceleration(array: array) < 0.5{
+            customTextFeedback = "whoa whoa whoa slow down"
+            
+        }
+        else{
+            customTextFeedback = "Keep up the good work"
+        }
+        
+        
+        
+        return (overallAccel,upSpeed,downSpeed,customTextFeedback)
         
     }
     

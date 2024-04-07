@@ -17,6 +17,9 @@ struct WorkoutMainPage: View {
     
     @State private var showGraphPopover = false
     @State private var graphData: [Double] = []
+    var feedback: (String, String, String, String) {
+           formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+       }
     
     
     var body: some View {
@@ -63,13 +66,12 @@ struct WorkoutMainPage: View {
 //                        .padding()
                     
                     VStack{
-                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).0)") //gives overall accelertion
+                        Text("\(feedback.0)") //gives overall acceleration
                             .font(.subheadline)
-                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).1)") // gives overall accel going up
+                        Text("\(feedback.1)") // gives overall accel going up
                             .font(.subheadline)
-                        Text("\(formCriteria.giveFeedback(array: ble.MPU6050_1Gyros).2)") // gives ovverall aceel going down
+                        Text("\(feedback.2)") // gives overall accel going down
                             .font(.subheadline)
-                    
                     }
                     .padding(.bottom, 30)
                 }
