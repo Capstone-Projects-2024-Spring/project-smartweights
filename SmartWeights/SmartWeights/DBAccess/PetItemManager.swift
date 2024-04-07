@@ -37,7 +37,7 @@ class PetItemDBManager: ObservableObject{
     @Published var petItems: [PetItemModel] = []
     let CKManager = CloudKitManager()
     var petItemExists: Bool = false
-    var activePet: String = ""
+    @Published var activePet: String = ""
     init() {
         fetchPetItems { petItems, error in
             if let error = error {
@@ -117,16 +117,16 @@ class PetItemDBManager: ObservableObject{
         }
     }
     // goes through all pet items and sets the active pet item to 1 and the rest to 0 
-    func setActivePetItem(imageName: String, completion: @escaping (Error?) -> Void) {
+    func setActivePetItem(imageName: String, completion: @escaping (String, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "PetItem") { records, error in
         if let error = error {
-            completion(error)
+            completion("", error)
             return
         }
         
         guard let records = records else {
             print("No pet items found.")
-            completion(nil)
+            completion("", nil)
             return
         }
             let dispatchGroup = DispatchGroup()
@@ -134,6 +134,7 @@ class PetItemDBManager: ObservableObject{
                 dispatchGroup.enter()
                 if record["imageName"] as? String == imageName {
                     record["isActive"] = 1 as CKRecordValue
+                    self.activePet = imageName
                 } else {
                     record["isActive"] = 0 as CKRecordValue
                 }
@@ -141,8 +142,18 @@ class PetItemDBManager: ObservableObject{
                 dispatchGroup.leave()
             }
             dispatchGroup.notify(queue: .main) {
-                completion(nil)
+                completion(self.activePet, nil)
             }
+        }
+    }
+    func getActivePet(completion : @escaping (String, Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "PetItem", fieldName: "isActive", fieldValue: "1") { records, error in
+            guard let record = records?.first else {
+                completion("", error)
+                return
+            }
+            let imageName = record["imageName"] as! String
+            completion(imageName, nil)
         }
     }
 }

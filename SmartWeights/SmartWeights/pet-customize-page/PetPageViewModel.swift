@@ -22,6 +22,7 @@ class PetPageFunction: ObservableObject {
     var inventoryDBManager = InventoryDBManager()
     var userDBManager = UserDBManager()
     var petDBManager = PetDBManager()
+    var petItemDBManager = PetItemDBManager()
     var foodItemDBManager = FoodItemDBManager()
     @Published var showShop = false
     @Published var showCustomize = false
@@ -37,13 +38,14 @@ class PetPageFunction: ObservableObject {
     // ]
 
     @Published var foodItems: [FoodItemModel] = []
-
+    @Published var petItems: [PetItemModel] = []
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
 
     @Published var userTotalXP = 0
-    var pet: PetModel?
+    @Published var pet: PetModel?
+    @Published var activePet: String = ""
     // Initializer
     init(){
         updateXP()
@@ -57,6 +59,18 @@ class PetPageFunction: ObservableObject {
                     self.foodItems = fetchedItems
                 }
             }
+        }
+        petItemDBManager.fetchPetItems{ petItems, error in
+            if let error = error {
+                print("Error fetching pet items: \(error.localizedDescription)")
+                return
+            }
+            if let petItems = petItems {
+                DispatchQueue.main.async {
+                    self.petItems = petItems
+                }
+            }
+
         }
     }
 
@@ -119,5 +133,17 @@ class PetPageFunction: ObservableObject {
         alertTitle = title
         alertMessage = message
         showAlert = true
+    }
+
+    func getActivePet(){
+        petItemDBManager.getActivePet { (activePet, error) in
+            if let error = error {
+                print("Error getting active pet: \(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    self.activePet = activePet
+                }
+            }
+            }
     }
 }

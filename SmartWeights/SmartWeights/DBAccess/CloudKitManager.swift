@@ -84,11 +84,11 @@ class CloudKitManager {
     ///   - usePrivateDatabase: A flag indicating whether to use the private database or not.
     ///   - user: An optional user reference to filter the records.
     ///   - completion: A closure to be called with the fetched records or an error.
-    private func p_fetchRecord(recordType: String, usePrivateDatabase: Bool, fieldName: String? = nil, fieldValue: String? = nil, completion: @escaping ([CKRecord]?, Error?) -> Void) {
+    private func p_fetchRecord(recordType: String, usePrivateDatabase: Bool, fieldName: String? = nil, fieldValue: Any? = nil, completion: @escaping ([CKRecord]?, Error?) -> Void) {
         let predicate: NSPredicate
         // set the predicate to user if not nil, otherwise true
         if let fieldName = fieldName, let fieldValue = fieldValue {
-            predicate = NSPredicate(format: "%K == %@", fieldName, fieldValue)
+            predicate = NSPredicate(format: "%K == %@", fieldName, fieldValue as! CKRecordValue as! CVarArg)
         } else {
             predicate = NSPredicate(value: true)
         }
@@ -304,7 +304,7 @@ struct testview : View{
                 }
             }
             Button("set dog active"){
-                petItemDBManager.setActivePetItem(imageName: "Dog"){ error in
+                petItemDBManager.setActivePetItem(imageName: "Dog"){ activePet, error in
                     if let error = error {
                         print("Error setting active: \(error.localizedDescription)")
                         return
@@ -313,7 +313,7 @@ struct testview : View{
                 }
             }
             Button("set cat active"){
-                petItemDBManager.setActivePetItem(imageName: "Cat"){ error in
+                petItemDBManager.setActivePetItem(imageName: "Cat"){ activePet, error in
                     if let error = error {
                         print("Error setting active: \(error.localizedDescription)")
                         return
