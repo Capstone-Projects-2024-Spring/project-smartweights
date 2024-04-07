@@ -5,7 +5,7 @@ import Combine
 struct WorkoutMainPage: View {
     @StateObject var viewModel = WorkoutViewModel()
     @StateObject var bleManager = BLEManager()
-//    @StateObject var storeModel = storeViewModel()
+    @StateObject var storeModel = storeViewModel()
     @ObservedObject var workoutPageViewModel = WorkoutPageViewModel()
     
     @State private var workoutSubscription: AnyCancellable?
@@ -17,6 +17,9 @@ struct WorkoutMainPage: View {
     
     @State private var showGraphPopover = false
     @State private var graphData: [Double] = []
+    
+    @State private var currentMotivationalPhrase = "Let's get started!"
+
     
     
     var body: some View {
@@ -154,50 +157,29 @@ struct WorkoutMainPage: View {
                         .bold()
                         .foregroundStyle(.green)
                 }
-                
             }
+            .padding(.bottom, -15)
             
-            // Reps count display
-            if hasWorkoutStarted {
-                HStack {
-                    Text("Sets: ")
-                        .font(.title2)
-                        .bold()
-                    
-                    Text("\(viewModel.currentSets) / \(viewModel.inputtedSets)")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(.orange)
+            
+            
+            HStack {
+                ZStack {
+                    Image("bubble")
+                        .resizable()
+                        .frame(width: 350, height: 150)
+                    Text(currentMotivationalPhrase)
+                        .foregroundStyle(Color.black)
                 }
-                .padding()
+                .padding(.bottom, -50)
             }
-            
-            
             HStack{
-                ZStack{
-                    // Form Rectangle box
-                    RoundedRectangle(cornerRadius:  25)
-                        .frame(width: 150, height: 150)
-                        .foregroundColor(.gray)
-                    Text("Form")
-                        .font(.system(size: 14))
-                        .bold()
-                        .foregroundColor(.white)
-                    CircularProgressView(progress: viewModel.progress)
-                    
-                }
-                ZStack{
-                    // Accel Rectange box
-                    RoundedRectangle(cornerRadius:  25)
-                        .frame(width: 150, height: 150)
-                        .foregroundColor(.gray)
-                    Text("Accel")
-                        .font(.system(size: 14))
-                        .bold()
-                        .foregroundColor(.white)
-                    CircularProgressView(progress: viewModel.progress)
-                }
+                
+                Image("dog")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 400, height: 375)
             }
+
             
             
             // Start/Reset workout button
@@ -206,23 +188,27 @@ struct WorkoutMainPage: View {
                     if buttonText == "Finish Workout" {
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
-//                        storeModel.addFundtoUser(price: 50)
+                        storeModel.addFundtoUser(price: 50)
                         workoutPageViewModel.AddXP(value: 25)
                         viewModel.resetWorkoutState()
                         hasWorkoutStarted = false
                         isWorkoutPaused = false
                         showGraphPopover = true
+                        currentMotivationalPhrase = "Let's get started with a New Workout!"
+
+                        
                     } else if buttonText == "Final Set" {
                         // Logic for transitioning from the final set to finishing the workout
                         viewModel.currentSets += 1 // This will push the state to "Finish Workout"
                         showGraphPopover = false
                         viewModel.resumeTimer()
+                        currentMotivationalPhrase = "Last Set! Push through!"
                     } else if !isWorkoutPaused {
                         viewModel.pauseTimer()
                         generateRandomData(for: .perSet) // Generate per-set data
                         showGraphPopover = true
                         isWorkoutPaused = true
-                        
+                        currentMotivationalPhrase = "Take a breather, then keep going!"
                         if let totalSets = Int(viewModel.inputtedSets), viewModel.currentSets < totalSets {
                             viewModel.currentSets += 1
                         }
@@ -231,14 +217,15 @@ struct WorkoutMainPage: View {
                         viewModel.resumeTimer()
                         showGraphPopover = false
                         isWorkoutPaused = false
+                        currentMotivationalPhrase = "You're doing great!"
                     }
                 } else {
                     // Start the workout
+                    currentMotivationalPhrase = "First set, let's go!"
                     viewModel.resumeTimer()
                     showingWorkoutSheet = true
                     showGraphPopover = false
-                    
-                    
+        
                 }
             }) {
                 RoundedRectangle(cornerRadius: 25)
