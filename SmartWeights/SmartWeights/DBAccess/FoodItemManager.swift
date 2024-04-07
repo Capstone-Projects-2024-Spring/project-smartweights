@@ -73,7 +73,17 @@ class FoodItemDBManager: ObservableObject{
             self.foodItemExists = true
         }
     }
-    
+    func createInitialFoodItems(){
+        let foodItems = [
+            FoodItemModel(recordId: nil, name: "Apple", quantity: 0, imageName: "Apple"),
+            FoodItemModel(recordId: nil, name: "Orange", quantity: 0, imageName: "Orange"),
+            FoodItemModel(recordId: nil, name: "Juice", quantity: 0, imageName: "Juice"),
+        ]
+        for foodItem in foodItems {
+            let foodItemRecord = foodItem.record
+            self.CKManager.savePrivateItem(record: foodItemRecord)
+        }
+    }
     func createFoodItem(name: String, quantity: Int64, completion: @escaping (Error?) -> Void) {
         fetchSpecificFoodItem(name: name) { foodItem, error in
             if let error = error {
