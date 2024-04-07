@@ -19,26 +19,6 @@ struct Pet_Page: View {
                     .font(.system(size: 45))
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
-                Text("USERXP: \(viewModel.userTotalXP)")
-                    
-                /*
-                // XP Increase Button for testing purpose
-                Button(action: {
-                    // Assuming you want to increase XP by a fixed amount, e.g., 5
-                    viewModel.AddXP(value: 50)
-                    
-                }) {
-                    Text("Increase XP")
-                        .bold()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .accessibilityIdentifier("IncreaseXPButton")
-                .padding(.top, 10) // Add some padding on top to separate it from the pet name
-                 */
                 
                 HStack {
                     HamburgerMenu(
@@ -111,6 +91,7 @@ struct Pet_Page: View {
                      */
                     CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                         .frame(height: 20)
+                        .padding()
                     
                 }
                 .padding(.top, -20)
