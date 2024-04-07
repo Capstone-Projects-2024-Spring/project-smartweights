@@ -70,7 +70,7 @@ struct Pet_Page: View {
                 }
                 .padding(.horizontal, 25)
                 
-                Image("dog")
+                Image("Dog")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 500, height: 400, alignment: .center)

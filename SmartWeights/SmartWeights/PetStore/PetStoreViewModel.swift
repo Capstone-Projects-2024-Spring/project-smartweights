@@ -12,9 +12,9 @@ class storeViewModel: ObservableObject {
     
     /// Items available in store.
     @Published var items = [
-        SellingItem(id: 1, name: "Dog", category: "Pets", price: "500", image: Image("dog"), description: "The best companion!"),
-        SellingItem(id: 2, name: "Cat", category: "Pets", price: "500", image: Image("cat"), description: "Has 9 lives!"),
-        SellingItem(id: 3, name: "Dinosaur", category: "Pets", price: "700", image: Image("dinosaur"), description: "Only 250 million years old!"),
+        SellingItem(id: 1, name: "Dog", category: "Pets", price: "500", image: Image("Dog"), description: "The best companion!"),
+        SellingItem(id: 2, name: "Cat", category: "Pets", price: "500", image: Image("Cat"), description: "Has 9 lives!"),
+        SellingItem(id: 3, name: "Dinosaur", category: "Pets", price: "700", image: Image("Dinosaur"), description: "Only 250 million years old!"),
         SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("Orange"), description: "Gives 20 health. MAX: 10"),
         SellingItem(id: 5, name: "Apple", category: "Foods", price: "10", image: Image("Apple"), description: "Gives 10 health. MAX: 10"),
         SellingItem(id: 6, name: "Juice", category: "Foods", price: "20", image: Image("Juice"), description: "Gives 10 health. MAX: 10"),
