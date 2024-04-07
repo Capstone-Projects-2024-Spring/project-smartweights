@@ -30,13 +30,19 @@ class FormCriteria: ObservableObject{
         var fast = 0
 
         array.forEach { (data) in
-            if data[2] > -180 && data[2] < 180{
+            if data[2] < 10 && data[2] > -10{ //the user isnt making a rep, could be between reps
+
+            }
+            else if data[2] > -180 && data[2] < 180{
                 good += 1
             }
             else if data[2] < 0{
                 fast += 1
             }
-            count += 1
+            if data[2] > 10 || data[2] < -10{
+                count += 1
+            }
+            
         }
 
         return Double(good)/Double(count)
@@ -53,17 +59,20 @@ class FormCriteria: ObservableObject{
         
         array.forEach{ (data) in
             
-            if data[2] > 180{
+            if data[2] < 10 && data[2] > -10{ //the user isnt making a rep, could be between reps (resting)
+            }
+            
+            else if data[2] > 180{ //moving up faster than 180 degrees per second
                 tooFastUp += 1
             }
-            else if data[2] < -180{
+            else if data[2] < -180{ //moving down faster than 180 degrees per second
                 tooFastDown += 1
             }
             
-            if data[2] > 0{
+            if data[2] > 10{ //only counting when they are moving up
                 upCount += 1
             }
-            else if data[2] < 0{
+            else if data[2] < -10{ //only counting when they are moving down
                 downCount += 1
             }
 
@@ -78,13 +87,13 @@ class FormCriteria: ObservableObject{
         let averageAcceleration = self.averageUpDownAcceleration(array: array)
         let upDownAcceleration = self.UpDownAcceleration(array: array)
 
-        let overallAccel = String(format: "Overall acceleration: %.2f %% good", averageAcceleration)
-        let upSpeed = String(format: "%.2f%% of your reps are too fast going up", upDownAcceleration.0 * 100)
-        let downSpeed = String(format: "%.2f%% of your reps are too fast going down", upDownAcceleration.1 * 100)
+        let overallAccel = String(format: "Overall acceleration: %.f%% good", averageAcceleration * 100)
+        let upSpeed = String(format: "%.0f%% of your reps are too fast going up", upDownAcceleration.0 * 100)
+        let downSpeed = String(format: "%.0f%% of your reps are too fast going down", upDownAcceleration.1 * 100)
         var customTextFeedback = ""
         
         if self.averageUpDownAcceleration(array: array) < 0.5{
-            customTextFeedback = "whoa whoa whoa slow down"
+            customTextFeedback = "whoa slow down!"
             
         }
         else{

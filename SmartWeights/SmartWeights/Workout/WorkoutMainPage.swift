@@ -63,7 +63,6 @@ struct WorkoutMainPage: View {
                     //Text("workout Progress Graph")
                     Text("Feedback")
                         .font(.headline)
-                        .padding()
                     
 //                    LineGraph(data: graphData) // Use the dynamic data for the line graph
 //                        .stroke(Color.green, lineWidth: 2)
@@ -71,6 +70,23 @@ struct WorkoutMainPage: View {
 //                        .padding()
                     
                     VStack{
+                        HStack {
+                            ZStack {
+                                Image("bubble")
+                                    .resizable()
+                                    .frame(width: 250, height: 150)
+                                Text("\(feedback.3)")
+                                    .foregroundStyle(Color.black)
+                            }
+                            .padding(.bottom, -40)
+                        }
+                        HStack{
+                            
+                            Image("dog")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200, height: 175)
+                        }
                         Text("\(feedback.0)") //gives overall acceleration
                             .font(.subheadline)
                         Text("\(feedback.1)") // gives overall accel going up
@@ -79,8 +95,9 @@ struct WorkoutMainPage: View {
                             .font(.subheadline)
                     }
                     .padding(.bottom, 30)
+                    
                 }
-                .frame(width: 400, height: 400)
+                .frame(width: 400, height: 500)
                 .background(Color.white.opacity(0.9))
                 .cornerRadius(20)
                 .shadow(radius: 10)
@@ -209,9 +226,10 @@ struct WorkoutMainPage: View {
                         hasWorkoutStarted = false
                         isWorkoutPaused = false
                         ble.collectDataToggle = false //stops collecting data
+                        print("hello")
                         //ble.MPU6050_1Gyros.removeAll()
-                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current set
                         //need to add this data to another array to store for workout history
+                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
                         showGraphPopover = true
                         currentMotivationalPhrase = "Let's get started with a New Workout!"
 
@@ -221,9 +239,11 @@ struct WorkoutMainPage: View {
                         viewModel.currentSets += 1 // This will push the state to "Finish Workout"
                         showGraphPopover = false
                         viewModel.resumeTimer()
+                        ble.MPU6050_1Gyros.removeAll()
+                        ble.collectDataToggle = true
                         currentMotivationalPhrase = "Last Set! Push through!"
                     } else if !isWorkoutPaused {
-                        ble.collectDataToggle = false // pauses the data collection
+                        ble.collectDataToggle = false// continue the data collection
                         viewModel.pauseTimer()
                         generateRandomData(for: .perSet) // Generate per-set data
                         showGraphPopover = true
@@ -237,8 +257,8 @@ struct WorkoutMainPage: View {
                         viewModel.resumeTimer()
                         showGraphPopover = false
                         isWorkoutPaused = false
+                        ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
                         ble.collectDataToggle = true //Stars collecting data again
-                        //ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
                         currentMotivationalPhrase = "You're doing great!"
                     }
                 } else {
