@@ -123,12 +123,12 @@ struct SettingsPageView: View {
                             .navigationBarTitleDisplayMode(.inline)
                         }
                     }
-                    HStack {
+                   /* HStack {
                         Image(systemName: "heart")
                         Toggle(isOn: $healthKitEnabled, label: {
                             Text("Enable HealthKit")
                         })
-                    }
+                         } */ 
                 }
                 Button("Logout", systemImage: "rectangle.portrait.and.arrow.right") {
                     // Implement logout button functionality
