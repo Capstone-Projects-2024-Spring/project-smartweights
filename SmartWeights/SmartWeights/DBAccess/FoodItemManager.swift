@@ -73,7 +73,7 @@ class FoodItemDBManager: ObservableObject{
             self.foodItemExists = true
         }
     }
-    func createInitialFoodItems(completion: @escaping (Error?) -> Void){
+    func createInitialFoodItems(){
         let foodItems = [
             FoodItemModel(recordId: nil, name: "Apple", quantity: 0, imageName: "Apple"),
             FoodItemModel(recordId: nil, name: "Orange", quantity: 0, imageName: "Orange"),
