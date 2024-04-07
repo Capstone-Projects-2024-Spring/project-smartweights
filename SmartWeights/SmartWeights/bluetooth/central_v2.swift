@@ -279,6 +279,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                                 self.MPU6050_1Gyros.append(self.MPU6050_1_Gyro)
                                 self.MPU6050_1_All_Gyros.append(self.MPU6050_1_Gyro)
                                 self.MPU6050_1_All_Accelerations.append(self.MPU6050_1_Accel)
+                                //print(self.MPU6050_1Gyros)
                             }
                                 //print("MPU6050_1 gyro")
                                 //print("\(self.MPU6050_1Gyros)")
