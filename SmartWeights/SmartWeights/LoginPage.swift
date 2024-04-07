@@ -23,6 +23,7 @@ struct LoginView: View {
     var userFeedbackDataDBManager = UserFeedbackDataDBManager()
     var userFitnessDataDBManager = UserFitnessDataDBManager()
     var userFitnessPlanDBManager = UserFitnessPlanDBManager()
+    var foodItemDBManager = FoodItemDBManager()
     var body: some View {
         ZStack {
             // Background gradient
@@ -68,6 +69,7 @@ struct LoginView: View {
                                 inventoryDBManager.createInventory()
                                 petDBManager.createPet()
                                 userFitnessDataDBManager.createUserFitnessData()
+                                foodItemDBManager.createInitialFoodItems()
                                 
                             }
                         case .failure(let error):
