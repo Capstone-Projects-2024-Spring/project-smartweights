@@ -82,7 +82,7 @@ struct WorkoutMainPage: View {
                         }
                         HStack{
                             
-                            Image("dog")
+                            Image("Dog")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 200, height: 175)
@@ -206,7 +206,7 @@ struct WorkoutMainPage: View {
             }
             HStack{
                 
-                Image("dog")
+                Image("Dog")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 400, height: 375)
