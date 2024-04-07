@@ -57,6 +57,13 @@ struct SettingsPageView: View {
                         }
                     }
                 }
+                // button for FitnessPlanPage
+                NavigationLink(destination: FitnessPlanPage()) {
+                    Text("Fitness Plan")
+                        .font(.system(size: 18))
+                        .foregroundColor(.black)
+                }
+                            .padding()
                 Section(header: Text("Body Measurements")) {
                     Picker("Weight", selection: $selectedWeight) {
                         ForEach(weightsArray, id: \.self) { weight in
