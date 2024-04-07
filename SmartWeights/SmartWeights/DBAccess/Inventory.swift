@@ -5,6 +5,10 @@
 //  Created by Daniel Eap on 3/27/24.
 //
 
+///TODO: Repurpose to call the FoodItems, PetItems, BackgroundItems and ClothingItems all into this one class
+/// example: var foodItemsToInstantiate ["Apple", "Orange", "Juice], pass this into create food function with quantity 0
+
+
 import Foundation
 import CloudKit
 
@@ -115,3 +119,12 @@ class InventoryDBManager: ObservableObject {
     // Rest of the code
     // ...
 }
+
+//class InventoryManager: ObservableObject{
+//    
+//    let foodItemDBManager = FoodItemDBManager()
+//    
+//    func fetchFoodItems(){
+//        foodItemDBManager.fetchFoodItems(completion: <#T##([FoodItemModel]?, (any Error)?) -> Void#>)
+//    }
+//}

@@ -5,7 +5,8 @@ import Combine
 struct WorkoutMainPage: View {
     @StateObject var viewModel = WorkoutViewModel()
     @StateObject var bleManager = BLEManager()
-    @StateObject var storeModel = storeViewModel()
+//    @StateObject var storeModel = storeViewModel()
+    @ObservedObject var workoutPageViewModel = WorkoutPageViewModel()
     
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
@@ -20,6 +21,7 @@ struct WorkoutMainPage: View {
     
     var body: some View {
         ZStack {
+            
             VStack {
                 // Title and microphone button for workout voice control
                 workoutTitleView
@@ -204,7 +206,8 @@ struct WorkoutMainPage: View {
                     if buttonText == "Finish Workout" {
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
-                        storeModel.addFundtoUser(price: 50)
+//                        storeModel.addFundtoUser(price: 50)
+                        workoutPageViewModel.AddXP(value: 25)
                         viewModel.resetWorkoutState()
                         hasWorkoutStarted = false
                         isWorkoutPaused = false

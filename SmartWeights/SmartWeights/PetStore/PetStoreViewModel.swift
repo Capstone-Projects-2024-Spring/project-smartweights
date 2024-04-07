@@ -8,15 +8,16 @@ class storeViewModel: ObservableObject {
 //    var cloudKitManager = CloudKitManager()
     var inventoryDBManager = InventoryDBManager()
     var userDBManager = UserDBManager()
+    var foodItemDBManager = FoodItemDBManager()
     
     /// Items available in store.
     @Published var items = [
         SellingItem(id: 1, name: "Dog", category: "Pets", price: "500", image: Image("dog"), description: "The best companion!"),
         SellingItem(id: 2, name: "Cat", category: "Pets", price: "500", image: Image("cat"), description: "Has 9 lives!"),
         SellingItem(id: 3, name: "Dinosaur", category: "Pets", price: "700", image: Image("dinosaur"), description: "Only 250 million years old!"),
-        SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("orange"), description: "Gives 20 health. MAX: 10"),
-        SellingItem(id: 5, name: "Apple", category: "Foods", price: "10", image: Image("apple"), description: "Gives 10 health. MAX: 10"),
-        SellingItem(id: 6, name: "Juice", category: "Foods", price: "20", image: Image("juice"), description: "Gives 10 health. MAX: 10"),
+        SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("Orange"), description: "Gives 20 health. MAX: 10"),
+        SellingItem(id: 5, name: "Apple", category: "Foods", price: "10", image: Image("Apple"), description: "Gives 10 health. MAX: 10"),
+        SellingItem(id: 6, name: "Juice", category: "Foods", price: "20", image: Image("Juice"), description: "Gives 10 health. MAX: 10"),
         SellingItem(id: 7, name: "Jetpack", category: "Backgrounds", price: "400", image: Image("jetpack"), description: "Walking is overrated."),
         SellingItem(id: 8, name: "Flag", category: "Backgrounds", price: "200", image: Image("flag"), description: "Works great in the wind!"),
         SellingItem(id: 9, name: "Sand Castle", category: "Backgrounds", price: "300", image: Image("sandcastle"), description: "Watch out for waves!"),
@@ -81,8 +82,14 @@ class storeViewModel: ObservableObject {
                     items[index].isBought = true
                 }
                 subtractFunds(price: Int(item.price) ?? 0)
+                foodItemDBManager.updateQuantity_add(name: item.name, quantity: 1) { error in
+                    if let error = error {
+                        print("Error updating quantity: \(error.localizedDescription)")
+                    }
+                }
             }
         }
+    
     
     func addFundtoUser(price: Int) {
         print("Adding \(price) to \(userCur)")
