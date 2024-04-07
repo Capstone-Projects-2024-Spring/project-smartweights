@@ -87,9 +87,42 @@ class PetDBManager: ObservableObject {
             let petImage = record[PetRecordKeys.petImage.rawValue] as? CKAsset
             let totalXP = record[PetRecordKeys.totalXP.rawValue] as? Int64 ?? 0
 
-            let pet = PetModel(recordId: record.recordID, health: health, level: level, petImage: petImage, totalXP: totalXP)
-            completion(pet, nil)
+            self.pet = PetModel(recordId: record.recordID, health: health, level: level, petImage: petImage, totalXP: totalXP)
+            completion(self.pet, nil)
             self.petExists = true
         }
     }
+    func getXP(completion: @escaping (Int64?, Error?) -> Void){
+        if let pet = pet {
+            completion(pet.totalXP, nil)
+        } else {
+            fetchPet { pet, error in
+                if let error = error {
+                    completion(nil, error)
+                    return
+                }
+                guard let pet = pet else {
+                    completion(nil, nil)
+                    return
+                }
+                completion(self.pet?.totalXP, nil)
+            }
+        }
+    }
+    func updateUserXP(newXP: Int64, completion: @escaping (Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
+            guard let record = records?.first else {
+                print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
+                completion(error)
+                return
+            }
+            
+            let currentXP = NSNumber(value: newXP)
+            record[PetRecordKeys.totalXP.rawValue] = currentXP as CKRecordValue
+            self.CKManager.savePrivateItem(record: record)
+            completion(nil)
+        }
+    }
+    
+    
 }

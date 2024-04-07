@@ -14,7 +14,7 @@ struct SmartWeightsApp: App {
         WindowGroup {
             WorkoutMainPage()
                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-//            PetStore()
+
         }
     }
 }
