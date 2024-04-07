@@ -20,7 +20,7 @@ struct ChallengesTab: View {
     var body: some View {
         NavigationView {
             ChallengesList(challenges: challenges)
-                .navigationBarTitle("Challenges", displayMode: .inline)
+                .navigationBarTitle("Achievements", displayMode: .inline)
         }
     }
 }
