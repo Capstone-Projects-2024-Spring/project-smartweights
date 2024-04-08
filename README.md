@@ -85,6 +85,54 @@ SmartWeights is a combination of two project proposals “SmartWeights” and �
 - Version Control management (GitHub/Git)
 - Database (Firebase & NoSQL)
 
+## Installation Instructions
+
+These instructions are to help build and run the project locally on your system.
+
+#### Minimum Requirements
+
+In order to install and build this project you must have (at the time of this being written):
+- a MacOS machine
+- MacOS Sonoma 14.4 as the minimum version
+- XCode 15 minimum (XCode can be downloaded from the App Store)
+- iPhone Simulator with iOS 17.2 minimum (XCode will download this for you), or iPhone with iOS 17.2 minimum
+    - if using a physical iPhone, it can be connected via cable with the Mac machine.
+- A valid iCloud Account
+    - iCloud Account should also have at 10kb of free storage remaining.
+
+The steps to building and running the project:
+1.  `
+git clone https://github.com/Capstone-Projects-2024-Spring/project-smartweights.git
+`
+2. Open XCode and click on `open existing project` 
+3. Locate the project and select the `SmartWeights.xcodeproj` file.
+    - This file will have the AppStore icon.
+4. Select your target location to run the project through the dropdown at the time of the IDE.
+    - It will likely say ***any iOS device (arm64)*** the first time
+5. Press the *play*/*start the active scheme* button found in the top left of the IDE.
+
+## Testing
+
+Testing the application is also available through invitation via **TestFlight**. The invite link is [Here](https://testflight.apple.com/join/ABKummcT). This invite link will prompt you to download the **TestFlight** app on your iOS device and give you a beta release to the SmartWeights application. The instructions are given on the directed webpage. 
+
+If you are unable to access the link, or unable to download the app due to the limit of testers allowed has been met, contact:
+smartweights1@gmail.com
+
+### Milestone Demo 2
+
+As this is the first version openly available to test, the SmartWeights team is requesting a test of the full application. The version being tested is v3.0.0. 
+If testing through TestFlight, there should be a section to leave feedback for the SmartWeights developer team to read through if you choose to submit feedback. You can submit feedback by clicking on the app icon in the **TestFlight** app and the **Send Beta Feedback** button 
+
+List of testing: 
+- Signing up/logging in for the application
+- Navigating through all the pages in the application
+- Watching a workout instructional video on the home page.
+- Starting and finishing a workout 
+- Connecting with a SmartWeights sensor
+- Purchasing items from the pet store
+- Customizing your virtual pet
+- Inputting user details in the profile
+
 ## Collaborators
 
 [//]: # ( readme: collaborators -start )
