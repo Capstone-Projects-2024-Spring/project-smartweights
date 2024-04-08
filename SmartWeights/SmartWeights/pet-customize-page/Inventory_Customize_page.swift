@@ -63,7 +63,9 @@ struct Customize_page: View {
         NavigationView {
             VStack {
                 ZStack {
-                    viewModel.backgroundColor.ignoresSafeArea(edges: .all)
+                    viewModel.backgroundColor
+                        .frame(width: 300, height: 320)
+                        .cornerRadius(15)
                     
                     // Background image
                     if let bgImage = viewModel.equippedBackgroundImage {

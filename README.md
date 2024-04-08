@@ -11,7 +11,7 @@
 
 ## Keywords
 
-Section 001, Swift, Python, Xcode, Raspberry Pi Pico, iOS Application, Machine Learning, TensorFlow
+Section 001, Swift, Python, Xcode, Raspberry Pi Pico, iOS Application 
 
 ## Project Abstract
 

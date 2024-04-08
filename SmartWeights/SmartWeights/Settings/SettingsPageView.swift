@@ -57,6 +57,13 @@ struct SettingsPageView: View {
                         }
                     }
                 }
+                // button for FitnessPlanPage
+                NavigationLink(destination: FitnessPlanPage()) {
+                    Text("Fitness Plan")
+                        .font(.system(size: 18))
+                        .foregroundColor(.black)
+                }
+                            .padding()
                 Section(header: Text("Body Measurements")) {
                     Picker("Weight", selection: $selectedWeight) {
                         ForEach(weightsArray, id: \.self) { weight in
@@ -116,12 +123,12 @@ struct SettingsPageView: View {
                             .navigationBarTitleDisplayMode(.inline)
                         }
                     }
-                    HStack {
+                   /* HStack {
                         Image(systemName: "heart")
                         Toggle(isOn: $healthKitEnabled, label: {
                             Text("Enable HealthKit")
                         })
-                    }
+                         } */ 
                 }
                 Button("Logout", systemImage: "rectangle.portrait.and.arrow.right") {
                     // Implement logout button functionality
