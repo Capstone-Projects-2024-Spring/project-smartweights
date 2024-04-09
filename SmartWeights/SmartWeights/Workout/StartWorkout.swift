@@ -45,9 +45,6 @@ class WorkoutViewModel: ObservableObject {
     @Published var alertMessage = ""
     private var countdownTimer: AnyCancellable?
     
-    let workoutStarted = PassthroughSubject<Void, Never>()
-    
-    
     func startCountdown() {
         countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
             guard let self = self else { return }
@@ -225,6 +222,9 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func resetWorkoutState() {
+        countdownActive = false
+        countdown = 5 // Reset to your initial countdown value
+        
         // Reset progress
         progress = 0
         inputtedSets = ""
