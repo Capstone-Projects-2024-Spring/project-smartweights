@@ -75,10 +75,6 @@ class WorkoutViewModel: ObservableObject {
         guard !input.isEmpty, let _ = Int(input) else { return false }
         return true
     }
-    //    override init() {
-    //        super.init()
-    //        speechRecognizer.delegate = self
-    //    }
     
     func startListening() {
         guard !isListening else { return }
@@ -133,11 +129,8 @@ class WorkoutViewModel: ObservableObject {
                         // }
                         return
                     } else if bestString.contains("start workout") {
-                        // Detected "finish workout" command, stop workout
-                        //                        self.startWorkout()
-                        startTimer()
-                        // self.workoutInProgress = true
-                        
+                        countdownActive = true
+                        //startCountdown()
                     }
                     print("bestString: \(bestString)")
                     

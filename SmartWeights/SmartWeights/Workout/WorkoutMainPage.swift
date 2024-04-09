@@ -349,7 +349,6 @@ struct WorkoutMainPage: View {
                                 .font(.headline)
                             
                             Button(action: {
-                                // Action to trigger voice input or start listening for commands
                                 viewModel.startListening()
                             }) {
                                 Image(systemName: "mic.circle")
@@ -379,8 +378,6 @@ struct WorkoutMainPage: View {
                         
                         Button("Start Workout") {
                             viewModel.validateAndStartCountdown(sets: viewModel.inputtedSets, reps: viewModel.inputtedReps, weights: viewModel.inputtedWeights)
-                            hasWorkoutStarted = true
-                            
                         }
                         .padding()
                         .foregroundColor(.white)
