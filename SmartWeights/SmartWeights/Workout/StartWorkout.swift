@@ -36,6 +36,45 @@ class WorkoutViewModel: ObservableObject {
         return workoutInProgressSubject.eraseToAnyPublisher()
     }
     
+    
+    @Published var hasWorkoutStarted = false
+    @Published var showingWorkoutSheet = false
+    @Published var countdown = 5
+    @Published var countdownActive = false
+    @Published var showingAlert = false
+    @Published var alertMessage = ""
+    private var countdownTimer: AnyCancellable?
+    
+    let workoutStarted = PassthroughSubject<Void, Never>()
+    
+    
+    func startCountdown() {
+        countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
+            guard let self = self else { return }
+            if self.countdown > 0 {
+                self.countdown -= 1
+            } else {
+                self.countdownTimer?.cancel()
+                startTimer()
+                startWorkout()
+            }
+        }
+    }
+    
+    func validateAndStartCountdown(sets: String, reps: String, weights: String) {
+        if isValidInput(sets) && isValidInput(reps) && isValidInput(weights) {
+            countdownActive = true
+            startCountdown()
+        } else {
+            alertMessage = "Please enter valid numbers for sets, reps, and weights."
+            showingAlert = true
+        }
+    }
+    
+    private func isValidInput(_ input: String) -> Bool {
+        guard !input.isEmpty, let _ = Int(input) else { return false }
+        return true
+    }
     //    override init() {
     //        super.init()
     //        speechRecognizer.delegate = self
@@ -122,18 +161,8 @@ class WorkoutViewModel: ObservableObject {
     }
     
     private func startWorkout() {
-        // Call your ViewModel or Model function to start the workout
-        if !workoutInProgress {
-            workoutInProgress = true
-            print("Workout started!")
-            workoutInProgressSubject.send(true)
-            startTimer()
-        }
-        
-        // Synthesize speech
-        //               let speechUtterance = AVSpeechUtterance(string: "Workout started")
-        //               speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        //               speechSynthesizer.speak(speechUtterance)
+        hasWorkoutStarted = true
+        showingWorkoutSheet = false
         
     }
     private func stopWorkout(){

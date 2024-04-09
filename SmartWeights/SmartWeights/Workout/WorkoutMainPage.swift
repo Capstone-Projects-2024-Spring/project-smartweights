@@ -12,8 +12,6 @@ struct WorkoutMainPage: View {
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
     @State private var isExpanded = false
-    @State private var hasWorkoutStarted = false
-    @State private var showingWorkoutSheet = false
     @State private var isWorkoutPaused = false
     
     @State private var showGraphPopover = false
@@ -142,7 +140,7 @@ struct WorkoutMainPage: View {
     // Compute the button text based on current and total sets
     private var buttonText: String {
         let totalSets = Int(viewModel.inputtedSets) ?? 0
-        if hasWorkoutStarted {
+        if viewModel.hasWorkoutStarted {
             if viewModel.currentSets >= totalSets {
                 return "Finish Workout" // When all sets are completed, regardless of the number of sets
             } else if totalSets == 1 {
@@ -168,11 +166,10 @@ struct WorkoutMainPage: View {
     
     private var StartWorkoutView: some View {
         VStack {
-            if !hasWorkoutStarted {
+            if !viewModel.hasWorkoutStarted {
                 Text("Prepare for your workout")
                     .bold()
             }
-            
             
             ZStack{
                 // Time rectangel box
@@ -216,14 +213,14 @@ struct WorkoutMainPage: View {
             
             // Start/Reset workout button
             Button(action: {
-                if hasWorkoutStarted {
+                if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
                         storeModel.addFundtoUser(price: 50)
                         workoutPageViewModel.AddXP(value: 25)
                         viewModel.resetWorkoutState()
-                        hasWorkoutStarted = false
+                        viewModel.hasWorkoutStarted = false
                         isWorkoutPaused = false
                         ble.collectDataToggle = false //stops collecting data
                         print("hello")
@@ -265,37 +262,25 @@ struct WorkoutMainPage: View {
                     // Start the workout
                     currentMotivationalPhrase = "First set, let's go!"
                     viewModel.resumeTimer()
-                    showingWorkoutSheet = true
+                    viewModel.showingWorkoutSheet = true
                     showGraphPopover = false
         
                 }
             }) {
                 RoundedRectangle(cornerRadius: 25)
                     .frame(width: 300, height: 80)
-                    .foregroundColor(hasWorkoutStarted ? (isWorkoutPaused ? .blue : .red) : .gray)
+                    .foregroundColor(viewModel.hasWorkoutStarted ? (isWorkoutPaused ? .blue : .red) : .gray)
                     .overlay(
                         Text(buttonText)
                             .bold()
                             .foregroundColor(.white)
                     )
             }
-            .accessibilityLabel(hasWorkoutStarted ? (isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
-            .sheet(isPresented: $showingWorkoutSheet) {
-                WorkoutDetailsInputView(viewModel: viewModel, ble: ble, hasWorkoutStarted: $hasWorkoutStarted, showingWorkoutSheet: $showingWorkoutSheet)
+            .accessibilityLabel(viewModel.hasWorkoutStarted ? (isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
+            .sheet(isPresented: $viewModel.showingWorkoutSheet) {
+                WorkoutDetailsInputView(viewModel: viewModel, ble: ble, hasWorkoutStarted: $viewModel.hasWorkoutStarted, showingWorkoutSheet: $viewModel.showingWorkoutSheet)
             }
             
-            
-            /*
-             // Connection status and acceleration data
-             if bleManager.isConnected {
-             Text("Sensor connected")
-             } else {
-             Text("Sensor disconnected")
-             }
-             Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])")
-             .padding()
-             Spacer()
-             */
             Spacer()
         }
         
@@ -335,16 +320,10 @@ struct WorkoutMainPage: View {
     
     // Define a new view for the workout details input form
     struct WorkoutDetailsInputView: View {
-        
         @ObservedObject var viewModel: WorkoutViewModel
         @ObservedObject var ble: BLEcentral
         @Binding var hasWorkoutStarted: Bool
         @Binding var showingWorkoutSheet: Bool
-        @State private var showingAlert = false
-        @State private var alertMessage = ""
-        @State private var countdown = 5 // New state variable for countdown
-        @State private var countdownTimer: AnyCancellable? // Timer for countdown
-        @State private var countdownActive = false // Indicates if the countdown is active
         
         var body: some View {
             
@@ -355,13 +334,13 @@ struct WorkoutMainPage: View {
                     .opacity(0.5)
                     .padding(.top, 5)
                 VStack {
-                    if countdownActive {
+                    if viewModel.countdownActive {
                         // Countdown UI
-                        Text("Starting in \(countdown)")
+                        Text("Starting in \(viewModel.countdown)")
                             .font(.largeTitle)
                             .padding()
                             .onAppear {
-                                startCountdown()
+                                viewModel.startCountdown()
                             }
                     } else {
                         // Regular input form
@@ -399,20 +378,16 @@ struct WorkoutMainPage: View {
                         
                         
                         Button("Start Workout") {
-                            if isValidInput(viewModel.inputtedSets) && isValidInput(viewModel.inputtedReps) && isValidInput(viewModel.inputtedWeights) {
-                                // Initiate countdown
-                                countdownActive = true
-                            } else {
-                                alertMessage = "Please enter valid numbers for sets, reps, and lbs."
-                                showingAlert = true
-                            }
+                            viewModel.validateAndStartCountdown(sets: viewModel.inputtedSets, reps: viewModel.inputtedReps, weights: viewModel.inputtedWeights)
+                            hasWorkoutStarted = true
+                            
                         }
                         .padding()
                         .foregroundColor(.white)
                         .background(Color.blue)
                         .cornerRadius(10)
-                        .alert(isPresented: $showingAlert) {
-                            Alert(title: Text("Invalid Input"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                        .alert(isPresented: $viewModel.showingAlert) {
+                            Alert(title: Text("Invalid Input"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
                         }
                     }
                 }
@@ -420,30 +395,6 @@ struct WorkoutMainPage: View {
                 .background(Color.white.opacity(0.9))
                 .cornerRadius(20)
                 .shadow(radius: 10)
-            }
-        }
-        
-        private func isValidInput(_ input: String) -> Bool {
-            guard !input.isEmpty, let _ = Int(input) else { return false }
-            return true
-        }
-        
-        private func startCountdown() {
-            countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { _ in
-                if countdown > 0 {
-                    countdown -= 1
-                } else {
-                    countdownTimer?.cancel() // Stop the countdown timer
-                    DispatchQueue.main.async {
-                        hasWorkoutStarted = true // Ensure this change is captured by the UI
-                        showingWorkoutSheet = false // Dismiss or update UI as needed
-                        viewModel.startTimer() // Start the main workout timer after countdown
-                        ble.MPU6050_1Gyros.removeAll() //Clear the collected Data for previous set
-                        ble.collectDataToggle = true //Start collecting data for the current workout
-                        
-                        
-                    }
-                }
             }
         }
     }
