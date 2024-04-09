@@ -17,11 +17,11 @@ struct WorkoutMainPage: View {
     @State private var showGraphPopover = false
     @State private var graphData: [Double] = []
     var feedback: (String, String, String, String) {
-           formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
-       }
+        formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+    }
     
     @State private var currentMotivationalPhrase = "Let's get started!"
-
+    
     
     
     var body: some View {
@@ -57,15 +57,15 @@ struct WorkoutMainPage: View {
                         .accessibilityLabel("Close") // Accessibility label for better UX
                     }
                     .padding(.top, 10) // Give some space from the top edge
-                
+                    
                     //Text("workout Progress Graph")
                     Text("Feedback")
                         .font(.headline)
                     
-//                    LineGraph(data: graphData) // Use the dynamic data for the line graph
-//                        .stroke(Color.green, lineWidth: 2)
-//                        .frame(height: 200)
-//                        .padding()
+                    //                    LineGraph(data: graphData) // Use the dynamic data for the line graph
+                    //                        .stroke(Color.green, lineWidth: 2)
+                    //                        .frame(height: 200)
+                    //                        .padding()
                     
                     VStack{
                         HStack {
@@ -159,8 +159,8 @@ struct WorkoutMainPage: View {
             return "Start Workout"
         }
     }
-
-
+    
+    
     
     
     
@@ -195,7 +195,7 @@ struct WorkoutMainPage: View {
                 ZStack {
                     Image("bubble")
                         .resizable()
-                        .frame(width: 350, height: 150)
+                        .frame(width: 350, height: 135)
                     Text(currentMotivationalPhrase)
                         .foregroundStyle(Color.black)
                 }
@@ -208,7 +208,7 @@ struct WorkoutMainPage: View {
                     .scaledToFit()
                     .frame(width: 400, height: 375)
             }
-
+            
             
             
             // Start/Reset workout button
@@ -229,7 +229,7 @@ struct WorkoutMainPage: View {
                         ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
                         showGraphPopover = true
                         currentMotivationalPhrase = "Let's get started with a New Workout!"
-
+                        
                         
                     } else if buttonText == "Final Set" {
                         // Logic for transitioning from the final set to finishing the workout
@@ -264,12 +264,12 @@ struct WorkoutMainPage: View {
                     viewModel.resumeTimer()
                     viewModel.showingWorkoutSheet = true
                     showGraphPopover = false
-        
+                    
                 }
             }) {
                 RoundedRectangle(cornerRadius: 25)
                     .frame(width: 300, height: 80)
-                    .foregroundColor(viewModel.hasWorkoutStarted ? (isWorkoutPaused ? .blue : .red) : .gray)
+                    .foregroundColor(buttonText == "Finish Workout" ? .red : (viewModel.hasWorkoutStarted ? (isWorkoutPaused ? .blue : .red) : .gray))
                     .overlay(
                         Text(buttonText)
                             .bold()
