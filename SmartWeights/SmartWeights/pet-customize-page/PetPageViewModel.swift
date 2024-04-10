@@ -35,14 +35,15 @@ class PetPageFunction: ObservableObject {
     //     FoodItem(name: "Apple", quantity: 10, imageName: "apple"),
     //     FoodItem(name: "Juice", quantity: 10, imageName: "juice")
     // ]
-
+    
     @Published var foodItems: [FoodItemModel] = []
-
+    
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
-
+    
     @Published var userTotalXP = 0
+    
     var pet: PetModel?
     // Initializer
     init(){
@@ -59,7 +60,7 @@ class PetPageFunction: ObservableObject {
             }
         }
     }
-
+    
     func handleFoodUse(selectedFoodIndex: Int) {
         guard selectedFoodIndex < foodItems.count else { return }
         var foodItem = foodItems[selectedFoodIndex]
@@ -99,7 +100,7 @@ class PetPageFunction: ObservableObject {
                     self.userTotalXP = Int(totalXP)
                 }
             }
-        
+            
         }
     }
     func AddXP(value: Int) {
@@ -111,13 +112,59 @@ class PetPageFunction: ObservableObject {
                 print("Error updating currency: \(error.localizedDescription)")
             }
         }
-        return userTotalXP = userTotalXP + value
+        return increaseXP(by: value)
     }
+    
     
     
     func showAlert(title: String, message: String) {
         alertTitle = title
         alertMessage = message
         showAlert = true
+    }
+    
+    func increaseXP(by value: Int) {
+        // Calculate new progress to see if it exceeds 100
+        let newProgress = userTotalXP + value
+
+        // Check if current level is less than 10
+        if currentLevel < 10 {
+            // If adding XP will exceed 100, level up and adjust XP
+            if newProgress >= 100 {
+                DispatchQueue.main.async {
+                    // Use DispatchQueue.main.async to ensure UI updates are performed on the main thread
+                    withAnimation {
+                        // Increase level by 1
+                        self.currentLevel += 1
+                        // Reset levelProgress to the remainder if exceeding 100
+                        // This carries over excess XP to the next level
+                        self.userTotalXP = newProgress % 100
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    withAnimation {
+                        // If not exceeding 100, just add the XP to the current progress
+                        self.userTotalXP = newProgress
+                    }
+                }
+            }
+        } else {
+            // For level 10, allow XP gain up to 100 but prevent level increase
+            DispatchQueue.main.async {
+                withAnimation {
+                    if newProgress <= 100 {
+                        self.userTotalXP = newProgress
+                    } else {
+                        // If XP would exceed 100, cap at 100 for level 10
+                        self.userTotalXP = 100
+                    }
+                }
+            }
+        }
+        // Ensure current level doesn't exceed 10
+        if currentLevel > 10 {
+            currentLevel = 10 // Cap the level at 10
+        }
     }
 }
