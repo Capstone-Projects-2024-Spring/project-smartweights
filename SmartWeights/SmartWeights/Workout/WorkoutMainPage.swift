@@ -12,16 +12,11 @@ struct WorkoutMainPage: View {
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
     @State private var isExpanded = false
-    @State private var isWorkoutPaused = false
     
-    @State private var showGraphPopover = false
     @State private var graphData: [Double] = []
     var feedback: (String, String, String, String) {
         formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
     }
-    
-    @State private var currentMotivationalPhrase = "Let's get started!"
-    
     
     
     
@@ -43,12 +38,12 @@ struct WorkoutMainPage: View {
                 }
             }
             
-            .popover(isPresented: $showGraphPopover) {
+            .popover(isPresented: $viewModel.showGraphPopover) {
                 VStack {
                     HStack {
                         Spacer() // Pushes the button to the right
                         Button(action: {
-                            showGraphPopover = false // Close the popover
+                            viewModel.showGraphPopover = false // Close the popover
                         }) {
                             Image(systemName: "xmark.circle.fill") // Stylish X mark
                                 .font(.title) // Increases the size a bit
@@ -153,16 +148,13 @@ struct WorkoutMainPage: View {
                 return "Final Set"
             } else {
                 // Default case for any sets that are not the last or only set
-                return isWorkoutPaused ? "Start Next Set" : "Finish Set"
+                return viewModel.isWorkoutPaused ? "Start Next Set" : "Finish Set"
             }
         } else {
             // Before the workout starts
             return "Start Workout"
         }
     }
-    
-    
-    
     
     
     private var StartWorkoutView: some View {
@@ -197,7 +189,7 @@ struct WorkoutMainPage: View {
                     Image("bubble")
                         .resizable()
                         .frame(width: 350, height: 135)
-                    Text(currentMotivationalPhrase)
+                    Text(viewModel.currentMotivationalPhrase)
                         .foregroundStyle(Color.black)
                 }
                 .padding(.bottom, -50)
@@ -216,68 +208,78 @@ struct WorkoutMainPage: View {
             Button(action: {
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
-                        // Logic for completing the workout
-                        generateRandomData(for: .overallWorkout) // Generate overall workout data
-                        storeModel.addFundtoUser(price: 50)
-                        workoutPageViewModel.AddXP(value: 25)
-                        viewModel.resetWorkoutState()
-                        viewModel.hasWorkoutStarted = false
-                        isWorkoutPaused = false
-                        ble.collectDataToggle = false //stops collecting data
-                        print("hello")
-                        //ble.MPU6050_1Gyros.removeAll()
-                        //need to add this data to another array to store for workout history
-                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
-                        showGraphPopover = true
-                        currentMotivationalPhrase = "Let's get started with a New Workout!"
                         
+                         // Logic for completing the workout
+                         generateRandomData(for: .overallWorkout) // Generate overall workout data
+                         storeModel.addFundtoUser(price: 50)
+                         workoutPageViewModel.AddXP(value: 25)
+                         viewModel.resetWorkoutState()
+                         viewModel.hasWorkoutStarted = false
+                         viewModel.isWorkoutPaused = false
+                         ble.collectDataToggle = false //stops collecting data
+                         print("hello")
+                         //ble.MPU6050_1Gyros.removeAll()
+                         //need to add this data to another array to store for workout history
+                         ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
+                         viewModel.showGraphPopover = true
+                         viewModel.currentMotivationalPhrase = "Let's get started with a New Workout!"
+                         
                         
                     } else if buttonText == "Final Set" {
-                        // Logic for transitioning from the final set to finishing the workout
-                        viewModel.currentSets += 1 // This will push the state to "Finish Workout"
-                        showGraphPopover = false
-                        viewModel.resumeTimer()
-                        ble.MPU6050_1Gyros.removeAll()
-                        ble.collectDataToggle = true
-                        currentMotivationalPhrase = "Last Set! Push through!"
-                    } else if !isWorkoutPaused {
-                        ble.collectDataToggle = false// continue the data collection
-                        viewModel.pauseTimer()
-                        generateRandomData(for: .perSet) // Generate per-set data
-                        showGraphPopover = true
-                        isWorkoutPaused = true
-                        currentMotivationalPhrase = "Take a breather, then keep going!"
-                        if let totalSets = Int(viewModel.inputtedSets), viewModel.currentSets < totalSets {
-                            viewModel.currentSets += 1
-                        }
+                        
+                         // Logic for transitioning from the final set to finishing the workout
+                         viewModel.currentSets += 1 // This will push the state to "Finish Workout"
+                         viewModel.showGraphPopover = false
+                         viewModel.resumeTimer()
+                         ble.MPU6050_1Gyros.removeAll()
+                         ble.collectDataToggle = true
+                         viewModel.currentMotivationalPhrase = "Last Set! Push through!"
+                         
+                        
+                    } else if !viewModel.isWorkoutPaused {
+                        
+                         ble.collectDataToggle = false// continue the data collection
+                         viewModel.pauseTimer()
+                         generateRandomData(for: .perSet) // Generate per-set data
+                         viewModel.showGraphPopover = true
+                         viewModel.isWorkoutPaused = true
+                         viewModel.currentMotivationalPhrase = "Take a breather, then keep going!"
+                         if let totalSets = Int(viewModel.inputtedSets), viewModel.currentSets < totalSets {
+                         viewModel.currentSets += 1
+                         }
+                         
+
                     } else {
-                        // Resume workout from a paused state
-                        viewModel.resumeTimer()
-                        showGraphPopover = false
-                        isWorkoutPaused = false
-                        ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
-                        ble.collectDataToggle = true //Stars collecting data again
-                        currentMotivationalPhrase = "You're doing great!"
+                        
+                         // Resume workout from a paused state
+                         viewModel.resumeTimer()
+                         viewModel.showGraphPopover = false
+                         viewModel.isWorkoutPaused = false
+                         ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
+                         ble.collectDataToggle = true //Stars collecting data again
+                         viewModel.currentMotivationalPhrase = "You're doing great!"
+                         
+                        
                     }
                 } else {
                     // Start the workout
-                    currentMotivationalPhrase = "First set, let's go!"
+                    viewModel.currentMotivationalPhrase = "First set, let's go!"
                     viewModel.resumeTimer()
                     viewModel.showingWorkoutSheet = true
-                    showGraphPopover = false
+                    viewModel.showGraphPopover = false
                     
                 }
             }) {
                 RoundedRectangle(cornerRadius: 25)
                     .frame(width: 300, height: 80)
-                    .foregroundColor(buttonText == "Finish Workout" ? .red : (viewModel.hasWorkoutStarted ? (isWorkoutPaused ? .blue : .red) : .gray))
+                    .foregroundColor(buttonText == "Finish Workout" ? .red : (viewModel.hasWorkoutStarted ? (viewModel.isWorkoutPaused ? .blue : .red) : .gray))
                     .overlay(
                         Text(buttonText)
                             .bold()
                             .foregroundColor(.white)
                     )
             }
-            .accessibilityLabel(viewModel.hasWorkoutStarted ? (isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
+            .accessibilityLabel(viewModel.hasWorkoutStarted ? (viewModel.isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
             .sheet(isPresented: $viewModel.showingWorkoutSheet) {
                 WorkoutDetailsInputView(viewModel: viewModel, ble: ble, hasWorkoutStarted: $viewModel.hasWorkoutStarted, showingWorkoutSheet: $viewModel.showingWorkoutSheet)
             }
@@ -397,33 +399,35 @@ struct WorkoutMainPage: View {
         }
     }
     
-    ///view to show the progress bar
-    struct CircularProgressView: View {
-        let progress: Double
-        
-        var body: some View {
-            ZStack {
-                Circle()
-                    .stroke(
-                        Color.pink.opacity(0.5),
-                        lineWidth: 10
-                    )
-                    .frame(width: 80)
-                Circle()
-                    .trim(from: 0, to: progress / 100) // Adjust this line if `progress` is a percentage
-                    .stroke(
-                        Color.blue,
-                        style: StrokeStyle(
-                            lineWidth: 10,
-                            lineCap: .round
-                        )
-                    )
-                    .rotationEffect(.degrees(-90))
-                    .animation(.easeOut, value: progress)
-                    .frame(width: 80)
-            }
-        }
-    }
+    /*
+     ///view to show the progress bar
+     struct CircularProgressView: View {
+     let progress: Double
+     
+     var body: some View {
+     ZStack {
+     Circle()
+     .stroke(
+     Color.pink.opacity(0.5),
+     lineWidth: 10
+     )
+     .frame(width: 80)
+     Circle()
+     .trim(from: 0, to: progress / 100) // Adjust this line if `progress` is a percentage
+     .stroke(
+     Color.blue,
+     style: StrokeStyle(
+     lineWidth: 10,
+     lineCap: .round
+     )
+     )
+     .rotationEffect(.degrees(-90))
+     .animation(.easeOut, value: progress)
+     .frame(width: 80)
+     }
+     }
+     }
+     */
 }
 
 #Preview {
