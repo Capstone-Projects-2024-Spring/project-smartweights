@@ -10,7 +10,7 @@ import SwiftUI
 struct ChallengesTab: View {
     let challenges = [
         Challenge(title: "1st Sign In", description: "Sign in for the first time.", currentProgress: 0, progressGoal: 1, reward: "+ 1000 XP", image: Image("C-1stLogin")),
-        Challenge(title: "1st Workout", description: "Complete your first workout.", currentProgress: 0, progressGoal: 1, reward: "+ 200 SP", image: Image("C-1stWorkout")),
+        Challenge(title: "1st Workout", description: "Complete your first workout.", currentProgress: 0, progressGoal: 1, reward: "+ 200 XP", image: Image("C-1stWorkout")),
         Challenge(title: "New Shopper", description: "Purchase your first item.", currentProgress: 0, progressGoal: 1, reward: "+ 100 XP", image: Image("C-1stItemBought")),
         Challenge(title: "Outfit Change", description: "Customize your pet's outfit and background for the first time.", currentProgress: 1, progressGoal: 2, reward: "+ 500 XP", image: Image("C-1stOutfitChange"))
         /*Challenge(title: "Challenge 5", description: "Description for Challenge 5.", currentProgress: 8, progressGoal: 10, reward: "+ 500 SP"),

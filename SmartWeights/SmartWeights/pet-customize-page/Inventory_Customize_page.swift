@@ -28,7 +28,7 @@ struct Pet_selection: Identifiable {
 class CustomizeViewModel: ObservableObject {
     @Published var equippedAccessory: Accessory?
     @Published var equippedBackgroundImage: BackgroundImage?
-    @Published var equippedPet: Pet_selection? = Pet_selection(name: "Dog", imageName: "dog") // Default pet
+    @Published var equippedPet: Pet_selection? = Pet_selection(name: "Dog", imageName: "Dog") // Default pet
     @Published var backgroundColor: Color = .white // Default background color
     
     // Data arrays
@@ -45,8 +45,8 @@ class CustomizeViewModel: ObservableObject {
     ]
     
     let pets: [Pet_selection] = [
-        Pet_selection(name: "Dog", imageName: "dog"),
-        Pet_selection(name: "Cat", imageName: "cat"),
+        Pet_selection(name: "Dog", imageName: "Dog"),
+        Pet_selection(name: "Cat", imageName: "Cat"),
     ]
 }
 
