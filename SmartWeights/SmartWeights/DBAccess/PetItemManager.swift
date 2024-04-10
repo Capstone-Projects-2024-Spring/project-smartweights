@@ -147,7 +147,7 @@ class PetItemDBManager: ObservableObject{
         }
     }
     func getActivePet(completion : @escaping (String, Error?) -> Void) {
-        CKManager.fetchPrivateRecord(recordType: "PetItem", fieldName: "isActive", fieldValue: "1") { records, error in
+        CKManager.fetchPrivateRecord(recordType: "PetItem", fieldName: "isActive", fieldValue: 1) { records, error in
             guard let record = records?.first else {
                 completion("", error)
                 return

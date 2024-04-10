@@ -128,7 +128,7 @@ class CloudKitManager {
     ///   - fieldName: The name of the field to filter the records by.
     ///   - fieldValue: The value of the field to filter the records by.
     ///   - completion: The completion handler that is called when the fetch operation is complete. It returns an array of fetched CKRecords and an optional error.
-    func fetchPublicRecord(recordType: String, fieldName: String, fieldValue: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+    func fetchPublicRecord(recordType: String, fieldName: String, fieldValue: Any? = nil, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
         p_fetchRecord(recordType: recordType, usePrivateDatabase: false, fieldName: fieldName, fieldValue: fieldValue, completion: completion)
     }
     
@@ -139,14 +139,13 @@ class CloudKitManager {
     func fetchPublicRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void) {
         p_fetchRecord(recordType: recordType, usePrivateDatabase: false, fieldName: nil, fieldValue: nil, completion: completion)
     }
-    
     /// Fetches private records from the CloudKit database based on a specified field name and value.
     /// - Parameters:
     ///   - recordType: The type of record to fetch.
     ///   - fieldName: The name of the field to filter the records by.
     ///   - fieldValue: The value of the field to filter the records by.
     ///   - completion: The completion handler that is called when the fetch operation is complete. It returns an array of fetched CKRecords and an optional error.
-    func fetchPrivateRecord(recordType: String, fieldName: String, fieldValue: String, completion: @escaping ([CKRecord]?, Error?) -> Void) {
+    func fetchPrivateRecord<T>(recordType: String, fieldName: String, fieldValue: T, completion: @escaping ([CKRecord]?, Error?) -> Void) {
         p_fetchRecord(recordType: recordType, usePrivateDatabase: true, fieldName: fieldName, fieldValue: fieldValue, completion: completion)
     }
     

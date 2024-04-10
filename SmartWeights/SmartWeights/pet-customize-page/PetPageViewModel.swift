@@ -38,7 +38,11 @@ class PetPageFunction: ObservableObject {
     // ]
 
     @Published var foodItems: [FoodItemModel] = []
-    @Published var petItems: [PetItemModel] = []
+    @Published var petItems: [PetItemModel] = []{
+        didSet{
+            getActivePet()
+        }
+    }
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
@@ -71,6 +75,17 @@ class PetPageFunction: ObservableObject {
                 }
             }
 
+        }
+        petItemDBManager.getActivePet{ activePet, error in
+            if let error = error {
+                print("Error fetching activePet: \(error.localizedDescription)")
+                return
+            } else {
+                DispatchQueue.main.async {
+                    self.activePet = activePet
+                    print("ACTIVE PET: \(self.activePet)")
+                }
+            }
         }
     }
 

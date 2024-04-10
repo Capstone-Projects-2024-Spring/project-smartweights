@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Pet_Page: View {
     @ObservedObject var viewModel = PetPageFunction()
-    @State var activePet: String = "Dog"
+    @State var activePet: String = ""
 
     var body: some View {
         NavigationView {
@@ -90,7 +90,7 @@ struct Pet_Page: View {
                 }
                 .padding(.horizontal, 25)
                 
-                Image(activePet)
+                Image(viewModel.activePet)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 500, height: 400, alignment: .center)
@@ -127,8 +127,6 @@ struct Pet_Page: View {
             .navigationBarTitleDisplayMode(.inline)
             .background(NavigationLink(destination: PetStore(), isActive: $viewModel.showShop) { EmptyView() })
             .background(NavigationLink(destination: Customize_page(), isActive: $viewModel.showCustomize) { EmptyView() })
-        }.onAppear{
-            viewModel.getActivePet()
         }
     }
 }
