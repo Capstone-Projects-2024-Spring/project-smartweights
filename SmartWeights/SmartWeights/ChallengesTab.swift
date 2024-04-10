@@ -9,12 +9,17 @@ import SwiftUI
 
 struct ChallengesTab: View {
     let challenges = [
-        Challenge(title: "1st Sign In", description: "Sign in for the first time.", currentProgress: 0, progressGoal: 1, reward: "+ 1000 XP", image: Image("C-1stLogin")),
-        Challenge(title: "1st Workout", description: "Complete your first workout.", currentProgress: 0, progressGoal: 1, reward: "+ 200 XP", image: Image("C-1stWorkout")),
-        Challenge(title: "New Shopper", description: "Purchase your first item.", currentProgress: 0, progressGoal: 1, reward: "+ 100 XP", image: Image("C-1stItemBought")),
-        Challenge(title: "Outfit Change", description: "Customize your pet's outfit and background for the first time.", currentProgress: 1, progressGoal: 2, reward: "+ 500 XP", image: Image("C-1stOutfitChange"))
-        /*Challenge(title: "Challenge 5", description: "Description for Challenge 5.", currentProgress: 8, progressGoal: 10, reward: "+ 500 SP"),
-        Challenge(title: "Challenge 6", description: "Description for Challenge 6.", currentProgress: 1, progressGoal: 10, reward: "+ 100 XP") */
+        Challenge(title: "1st Sign In", description: "Log in to SmartWeights for the first time.", currentProgress: 0, progressGoal: 1, coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stLogin")),
+        Challenge(title: "1st Workout", description: "Complete your first workout.", currentProgress: 0, progressGoal: 1, coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stWorkout")),
+        Challenge(title: "New Shopper", description: "Purchase your first item in the pet store.", currentProgress: 0, progressGoal: 1, coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stItemBought")),
+        Challenge(title: "Outfit Change", description: "Customize your pet for the first time.", currentProgress: 0, progressGoal: 1, coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stOutfitChange")),
+        Challenge(title: "Sharing Companion", description: "Interact with the share button on the profile tab.", currentProgress: 0, progressGoal: 1, coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("SharingCompanion")),
+        Challenge(title: "New Best Friends", description: "Level up your pet to level 2.", currentProgress: 1, progressGoal: 2, coinReward: "+ 100 PC", xpReward: "+ 20 XP", image: Image("NewBestFriends")),
+        Challenge(title: "Dinner Time", description: "Feed your pet 50 times.", currentProgress: 0, progressGoal: 50, coinReward: "+ 250 PC", xpReward: "+ 50 XP", image: Image("DinnerTime")),
+        Challenge(title: "Loyal Customer", description: "Spend 2000 pet coins in the pet store.", currentProgress: 0, progressGoal: 2000, coinReward: "+ 500 PC", xpReward: "+ 75 XP", image: Image("LoyalCustomer")),
+        Challenge(title: "Workout Machine", description: "Complete 50 workouts.", currentProgress: 0, progressGoal: 50, coinReward: "+ 500 PC", xpReward: "+ 50 XP", image: Image("WorkoutMachine")),
+        Challenge(title: "Perfect Form", description: "Complete 100 workouts.", currentProgress: 0, progressGoal: 100, coinReward: "+ 1000 PC", xpReward: "+ 100 XP", image: Image("PerfectForm")),
+        Challenge(title: "Dynamic Duo", description: "Level up your pet to level 10.", currentProgress: 1, progressGoal: 10, coinReward: "+ 1500 PC", xpReward: "+ 100 XP", image: Image("DynamicDuo"))
     ]
     
     var body: some View {
@@ -31,8 +36,10 @@ struct Challenge: Identifiable {
     var description: String
     var currentProgress: Int
     var progressGoal: Int
-    var reward: String
+    var coinReward: String
+    var xpReward: String
     var image: Image // added for custom images
+    var isCompleted = false
     
     var progressPercent: Double {
         return Double(currentProgress) / Double(progressGoal)
@@ -63,7 +70,10 @@ struct ChallengeRow: View {
                     Text("\(challenge.currentProgress)/\(challenge.progressGoal)")
                         .font(.subheadline)
                         .foregroundColor(.blue)
-                    Text(challenge.reward)
+                    Text(challenge.coinReward)
+                        .font(.subheadline)
+                        .foregroundColor(.green)
+                    Text(challenge.xpReward)
                         .font(.subheadline)
                         .foregroundColor(.green)
                 }
