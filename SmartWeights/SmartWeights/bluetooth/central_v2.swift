@@ -4,7 +4,7 @@ import CoreBluetooth
 
 
 /*
-Bluetooth will only work if it being tested on an external device with Bluetooth capabilities
+Bluetooth will only work if the app is being built.
  
  current status - picos will automatically connect the moment the BLEcentral class is initialize.
                     The picos will be kept turned on. (Have user turn all sensors on prior the starting workout)
@@ -67,10 +67,16 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     @Published var MPU6050_2_Accel: [Int] = [0, 0, 0] // Array to store current acceleration of MPU6050-2
     @Published var MPU6050_1_Gyro: [Int] = [0, 0, 0] // Array to store current gyro rotation of MPU6050-1
     @Published var MPU6050_2_Gyro: [Int] = [0, 0, 0] // Array to store current gyro rotation of MPU6050-2
-    @Published var MPU6050_1Accelerations: [[Int]] = [] //stores all the acceleration of MPU6050-1
-    @Published var MPU6050_2Accelerations: [[Int]] = [] //stores all the acceleration of MPU6050-2
-    @Published var MPU6050_1Gyros: [[Int]] = [] //stores all the gyro data of MPU6050-1
-    @Published var MPU6050_2Gyros: [[Int]] = [] //stores all the gyro data of MPU6050-2
+    @Published var MPU6050_1Accelerations: [[Int]] = [] //stores all the acceleration of MPU6050-1 for curent set
+    @Published var MPU6050_2Accelerations: [[Int]] = [] //stores all the acceleration of MPU6050-2 for current set
+    @Published var MPU6050_1Gyros: [[Int]] = [] //stores all the gyro data of MPU6050-1 for current set
+    @Published var MPU6050_2Gyros: [[Int]] = [] //stores all the gyro data of MPU6050-2 for current set
+    @Published var MPU6050_1_All_Accelerations: [[Int]] = [] //stores all the acceleration of MPU6050-1 for curent set
+    @Published var MPU6050_2_All_Accelerations: [[Int]] = [] //stores all the acceleration of MPU6050-2 for current set
+    @Published var MPU6050_1_All_Gyros: [[Int]] = [] //stores all the gyro data of MPU6050-1 for complete workout
+    @Published var MPU6050_2_All_Gyros: [[Int]] = [] //stores all the gyro data of MPU6050-2 for complete workout
+    
+    
     @Published var collectDataToggle = false//
     @Published var isConnected = false
     
@@ -271,9 +277,12 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                                 self.MPU6050_1_Gyro[2] = data
                             if self.collectDataToggle{
                                 self.MPU6050_1Gyros.append(self.MPU6050_1_Gyro)
+                                self.MPU6050_1_All_Gyros.append(self.MPU6050_1_Gyro)
+                                self.MPU6050_1_All_Accelerations.append(self.MPU6050_1_Accel)
+                                //print(self.MPU6050_1Gyros)
                             }
-                                print("MPU6050_1 gyro")
-                                print("\(self.MPU6050_1Gyros)")
+                                //print("MPU6050_1 gyro")
+                                //print("\(self.MPU6050_1Gyros)")
                             default:
                                 break
                         }
@@ -287,6 +296,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                                 self.MPU6050_2_Accel[2] = data
                             if self.collectDataToggle{
                                 self.MPU6050_2Accelerations.append(self.MPU6050_2_Accel)
+                                self.MPU6050_2_All_Accelerations.append(self.MPU6050_2_Accel)
                             }
                             case self.gxCharacteristic2:
                                 self.MPU6050_2_Gyro[0] = data
@@ -296,9 +306,10 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                                 self.MPU6050_2_Gyro[2] = data
                             if self.collectDataToggle{
                                 self.MPU6050_2Gyros.append(self.MPU6050_2_Gyro)
+                                self.MPU6050_2_All_Gyros.append(self.MPU6050_2_Gyro)
                             }
-                                print("MPU6050_2 gyro")
-                                print("\(self.MPU6050_2Gyros)")
+                                //print("MPU6050_2 gyro")
+                                //print("\(self.MPU6050_2Gyros)")
                             default:
                                 break
                             
@@ -317,7 +328,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
 
 struct bleView : View {
     //initialize bluetooth
-    @ObservedObject var ble = BLEcentral()
+    @ObservedObject var ble: BLEcentral
     
     var body: some View {
         //allow the app to start collecting data
@@ -363,7 +374,6 @@ struct bleView : View {
                         }
                     }
                 }
-                
             }
             //list the accel and gyro data for MPU6050-2
             HStack{
@@ -399,6 +409,6 @@ struct bleView : View {
 
 
 #Preview {
-    bleView()
+    bleView(ble: BLEcentral())
 }
 

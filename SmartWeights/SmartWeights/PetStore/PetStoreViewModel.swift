@@ -5,7 +5,7 @@ import CloudKit
 
 class storeViewModel: ObservableObject {
     
-//    var cloudKitManager = CloudKitManager()
+    //    var cloudKitManager = CloudKitManager()
     var inventoryDBManager = InventoryDBManager()
     var userDBManager = UserDBManager()
     var foodItemDBManager = FoodItemDBManager()
@@ -38,7 +38,7 @@ class storeViewModel: ObservableObject {
     init() {
         updateCurrency()
     }
-
+    
     func updateCurrency() {
         userDBManager.getCurrency { (currency, error) in
             if let error = error {
@@ -50,7 +50,7 @@ class storeViewModel: ObservableObject {
             }
         }
     }
-
+    
     /// Display items based on selected sorting method.
     func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem] {
         if sortByPrice {
@@ -66,7 +66,7 @@ class storeViewModel: ObservableObject {
     /// Function to return amount of currrency after item is bought
     func subtractFunds(price: Int) {
         print("Subtracting \(price) from \(userCur)")
-       
+        
         
         print("userCur: \(self.userCur - price)")
         userDBManager.updateCurrency(newCurrency: Int64(userCur-price)){
@@ -79,24 +79,28 @@ class storeViewModel: ObservableObject {
     }
     
     /// Function to handle item purchase
-        func purchaseItem(item: SellingItem) {
-            if let index = items.firstIndex(where: { $0.id == item.id }) {
-                if item.category != "Foods" {
-                    items[index].isBought = true
-                }
-                subtractFunds(price: Int(item.price) ?? 0)
+    func purchaseItem(item: SellingItem) {
+        if let index = items.firstIndex(where: { $0.id == item.id }) {
+            if item.category != "Foods" {
+                items[index].isBought = true
+            }
+            subtractFunds(price: Int(item.price) ?? 0)
+            // eventually case statements for each category
+            if(item.category == "Foods"){
                 foodItemDBManager.updateQuantity_add(name: item.name, quantity: 1) { error in
                     if let error = error {
                         print("Error updating quantity: \(error.localizedDescription)")
                     }
                 }
             }
+            
         }
+    }
     
     
     func addFundtoUser(price: Int) {
         print("Adding \(price) to \(userCur)")
-       
+        
         
         print("userCur: \(self.userCur + price)")
         userDBManager.updateCurrency(newCurrency: Int64(userCur+price)){
