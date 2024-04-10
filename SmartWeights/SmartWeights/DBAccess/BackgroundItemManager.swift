@@ -82,8 +82,10 @@ class BackgroundItemDBManager : ObservableObject{
             completion(backgroundItem, nil)
         }
     }
+    
+    
     func createBackgroundItem(imageName: String, completion: @escaping (Error?) -> Void) {
-        fetchSpecifcBackgroundItem(imageName: String){ backgroundItem, error in
+        fetchSpecifcBackgroundItem(imageName: imageName){ backgroundItem, error in
             
             if backgroundItem != nil {
                 completion(nil)
