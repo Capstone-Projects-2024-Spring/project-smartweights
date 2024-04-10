@@ -89,7 +89,7 @@ struct Pet_Page: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 10)
                      */
-                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "Level 1 | XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                         .frame(height: 20)
                         .padding()
                     
