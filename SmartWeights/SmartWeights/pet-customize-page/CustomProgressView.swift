@@ -45,7 +45,7 @@ struct CustomProgressView: View {
     
     var body: some View {
         VStack {
-            Text("\(label) (\(displayValue))")
+            Text("\(label) \(displayValue)")
                 .bold()
                 .foregroundColor(textColor)
             
