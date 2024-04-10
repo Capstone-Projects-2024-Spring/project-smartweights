@@ -161,4 +161,15 @@ class ClothingItemDBManager : ObservableObject{
         }
     }
 
+    func getActiveClothing(completion : @escaping (String, Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "ClothingItem", fieldName: "isActive", fieldValue: 1) { records, error in
+            guard let record = records?.first else {
+                completion("", error)
+                return
+            }
+            let imageName = record["imageName"] as! String
+            completion(imageName, nil)
+        }
+    }
+
 }
