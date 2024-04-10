@@ -36,10 +36,42 @@ class WorkoutViewModel: ObservableObject {
         return workoutInProgressSubject.eraseToAnyPublisher()
     }
     
-    //    override init() {
-    //        super.init()
-    //        speechRecognizer.delegate = self
-    //    }
+    
+    @Published var hasWorkoutStarted = false
+    @Published var showingWorkoutSheet = false
+    @Published var countdown = 5
+    @Published var countdownActive = false
+    @Published var showingAlert = false
+    @Published var alertMessage = ""
+    private var countdownTimer: AnyCancellable?
+    
+    func startCountdown() {
+        countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
+            guard let self = self else { return }
+            if self.countdown > 0 {
+                self.countdown -= 1
+            } else {
+                self.countdownTimer?.cancel()
+                startTimer()
+                startWorkout()
+            }
+        }
+    }
+    
+    func validateAndStartCountdown(sets: String, reps: String, weights: String) {
+        if isValidInput(sets) && isValidInput(reps) && isValidInput(weights) {
+            countdownActive = true
+            startCountdown()
+        } else {
+            alertMessage = "Please enter valid numbers for sets, reps, and weights."
+            showingAlert = true
+        }
+    }
+    
+    private func isValidInput(_ input: String) -> Bool {
+        guard !input.isEmpty, let _ = Int(input) else { return false }
+        return true
+    }
     
     func startListening() {
         guard !isListening else { return }
@@ -94,11 +126,8 @@ class WorkoutViewModel: ObservableObject {
                         // }
                         return
                     } else if bestString.contains("start workout") {
-                        // Detected "finish workout" command, stop workout
-                        //                        self.startWorkout()
-                        startTimer()
-                        // self.workoutInProgress = true
-                        
+                        countdownActive = true
+                        //startCountdown()
                     }
                     print("bestString: \(bestString)")
                     
@@ -122,18 +151,8 @@ class WorkoutViewModel: ObservableObject {
     }
     
     private func startWorkout() {
-        // Call your ViewModel or Model function to start the workout
-        if !workoutInProgress {
-            workoutInProgress = true
-            print("Workout started!")
-            workoutInProgressSubject.send(true)
-            startTimer()
-        }
-        
-        // Synthesize speech
-        //               let speechUtterance = AVSpeechUtterance(string: "Workout started")
-        //               speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        //               speechSynthesizer.speak(speechUtterance)
+        hasWorkoutStarted = true
+        showingWorkoutSheet = false
         
     }
     private func stopWorkout(){
@@ -203,6 +222,9 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func resetWorkoutState() {
+        countdownActive = false
+        countdown = 5 // Reset to your initial countdown value
+        
         // Reset progress
         progress = 0
         inputtedSets = ""
