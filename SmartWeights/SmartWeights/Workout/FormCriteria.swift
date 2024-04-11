@@ -137,7 +137,7 @@ class FormCriteria: ObservableObject{
     
     //measures if the eblow is swinging back and forth too much
     //use MPU6050-2
-    func eblowSwingAverage(array: [[Int]]) -> Double {
+    func averageElowSwing(array: [[Int]]) -> Double {
         
         var count = 0 //total data collected
         var good = 0
@@ -168,7 +168,7 @@ class FormCriteria: ObservableObject{
     
     
     //flaring elbow up and down
-    func eblowFlareUpDownAverage(array: [[Int]]) -> Double {
+    func averageEblowFlareUpDown(array: [[Int]]) -> Double {
         
         var count = 0 //total data collected
         var good = 0
@@ -199,7 +199,7 @@ class FormCriteria: ObservableObject{
     
     
     //flaring elbow forward and black
-    func eblowFlareFowardBackwardAverage(array: [[Int]]) -> Double {
+    func averageEblowFlareFowardBackward(array: [[Int]]) -> Double {
         
         var count = 0 //total data collected
         var good = 0
@@ -267,25 +267,33 @@ class FormCriteria: ObservableObject{
     
     
     //returns a tuple of strings for the specific feedback
-    func giveFeedback(array: [[Int]]) -> (String,String,String){
+    func giveFeedback(dumbbellArray: [[Int]],elbowArray: [[Int]] ) -> (String,String,String){
     
         let averageAcceleration = self.averageUpDownAcceleration(array: array)
 
         let overallAccel = String(format: "Overall acceleration: %.f%% good", averageAcceleration * 100)
-        var upDownCustomTextFeedback = ""
+        var dumbbellCustomTextFeedback = ""
         var elbowCustomTextFeedback = ""
         
-        if self.averageUpDownAcceleration(array: array) < 0.7{ //if acceleration is 70% bad
-            upDownCustomTextFeedback = "whoa slow down!!"
+        if self.averageUpDownAcceleration(array: dumbbellArray) < 0.7{ //if acceleration is 70% bad
+            dumbbellCustomTextFeedback = "whoa slow down!!"
             
         }
         else{
-            upDownCustomTextFeedback = "Keep up the good work!!"
+            //TODO: Make a array of phrases and randomize which one to be called
+            dumbbellCustomTextFeedback = "Keep up the good work!!"
+        }
+        
+        if self.averageElowSwing(array: elbowArray) < 0.7{
+            elbowCustomTextFeedback = "Keep those elbow steady!"
+        }
+        else{
+            elbowCustomTextFeedback = "Way to go!!!"
         }
         
         //need to add when form is dangerous
         
-        return (overallAccel,upDownCustomTextFeedback,elbowCustomTextFeedback)
+        return (overallAccel,dumbbellCustomTextFeedback,elbowCustomTextFeedback)
         
     }
     
