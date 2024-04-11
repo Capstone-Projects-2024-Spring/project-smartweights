@@ -18,7 +18,7 @@ struct WorkoutMainPage: View {
     
     @State private var showGraphPopover = false
     @State private var graphData: [Double] = []
-    var feedback: (String, String, String, String) {
+    var feedback: (String,String) {
            formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
        }
     
@@ -75,7 +75,7 @@ struct WorkoutMainPage: View {
                                 Image("bubble")
                                     .resizable()
                                     .frame(width: 250, height: 150)
-                                Text("\(feedback.3)")
+                                Text("\(feedback.1)")
                                     .foregroundStyle(Color.black)
                             }
                             .padding(.bottom, -40)
@@ -88,10 +88,6 @@ struct WorkoutMainPage: View {
                                 .frame(width: 200, height: 175)
                         }
                         Text("\(feedback.0)") //gives overall acceleration
-                            .font(.subheadline)
-                        Text("\(feedback.1)") // gives overall accel going up
-                            .font(.subheadline)
-                        Text("\(feedback.2)") // gives overall accel going down
                             .font(.subheadline)
                     }
                     .padding(.bottom, 30)
