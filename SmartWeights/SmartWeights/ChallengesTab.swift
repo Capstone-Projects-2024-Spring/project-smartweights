@@ -39,7 +39,10 @@ struct Challenge: Identifiable {
     var coinReward: String
     var xpReward: String
     var image: Image // added for custom images
-    var isCompleted = false
+    
+    var isCompleted: Bool {
+            return currentProgress >= progressGoal
+        }
     
     var progressPercent: Double {
         return Double(currentProgress) / Double(progressGoal)
@@ -90,15 +93,35 @@ struct ChallengesList: View {
     
     var body: some View {
         VStack {
-            Picker(selection: $selectedTab, label: Text("Select a tab")) {
-                Text("In Progress").tag(0)
-                Text("Completed").tag(1)
+            HStack {
+                Spacer()
+                Picker(selection: $selectedTab, label: Text("Select a tab")) {
+                    Text("In Progress").tag(0)
+                    Text("Completed").tag(1)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                
+                Spacer()
+                Button(action: {
+                    // Handle GC button logic here
+                }) {
+                    Image("GameCenterIcon")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30) // can adjust if needed
+                        .foregroundColor(.blue)
+                        .padding(1)
+                        .background(Color.white)
+                }
+                Spacer()
             }
-            .pickerStyle(SegmentedPickerStyle())
-            List(challenges) { challenge in
-                ChallengeRow(challenge: challenge)
+            
+            // Allows achievements to appear as In Progress or Completed
+            List(challenges.filter { selectedTab == 0 ? !$0.isCompleted : $0.isCompleted }) { challenge in
+                           ChallengeRow(challenge: challenge)
             }
         }
+        
     }
 }
 
