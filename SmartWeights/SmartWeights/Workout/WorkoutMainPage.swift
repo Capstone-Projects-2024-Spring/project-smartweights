@@ -252,6 +252,14 @@ struct WorkoutMainPage: View {
                         if let totalSets = Int(viewModel.inputtedSets), viewModel.currentSets < totalSets {
                             viewModel.currentSets += 1
                         }
+                        // Get feedback from formCriteria
+                        let currentFeedback = formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+                        
+                        // Check if feedback indicates poor form
+                        if currentFeedback.3 == "whoah slow down!" {
+                            // Call function to reduce HP
+                            workoutPageViewModel.lowerHP()
+                        }
                     } else {
                         // Resume workout from a paused state
                         viewModel.resumeTimer()
