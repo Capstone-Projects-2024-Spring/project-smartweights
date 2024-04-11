@@ -157,6 +157,34 @@ class CloudKitManager {
     func fetchPrivateRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void) {
         p_fetchRecord(recordType: recordType, usePrivateDatabase: true, fieldName: nil, fieldValue: nil, completion: completion)
     }
+    
+    /// Fetches a single private record from the CloudKit database by its ID.
+    /// - Parameters:
+    ///   - recordID: The ID of the record to fetch.
+    ///   - completion: The completion handler that is called when the fetch operation is complete. It returns the fetched CKRecord and an optional error.
+    func fetchPrivateRecord(recordID: CKRecord.ID, completion: @escaping (CKRecord?, Error?) -> Void) {
+        privateDatabase.fetch(withRecordID: recordID) { (record, error) in
+            DispatchQueue.main.async {
+                completion(record, error)
+            }
+        }
+    }
+    // Add a completion handler to your savePrivateItem method.
+    func savePrivateItem(record: CKRecord, completion: @escaping (Error?) -> Void) {
+        privateDatabase.save(record) { _, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("Error saving item: \(error.localizedDescription)")
+                } else {
+                    print("Item saved successfully.")
+                }
+                completion(error)
+            }
+        }
+    }
+
+
+
 }
 
 

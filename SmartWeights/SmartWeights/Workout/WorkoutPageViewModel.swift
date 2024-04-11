@@ -46,5 +46,18 @@ class WorkoutPageViewModel: ObservableObject{
         }
         return userTotalXP = userTotalXP + value
     }
+    func lowerHP() {
+        // Lower pet's HP by 5
+        guard let currentPet = self.pet else { return }
+        let newHealth = max(currentPet.health - 5, 0) // Ensuring health doesn't go below 0
+        petDBManager.updatePetHealth(newHealth: newHealth) { [weak self] error in
+            if let error = error {
+                print("Error updating pet's health: \(error.localizedDescription)")
+            } else {
+                self?.pet?.health = newHealth
+                print("Pet's new HP: \(newHealth)")
+            }
+        }
+    }
     
 }

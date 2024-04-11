@@ -106,6 +106,13 @@ class FormCriteria: ObservableObject{
         
     }
     
+    func checkFeedbackAndLowerHP(array: [[Int]], workoutPageViewModel: WorkoutPageViewModel) {
+        let feedback = giveFeedback(array: array)
+        if feedback.3 == "whoa slow down!" {
+            workoutPageViewModel.lowerHP()
+        }
+    }
+    
 }
 
 
