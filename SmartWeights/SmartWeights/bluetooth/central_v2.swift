@@ -11,10 +11,6 @@ Bluetooth will only work if the app is being built.
                     The sensors will continuously send data. But only when collectedDataToggle == True will the app collect data.
                     This makes starting the workout easier, since sensors are always connected.
 
-
-TODO: Connect three more picos - in progress
-TODO: Refactor the code to handle three more picos - in progress
-TODO: Read gyroscope data - done
  */
 
 
@@ -62,7 +58,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     
     
     
-    //TODO: Clean up
+
     @Published var MPU6050_1_Accel: [Int] = [0, 0, 0] // Array to store current acceleration of MPU6050-1
     @Published var MPU6050_2_Accel: [Int] = [0, 0, 0] // Array to store current acceleration of MPU6050-2
     @Published var MPU6050_1_Gyro: [Int] = [0, 0, 0] // Array to store current gyro rotation of MPU6050-1

@@ -269,7 +269,8 @@ class FormCriteria: ObservableObject{
     //returns a tuple of strings for the specific feedback
     func giveFeedback(dumbbellArray: [[Int]],elbowArray: [[Int]] ) -> (String,String,String){
     
-        let averageAcceleration = self.averageUpDownAcceleration(array: array)
+        let averageAcceleration = self.averageUpDownAcceleration(array: dumbbellArray)
+        
 
         let overallAccel = String(format: "Overall acceleration: %.f%% good", averageAcceleration * 100)
         var dumbbellCustomTextFeedback = ""
