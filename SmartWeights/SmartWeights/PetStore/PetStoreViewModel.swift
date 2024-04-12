@@ -61,10 +61,12 @@ class storeViewModel: ObservableObject {
                 print("No background items found.")
                 return
             }
-            for item in self.items {
-                if backgroundItems.contains(where: { $0.imageName == item.name }) {
-                    if let index = self.items.firstIndex(where: { $0.id == item.id }) {
-                        self.items[index].isBought = true
+            DispatchQueue.main.async {
+                for item in self.items {
+                    if backgroundItems.contains(where: { $0.imageName == item.name }) {
+                        if let index = self.items.firstIndex(where: { $0.id == item.id }) {
+                            self.items[index].isBought = true
+                        }
                     }
                 }
             }
@@ -79,10 +81,12 @@ class storeViewModel: ObservableObject {
                 print("No pet items found.")
                 return
             }
-            for item in self.items {
-                if petItems.contains(where: { $0.imageName == item.name }) {
-                    if let index = self.items.firstIndex(where: { $0.id == item.id }) {
-                        self.items[index].isBought = true
+            DispatchQueue.main.async {
+                for item in self.items {
+                    if petItems.contains(where: { $0.imageName == item.name }) {
+                        if let index = self.items.firstIndex(where: { $0.id == item.id }) {
+                            self.items[index].isBought = true
+                        }
                     }
                 }
             }
@@ -97,10 +101,12 @@ class storeViewModel: ObservableObject {
                 print("No clothing items found.")
                 return
             }
-            for item in self.items {
-                if clothingItems.contains(where: { $0.imageName == item.name }) {
-                    if let index = self.items.firstIndex(where: { $0.id == item.id }) {
-                        self.items[index].isBought = true
+            DispatchQueue.main.async {
+                for item in self.items {
+                    if clothingItems.contains(where: { $0.imageName == item.name }) {
+                        if let index = self.items.firstIndex(where: { $0.id == item.id }) {
+                            self.items[index].isBought = true
+                        }
                     }
                 }
             }
