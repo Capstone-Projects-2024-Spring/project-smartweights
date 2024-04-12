@@ -18,8 +18,8 @@ struct WorkoutMainPage: View {
     
     @State private var showGraphPopover = false
     @State private var graphData: [Double] = []
-    var feedback: (String,String) {
-           formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+    var feedback: (String,String,String) {
+        formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
        }
     
     @State private var currentMotivationalPhrase = "Let's get started!"

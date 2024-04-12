@@ -14,8 +14,14 @@ class FormCriteria: ObservableObject{
     read from the arrays that store the data
      */
     
-    @Published var ListOfAccelAverage:[Double] = []
-    @Published var ListOfElbowAverage:[Double] = []
+    private var ListOfAccelAverage:[Double] = []
+    private var ListOfElbowAverage:[Double] = []
+    private var goodFormPhrases: [String] = ["Keep up the good work!!","Looking good","Phew, good job","Those curls were nice!"]
+    
+    
+    
+    
+    //---------------------DUMBBELL-------------------//
     
     //read the Z axis rotation and gives an average of the up and down for that set
     func averageUpDownAcceleration(array: [[Int]]) -> Double{
@@ -53,7 +59,7 @@ class FormCriteria: ObservableObject{
     }
     
     
-    //twisting left and right
+    //twisting writst left and right
     func averageWristLeftRightRotation(array: [[Int]]) -> Double{
         
         //measurement from the X rotation
@@ -86,6 +92,7 @@ class FormCriteria: ObservableObject{
         
         
     }
+    
     //twisting up and down
     func averageWristUpDownRotation(array: [[Int]]) -> Double{
        
@@ -133,7 +140,12 @@ class FormCriteria: ObservableObject{
         
     }
     
-    //----------------------------------------------------------------//
+    
+    func overwallWorkoutTwisting(){
+        
+    }
+    
+    //--------------------------------ELBOW-------------------------------//
     
     //measures if the eblow is swinging back and forth too much
     //use MPU6050-2
@@ -246,20 +258,26 @@ class FormCriteria: ObservableObject{
     
     
     
+    func overallWorkoutElbowFlare() {
+        
+        
+        
+    }
     
     
+    
+    //----------------DANGEROUS MOVEMENTS----------------//
     
     //Threshhold if they are moving too fast and is dangerous
-    func dangerousForm() -> Bool{
+    func dangerousForm() -> (Bool,Bool){
         
         //if accel > 300 degrees per second
         //if the accel(300)/total count > 10% of the workout return true
         
         
-    
         //if dangerous eblow movement or going too fast return true
         
-        return true
+        return (true,true)
     }
     
     
