@@ -218,6 +218,18 @@ struct WorkoutMainPage: View {
             Button(action: {
                 if hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
+                        // Get feedback from formCriteria
+                        let currentFeedback = formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+                        
+                        // Check if feedback indicates poor form
+                        if currentFeedback.3 == "whoa slow down!" {
+                            // Call function to reduce HP
+                            workoutPageViewModel.lowerHP()
+                        }
+                        
+                        print("hello test")
+                        print(currentFeedback.3)
+                        
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
                         storeModel.addFundtoUser(price: 50)
