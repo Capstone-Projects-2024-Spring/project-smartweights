@@ -256,7 +256,7 @@ struct WorkoutMainPage: View {
                         let currentFeedback = formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
                         
                         // Check if feedback indicates poor form
-                        if currentFeedback.3 == "whoah slow down!" {
+                        if currentFeedback.3 == "whoa slow down!" {
                             // Call function to reduce HP
                             workoutPageViewModel.lowerHP()
                         }
