@@ -260,6 +260,9 @@ struct WorkoutMainPage: View {
                             // Call function to reduce HP
                             workoutPageViewModel.lowerHP()
                         }
+                        
+                        print("hello test")
+                        print(currentFeedback.3)
                     } else {
                         // Resume workout from a paused state
                         viewModel.resumeTimer()
