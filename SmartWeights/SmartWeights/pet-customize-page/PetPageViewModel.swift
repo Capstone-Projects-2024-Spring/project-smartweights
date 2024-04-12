@@ -38,22 +38,22 @@ class PetPageFunction: ObservableObject {
     // ]
     
     @Published var foodItems: [FoodItemModel] = []
-
+    
     @Published var petItems: [PetItemModel] = []{
         didSet{
             getActivePet()
         }
     }
-
+    
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
     
     @Published var userTotalXP = 0
-
+    
     @Published var pet: PetModel?
     @Published var activePet: String = ""
-
+    
     // Initializer
     init(){
         updateXP()
@@ -78,7 +78,7 @@ class PetPageFunction: ObservableObject {
                     self.petItems = petItems
                 }
             }
-
+            
         }
         petItemDBManager.getActivePet{ activePet, error in
             if let error = error {
@@ -144,7 +144,9 @@ class PetPageFunction: ObservableObject {
                 print("Error updating currency: \(error.localizedDescription)")
             }
         }
-        return increaseXP(by: value)
+        
+//        return userTotalXP = userTotalXP + value
+                return increaseXP(by: value)
     }
     
     
@@ -154,7 +156,7 @@ class PetPageFunction: ObservableObject {
         alertMessage = message
         showAlert = true
     }
-
+    
     func getActivePet(){
         petItemDBManager.getActivePet { (activePet, error) in
             if let error = error {
@@ -164,13 +166,14 @@ class PetPageFunction: ObservableObject {
                     self.activePet = activePet
                 }
             }
+        }
     }
-
+    
     
     func increaseXP(by value: Int) {
         // Calculate new progress to see if it exceeds 100
         let newProgress = userTotalXP + value
-
+        
         // Check if current level is less than 10
         if currentLevel < 10 {
             // If adding XP will exceed 100, level up and adjust XP
@@ -210,6 +213,7 @@ class PetPageFunction: ObservableObject {
         if currentLevel > 10 {
             currentLevel = 10 // Cap the level at 10
         }
-
+        
     }
+
 }
