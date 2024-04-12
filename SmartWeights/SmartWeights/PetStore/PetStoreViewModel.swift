@@ -52,6 +52,59 @@ class storeViewModel: ObservableObject {
     init() {
         updateCurrency()
         // fetch backgrounds, so can disable purchase if already bought, set sellingItem's .isBought to true if name match
+        backgroundItemDBManager.fetchBackgroundItems { backgroundItems, error in
+            if let error = error {
+                print("Error fetching background items: \(error.localizedDescription)")
+                return
+            }
+            guard let backgroundItems = backgroundItems else {
+                print("No background items found.")
+                return
+            }
+            for item in self.items {
+                if backgroundItems.contains(where: { $0.imageName == item.name }) {
+                    if let index = self.items.firstIndex(where: { $0.id == item.id }) {
+                        self.items[index].isBought = true
+                    }
+                }
+            }
+        }
+        // fetch pets, so can disable purchase if already bought, set sellingItem's .isBought to true if name match
+        petItemDBManager.fetchPetItems { petItems, error in
+            if let error = error {
+                print("Error fetching pet items: \(error.localizedDescription)")
+                return
+            }
+            guard let petItems = petItems else {
+                print("No pet items found.")
+                return
+            }
+            for item in self.items {
+                if petItems.contains(where: { $0.imageName == item.name }) {
+                    if let index = self.items.firstIndex(where: { $0.id == item.id }) {
+                        self.items[index].isBought = true
+                    }
+                }
+            }
+        }
+        // fetch clothing, so can disable purchase if already bought, set sellingItem's .isBought to true if name match
+        clothingItemDBManager.fetchClothingItems { clothingItems, error in
+            if let error = error {
+                print("Error fetching clothing items: \(error.localizedDescription)")
+                return
+            }
+            guard let clothingItems = clothingItems else {
+                print("No clothing items found.")
+                return
+            }
+            for item in self.items {
+                if clothingItems.contains(where: { $0.imageName == item.name }) {
+                    if let index = self.items.firstIndex(where: { $0.id == item.id }) {
+                        self.items[index].isBought = true
+                    }
+                }
+            }
+        }
     }
     
     func updateCurrency() {
