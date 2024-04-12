@@ -3,6 +3,16 @@ import SwiftUI
 import CloudKit
 /// StoreViewModel class with items list and needed variables.
 
+/// SellingItem struct that contains essential item attributes.
+struct SellingItem: Identifiable {
+    var id = Int() // universal identifier for item number
+    var name: String
+    var category: String
+    var price: String
+    var image: Image //  property for the image itself
+    var description: String
+    var isBought = false
+}
 class storeViewModel: ObservableObject {
     
     var inventoryDBManager = InventoryDBManager()
@@ -11,6 +21,9 @@ class storeViewModel: ObservableObject {
     var foodItemDBManager = FoodItemDBManager()
     var backgroundItemDBManager = BackgroundItemDBManager()
     var clothingItemDBManager = ClothingItemDBManager()
+
+
+    
     /// Items available in store.
     @Published var items = [
         SellingItem(id: 1, name: "Dog", category: "Pets", price: "500", image: Image("Dog"), description: "The best companion!"),
@@ -38,6 +51,7 @@ class storeViewModel: ObservableObject {
     
     init() {
         updateCurrency()
+        // fetch backgrounds, so can disable purchase if already bought, set sellingItem's .isBought to true if name match
     }
     
     func updateCurrency() {

@@ -8,16 +8,6 @@
 import Foundation
 import SwiftUI
 
-/// SellingItem struct that contains essential item attributes.
-struct SellingItem: Identifiable {
-    var id = Int() // universal identifier for item number
-    var name: String
-    var category: String
-    var price: String
-    var image: Image //  property for the image itself
-    var description: String
-    var isBought = false
-}
 
 /// Grid for displaying items.
 private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
