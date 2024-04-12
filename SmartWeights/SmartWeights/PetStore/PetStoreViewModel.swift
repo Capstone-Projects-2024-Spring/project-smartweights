@@ -5,11 +5,12 @@ import CloudKit
 
 class storeViewModel: ObservableObject {
     
-    //    var cloudKitManager = CloudKitManager()
     var inventoryDBManager = InventoryDBManager()
     var userDBManager = UserDBManager()
+    var petItemDBManager = PetItemDBManager()
     var foodItemDBManager = FoodItemDBManager()
-    
+    var backgroundItemDBManager = BackgroundItemDBManager()
+    var clothingItemDBManager = ClothingItemDBManager()
     /// Items available in store.
     @Published var items = [
         SellingItem(id: 1, name: "Dog", category: "Pets", price: "500", image: Image("Dog"), description: "The best companion!"),
@@ -18,9 +19,9 @@ class storeViewModel: ObservableObject {
         SellingItem(id: 4, name: "Orange", category: "Foods", price: "10", image: Image("Orange"), description: "Gives 20 health."),
         SellingItem(id: 5, name: "Apple", category: "Foods", price: "10", image: Image("Apple"), description: "Gives 10 health."),
         SellingItem(id: 6, name: "Juice", category: "Foods", price: "20", image: Image("Juice"), description: "Gives 10 health."),
-//        SellingItem(id: 7, name: "Jetpack", category: "Backgrounds", price: "400", image: Image("jetpack"), description: "Walking is overrated."),
-//        SellingItem(id: 8, name: "Flag", category: "Backgrounds", price: "200", image: Image("flag"), description: "Works great in the wind!"),
-//        SellingItem(id: 9, name: "Sand Castle", category: "Backgrounds", price: "300", image: Image("sandcastle"), description: "Watch out for waves!"),
+        //        SellingItem(id: 7, name: "Jetpack", category: "Backgrounds", price: "400", image: Image("jetpack"), description: "Walking is overrated."),
+        //        SellingItem(id: 8, name: "Flag", category: "Backgrounds", price: "200", image: Image("flag"), description: "Works great in the wind!"),
+        //        SellingItem(id: 9, name: "Sand Castle", category: "Backgrounds", price: "300", image: Image("sandcastle"), description: "Watch out for waves!"),
         SellingItem(id: 7, name: "Festive", category: "Backgrounds", price: "200", image: Image("Festive"), description: "Celebrate!"),
         SellingItem(id: 8, name: "Bamboo", category: "Backgrounds", price: "300", image: Image("Bamboo"), description: "Peaceful."),
         SellingItem(id: 9, name: "Royal", category: "Backgrounds", price: "400", image: Image("Royal"), description: "Fit for a king."),
@@ -85,13 +86,33 @@ class storeViewModel: ObservableObject {
                 items[index].isBought = true
             }
             subtractFunds(price: Int(item.price) ?? 0)
-            // eventually case statements for each category
-            if(item.category == "Foods"){
+            switch item.category {
+            case "Foods":
                 foodItemDBManager.updateQuantity_add(name: item.name, quantity: 1) { error in
                     if let error = error {
                         print("Error updating quantity: \(error.localizedDescription)")
                     }
                 }
+            case "Backgrounds":
+                backgroundItemDBManager.createBackgroundItem(imageName: item.name) { error in
+                    if let error = error {
+                        print("Error updating quantity: \(error.localizedDescription)")
+                    }
+                }
+            case "Pets":
+                petItemDBManager.createPetItem(imageName: item.name) { error in
+                    if let error = error {
+                        print("Error updating quantity: \(error.localizedDescription)")
+                    }
+                }
+            case "Outfits":
+                clothingItemDBManager.createClothingItem(imageName: item.name) { error in
+                    if let error = error {
+                        print("Error updating quantity: \(error.localizedDescription)")
+                    }
+                }
+            default:
+                break
             }
             
         }
