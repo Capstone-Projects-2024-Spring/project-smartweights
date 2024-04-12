@@ -22,6 +22,7 @@ class PetPageFunction: ObservableObject {
     var inventoryDBManager = InventoryDBManager()
     var userDBManager = UserDBManager()
     var petDBManager = PetDBManager()
+    var petItemDBManager = PetItemDBManager()
     var foodItemDBManager = FoodItemDBManager()
     @Published var showShop = false
     @Published var showCustomize = false
@@ -37,14 +38,22 @@ class PetPageFunction: ObservableObject {
     // ]
     
     @Published var foodItems: [FoodItemModel] = []
-    
+
+    @Published var petItems: [PetItemModel] = []{
+        didSet{
+            getActivePet()
+        }
+    }
+
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
     
     @Published var userTotalXP = 0
-    
-    var pet: PetModel?
+
+    @Published var pet: PetModel?
+    @Published var activePet: String = ""
+
     // Initializer
     init(){
         updateXP()
@@ -56,6 +65,29 @@ class PetPageFunction: ObservableObject {
             if let fetchedItems = fetchedItems {
                 DispatchQueue.main.async {
                     self.foodItems = fetchedItems
+                }
+            }
+        }
+        petItemDBManager.fetchPetItems{ petItems, error in
+            if let error = error {
+                print("Error fetching pet items: \(error.localizedDescription)")
+                return
+            }
+            if let petItems = petItems {
+                DispatchQueue.main.async {
+                    self.petItems = petItems
+                }
+            }
+
+        }
+        petItemDBManager.getActivePet{ activePet, error in
+            if let error = error {
+                print("Error fetching activePet: \(error.localizedDescription)")
+                return
+            } else {
+                DispatchQueue.main.async {
+                    self.activePet = activePet
+                    print("ACTIVE PET: \(self.activePet)")
                 }
             }
         }
@@ -122,6 +154,18 @@ class PetPageFunction: ObservableObject {
         alertMessage = message
         showAlert = true
     }
+
+    func getActivePet(){
+        petItemDBManager.getActivePet { (activePet, error) in
+            if let error = error {
+                print("Error getting active pet: \(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    self.activePet = activePet
+                }
+            }
+    }
+
     
     func increaseXP(by value: Int) {
         // Calculate new progress to see if it exceeds 100
@@ -166,5 +210,6 @@ class PetPageFunction: ObservableObject {
         if currentLevel > 10 {
             currentLevel = 10 // Cap the level at 10
         }
+
     }
 }

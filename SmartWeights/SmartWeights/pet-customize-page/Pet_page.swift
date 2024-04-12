@@ -10,8 +10,8 @@ import SwiftUI
 
 struct Pet_Page: View {
     @ObservedObject var viewModel = PetPageFunction()
+    @State var activePet: String = ""
 
-    
     var body: some View {
         NavigationView {
             VStack {
@@ -75,7 +75,7 @@ struct Pet_Page: View {
                 }
                 .padding(.horizontal, 25)
                 
-                Image("Dog")
+                Image(viewModel.activePet)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 500, height: 400, alignment: .center)

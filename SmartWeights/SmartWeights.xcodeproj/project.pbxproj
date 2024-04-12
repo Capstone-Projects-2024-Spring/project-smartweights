@@ -21,6 +21,8 @@
 		32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E288592B83CD2800458FB1 /* Calendar.swift */; };
 		32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */; };
 		32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */; };
+		6B50EDF12BC6EB810094C715 /* ClothingItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50EDF02BC6EB810094C715 /* ClothingItemManager.swift */; };
+		6B50EDF32BC700E60094C715 /* BackgroundItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50EDF22BC700E60094C715 /* BackgroundItemManager.swift */; };
 		6B8762AB2BA26891005627CE /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762A92BA26891005627CE /* CloudKitManager.swift */; };
 		6BA2DC482B90FCF500A998FC /* CloudKitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */; };
 		6BC8E5722BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */; };
@@ -33,8 +35,9 @@
 		6BEA78632BBDC88200239AB0 /* UserFitnessDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA78622BBDC88200239AB0 /* UserFitnessDataManager.swift */; };
 		6BEA78652BBDC94300239AB0 /* UserFitnessPlanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA78642BBDC94300239AB0 /* UserFitnessPlanManager.swift */; };
 		6BEA786B2BC0470C00239AB0 /* PetPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA786A2BC0470C00239AB0 /* PetPageViewModel.swift */; };
-		6BEA786F2BC08E4700239AB0 /* WorkoutPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA786E2BC08E4700239AB0 /* WorkoutPageViewModel.swift */; };
 		6BEA786D2BC0780E00239AB0 /* FoodItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA786C2BC0780E00239AB0 /* FoodItemManager.swift */; };
+		6BEA786F2BC08E4700239AB0 /* WorkoutPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA786E2BC08E4700239AB0 /* WorkoutPageViewModel.swift */; };
+		6BEA78732BC1E93F00239AB0 /* PetItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA78722BC1E93F00239AB0 /* PetItemManager.swift */; };
 		77C430C32BC080C8006E1FBE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C430C22BC080C8006E1FBE /* CoreDataManager.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
 		91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7E2B7A7E4700BC62E6 /* ContentView.swift */; };
@@ -94,6 +97,8 @@
 		32E288592B83CD2800458FB1 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallProgressGraph.swift; sourceTree = "<group>"; };
 		32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallProgress.swift; sourceTree = "<group>"; };
+		6B50EDF02BC6EB810094C715 /* ClothingItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItemManager.swift; sourceTree = "<group>"; };
+		6B50EDF22BC700E60094C715 /* BackgroundItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundItemManager.swift; sourceTree = "<group>"; };
 		6B8762A92BA26891005627CE /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitTest.swift; sourceTree = "<group>"; };
 		6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecognitionViewModel.swift; sourceTree = "<group>"; };
@@ -106,8 +111,9 @@
 		6BEA78622BBDC88200239AB0 /* UserFitnessDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFitnessDataManager.swift; sourceTree = "<group>"; };
 		6BEA78642BBDC94300239AB0 /* UserFitnessPlanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFitnessPlanManager.swift; sourceTree = "<group>"; };
 		6BEA786A2BC0470C00239AB0 /* PetPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetPageViewModel.swift; sourceTree = "<group>"; };
-		6BEA786E2BC08E4700239AB0 /* WorkoutPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPageViewModel.swift; sourceTree = "<group>"; };
 		6BEA786C2BC0780E00239AB0 /* FoodItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemManager.swift; sourceTree = "<group>"; };
+		6BEA786E2BC08E4700239AB0 /* WorkoutPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPageViewModel.swift; sourceTree = "<group>"; };
+		6BEA78722BC1E93F00239AB0 /* PetItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PetItemManager.swift; path = SmartWeights/DBAccess/PetItemManager.swift; sourceTree = SOURCE_ROOT; };
 		77C430C22BC080C8006E1FBE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		91065F792B7A7E4700BC62E6 /* SmartWeights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWeights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsApp.swift; sourceTree = "<group>"; };
@@ -213,9 +219,12 @@
 				6B8762A92BA26891005627CE /* CloudKitManager.swift */,
 				6BEA78542BBCE5E300239AB0 /* Inventory.swift */,
 				6BEA785C2BBDC4B300239AB0 /* PetManager.swift */,
+				6BEA78722BC1E93F00239AB0 /* PetItemManager.swift */,
 				6BEA78642BBDC94300239AB0 /* UserFitnessPlanManager.swift */,
 				6BEA78562BBCE60400239AB0 /* UserManager.swift */,
 				6BEA786C2BC0780E00239AB0 /* FoodItemManager.swift */,
+				6B50EDF02BC6EB810094C715 /* ClothingItemManager.swift */,
+				6B50EDF22BC700E60094C715 /* BackgroundItemManager.swift */,
 				77C430C22BC080C8006E1FBE /* CoreDataManager.swift */,
 			);
 			path = DBAccess;
@@ -501,6 +510,7 @@
 			files = (
 				B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */,
 				6BEA78632BBDC88200239AB0 /* UserFitnessDataManager.swift in Sources */,
+				6B50EDF32BC700E60094C715 /* BackgroundItemManager.swift in Sources */,
 				6BC8E5722BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift in Sources */,
 				6BEA786B2BC0470C00239AB0 /* PetPageViewModel.swift in Sources */,
 				B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */,
@@ -525,6 +535,7 @@
 				9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */,
 				6BEA785D2BBDC4B300239AB0 /* PetManager.swift in Sources */,
 				321EF0452B83AAFA000A2D02 /* LoginPage.swift in Sources */,
+				6B50EDF12BC6EB810094C715 /* ClothingItemManager.swift in Sources */,
 				0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */,
 				6BEA78552BBCE5E300239AB0 /* Inventory.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
@@ -532,6 +543,7 @@
 				9180379A2BBF719B00802D01 /* FormCriteria.swift in Sources */,
 				6B98A7242BAA223F00856271 /* TestDB.swift in Sources */,
 				01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */,
+				6BEA78732BC1E93F00239AB0 /* PetItemManager.swift in Sources */,
 				320276222B892D55001A86B8 /* Pet_page.swift in Sources */,
 				327C4B022BA9C38800E160EE /* Inventory_Customize_page.swift in Sources */,
 				6BEA786F2BC08E4700239AB0 /* WorkoutPageViewModel.swift in Sources */,
