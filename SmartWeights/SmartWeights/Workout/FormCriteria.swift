@@ -13,9 +13,19 @@ class FormCriteria: ObservableObject{
     /*
     read from the arrays that store the data
      */
+    //dumbbell averages
+    private var listOfDumbellAverage:[Double] = []
+    private var listOfWristLeftRightAverage:[Double] = []
+    private var listOfWristUpDownAverage:[Double] = []
     
-    private var ListOfAccelAverage:[Double] = []
-    private var ListOfElbowAverage:[Double] = []
+    
+    //elbow averages
+    private var listOfElbowSwingAverage:[Double] = []
+    private var listOfElbowFlareUpDwonAverage:[Double] = []
+    private var listOfElbowFlareForwardBackAverage: [Double] = []
+    
+    
+    //phrases
     private var goodFormPhrases: [String] = ["Keep up the good work!!","Looking good","Phew, good job","Those curls were nice!"]
     
     
@@ -34,7 +44,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0 //data in range of good form
         var fast = 0 // data outside of good form
-        var precentage:Double = 0 //return
+        var percentage:Double = 0 //return
 
         array.forEach { (data) in
             if data[2] < 10 && data[2] > -10{ //the user isnt making a rep, could be between reps
@@ -52,9 +62,9 @@ class FormCriteria: ObservableObject{
             }
             
         }
-        precentage = Double(good)/Double(count)
-        self.ListOfAccelAverage.append(Double(good)/Double(count))
-        return precentage
+        percentage = Double(good)/Double(count)
+        self.listOfDumbellAverage.append(Double(good)/Double(count))
+        return percentage
         
     }
     
@@ -67,7 +77,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0 //data in range of good form
         var fast = 0 // data outside of good form
-        var precentage:Double = 0 //return
+        var percentage:Double = 0 //return
 
         array.forEach { (data) in
             if data[0] < 10 && data[1] > -10{ //the user isnt making a rep, could be between reps
@@ -85,11 +95,9 @@ class FormCriteria: ObservableObject{
             }
             
         }
-        precentage = Double(good)/Double(count)
-        return precentage
-        
-        
-        
+        percentage = Double(good)/Double(count)
+        self.listOfWristLeftRightAverage.append(percentage)
+        return percentage
         
     }
     
@@ -101,7 +109,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0 //data in range of good form
         var fast = 0 // data outside of good form
-        var precentage:Double = 0 //return
+        var percentage:Double = 0 //return
 
         array.forEach { (data) in
             if data[1] < 10 && data[1] > -10{ //the user isnt making a rep, could be between reps
@@ -119,8 +127,9 @@ class FormCriteria: ObservableObject{
             }
             
         }
-        precentage = Double(good)/Double(count)
-        return precentage
+        percentage = Double(good)/Double(count)
+        self.listOfWristUpDownAverage.append(percentage)
+        return percentage
         
         
         
@@ -130,18 +139,40 @@ class FormCriteria: ObservableObject{
             
             var sum = 0
             
-            self.ListOfAccelAverage.forEach{ (data) in
+            self.listOfDumbellAverage.forEach{ (data) in
                 sum += Int(data)
             }
             
-            return Double(sum/totalSets)
+            return (Double(sum)/Double(totalSets))
             
         }
         
     }
     
     
-    func overwallWorkoutTwisting(){
+    func overwallWorkoutTwisting(totalSets: Int)->(Double,Double){
+        
+        var sumUpDown = 0
+        var sumLeftRight = 0
+        var averageUpDown: Double = 0.0
+        var averageLeftRight: Double = 0.0
+        
+        self.listOfWristUpDownAverage.forEach{ (data) in
+            sumUpDown += Int(data)
+            
+        }
+        averageUpDown = (Double(sumUpDown)/Double(totalSets))
+        
+        
+        
+        self.listOfWristLeftRightAverage.forEach{ (data) in
+            sumLeftRight += Int(data)
+            
+        }
+        
+        averageLeftRight = (Double(sumLeftRight)/Double(totalSets))
+        
+        return (averageUpDown,averageLeftRight)
         
     }
     
@@ -154,7 +185,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0
         var tooMuchSwing = 0
-        var precentage:Double = 0 //return
+        var percentage:Double = 0 //return
         
      
         //data[x,y,z]
@@ -173,9 +204,9 @@ class FormCriteria: ObservableObject{
             }
             
         }
-        precentage = Double(good)/Double(count)
-        self.ListOfElbowAverage.append(precentage)
-        return precentage
+        percentage = Double(good)/Double(count)
+        self.listOfElbowSwingAverage.append(percentage)
+        return percentage
     }
     
     
@@ -185,7 +216,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0
         var tooMuchFlare = 0
-        var precentage:Double = 0 //return
+        var percentage:Double = 0 //return
         
      
         //data[x,y,z]
@@ -204,8 +235,8 @@ class FormCriteria: ObservableObject{
             }
             
         }
-        precentage = Double(good)/Double(count)
-        return precentage
+        percentage = Double(good)/Double(count)
+        return percentage
     }
     
     
@@ -216,7 +247,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0
         var tooMuchFlare = 0
-        var precentage:Double = 0 //return
+        var percentage:Double = 0 //return
         
      
         //data[x,y,z]
@@ -235,8 +266,8 @@ class FormCriteria: ObservableObject{
             }
             
         }
-        precentage = Double(good)/Double(count)
-        return precentage
+        percentage = Double(good)/Double(count)
+        return percentage
     }
     
     
@@ -249,7 +280,7 @@ class FormCriteria: ObservableObject{
         
         var sum = 0
         
-        self.ListOfElbowAverage.forEach{ (data) in
+        self.listOfElbowSwingAverage.forEach{ (data) in
             sum += Int(data)
             
         }
@@ -282,20 +313,22 @@ class FormCriteria: ObservableObject{
     
     
     
-    
+    //--------------FEEDBACK---------------------//
     
     //returns a tuple of strings for the specific feedback
-    func giveFeedback(dumbbellArray: [[Int]],elbowArray: [[Int]] ) -> (String,String,String){
+    func giveFeedback(dumbbellArray: [[Int]],elbowArray: [[Int]] ) -> (String,String,String,String){
     
         let averageAcceleration = self.averageUpDownAcceleration(array: dumbbellArray)
+        let averageElbowSwing = self.averageElowSwing(array: elbowArray)
         
 
-        let overallAccel = String(format: "Overall acceleration: %.f%% good", averageAcceleration * 100)
+        let overallAccel = String(format: "Overall curl acceleration: %.f%% good", averageAcceleration * 100)
+        let overallElbowSwing = String(format: "Overall elbow stability: %.f%% good", averageElbowSwing)
         var dumbbellCustomTextFeedback = ""
         var elbowCustomTextFeedback = ""
         
         if self.averageUpDownAcceleration(array: dumbbellArray) < 0.7{ //if acceleration is 70% bad
-            dumbbellCustomTextFeedback = "whoa slow down!!"
+            dumbbellCustomTextFeedback = "Whoa slow down!!"
             
         }
         else{
@@ -307,12 +340,12 @@ class FormCriteria: ObservableObject{
             elbowCustomTextFeedback = "Keep those elbow steady!"
         }
         else{
-            elbowCustomTextFeedback = "Way to go!!!"
+            elbowCustomTextFeedback = "Elbows are looking good!!!"
         }
         
         //need to add when form is dangerous
         
-        return (overallAccel,dumbbellCustomTextFeedback,elbowCustomTextFeedback)
+        return (overallAccel,overallElbowSwing,dumbbellCustomTextFeedback,elbowCustomTextFeedback)
         
     }
     

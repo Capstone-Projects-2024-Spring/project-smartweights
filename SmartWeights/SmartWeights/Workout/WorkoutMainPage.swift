@@ -18,7 +18,7 @@ struct WorkoutMainPage: View {
     
     @State private var showGraphPopover = false
     @State private var graphData: [Double] = []
-    var feedback: (String,String,String) {
+    var feedback: (String,String,String,String) {
         formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
        }
     
@@ -69,14 +69,20 @@ struct WorkoutMainPage: View {
 //                        .frame(height: 200)
 //                        .padding()
                     
+                    
+                   //---------------------FEEDBACK----------------//
                     VStack{
                         HStack {
                             ZStack {
-                                Image("bubble")
+                                Image("bubble2")
                                     .resizable()
                                     .frame(width: 250, height: 150)
-                                Text("\(feedback.1)")
-                                    .foregroundStyle(Color.black)
+                                VStack{
+                                    Text("\(feedback.2)")
+                                        .foregroundStyle(Color.black)
+                                    Text("\(feedback.3)")
+                                }
+                                
                             }
                             .padding(.bottom, -40)
                         }
@@ -88,6 +94,8 @@ struct WorkoutMainPage: View {
                                 .frame(width: 200, height: 175)
                         }
                         Text("\(feedback.0)") //gives overall acceleration
+                            .font(.subheadline)
+                        Text("\(feedback.1)") //gives overall elbow stability
                             .font(.subheadline)
                     }
                     .padding(.bottom, 30)
@@ -192,7 +200,7 @@ struct WorkoutMainPage: View {
             
             HStack {
                 ZStack {
-                    Image("bubble")
+                    Image("bubble2")
                         .resizable()
                         .frame(width: 350, height: 150)
                     Text(currentMotivationalPhrase)
