@@ -27,6 +27,13 @@ struct SettingsPageView: View {
     @State private var petNotificationsEnabled = false
     @State private var healthKitEnabled = false
     
+    @State private var showingLogoutConfirmation = false
+    
+    @AppStorage("email") var email: String = ""
+    @AppStorage("firstName") var firstName: String = ""
+    @AppStorage("lastName") var lastName: String = ""
+    @AppStorage("userID") var userID: String = ""
+    
     var body: some View {
         NavigationStack {
             SwiftUI.Form {
@@ -132,10 +139,24 @@ struct SettingsPageView: View {
                 }
                 Button("Logout", systemImage: "rectangle.portrait.and.arrow.right") {
                     // Implement logout button functionality
+                    showingLogoutConfirmation = true
                 }
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .alert("Confirm Logout", isPresented: $showingLogoutConfirmation) {
+            Button("Yes", role: .destructive) {
+                // Clear AppStorage variables here
+                email = ""
+                firstName = ""
+                lastName = ""
+                userID = ""
+            }
+            Button("No", role: .cancel) {}
+        }
+        message: {
+            Text("Are you sure you want to logout?")
         }
     }
 }
