@@ -91,7 +91,7 @@ struct WorkoutMainPage: View {
                             
                             Image("Dog")
                                 .resizable()
-                                .scaledToFit() 
+                                .scaledToFit()
                                 .frame(width: 200, height: 175)
                         }
                         Text("\(feedback.0)") //gives overall acceleration

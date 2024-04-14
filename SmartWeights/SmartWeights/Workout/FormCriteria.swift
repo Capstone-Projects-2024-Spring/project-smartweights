@@ -14,7 +14,7 @@ class FormCriteria: ObservableObject{
     read from the arrays that store the data
      */
     //dumbbell averages
-    private var listOfDumbellAverage:[Double] = []
+    private var listOfDumbbellAverage:[Double] = []
     private var listOfWristLeftRightAverage:[Double] = []
     private var listOfWristUpDownAverage:[Double] = []
     
@@ -68,7 +68,7 @@ class FormCriteria: ObservableObject{
             
         }
         percentage = Double(good)/Double(count)
-        self.listOfDumbellAverage.append(Double(good)/Double(count))
+        self.listOfDumbbellAverage.append(Double(good)/Double(count))
         return percentage
         
     }
@@ -144,7 +144,7 @@ class FormCriteria: ObservableObject{
             
             var sum = 0
             
-            self.listOfDumbellAverage.forEach{ (data) in
+            self.listOfDumbbellAverage.forEach{ (data) in
                 sum += Int(data)
             }
             
@@ -155,7 +155,7 @@ class FormCriteria: ObservableObject{
     }
     
     
-    func overwallWorkoutTwisting(totalSets: Int)->(Double,Double){
+    func overallDumbbellTwisting(totalSets: Int)->(Double,Double){
         
         var sumUpDown = 0
         var sumLeftRight = 0
@@ -216,7 +216,7 @@ class FormCriteria: ObservableObject{
     
     
     //flaring elbow up and down
-    func averageEblowFlareUpDown(array: [[Int]]) -> Double {
+    func averageElbowFlareUpDown(array: [[Int]]) -> Double {
         
         var count = 0 //total data collected
         var good = 0
@@ -247,7 +247,7 @@ class FormCriteria: ObservableObject{
     
     
     //flaring elbow forward and black
-    func averageEblowFlareFowardBackward(array: [[Int]]) -> Double {
+    func averageElbowFlareFowardBackward(array: [[Int]]) -> Double {
         
         var count = 0 //total data collected
         var good = 0
@@ -293,27 +293,126 @@ class FormCriteria: ObservableObject{
     }
     
     
-    
-    func overallWorkoutElbowFlare() {
+    //gives the overall elbow flaring for the whole workout
+    func overallWorkoutElbowFlare(totalSets: Int) -> (Double,Double) {
         
+        var sumUpDown = 0 //elbow flaring up and down
+        var sumForwardBackward = 0 // elbow flaring forward and backward
         
+        var averageUpDown = 0.0
+        var averageForwardBackward = 0.0
+        
+        self.listOfElbowFlareUpDwonAverage.forEach{ (data) in
+            sumUpDown += Int(data)
+        }
+        
+        averageUpDown = (Double(sumUpDown)/Double(totalSets))
+        
+        self.listOfElbowFlareForwardBackAverage.forEach{ (data) in
+            sumForwardBackward += Int(data)
+        }
+        
+        averageForwardBackward = (Double(sumForwardBackward)/Double((totalSets)))
+        
+        return(averageUpDown,averageForwardBackward)
         
     }
+
     
     
     
     //----------------DANGEROUS MOVEMENTS----------------//
     
     //Threshhold if they are moving too fast and is dangerous
-    func dangerousForm() -> (Bool,Bool){
+    //will be ran in a while loop to continously check the user
+    func dangerousForm(dumbbellArray:[[Int]], elbowArray: [[Int]]) -> Bool{
         
-        //if accel > 300 degrees per second
-        //if the accel(300)/total count > 10% of the workout return true
+        //count all the data that is being collected
+        var dumbbellSwingCount = 0
+        var wristTwistLRcount = 0
+        var wristTwistUDcount = 0
+        var elbowSwingCount = 0
+        var elbowFlareLRcount = 0
+        var elbowFlareUPcount = 0
+        
+        //count how many data is in the dangerous threshold
+        var dumbbellSwingDanger = 0
+        var wristTwistLRdanger = 0
+        var wristTwistUDdanger = 0
+        var elbowSwingDanger = 0
+        var elbowFlareLRdanger = 0
+        var elbowFlareUPdanger = 0
         
         
-        //if dangerous eblow movement or going too fast return true
         
-        return (true,true)
+        dumbbellArray.forEach{ (data) in
+            //wristLR
+            if abs(data[0]) > 100{
+                wristTwistLRdanger += 1
+            }
+            
+            if abs(data[1]) > 100 {
+                wristTwistUDdanger += 1
+            }
+            
+            if abs(data[2]) > 300 {
+                dumbbellSwingDanger += 1
+            }
+            
+            if abs(data[0]) > 10 {
+                wristTwistLRcount  += 1
+            }
+            
+            if abs(data[1]) > 10 {
+                wristTwistUDcount += 1
+            }
+
+            if abs(data[2]) > 10 {
+                dumbbellSwingCount += 1
+            }
+        }
+
+        elbowArray.forEach { (data) in
+            if abs(data[0]) > 200{
+                elbowSwingDanger += 1
+            }
+            
+            if abs(data[1]) > 200 {
+                elbowFlareLRdanger += 1
+            }
+            
+            if abs(data[2]) > 200 {
+                elbowFlareUPdanger += 1
+            }
+            
+            if abs(data[0]) > 10 {
+                elbowSwingCount += 1
+            }
+            
+            if abs(data[1]) > 10 {
+                elbowFlareLRcount += 1
+            }
+            
+            if abs(data[2]) > 10 {
+                elbowFlareUPcount += 1
+            }
+
+        }
+        
+        
+        let isDumbbellSwingDangerous = Double(dumbbellSwingDanger) / Double(dumbbellSwingCount) >= 0.1
+        let isWristTwistLRDangerous = Double(wristTwistLRdanger) / Double(wristTwistLRcount) >= 0.1
+        let isWristTwistUDDangerous = Double(wristTwistUDdanger) / Double(wristTwistUDcount) >= 0.1
+        let isElbowSwingDangerous = Double(elbowSwingDanger) / Double(elbowSwingCount) >= 0.1
+        let isElbowFlareLRDangerous = Double(elbowFlareLRdanger) / Double(elbowFlareLRcount) >= 0.1
+        let isElbowFlareUPDangerous = Double(elbowFlareUPdanger) / Double(elbowFlareUPcount) >= 0.1
+    
+
+        let dangerous = isDumbbellSwingDangerous || isWristTwistLRDangerous || isWristTwistUDDangerous || isElbowSwingDangerous || isElbowFlareLRDangerous || isElbowFlareUPDangerous
+        //TODO: show dangerous movements be returning a tuple of bools or just one bool
+        //should i specify which movement is dangerous or just give overall dangerous activity
+        
+        return dangerous //returns Dumbbell Swing, Wrist twist, Elbow Swing, Elbow Flare
     }
     
     
@@ -347,6 +446,9 @@ class FormCriteria: ObservableObject{
         else{
             elbowCustomTextFeedback = "Elbows are looking good!!!"
         }
+        
+        
+        
         
         //need to add when form is dangerous
         
