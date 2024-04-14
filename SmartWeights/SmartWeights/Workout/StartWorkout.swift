@@ -45,7 +45,7 @@ class WorkoutViewModel: ObservableObject {
     @Published var showingAlert = false
     @Published var alertMessage = ""
     @Published var currentMotivationalPhrase = "Let's get started!"
-
+    
     private var countdownTimer: AnyCancellable?
     
     
@@ -81,6 +81,7 @@ class WorkoutViewModel: ObservableObject {
         guard !input.isEmpty, let _ = Int(input) else { return false }
         return true
     }
+
     
     func startListening() {
         guard !isListening else { return }
@@ -89,14 +90,13 @@ class WorkoutViewModel: ObservableObject {
         let recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         
         do {
-            print("listening started")
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.record)
-            try AVAudioSession.sharedInstance().setMode(AVAudioSession.Mode.measurement)
+            print("Listening started")
+            try AVAudioSession.sharedInstance().setCategory(.record)
+            try AVAudioSession.sharedInstance().setMode(.measurement)
             try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
             
             let inputNode = audioEngine.inputNode
             recognitionRequest.shouldReportPartialResults = true
-            
             recognitionRequest.taskHint = .dictation
             
             let recordingFormat = inputNode.outputFormat(forBus: 0)
@@ -106,7 +106,8 @@ class WorkoutViewModel: ObservableObject {
             
             audioEngine.prepare()
             try audioEngine.start()
-            print("still listening")
+            print("Audio engine started")
+            
             let recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] (result, error) in
                 guard let self = self else { return }
                 
@@ -114,67 +115,43 @@ class WorkoutViewModel: ObservableObject {
                 
                 if let result = result {
                     let bestString = result.bestTranscription.formattedString.lowercased()
-                    if bestString.contains("finish workout") {
-                        // Logic for completing the workout
-                        //generateRandomData(for: .overallWorkout) // Generate overall workout data
-                        storeModel.addFundtoUser(price: 50)
-                        workoutPageViewModel.AddXP(value: 25)
-                        resetWorkoutState()
-                        hasWorkoutStarted = false
-                        isWorkoutPaused = false
-                        ble.collectDataToggle = false //stops collecting data
-                        print("hello")
-                        //ble.MPU6050_1Gyros.removeAll()
-                        //need to add this data to another array to store for workout history
-                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
-                        showGraphPopover = true
-                        currentMotivationalPhrase = "Let's get started with a New Workout!"
-                        
-                        print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
-                        
-                        self.recognitionTask = nil
-                        
-                        // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        self.audioEngine.stop()
-                        inputNode.removeTap(onBus: 0)
-                        recognitionRequest.endAudio()
-                        print("Stopped listening")
-                        self.isListening = false
-                        // }
-                        return
-                    } else if bestString.contains("start workout") {
-                        self.startWorkout()
-                        //startCountdown()
-                    }
+                    print("Recognized string: \(bestString)")
                     
-                    if bestString.contains("finish set") {
-                        ble.collectDataToggle = false// continue the data collection
-                        pauseTimer()
-                        //generateRandomData(for: .perSet) // Generate per-set data
-                        showGraphPopover = true
-                        isWorkoutPaused = true
-                        currentMotivationalPhrase = "Take a breather, then keep going!"
-                        if let totalSets = Int(inputtedSets), currentSets < totalSets {
-                        currentSets += 1
+                    // Use last recognized phrase for command detection to avoid overlapping commands
+                    let commands = bestString.components(separatedBy: " ")
+                    if let lastCommand = commands.last {
+                        switch lastCommand {
+                        case "finish":
+                            self.finishworkout()
+                            print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
+                            // Cancel the recognition task before stopping the audio engine
+                            //                        self.recognitionTask?.cancel()
+                            self.recognitionTask = nil
+                            
+                            // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            self.audioEngine.stop()
+                            inputNode.removeTap(onBus: 0)
+                            recognitionRequest.endAudio()
+                            print("Stopped listening")
+                            self.isListening = false
+                            // }
+                            return
+                        case "start":
+                            self.startWorkout()
+                            print("Workout started")
+                        case "pause":
+                            self.finishset()
+                            print("Workout paused")
+                        case "next":
+                            self.nextset()
+                            print("Next Set coming up")
+                        case "final":
+                            self.finalset()
+                            print("This is your final set")
+                        default:
+                            break
                         }
-                    } else if bestString.contains("final set") {
-                        currentSets += 1 // This will push the state to "Finish Workout"
-                        showGraphPopover = false
-                        resumeTimer()
-                        ble.MPU6050_1Gyros.removeAll()
-                        ble.collectDataToggle = true
-                        currentMotivationalPhrase = "Last Set! Push through!"
-                    } else if bestString.contains("next set"){
-                        resumeTimer()
-                        showGraphPopover = false
-                        isWorkoutPaused = false
-                        ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
-                        ble.collectDataToggle = true //Stars collecting data again
-                        currentMotivationalPhrase = "You're doing great!"
                     }
-                    
-                    
-                    print("bestString: \(bestString)")
                     
                     isFinal = result.isFinal
                 }
@@ -198,10 +175,6 @@ class WorkoutViewModel: ObservableObject {
     
     
     
-    func startWorkout() {
-        validateAndStartCountdown(sets: inputtedSets, reps: inputtedReps, weights: inputtedWeights)
-    }
-    /*
     func finishset(){
         ble.collectDataToggle = false// continue the data collection
         pauseTimer()
@@ -209,10 +182,7 @@ class WorkoutViewModel: ObservableObject {
         showGraphPopover = true
         isWorkoutPaused = true
         currentMotivationalPhrase = "Take a breather, then keep going!"
-        if let totalSets = Int(inputtedSets),
-            currentSets < totalSets {
-            currentSets += 1
-        }
+        currentSets += 1
     }
     
     func nextset(){
@@ -224,14 +194,9 @@ class WorkoutViewModel: ObservableObject {
         currentMotivationalPhrase = "You're doing great!"
     }
     
-    func finalset(){
-        // Logic for transitioning from the final set to finishing the workout
-        currentSets += 1 // This will push the state to "Finish Workout"
-        showGraphPopover = false
-        resumeTimer()
-        ble.MPU6050_1Gyros.removeAll()
-        ble.collectDataToggle = true
-        currentMotivationalPhrase = "Last Set! Push through!"
+    
+    func startWorkout() {
+        validateAndStartCountdown(sets: inputtedSets, reps: inputtedReps, weights: inputtedWeights)
     }
     
     func finishworkout(){
@@ -249,19 +214,17 @@ class WorkoutViewModel: ObservableObject {
         ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
         showGraphPopover = true
         currentMotivationalPhrase = "Let's get started with a New Workout!"
-
     }
     
-    private func stopWorkout(){
-        if workoutInProgress {
-            workoutInProgress = false
-            print("Workout stopped!")
-            workoutInProgressSubject.send(false) // Notify subscribers that the workout has stopped
-            stopTimer()
-        }
-        
+    func finalset(){
+        currentSets += 1 // This will push the state to "Finish Workout"
+        showGraphPopover = false
+        resumeTimer()
+        ble.MPU6050_1Gyros.removeAll()
+        ble.collectDataToggle = true
+        currentMotivationalPhrase = "Last Set! Push through!"
     }
-     */
+
     
     /// Function to reset progress
     func resetProgress() {
