@@ -21,6 +21,11 @@ struct WorkoutMainPage: View {
     var feedback: (String,String,String,String) {
         formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
        }
+    //TODO: IMPLEMENT THE DANGEROUS ASPECT
+    var dangerousCalled = false
+    var dangerous: Bool {
+        formCriteria.dangerousForm(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+    }
     
     @State private var currentMotivationalPhrase = "Let's get started!"
 
@@ -249,7 +254,7 @@ struct WorkoutMainPage: View {
                         ble.collectDataToggle = true
                         currentMotivationalPhrase = "Last Set! Push through!"
                     } else if !isWorkoutPaused {
-                        ble.collectDataToggle = false// continue the data collection
+                        ble.collectDataToggle = false
                         viewModel.pauseTimer()
                         generateRandomData(for: .perSet) // Generate per-set data
                         showGraphPopover = true
@@ -455,6 +460,7 @@ struct WorkoutMainPage: View {
             }
         }
     }
+    
     
     ///view to show the progress bar
     struct CircularProgressView: View {

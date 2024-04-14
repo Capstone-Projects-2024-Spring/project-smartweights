@@ -10,9 +10,6 @@ import SwiftUI
 
 class FormCriteria: ObservableObject{
     
-    /*
-    read from the arrays that store the data
-     */
     //dumbbell averages
     private var listOfDumbbellAverage:[Double] = []
     private var listOfWristLeftRightAverage:[Double] = []
@@ -23,6 +20,10 @@ class FormCriteria: ObservableObject{
     private var listOfElbowSwingAverage:[Double] = []
     private var listOfElbowFlareUpDwonAverage:[Double] = []
     private var listOfElbowFlareForwardBackAverage: [Double] = []
+    
+    
+    private var dumbbellDangerousCheck:[[Int]] = []
+    private var elbowDangerousCheck: [[Int]] = []
     
     
     //phrases
@@ -52,10 +53,10 @@ class FormCriteria: ObservableObject{
         var percentage:Double = 0 //return
 
         array.forEach { (data) in
-            if data[2] < 10 && data[2] > -10{ //the user isnt making a rep, could be between reps
+            if data[2] < 10 && data[2] > -10{ //the user isn't making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[2] > -180 && data[2] < 180{ //between good threshhold
+            else if data[2] > -180 && data[2] < 180{ //between good threshold
                 good += 1
             }
             else{
@@ -88,7 +89,7 @@ class FormCriteria: ObservableObject{
             if data[0] < 10 && data[1] > -10{ //the user isnt making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[0] > -20 && data[0] < 20{ //between good threshhold
+            else if data[0] > -20 && data[0] < 20{ //between good threshold
                 good += 1
             }
             else{
@@ -117,10 +118,10 @@ class FormCriteria: ObservableObject{
         var percentage:Double = 0 //return
 
         array.forEach { (data) in
-            if data[1] < 10 && data[1] > -10{ //the user isnt making a rep, could be between reps
+            if data[1] < 10 && data[1] > -10{ //the user isn't making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[1] > -20 && data[1] < 20{ //between good threshhold
+            else if data[1] > -20 && data[1] < 20{ //between good threshold
                 good += 1
             }
             else{
@@ -195,10 +196,10 @@ class FormCriteria: ObservableObject{
      
         //data[x,y,z]
         array.forEach { (data) in
-            if data[0] < 10 && data[0] > -10{ //the user isnt making a rep, could be between reps
+            if data[0] < 10 && data[0] > -10{ //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[0] > -50 && data[0] < 50{ //in good treshhold of elbow swing
+            else if data[0] > -50 && data[0] < 50{ //in good threshold of elbow swing
                 good += 1
             }
             else{
@@ -226,10 +227,10 @@ class FormCriteria: ObservableObject{
      
         //data[x,y,z]
         array.forEach { (data) in
-            if data[2] < 10 && data[2] > -10{ //the user isnt making a rep, could be between reps
+            if data[2] < 10 && data[2] > -10{ //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[2] > -20 && data[2] < 20{ //in good treshhold of elbow flare
+            else if data[2] > -20 && data[2] < 20{ //in good threshold of elbow flare
                 good += 1
             }
             else{
@@ -257,10 +258,10 @@ class FormCriteria: ObservableObject{
      
         //data[x,y,z]
         array.forEach { (data) in
-            if data[2] < 10 && data[2] > -10{ //the user isnt making a rep, could be between reps
+            if data[2] < 10 && data[2] > -10{ //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[2] > -20 && data[2] < 20{ //in good treshhold of elbow flare
+            else if data[2] > -20 && data[2] < 20{ //in good threshold of elbow flare
                 good += 1
             }
             else{
@@ -323,8 +324,8 @@ class FormCriteria: ObservableObject{
     
     //----------------DANGEROUS MOVEMENTS----------------//
     
-    //Threshhold if they are moving too fast and is dangerous
-    //will be ran in a while loop to continously check the user
+    //Threshold if they are moving too fast and is dangerous
+    //will be ran in a while loop to continuously check the user
     func dangerousForm(dumbbellArray:[[Int]], elbowArray: [[Int]]) -> Bool{
         
         //count all the data that is being collected
@@ -409,8 +410,9 @@ class FormCriteria: ObservableObject{
     
 
         let dangerous = isDumbbellSwingDangerous || isWristTwistLRDangerous || isWristTwistUDDangerous || isElbowSwingDangerous || isElbowFlareLRDangerous || isElbowFlareUPDangerous
-        //TODO: show dangerous movements be returning a tuple of bools or just one bool
-        //should i specify which movement is dangerous or just give overall dangerous activity
+        
+        //TODO: show dangerous movements be returning a tuple of bool or just one bool
+        //should I specify which movement is dangerous or just give overall dangerous activity
         
         return dangerous //returns Dumbbell Swing, Wrist twist, Elbow Swing, Elbow Flare
     }
