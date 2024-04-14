@@ -20,7 +20,8 @@ struct WorkoutMainPage: View {
     @State private var graphData: [Double] = []
     var feedback: (String,String,String,String) {
         formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
-       }
+    }
+    @State var feedbackDataForSets: [(String, String, String, String)] = []
     //TODO: IMPLEMENT THE DANGEROUS ASPECT
     var dangerousCalled = false
     var dangerous: Bool {
@@ -35,7 +36,6 @@ struct WorkoutMainPage: View {
         ZStack {
             
             VStack {
-                // Title and microphone button for workout voice control
                 workoutTitleView
                 
                 // Tab selection for workout or feedback
@@ -45,10 +45,9 @@ struct WorkoutMainPage: View {
                 if selectedTab == 0 {
                     StartWorkoutView
                 } else if selectedTab == 1 {
-                    WorkoutFeedback(viewModel: viewModel)
+                    WorkoutFeedback(viewModel: viewModel, showGraphPopover: $showGraphPopover, feedbackDataForSets: $feedbackDataForSets)
                 }
             }
-            
             .popover(isPresented: $showGraphPopover) {
                 VStack {
                     HStack {
@@ -112,7 +111,14 @@ struct WorkoutMainPage: View {
                 .cornerRadius(20)
                 .shadow(radius: 10)
             }
+            
         }
+        .onChange(of: showGraphPopover) { newValue in
+                        if newValue {
+                            // Add the current feedback data when showGraphPopover is true
+                            self.feedbackDataForSets.append(feedback)
+                        }
+                    }
     }
     
     enum SetType {
@@ -238,10 +244,12 @@ struct WorkoutMainPage: View {
                         ble.collectDataToggle = false //stops collecting data
                         print("hello")
                         //need to add this data to another array to store for workout history
+                        //TODO: Need to move this
                         ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
                         ble.MPU6050_2_All_Gyros.removeAll()
                         showGraphPopover = true
                         currentMotivationalPhrase = "Let's get started with a New Workout!"
+                        
 
                         
                     } else if buttonText == "Final Set" {
@@ -293,21 +301,10 @@ struct WorkoutMainPage: View {
             }
             .accessibilityLabel(hasWorkoutStarted ? (isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
             .sheet(isPresented: $showingWorkoutSheet) {
-                WorkoutDetailsInputView(viewModel: viewModel, ble: ble, hasWorkoutStarted: $hasWorkoutStarted, showingWorkoutSheet: $showingWorkoutSheet)
+                WorkoutDetailsInputView(viewModel: viewModel, ble: ble, hasWorkoutStarted: $hasWorkoutStarted, showingWorkoutSheet: $showingWorkoutSheet,feedbackDataForSets: $feedbackDataForSets)
             }
             
             
-            /*
-             // Connection status and acceleration data
-             if bleManager.isConnected {
-             Text("Sensor connected")
-             } else {
-             Text("Sensor disconnected")
-             }
-             Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])")
-             .padding()
-             Spacer()
-             */
             Spacer()
         }
         
@@ -357,6 +354,7 @@ struct WorkoutMainPage: View {
         @State private var countdown = 5 // New state variable for countdown
         @State private var countdownTimer: AnyCancellable? // Timer for countdown
         @State private var countdownActive = false // Indicates if the countdown is active
+        @Binding var feedbackDataForSets: [(String, String, String, String)]
         
         var body: some View {
             
@@ -414,6 +412,9 @@ struct WorkoutMainPage: View {
                             if isValidInput(viewModel.inputtedSets) && isValidInput(viewModel.inputtedReps) && isValidInput(viewModel.inputtedWeights) {
                                 // Initiate countdown
                                 countdownActive = true
+                                feedbackDataForSets.removeAll()
+                               
+                                
                             } else {
                                 alertMessage = "Please enter valid numbers for sets, reps, and lbs."
                                 showingAlert = true

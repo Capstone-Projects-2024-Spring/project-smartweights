@@ -8,49 +8,18 @@ import SwiftUI
 //to create each of the boxes for each set
 
 
-class FeedBackViewModel: ObservableObject{
-
-    @Published var PetFeedbackText: String = "Tuck elbows in more when going up - roar"
-    
-}
-
-
-struct VirtualPetFeedback: View{
-    
-    @State var viewModel = FeedBackViewModel()
-    var body: some View{
-        
-        ZStack {
-            Image("bubble")
-                .resizable()
-                .frame(width: 200,height: 100)
-                .foregroundColor(.brown)
-                .padding(.bottom,30)
-            //need to somehow adjust font size or text box size based on text size
-            Text("\(viewModel.PetFeedbackText)")
-                .frame(width: 170)
-                .font(.system(size: 14))
-                .multilineTextAlignment(.center)
-                .bold()
-                .foregroundColor(.green)
-                .padding(.bottom,30)
-        }
-        .frame(minHeight: 120)
-    }
-    
-    
-}
-
 struct PostWorkoutData: View {
     @ObservedObject var viewModel: WorkoutViewModel
     
     @State private var isExpanded: Bool = false
     let setIndex: Int
+    let feedback: (String, String, String, String)
     
-    init(viewModel: WorkoutViewModel, setIndex: Int) {
-        self.viewModel = viewModel // Initialize viewModel first
-        self.setIndex = setIndex
-    }
+    init(viewModel: WorkoutViewModel, setIndex: Int, feedback: (String, String, String, String)) {
+            self.viewModel = viewModel
+            self.setIndex = setIndex
+            self.feedback = feedback // Initialize feedback
+        }
     
     var body: some View {
         HStack{
@@ -69,11 +38,13 @@ struct PostWorkoutData: View {
         }
         
         if isExpanded {
-            Text("Data data data")
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-            WorkoutGraphForm()
+            VStack{
+                // ... your code ...
+                Text("\(feedback.0)") //gives overall acceleration
+                    .font(.subheadline)
+                Text("\(feedback.1)") //gives overall elbow stability
+                    .font(.subheadline)
+            }
         }
     }
 }
@@ -83,92 +54,27 @@ struct PostWorkoutData: View {
 ///View to show all data collected from the most recent workout
 struct WorkoutFeedback: View {
     @ObservedObject var viewModel: WorkoutViewModel
-    @State private var isGraphExpanded: Bool = false
-    
-    
-    
-    
+    @State private var sets: Int = 0
+    @Binding var showGraphPopover: Bool
+    @Binding var feedbackDataForSets: [(String, String, String, String)]
+
     var body: some View {
-        @State var sets = Int(viewModel.inputtedSets) ?? 5
-        
-        //displays all the set data
-        //will add more implmenetation once we get acutal data
         ScrollView {
             VStack {
-                
                 SwiftUI.Form {
-                    ForEach(0..<sets, id: \.self) { index in
-                        PostWorkoutData(viewModel: viewModel,setIndex: index + 1)
-                    }
+                    ForEach(feedbackDataForSets.indices, id: \.self) { index in
+                               PostWorkoutData(viewModel: viewModel, setIndex: index + 1, feedback: feedbackDataForSets[index])
+                           }
                 }
-                .frame(height: 300)
+                .frame(height: 600)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 10) // Adjust corner radius as needed
-                        .stroke(Color.gray, lineWidth: 1) // Set border color and width
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.gray, lineWidth: 1)
                 )
                 .foregroundColor(.black)
-                .background(Color.black)
+                .background(Color.blue)
                 .scrollContentBackground(.hidden)
-                
-                VStack() {
-                    HStack {
-                        Spacer()
-                        ZStack(alignment: .trailing) {
-                            
-                            Image("Dinosaur")
-                                .resizable()
-                                .frame(width: 140, height: 140)
-                            Image("chain")
-                                .resizable()
-                                .frame(width: 140, height: 140)
-                            VirtualPetFeedback(viewModel: FeedBackViewModel())
-                                .padding(.trailing,90)
-                                .padding(.bottom,100)
-                            
-                        }
-                        
-                        
-                    }
-                    HStack {
-                        Button(action: {
-                            isGraphExpanded.toggle()
-                        }, label: {
-                            Text("Graphs")
-                                .font(.title3)
-                                .bold()
-                        })
-                        
-                        if isGraphExpanded{
-                            
-                            Image(systemName: "arrowshape.up.fill")
-                            
-                        }
-                        else{
-                            Image(systemName: "arrowshape.down.fill")
-                        }
-                    }
-                    .accessibilityLabel("OpenFeedbackGraphButton")
-                    
-                    
-                    
-                    if isGraphExpanded{
-                        Text("Form")
-                            .padding(.bottom,20)
-                        WorkoutGraphForm()
-                            .frame(height: 250)
-                            .padding(.bottom,50)
-                        Text("Velocity")
-                            .padding(.bottom,20)
-                        WorkoutGraphForm()
-                            .frame(height: 250)
-                        
-                    }
-                    
-                    Spacer()
-                }
-                .frame(minHeight:  300)
-                
-                
+
                 Spacer()
             }
         }
@@ -179,8 +85,7 @@ struct WorkoutFeedback: View {
 
 
 
-
-#Preview {
-    WorkoutFeedback(viewModel: WorkoutViewModel())
-    //VirtualPetFeedback()
-}
+//#Preview {
+//    //    WorkoutFeedback(viewModel: WorkoutViewModel(), feedback: ("","","",""), showGraphPopover: $showGraphPopover)
+//    //}
+//}
