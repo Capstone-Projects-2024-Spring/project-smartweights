@@ -38,8 +38,8 @@ class storeViewModel: ObservableObject {
         SellingItem(id: 7, name: "Festive", category: "Backgrounds", price: "200", image: Image("Festive"), description: "Celebrate!"),
         SellingItem(id: 8, name: "Bamboo", category: "Backgrounds", price: "300", image: Image("Bamboo"), description: "Peaceful."),
         SellingItem(id: 9, name: "Royal", category: "Backgrounds", price: "400", image: Image("Royal"), description: "Fit for a king."),
-        SellingItem(id: 10, name: "Floral Glasses", category: "Outfits", price: "250", image: Image("Glasses"), description: "100% UV Protection."),
-        SellingItem(id: 11, name: "Pet Chain", category: "Outfits", price: "200", image: Image("Chain"), description: "Fashionably tasteful.")
+        SellingItem(id: 10, name: "Floral Glasses", category: "Outfits", price: "250", image: Image("Floral Glasses"), description: "100% UV Protection."),
+        SellingItem(id: 11, name: "Pet Chain", category: "Outfits", price: "200", image: Image("Pet Chain"), description: "Fashionably tasteful.")
     ]
     
     @Published var showAlert = false
