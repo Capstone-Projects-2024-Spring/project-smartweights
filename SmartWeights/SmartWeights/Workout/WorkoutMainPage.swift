@@ -81,6 +81,7 @@ struct WorkoutMainPage: View {
                                     Text("\(feedback.2)")
                                         .foregroundStyle(Color.black)
                                     Text("\(feedback.3)")
+                                        .foregroundStyle(Color.black)
                                 }
                                 
                             }
@@ -90,7 +91,7 @@ struct WorkoutMainPage: View {
                             
                             Image("Dog")
                                 .resizable()
-                                .scaledToFit()
+                                .scaledToFit() 
                                 .frame(width: 200, height: 175)
                         }
                         Text("\(feedback.0)") //gives overall acceleration
@@ -231,9 +232,9 @@ struct WorkoutMainPage: View {
                         isWorkoutPaused = false
                         ble.collectDataToggle = false //stops collecting data
                         print("hello")
-                        //ble.MPU6050_1Gyros.removeAll()
                         //need to add this data to another array to store for workout history
                         ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
+                        ble.MPU6050_2_All_Gyros.removeAll()
                         showGraphPopover = true
                         currentMotivationalPhrase = "Let's get started with a New Workout!"
 
@@ -244,6 +245,7 @@ struct WorkoutMainPage: View {
                         showGraphPopover = false
                         viewModel.resumeTimer()
                         ble.MPU6050_1Gyros.removeAll()
+                        ble.MPU6050_2Gyros.removeAll()
                         ble.collectDataToggle = true
                         currentMotivationalPhrase = "Last Set! Push through!"
                     } else if !isWorkoutPaused {
@@ -262,6 +264,7 @@ struct WorkoutMainPage: View {
                         showGraphPopover = false
                         isWorkoutPaused = false
                         ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
+                        ble.MPU6050_2Gyros.removeAll()
                         ble.collectDataToggle = true //Stars collecting data again
                         currentMotivationalPhrase = "You're doing great!"
                     }
@@ -443,6 +446,7 @@ struct WorkoutMainPage: View {
                         showingWorkoutSheet = false // Dismiss or update UI as needed
                         viewModel.startTimer() // Start the main workout timer after countdown
                         ble.MPU6050_1Gyros.removeAll() //Clear the collected Data for previous set
+                        ble.MPU6050_2Gyros.removeAll()
                         ble.collectDataToggle = true //Start collecting data for the current workout
                         
                         

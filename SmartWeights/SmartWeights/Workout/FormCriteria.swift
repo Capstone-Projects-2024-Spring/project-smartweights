@@ -26,7 +26,12 @@ class FormCriteria: ObservableObject{
     
     
     //phrases
-    private var goodFormPhrases: [String] = ["Keep up the good work!!","Looking good","Phew, good job","Those curls were nice!"]
+    private var goodFormPhrases: [String] = ["Keep up the good work!!","Looking good","Phew, Good job","Those curls were nice!"]
+    
+    func getRandomGoodFormPhrase() -> String {
+        let randomIndex = Int.random(in: 0..<goodFormPhrases.count)
+        return goodFormPhrases[randomIndex]
+    }
     
     
     
@@ -180,7 +185,7 @@ class FormCriteria: ObservableObject{
     
     //measures if the eblow is swinging back and forth too much
     //use MPU6050-2
-    func averageElowSwing(array: [[Int]]) -> Double {
+    func averageElbowSwing(array: [[Int]]) -> Double {
         
         var count = 0 //total data collected
         var good = 0
@@ -319,24 +324,24 @@ class FormCriteria: ObservableObject{
     func giveFeedback(dumbbellArray: [[Int]],elbowArray: [[Int]] ) -> (String,String,String,String){
     
         let averageAcceleration = self.averageUpDownAcceleration(array: dumbbellArray)
-        let averageElbowSwing = self.averageElowSwing(array: elbowArray)
+        let averageElbowSwing = self.averageElbowSwing(array: elbowArray)
         
 
         let overallAccel = String(format: "Overall curl acceleration: %.f%% good", averageAcceleration * 100)
-        let overallElbowSwing = String(format: "Overall elbow stability: %.f%% good", averageElbowSwing)
+        let overallElbowSwing = String(format: "Overall elbow stability: %.f%% good", averageElbowSwing * 100)
         var dumbbellCustomTextFeedback = ""
         var elbowCustomTextFeedback = ""
         
-        if self.averageUpDownAcceleration(array: dumbbellArray) < 0.7{ //if acceleration is 70% bad
+        if averageAcceleration < 0.7{
             dumbbellCustomTextFeedback = "Whoa slow down!!"
             
         }
         else{
             //TODO: Make a array of phrases and randomize which one to be called
-            dumbbellCustomTextFeedback = "Keep up the good work!!"
+            dumbbellCustomTextFeedback = getRandomGoodFormPhrase()
         }
         
-        if self.averageElowSwing(array: elbowArray) < 0.7{
+        if averageElbowSwing < 0.7{
             elbowCustomTextFeedback = "Keep those elbow steady!"
         }
         else{

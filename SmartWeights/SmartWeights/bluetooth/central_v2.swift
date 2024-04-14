@@ -254,6 +254,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
             //updates the correct array based on the characteristic
             DispatchQueue.main.async {
                 switch peripheral.name{
+                    
                     case self.MPU_1_Name:
                         switch characteristic{
                             case self.axCharacteristic:
@@ -265,6 +266,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                             if self.collectDataToggle{
                                 self.MPU6050_1Accelerations.append(self.MPU6050_1_Accel)
                             }
+                            
                             case self.gxCharacteristic:
                                 self.MPU6050_1_Gyro[0] = data
                             case self.gyCharacteristic:
@@ -290,20 +292,20 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                                 self.MPU6050_2_Accel[1] = data
                             case self.azCharacteristic2:
                                 self.MPU6050_2_Accel[2] = data
-                            if self.collectDataToggle{
-                                self.MPU6050_2Accelerations.append(self.MPU6050_2_Accel)
-                                self.MPU6050_2_All_Accelerations.append(self.MPU6050_2_Accel)
-                            }
+                                if self.collectDataToggle{
+                                    self.MPU6050_2Accelerations.append(self.MPU6050_2_Accel)
+                                    self.MPU6050_2_All_Accelerations.append(self.MPU6050_2_Accel)
+                                }
                             case self.gxCharacteristic2:
                                 self.MPU6050_2_Gyro[0] = data
                             case self.gyCharacteristic2:
                                 self.MPU6050_2_Gyro[1] = data
                             case self.gzCharacteristic2:
                                 self.MPU6050_2_Gyro[2] = data
-                            if self.collectDataToggle{
-                                self.MPU6050_2Gyros.append(self.MPU6050_2_Gyro)
-                                self.MPU6050_2_All_Gyros.append(self.MPU6050_2_Gyro)
-                            }
+                                if self.collectDataToggle{
+                                    self.MPU6050_2Gyros.append(self.MPU6050_2_Gyro)
+                                    self.MPU6050_2_All_Gyros.append(self.MPU6050_2_Gyro)
+                                }
                                 //print("MPU6050_2 gyro")
                                 //print("\(self.MPU6050_2Gyros)")
                             default:
