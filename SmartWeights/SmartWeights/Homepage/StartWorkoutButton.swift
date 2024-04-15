@@ -24,18 +24,14 @@ struct StartWorkoutButton: View {
                                 .foregroundStyle(Color.africanViolet)
                         }
                         Text(currentWorkout)
-                            .foregroundStyle(Color.lightGray)
                             .font(.subheadline)
                     }
                     .padding()
                     Spacer()
                     Image(systemName: "photo")
-                        .foregroundStyle(Color.lightGray)
                         .padding()
                 }
-                .foregroundStyle(.white)
             }
-            .background(Color.darkGray)
             .cornerRadius(12)
             .padding()
         }

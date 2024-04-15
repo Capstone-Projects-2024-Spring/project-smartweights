@@ -26,7 +26,6 @@ struct Homepage: View {
                 HStack {
                     Text("Welcome")
                         .font(.title)
-                        .foregroundStyle(.white)
                         .padding(.top)
                         .padding(.horizontal)
                     Spacer()
@@ -132,7 +131,6 @@ struct Homepage: View {
                 .foregroundStyle(.white)
                 Spacer()
             }
-            .background(Color.midnightBlack.edgesIgnoringSafeArea(.all))
         }
        
     }
