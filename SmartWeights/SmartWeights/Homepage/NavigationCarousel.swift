@@ -16,6 +16,8 @@ struct CarouselButton: Identifiable {
 struct NavigationCarousel: View {
     
     let buttons: [CarouselButton]
+    let iconColor: Color
+    let bgColor: Color
     
     var body: some View {
         VStack (alignment: .leading) {
@@ -28,9 +30,11 @@ struct NavigationCarousel: View {
                     ForEach (buttons) { button in
                         VStack {
                             Image(systemName: button.icon)
+                                .foregroundStyle(iconColor)
                                 .background(Circle()
                                     .frame(width: 60,
-                                           height: 60))
+                                           height: 60)
+                                        .foregroundStyle(bgColor))
                                 .padding()
                             Text("\(button.name)")
                                 .font(.subheadline)
@@ -49,5 +53,5 @@ struct NavigationCarousel: View {
         button
     ]
     
-    return NavigationCarousel(buttons: buttons)
+    return NavigationCarousel(buttons: buttons, iconColor: Color.africanViolet, bgColor: Color.black)
 }
