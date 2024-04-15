@@ -17,14 +17,24 @@ struct WorkoutMainPage: View {
     @State private var showingWorkoutSheet = false
     @State private var isWorkoutPaused = false
     
-    @State private var showGraphPopover = false
+    @State var showGraphPopover: Bool = false {
+        didSet {
+            if showGraphPopover {
+                self.feedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
+                self.feedbackDataForSets.append(feedback)
+                formCriteria.UpdateWorkoutAnalysis(totalSets: Int(viewModel.inputtedSets) ?? 0, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+                self.workoutAnalysis = formCriteria.workoutAnalysis
+            }
+        }
+    }
     @State private var graphData: [Double] = []
-    var feedback: (String,String,String,String) {
-        formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
-    }
-    var updateWorkoutAnalysis:(){
-        formCriteria.UpdateWorkoutAnalysis(totalSets: Int(viewModel.inputtedSets) ?? 1, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
-    }
+    @State private var feedback: (String, String, String, String) = ("", "", "", "")
+//    var feedback: (String,String,String,String) {
+//        formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
+//    }
+//    var updateWorkoutAnalysis:(){
+//        formCriteria.UpdateWorkoutAnalysis(totalSets: Int(viewModel.inputtedSets) ?? 1, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+//    }
     @State var feedbackDataForSets: [(String, String, String, String)] = []
     @State var workoutAnalysis: [String:Double] = [:]
     //TODO: IMPLEMENT THE DANGEROUS ASPECT
@@ -116,17 +126,19 @@ struct WorkoutMainPage: View {
                 .cornerRadius(20)
                 .shadow(radius: 10)
             }
+//            .onChange(of: showGraphPopover) { newValue in
+//                        if newValue {
+//                            self.feedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
+//                            // Add the current feedback data when showGraphPopover is true
+//                            self.feedbackDataForSets.append(feedback)
+//                            formCriteria.UpdateWorkoutAnalysis(totalSets: Int(viewModel.inputtedSets) ?? 0, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+//                            self.workoutAnalysis = formCriteria.workoutAnalysis
+//                        }
+//                    }
+            
             
         }
-        .onChange(of: showGraphPopover) { newValue in
-                        if newValue {
-                            // Add the current feedback data when showGraphPopover is true
-                            self.feedbackDataForSets.append(feedback)
-                            //TODO: Figure out why it is breaking here
-                            updateWorkoutAnalysis
-                            self.workoutAnalysis = formCriteria.workoutAnalysis
-                        }
-                    }
+        
     }
     
     enum SetType {

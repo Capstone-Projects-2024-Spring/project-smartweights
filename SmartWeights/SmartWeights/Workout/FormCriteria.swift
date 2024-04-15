@@ -93,7 +93,7 @@ class FormCriteria: ObservableObject{
         
         var count = 0 //total data collected
         var good = 0 //data in range of good form
-        var percentage: Double = 0 //return
+        var percentage: Double = 1 //return
 
         array.forEach { (data) in
             if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
@@ -123,7 +123,7 @@ class FormCriteria: ObservableObject{
         
         var count = 0 //total data collected
         var good = 0 //data in range of good form
-        var percentage: Double = 0 //return
+        var percentage: Double = 1 //return
 
         array.forEach { (data) in
             if data[0] < 10 && data[1] > -10 { //the user isnt making a rep, could be between reps
@@ -152,7 +152,7 @@ class FormCriteria: ObservableObject{
         
         var count = 0 //total data collected
         var good = 0 //data in range of good form
-        var percentage: Double = 0 //return
+        var percentage: Double = 1 //return
 
         array.forEach { (data) in
             if data[1] < 10 && data[1] > -10 { //the user isn't making a rep, could be between reps
@@ -181,7 +181,7 @@ class FormCriteria: ObservableObject{
         //(sum of averages from sets)/total sets
     func overallWorkoutUpDownAverage(totalSets: Int) -> Double {
         guard totalSets != 0 else {
-            return 0.0
+            return 1.0
         }
 
         var sum: Double = 0
@@ -197,7 +197,7 @@ class FormCriteria: ObservableObject{
     
     func overallDumbbellTwisting(totalSets: Int) -> (Double, Double) {
         guard totalSets != 0 else {
-            return (0.0, 0.0)
+            return (1.0, 1.0)
         }
 
         var sumUpDown: Double = 0
@@ -224,7 +224,7 @@ class FormCriteria: ObservableObject{
     func averageElbowSwing(array: [[Int]]) -> Double {
         var count = 0 //total data collected
         var good = 0 //data in range of good form
-        var percentage: Double = 0 //return
+        var percentage: Double = 1 //return
 
         //data[x,y,z]
         array.forEach { (data) in
@@ -237,13 +237,17 @@ class FormCriteria: ObservableObject{
             if data[0] > 10 || data[0] < -10 { //only add when they are moving not resting
                 count += 1
             }
+           
         }
+        print("this is good")
+        print(good)
+        print("this is count")
+        print(count)
 
         if count != 0 {
             percentage = Double(good) / Double(count)
             self.listOfElbowSwingAverage.append(percentage)
         }
-
         return percentage
     }
     
@@ -252,7 +256,7 @@ class FormCriteria: ObservableObject{
     func averageElbowFlareUpDown(array: [[Int]]) -> Double {
         var count = 0 //total data collected
         var good = 0 //data in range of good form
-        var percentage: Double = 0 //return
+        var percentage: Double = 1 //return
 
         //data[x,y,z]
         array.forEach { (data) in
@@ -280,7 +284,7 @@ class FormCriteria: ObservableObject{
     func averageElbowFlareFowardBackward(array: [[Int]]) -> Double {
         var count = 0 //total data collected
         var good = 0 //data in range of good form
-        var percentage: Double = 0 //return
+        var percentage: Double = 1 //return
 
         //data[x,y,z]
         array.forEach { (data) in
@@ -308,7 +312,7 @@ class FormCriteria: ObservableObject{
     
     func overallWorkoutElbowSwing(totalSets: Int) -> Double {
         guard totalSets != 0 else {
-            return 0.0
+            return 1.0
         }
 
         var sum: Double = 0
@@ -324,7 +328,7 @@ class FormCriteria: ObservableObject{
     //gives the overall elbow flaring for the whole workout
     func overallWorkoutElbowFlare(totalSets: Int) -> (Double, Double) {
         guard totalSets != 0 else {
-            return (0.0, 0.0)
+            return (1.0, 1.0)
         }
 
         var sumUpDown: Double = 0
@@ -453,7 +457,7 @@ class FormCriteria: ObservableObject{
         let averageElbowSwing = self.averageElbowSwing(array: elbowArray)
         
 
-        let overallAccel = String(format: "Overall curl acceleration: %.f%% good", averageAcceleration * 100)
+        let overallAccel = String(format: "Overall curl form: %.f%% good", averageAcceleration * 100)
         let overallElbowSwing = String(format: "Overall elbow stability: %.f%% good", averageElbowSwing * 100)
         var dumbbellCustomTextFeedback = ""
         var elbowCustomTextFeedback = ""
@@ -485,41 +489,3 @@ class FormCriteria: ObservableObject{
     
 }
 
-
-struct FormCriteriaView:View {
-    @ObservedObject var ble = BLEcentral()
-    @ObservedObject var form = FormCriteria()
-    
-    @State var z = 0.0
-    @State var up = 0.0
-    @State var down = 0.0
-    
-    var body: some View {
-        bleView(ble: ble)
-        
-        
-        Button(action: {
-            z = form.averageUpDownAcceleration(array: ble.MPU6050_1Gyros)
-        }){
-            Text("get feedback")
-        }
-        Text("Overall acceleration going up and down is \(z*100)%")
-        Text("\(up * 100)% of your reps are too fast going up")
-        Text("\(down * 100)% of your reps are too fast going down")
-    
-       
-        Button(action: {
-            form.UpdateWorkoutAnalysis(totalSets: 2, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_1Gyros)
-        }) {
-            Text("Update Workout Analysis")
-        }
-        Text("\(form.workoutAnalysis)")
-    
-        
-        
-    }
-}
-
-#Preview{
-    FormCriteriaView()
-}

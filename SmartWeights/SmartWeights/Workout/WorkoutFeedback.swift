@@ -46,19 +46,11 @@ struct PostWorkoutData: View {
         }
         
         if isExpanded {
-            VStack{
-                Text("\(String(describing: workoutAnalysis["averageWristLeftRightRotation"])) wrist twisting")
-                Text("\(String(describing: workoutAnalysis["averageWristUpDownRotation"])) wrist twisting")
-                Text("\(String(describing: workoutAnalysis["overallWorkoutUpDownAverage"])) wrist twisting")
-                Text("\(String(describing: workoutAnalysis["overallDumbbellTwistingUpDown"])) wrist twisting")
-                Text("\(String(describing: workoutAnalysis["overallDumbbellTwistingLeftRight"])) wrist twisting")
-                Text("\(String(describing: workoutAnalysis["averageElbowSwing"])) wrist twisting")
-                Text("\(String(describing: workoutAnalysis["averageElbowFlareUpDown"])) wrist twisting")
-                Text("\(String(describing: workoutAnalysis["averageElbowFlareForwardBackward"])) wrist twisting")
-                Text("\(String(describing: workoutAnalysis["overallWorkoutElbowSwing"])) wrist twisting")
-                Text("\(String(describing: workoutAnalysis["overallWorkoutElbowFlareUpDown"])) wrist twisting")
-                Text("\(String(describing: workoutAnalysis["overallWorkoutElbowFlareForwardBackward"])) wrist twisting")
-                
+            VStack(alignment: .leading){
+                Text("\(Int(workoutAnalysis["averageWristLeftRightRotation"] ?? 0.0 * 100))% wrist stability (left right)")
+                Text("\(Int(workoutAnalysis["averageWristUpDownRotation"] ?? 0.0 * 100))% wrist wrist stability (up down)")
+                Text("\(Int(workoutAnalysis["averageElbowFlareUpDown"] ?? 0.0 * 100))% elbow stability(up down)")
+                Text("\(Int(workoutAnalysis["averageElbowFlareForwardBackward"] ?? 0.0 * 100))% elbow (foward backward)")
             }
         }
     }
