@@ -64,6 +64,7 @@
 		E56BD7DB2BAFB0F400863D4D /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */; };
 		E5B86DB32B91033400A0AD04 /* navbarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B86DB22B91033400A0AD04 /* navbarUITests.swift */; };
 		E5D7FE662BCD70330097A175 /* StartWorkoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D7FE652BCD70330097A175 /* StartWorkoutButton.swift */; };
+		E5D7FE682BCD740F0097A175 /* NavigationCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D7FE672BCD740F0097A175 /* NavigationCarousel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +147,7 @@
 		E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		E5B86DB22B91033400A0AD04 /* navbarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = navbarUITests.swift; sourceTree = "<group>"; };
 		E5D7FE652BCD70330097A175 /* StartWorkoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutButton.swift; sourceTree = "<group>"; };
+		E5D7FE672BCD740F0097A175 /* NavigationCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCarousel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,6 +359,7 @@
 				E5297D252BB4596D0078A9E6 /* EmbeddedVideo.swift */,
 				E5297D272BB45D110078A9E6 /* VideoCard.swift */,
 				E5D7FE652BCD70330097A175 /* StartWorkoutButton.swift */,
+				E5D7FE672BCD740F0097A175 /* NavigationCarousel.swift */,
 			);
 			path = Homepage;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				6BEA78612BBDC82900239AB0 /* UserFeedbackDataManager.swift in Sources */,
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				E5297D282BB45D110078A9E6 /* VideoCard.swift in Sources */,
+				E5D7FE682BCD740F0097A175 /* NavigationCarousel.swift in Sources */,
 				E56BD7DB2BAFB0F400863D4D /* ColorExtension.swift in Sources */,
 				32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
