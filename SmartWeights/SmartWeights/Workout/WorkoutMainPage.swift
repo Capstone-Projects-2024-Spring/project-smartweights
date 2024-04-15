@@ -94,9 +94,9 @@ struct WorkoutMainPage: View {
                                     .frame(width: 250, height: 150)
                                 VStack{
                                     Text("\(feedback.2)")
-                                        .foregroundStyle(Color.black)
+                                        .foregroundColor(feedback.2 == "Whoa slow down" ? Color.red : Color.green)
                                     Text("\(feedback.3)")
-                                        .foregroundStyle(Color.black)
+                                        .foregroundColor(feedback.3 == "Keep that elbow steady" ? Color.red : Color.green)
                                 }
                                 
                             }

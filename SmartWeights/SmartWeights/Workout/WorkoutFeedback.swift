@@ -56,6 +56,14 @@ struct PostWorkoutData: View {
     }
 }
 
+struct OverallWorkoutData: View{
+    
+    var body: some View{
+        Text("overall dumbbell form  goes here")
+        Text("overall elbow stability goes here")
+    }
+}
+
 
 
 ///View to show all data collected from the most recent workout
@@ -82,6 +90,8 @@ struct WorkoutFeedback: View {
                 .foregroundColor(.black)
                 .background(Color.blue)
                 .scrollContentBackground(.hidden)
+                OverallWorkoutData()
+                
 
                 Spacer()
             }

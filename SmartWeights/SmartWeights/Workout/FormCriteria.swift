@@ -457,8 +457,6 @@ class FormCriteria: ObservableObject{
         let averageAcceleration = self.averageUpDownAcceleration(array: dumbbellArray)
         let averageElbowSwing = self.averageElbowSwing(array: elbowArray)
         
-        var dumbbellTextColor = "green"
-        var elbowTextColor = "green"
         
 
         let overallAccel = String(format: "Overall curl form: %.f%% good", averageAcceleration * 100)
@@ -476,7 +474,7 @@ class FormCriteria: ObservableObject{
         }
         
         if averageElbowSwing < 0.7{
-            elbowCustomTextFeedback = "Keep those elbow steady!"
+            elbowCustomTextFeedback = "Keep that elbow steady!"
         }
         else{
             elbowCustomTextFeedback = "Elbows are looking good!!!"
