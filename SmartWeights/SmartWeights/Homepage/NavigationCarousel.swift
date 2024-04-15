@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CarouselButton: Identifiable {
     let name: String
+    let icon: String
     var id: String { name }
 }
 
@@ -26,7 +27,7 @@ struct NavigationCarousel: View {
                 HStack {
                     ForEach (buttons) { button in
                         VStack {
-                            Image(systemName: "photo")
+                            Image(systemName: button.icon)
                                 .background(Circle()
                                     .frame(width: 60,
                                            height: 60))
@@ -43,7 +44,7 @@ struct NavigationCarousel: View {
 }
 
 #Preview {
-    let button = CarouselButton(name: "Test")
+    let button = CarouselButton(name: "Test", icon: "photo")
     let buttons: [CarouselButton] = [
         button
     ]
