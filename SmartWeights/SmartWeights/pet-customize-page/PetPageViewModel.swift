@@ -53,6 +53,8 @@ class PetPageFunction: ObservableObject {
     
     @Published var pet: PetModel?
     @Published var activePet: String = ""
+
+    @Published var isLoading = false
     
     // Initializer
     init(){
@@ -93,7 +95,32 @@ class PetPageFunction: ObservableObject {
             }
         }
     }
-    
+    func refreshData() {
+        isLoading = true
+        let group = DispatchGroup()
+
+        group.enter()
+        fetchPetHealth()
+            group.leave()
+        
+
+        group.enter()
+        petDBManager.getXP{ (totalXP, error) in
+            if let error = error {
+                print("Error getting XP: \(error.localizedDescription)")
+            } else if let totalXP = totalXP {
+                DispatchQueue.main.async {
+                    self.userTotalXP = Int(totalXP)
+                    print("XP has been initialized to: \(self.userTotalXP)")
+                }
+            }
+            group.leave()
+        }
+
+        group.notify(queue: .main) {
+            self.isLoading = false
+        }
+    }
     func handleFoodUse(selectedFoodIndex: Int) {
         guard selectedFoodIndex < foodItems.count else { return }
         var foodItem = foodItems[selectedFoodIndex]
@@ -141,12 +168,14 @@ class PetPageFunction: ObservableObject {
     }
     
     func updateXP(){
+        
         petDBManager.getXP{ (totalXP, error) in
             if let error = error {
                 print("Error getting currency: \(error.localizedDescription)")
             } else if let totalXP = totalXP {
                 DispatchQueue.main.async {
                     self.userTotalXP = Int(totalXP)
+                
                 }
             }
             
@@ -159,11 +188,16 @@ class PetPageFunction: ObservableObject {
             error in
             if let error = error {
                 print("Error updating currency: \(error.localizedDescription)")
+            } else{
+                DispatchQueue.main.async{
+                    self.userTotalXP += value
+                    self.updateXP()
+                }
             }
         }
         
 //        return userTotalXP = userTotalXP + value
-                return increaseXP(by: value)
+                // return increaseXP(by: value)
     }
     
     

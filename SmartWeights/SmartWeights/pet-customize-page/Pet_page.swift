@@ -10,6 +10,7 @@ import SwiftUI
 
 struct Pet_Page: View {
     @ObservedObject var viewModel = PetPageFunction()
+    @ObservedObject var petDBManager = PetDBManager()
     @State var activePet: String = ""
 
     var body: some View {
@@ -25,6 +26,11 @@ struct Pet_Page: View {
                     viewModel.AddXP(value: 75)
                 }
                 */
+                Text("XP:  \(viewModel.userTotalXP)")
+                    .font(.system(size: 20))
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 10)
                 HStack {
                     HamburgerMenu(
                         navigateToShop: { viewModel.showShop = true },
@@ -93,14 +99,20 @@ struct Pet_Page: View {
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 10)
-                     
-                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
-                        .frame(height: 20)
-                        .padding()
+                    if viewModel.isLoading{
+                        ProgressView()
+                    } else{
+                        CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                            .frame(height: 20)
+                            .padding()
+                    }
                     
                 }
                 .padding(.top, -20)
                 Spacer()
+            }
+            .onAppear {
+                viewModel.refreshData()
             }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(
