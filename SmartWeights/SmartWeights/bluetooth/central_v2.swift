@@ -79,6 +79,9 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     @Published var listOfPeripherals = []
     @Published var peripheralData = [:]
     
+    var MPU_1_Connected = false
+    var MPU_2_Connected = false
+    
     override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -128,6 +131,24 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
         print("\(peripherals)")
         centralManager.scanForPeripherals(withServices: [AccelServiceUUID,GyroServiceUUID], options: nil)
         self.isConnected = false
+        if peripheral.name == MPU_1_Name{
+            if peripheral.state == .connected{
+                MPU_1_Connected = true
+            }
+            else{
+                MPU_1_Connected = false
+            }
+            
+        }
+        
+        else if peripheral.name == MPU_2_Name{
+            if peripheral.state == .connected{
+                MPU_2_Connected = true
+            }
+            else{
+                MPU_2_Connected = false
+            }
+        }
         
         
     }
@@ -138,6 +159,24 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
         self.isConnected = true
         listOfPeripherals.append(peripheral)
         print(peripheral)
+        if peripheral.name == MPU_1_Name{
+            if peripheral.state == .connected{
+                MPU_1_Connected = true
+            }
+            else{
+                MPU_1_Connected = false
+            }
+            
+        }
+        else if peripheral.name == MPU_2_Name{
+            if peripheral.state == .connected{
+                MPU_2_Connected = true
+            }
+            else{
+                MPU_2_Connected = false
+            }
+        }
+        
     }
     
     //if a bluetooth device could not connect correctly

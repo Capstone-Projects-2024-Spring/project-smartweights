@@ -47,7 +47,32 @@ struct WorkoutMainPage: View {
         ZStack {
             
             VStack {
-                workoutTitleView
+                ZStack{
+                    workoutTitleView
+                    VStack{
+                        Image(systemName: "dumbbell.fill")
+                            .frame(width: 25, height: 25)
+                            .foregroundColor(ble.MPU_1_Connected ? .green : .red)
+                            
+                        Text("Dumbbell")
+                            .font(.custom("small", size: 12))
+                            
+                    }
+                    .padding(.leading,200)
+                    VStack{
+                        Image(systemName: "figure.arms.open")
+                            .frame(width: 25, height: 25)
+                            .foregroundColor(ble.MPU_2_Connected ? .green : .red)
+                            
+                        Text("Elbow")
+                            .font(.custom("small", size: 12))
+                    }
+                    .padding(.leading,300)
+                   
+                
+                }
+                
+               
                 
                 // Tab selection for workout or feedback
                 workoutTabSelection
@@ -104,6 +129,7 @@ struct WorkoutMainPage: View {
                         }
                         HStack{
                             
+
                             Image("Dog")
                                 .resizable()
                                 .scaledToFit()
