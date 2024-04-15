@@ -130,7 +130,7 @@ class FormCriteria: ObservableObject{
             if data[0] < 10 && data[1] > -10 { //the user isnt making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[0] > -20 && data[0] < 20 { //between good threshold
+            else if data[0] > -50 && data[0] < 50 { //between good threshold
                 good += 1
             }
             //ignoring resting movements
@@ -159,7 +159,7 @@ class FormCriteria: ObservableObject{
             if data[1] < 10 && data[1] > -10 { //the user isn't making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[1] > -20 && data[1] < 20 { //between good threshold
+            else if data[1] > -50 && data[1] < 50 { //between good threshold
                 good += 1
             }
             //ignoring resting movements
@@ -264,7 +264,7 @@ class FormCriteria: ObservableObject{
             if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[2] > -20 && data[2] < 20 { //in good threshold of elbow flare
+            else if data[2] > -50 && data[2] < 50 { //in good threshold of elbow flare
                 good += 1
             }
             if data[2] > 10 || data[2] < -10 { //only add when they are moving not resting
@@ -292,7 +292,7 @@ class FormCriteria: ObservableObject{
             if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[2] > -20 && data[2] < 20 { //in good threshold of elbow flare
+            else if data[2] > -50 && data[2] < 50 { //in good threshold of elbow flare
                 good += 1
             }
             if data[2] > 10 || data[2] < -10 { //only add when they are moving not resting
@@ -456,6 +456,9 @@ class FormCriteria: ObservableObject{
     
         let averageAcceleration = self.averageUpDownAcceleration(array: dumbbellArray)
         let averageElbowSwing = self.averageElbowSwing(array: elbowArray)
+        
+        var dumbbellTextColor = "green"
+        var elbowTextColor = "green"
         
 
         let overallAccel = String(format: "Overall curl form: %.f%% good", averageAcceleration * 100)
