@@ -56,6 +56,7 @@ class PetPageFunction: ObservableObject {
     
     // Initializer
     init(){
+        fetchPetHealth()
         updateXP()
         foodItemDBManager.fetchFoodItems { fetchedItems, error in
             if let error = error {
@@ -118,8 +119,24 @@ class PetPageFunction: ObservableObject {
     }
     
     func increaseHealth(by amount: Int) {
-        withAnimation {
-            healthBar = min(healthBar + amount, 100) // Assuming max health is 100
+        guard let currentPet = pet else {
+            print("Pet not available")
+            return
+        }
+        let newHealth = min(Int(currentPet.health) + amount, 100)
+        petDBManager.updatePetHealth(newHealth: Int64(newHealth)) { [weak self] error in
+            if let error = error {
+                print("Error updating pet's health: \(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    // Perform the animation after confirming the health is updated in CloudKit
+                                    withAnimation {
+                                        self?.healthBar = Int(newHealth)
+                                    }
+                                    // Update the local pet model
+                                    self?.pet?.health = Int64(newHealth)
+                }
+            }
         }
     }
     
@@ -215,5 +232,16 @@ class PetPageFunction: ObservableObject {
         }
         
     }
-
+    func fetchPetHealth() {
+        petDBManager.fetchPet { [weak self] pet, error in
+            if let error = error {
+                print("Error fetching pet: \(error.localizedDescription)")
+            } else if let pet = pet {
+                DispatchQueue.main.async {
+                    self?.pet = pet
+                    self?.healthBar = Int(pet.health)
+                }
+            }
+        }
+    }
 }
