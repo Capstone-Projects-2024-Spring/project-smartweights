@@ -18,7 +18,7 @@ class FormCriteria: ObservableObject{
     
     //elbow averages
     private var listOfElbowSwingAverage:[Double] = []
-    private var listOfElbowFlareUpDwonAverage:[Double] = []
+    private var listOfElbowFlareUpDownAverage:[Double] = []
     private var listOfElbowFlareForwardBackAverage: [Double] = []
     
     
@@ -34,14 +34,58 @@ class FormCriteria: ObservableObject{
         return goodFormPhrases[randomIndex]
     }
     
+    func resetListofData(){
+        listOfDumbbellAverage.removeAll()
+        listOfDumbbellAverage.removeAll()
+        
+    }
+    
+    
+    
+    
+    //--------------------ALL_DATA--------------------//
+    
+    @State var workoutAnalysis: [String: Double] = [
+        "averageUpDownAcceleration": 0.0,
+        "averageWristLeftRightRotation": 0.0,
+        "averageWristUpDownRotation": 0.0,
+        "overallWorkoutUpDownAverage": 0.0,
+        "overallDumbbellTwistingUpDown": 0.0,
+        "overallDumbbellTwistingLeftRight": 0.0,
+        "averageElbowSwing": 0.0,
+        "averageElbowFlareUpDown": 0.0,
+        "averageElbowFlareForwardBackward": 0.0,
+        "overallWorkoutElbowSwing": 0.0,
+        "overallWorkoutElbowFlareUpDown": 0.0,
+        "overallWorkoutElbowFlareForwardBackward": 0.0
+    ]
+    
+    
+    func UpdateWorkoutAnalysis(totalSets:Int,dumbbellArray: [[Int]],elbowArray: [[Int]]){
+        
+        self.workoutAnalysis["averageUpDownAcceleration"] = averageUpDownAcceleration(array: dumbbellArray)
+        self.workoutAnalysis["averageWristLeftRightRotation"] = averageWristLeftRightRotation(array: dumbbellArray)
+        self.workoutAnalysis["averageWristUpDownRotation"] = averageWristUpDownRotation(array: dumbbellArray)
+        self.workoutAnalysis["overallWorkoutUpDownAverage"] = overallWorkoutUpDownAverage(totalSets: totalSets)
+        self.workoutAnalysis["overallDumbbellTwistingUpDown"] = overallDumbbellTwisting(totalSets: totalSets).0
+        self.workoutAnalysis["overallDumbbellTwistingLeftRight"] = overallDumbbellTwisting(totalSets: totalSets).1
+        self.workoutAnalysis["averageElbowSwing"] = averageElbowSwing(array: elbowArray)
+        self.workoutAnalysis["averageElbowFlareUpDown"] = averageElbowFlareUpDown(array: elbowArray)
+        self.workoutAnalysis["averageElbowFlareForwardBackward"] = averageElbowFlareFowardBackward(array: elbowArray)
+        self.workoutAnalysis["overallWorkoutElbowSwing"] = overallWorkoutElbowSwing(totalSets: totalSets)
+        self.workoutAnalysis["overallWorkoutElbowFlareUpDown"] = overallWorkoutElbowFlare(totalSets: totalSets).0
+        self.workoutAnalysis["overallWorkoutElbowFlareForwardBackward"] = overallWorkoutElbowFlare(totalSets: totalSets).1
+        
+    }
+    
+    
     
     
     
     //---------------------DUMBBELL-------------------//
     
     //read the Z axis rotation and gives an average of the up and down for that set
-    func averageUpDownAcceleration(array: [[Int]]) -> Double{
-
+    func averageUpDownAcceleration(array: [[Int]]) -> Double {
         /*
         good acceleration for going up and down -180°/s, 180°/s
         bad - less than -180 or greater than 180
@@ -49,137 +93,128 @@ class FormCriteria: ObservableObject{
         
         var count = 0 //total data collected
         var good = 0 //data in range of good form
-        var fast = 0 // data outside of good form
-        var percentage:Double = 0 //return
+        var percentage: Double = 0 //return
 
         array.forEach { (data) in
-            if data[2] < 10 && data[2] > -10{ //the user isn't making a rep, could be between reps
+            if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[2] > -180 && data[2] < 180{ //between good threshold
+            else if data[2] > -180 && data[2] < 180 { //between good threshold
                 good += 1
             }
-            else{
-                fast += 1 //data is outside range
-            }
             //ignoring resting movements
-            if data[2] > 10 || data[2] < -10{
+            if data[2] > 10 || data[2] < -10 {
                 count += 1
             }
-            
         }
-        percentage = Double(good)/Double(count)
-        self.listOfDumbbellAverage.append(Double(good)/Double(count))
+
+        if count != 0 {
+            percentage = Double(good) / Double(count)
+            self.listOfDumbbellAverage.append(percentage)
+        }
+
         return percentage
-        
     }
     
     
     //twisting writst left and right
-    func averageWristLeftRightRotation(array: [[Int]]) -> Double{
-        
+    func averageWristLeftRightRotation(array: [[Int]]) -> Double {
         //measurement from the X rotation
         
         var count = 0 //total data collected
         var good = 0 //data in range of good form
-        var fast = 0 // data outside of good form
-        var percentage:Double = 0 //return
+        var percentage: Double = 0 //return
 
         array.forEach { (data) in
-            if data[0] < 10 && data[1] > -10{ //the user isnt making a rep, could be between reps
+            if data[0] < 10 && data[1] > -10 { //the user isnt making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[0] > -20 && data[0] < 20{ //between good threshold
+            else if data[0] > -20 && data[0] < 20 { //between good threshold
                 good += 1
             }
-            else{
-                fast += 1 //data is outside range
-            }
             //ignoring resting movements
-            if data[0] > 10 || data[0] < -10{
+            if data[0] > 10 || data[0] < -10 {
                 count += 1
             }
-            
         }
-        percentage = Double(good)/Double(count)
-        self.listOfWristLeftRightAverage.append(percentage)
+
+        if count != 0 {
+            percentage = Double(good) / Double(count)
+            self.listOfWristLeftRightAverage.append(percentage)
+        }
+
         return percentage
-        
     }
     
     //twisting up and down
-    func averageWristUpDownRotation(array: [[Int]]) -> Double{
-       
+    func averageWristUpDownRotation(array: [[Int]]) -> Double {
         //measurement from the Y rotation
         
         var count = 0 //total data collected
         var good = 0 //data in range of good form
-        var fast = 0 // data outside of good form
-        var percentage:Double = 0 //return
+        var percentage: Double = 0 //return
 
         array.forEach { (data) in
-            if data[1] < 10 && data[1] > -10{ //the user isn't making a rep, could be between reps
+            if data[1] < 10 && data[1] > -10 { //the user isn't making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[1] > -20 && data[1] < 20{ //between good threshold
+            else if data[1] > -20 && data[1] < 20 { //between good threshold
                 good += 1
             }
-            else{
-                fast += 1 //data is outside range
-            }
             //ignoring resting movements
-            if data[1] > 10 || data[1] < -10{
+            if data[1] > 10 || data[1] < -10 {
                 count += 1
             }
-            
         }
-        percentage = Double(good)/Double(count)
-        self.listOfWristUpDownAverage.append(percentage)
+
+        if count != 0 {
+            percentage = Double(good) / Double(count)
+            self.listOfWristUpDownAverage.append(percentage)
+        }
+
         return percentage
+    }
         
         
         
         //get the average of each set and compute the overall average for the workout
         //(sum of averages from sets)/total sets
-        func overallWorkoutUpDownAverage(totalSets: Int) -> Double {
-            
-            var sum = 0
-            
-            self.listOfDumbbellAverage.forEach{ (data) in
-                sum += Int(data)
-            }
-            
-            return (Double(sum)/Double(totalSets))
-            
+    func overallWorkoutUpDownAverage(totalSets: Int) -> Double {
+        guard totalSets != 0 else {
+            return 0.0
         }
-        
+
+        var sum: Double = 0
+
+        self.listOfDumbbellAverage.forEach { (data) in
+            sum += data
+        }
+
+        return sum / Double(totalSets)
     }
+        
     
     
-    func overallDumbbellTwisting(totalSets: Int)->(Double,Double){
-        
-        var sumUpDown = 0
-        var sumLeftRight = 0
-        var averageUpDown: Double = 0.0
-        var averageLeftRight: Double = 0.0
-        
-        self.listOfWristUpDownAverage.forEach{ (data) in
-            sumUpDown += Int(data)
-            
+    func overallDumbbellTwisting(totalSets: Int) -> (Double, Double) {
+        guard totalSets != 0 else {
+            return (0.0, 0.0)
         }
-        averageUpDown = (Double(sumUpDown)/Double(totalSets))
-        
-        
-        
-        self.listOfWristLeftRightAverage.forEach{ (data) in
-            sumLeftRight += Int(data)
-            
+
+        var sumUpDown: Double = 0
+        var sumLeftRight: Double = 0
+
+        self.listOfWristUpDownAverage.forEach { (data) in
+            sumUpDown += data
         }
-        
-        averageLeftRight = (Double(sumLeftRight)/Double(totalSets))
-        
-        return (averageUpDown,averageLeftRight)
-        
+
+        self.listOfWristLeftRightAverage.forEach { (data) in
+            sumLeftRight += data
+        }
+
+        let averageUpDown = sumUpDown / Double(totalSets)
+        let averageLeftRight = sumLeftRight / Double(totalSets)
+
+        return (averageUpDown, averageLeftRight)
     }
     
     //--------------------------------ELBOW-------------------------------//
@@ -187,61 +222,55 @@ class FormCriteria: ObservableObject{
     //measures if the eblow is swinging back and forth too much
     //use MPU6050-2
     func averageElbowSwing(array: [[Int]]) -> Double {
-        
         var count = 0 //total data collected
-        var good = 0
-        var tooMuchSwing = 0
-        var percentage:Double = 0 //return
-        
-     
+        var good = 0 //data in range of good form
+        var percentage: Double = 0 //return
+
         //data[x,y,z]
         array.forEach { (data) in
-            if data[0] < 10 && data[0] > -10{ //the user isn't making a rep, could be between reps
+            if data[0] < 10 && data[0] > -10 { //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[0] > -50 && data[0] < 50{ //in good threshold of elbow swing
+            else if data[0] > -50 && data[0] < 50 { //in good threshold of elbow swing
                 good += 1
             }
-            else{
-                tooMuchSwing += 1 //data is outside of range
-            }
-            if data[0] > 10 || data[0] < -10{ //only add when they are moving not resting
+            if data[0] > 10 || data[0] < -10 { //only add when they are moving not resting
                 count += 1
             }
-            
         }
-        percentage = Double(good)/Double(count)
-        self.listOfElbowSwingAverage.append(percentage)
+
+        if count != 0 {
+            percentage = Double(good) / Double(count)
+            self.listOfElbowSwingAverage.append(percentage)
+        }
+
         return percentage
     }
     
     
     //flaring elbow up and down
     func averageElbowFlareUpDown(array: [[Int]]) -> Double {
-        
         var count = 0 //total data collected
-        var good = 0
-        var tooMuchFlare = 0
-        var percentage:Double = 0 //return
-        
-     
+        var good = 0 //data in range of good form
+        var percentage: Double = 0 //return
+
         //data[x,y,z]
         array.forEach { (data) in
-            if data[2] < 10 && data[2] > -10{ //the user isn't making a rep, could be between reps
+            if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[2] > -20 && data[2] < 20{ //in good threshold of elbow flare
+            else if data[2] > -20 && data[2] < 20 { //in good threshold of elbow flare
                 good += 1
             }
-            else{
-                tooMuchFlare += 1 //data is outside of range
-            }
-            if data[2] > 10 || data[2] < -10{ //only add when they are moving not resting
+            if data[2] > 10 || data[2] < -10 { //only add when they are moving not resting
                 count += 1
             }
-            
         }
-        percentage = Double(good)/Double(count)
+
+        if count != 0 {
+            percentage = Double(good) / Double(count)
+        }
+
         return percentage
     }
     
@@ -249,74 +278,70 @@ class FormCriteria: ObservableObject{
     
     //flaring elbow forward and black
     func averageElbowFlareFowardBackward(array: [[Int]]) -> Double {
-        
         var count = 0 //total data collected
-        var good = 0
-        var tooMuchFlare = 0
-        var percentage:Double = 0 //return
-        
-     
+        var good = 0 //data in range of good form
+        var percentage: Double = 0 //return
+
         //data[x,y,z]
         array.forEach { (data) in
-            if data[2] < 10 && data[2] > -10{ //the user isn't making a rep, could be between reps
+            if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[2] > -20 && data[2] < 20{ //in good threshold of elbow flare
+            else if data[2] > -20 && data[2] < 20 { //in good threshold of elbow flare
                 good += 1
             }
-            else{
-                tooMuchFlare += 1 //data is outside of range
-            }
-            if data[2] > 10 || data[2] < -10{ //only add when they are moving not resting
+            if data[2] > 10 || data[2] < -10 { //only add when they are moving not resting
                 count += 1
             }
-            
         }
-        percentage = Double(good)/Double(count)
+
+        if count != 0 {
+            percentage = Double(good) / Double(count)
+        }
+
         return percentage
     }
     
     
     
-  
-
     //get average of elbow swinging for the workout
     
-    func overallWorkoutElbowSwing(totalSets: Int) -> Double{
-        
-        var sum = 0
-        
-        self.listOfElbowSwingAverage.forEach{ (data) in
-            sum += Int(data)
-            
+    func overallWorkoutElbowSwing(totalSets: Int) -> Double {
+        guard totalSets != 0 else {
+            return 0.0
         }
-        return Double(sum/totalSets)
+
+        var sum: Double = 0
+
+        self.listOfElbowSwingAverage.forEach { (data) in
+            sum += data
+        }
+
+        return sum / Double(totalSets)
     }
     
     
     //gives the overall elbow flaring for the whole workout
-    func overallWorkoutElbowFlare(totalSets: Int) -> (Double,Double) {
-        
-        var sumUpDown = 0 //elbow flaring up and down
-        var sumForwardBackward = 0 // elbow flaring forward and backward
-        
-        var averageUpDown = 0.0
-        var averageForwardBackward = 0.0
-        
-        self.listOfElbowFlareUpDwonAverage.forEach{ (data) in
-            sumUpDown += Int(data)
+    func overallWorkoutElbowFlare(totalSets: Int) -> (Double, Double) {
+        guard totalSets != 0 else {
+            return (0.0, 0.0)
         }
-        
-        averageUpDown = (Double(sumUpDown)/Double(totalSets))
-        
-        self.listOfElbowFlareForwardBackAverage.forEach{ (data) in
-            sumForwardBackward += Int(data)
+
+        var sumUpDown: Double = 0
+        var sumForwardBackward: Double = 0
+
+        self.listOfElbowFlareUpDownAverage.forEach { (data) in
+            sumUpDown += data
         }
-        
-        averageForwardBackward = (Double(sumForwardBackward)/Double((totalSets)))
-        
-        return(averageUpDown,averageForwardBackward)
-        
+
+        self.listOfElbowFlareForwardBackAverage.forEach { (data) in
+            sumForwardBackward += data
+        }
+
+        let averageUpDown = sumUpDown / Double(totalSets)
+        let averageForwardBackward = sumForwardBackward / Double(totalSets)
+
+        return (averageUpDown, averageForwardBackward)
     }
 
     
@@ -481,7 +506,14 @@ struct FormCriteriaView:View {
         Text("Overall acceleration going up and down is \(z*100)%")
         Text("\(up * 100)% of your reps are too fast going up")
         Text("\(down * 100)% of your reps are too fast going down")
-        
+    
+       
+        Button(action: {
+            form.UpdateWorkoutAnalysis(totalSets: 2, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_1Gyros)
+        }) {
+            Text("Update Workout Analysis")
+        }
+        Text("\(form.workoutAnalysis)")
     
         
         

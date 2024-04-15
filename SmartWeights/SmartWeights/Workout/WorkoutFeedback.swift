@@ -14,36 +14,51 @@ struct PostWorkoutData: View {
     @State private var isExpanded: Bool = false
     let setIndex: Int
     let feedback: (String, String, String, String)
+    let workoutAnalysis: [String:Double]
     
-    init(viewModel: WorkoutViewModel, setIndex: Int, feedback: (String, String, String, String)) {
+    init(viewModel: WorkoutViewModel, setIndex: Int, feedback: (String, String, String, String),workoutAnalysis: [String:Double]) {
             self.viewModel = viewModel
             self.setIndex = setIndex
             self.feedback = feedback // Initialize feedback
+            self.workoutAnalysis = workoutAnalysis //initialize all workout data
         }
     
     var body: some View {
-        HStack{
-            Text(("Set \(setIndex)  Form 80%  Velocity 60%"))
-            Spacer()
-            if isExpanded{
-                Image(systemName: "arrowshape.up.fill")
-            } else {
-                Image(systemName: "arrowshape.down.fill")
+        VStack{
+            HStack{
+                Text("Set \(setIndex)")
+                Spacer()
+                if isExpanded{
+                    Image(systemName: "arrowshape.up.fill")
+                } else {
+                    Image(systemName: "arrowshape.down.fill")
+                }
             }
-        }
-        .onTapGesture {
-            withAnimation {
-                self.isExpanded.toggle()
+            .onTapGesture {
+                withAnimation {
+                    self.isExpanded.toggle()
+                }
             }
+            Text("\(feedback.0)") //gives overall acceleration
+                .font(.subheadline)
+            Text("\(feedback.1)") //gives overall elbow stability
+                .font(.subheadline)
         }
         
         if isExpanded {
             VStack{
-                // ... your code ...
-                Text("\(feedback.0)") //gives overall acceleration
-                    .font(.subheadline)
-                Text("\(feedback.1)") //gives overall elbow stability
-                    .font(.subheadline)
+                Text("\(String(describing: workoutAnalysis["averageWristLeftRightRotation"])) wrist twisting")
+                Text("\(String(describing: workoutAnalysis["averageWristUpDownRotation"])) wrist twisting")
+                Text("\(String(describing: workoutAnalysis["overallWorkoutUpDownAverage"])) wrist twisting")
+                Text("\(String(describing: workoutAnalysis["overallDumbbellTwistingUpDown"])) wrist twisting")
+                Text("\(String(describing: workoutAnalysis["overallDumbbellTwistingLeftRight"])) wrist twisting")
+                Text("\(String(describing: workoutAnalysis["averageElbowSwing"])) wrist twisting")
+                Text("\(String(describing: workoutAnalysis["averageElbowFlareUpDown"])) wrist twisting")
+                Text("\(String(describing: workoutAnalysis["averageElbowFlareForwardBackward"])) wrist twisting")
+                Text("\(String(describing: workoutAnalysis["overallWorkoutElbowSwing"])) wrist twisting")
+                Text("\(String(describing: workoutAnalysis["overallWorkoutElbowFlareUpDown"])) wrist twisting")
+                Text("\(String(describing: workoutAnalysis["overallWorkoutElbowFlareForwardBackward"])) wrist twisting")
+                
             }
         }
     }
@@ -57,13 +72,14 @@ struct WorkoutFeedback: View {
     @State private var sets: Int = 0
     @Binding var showGraphPopover: Bool
     @Binding var feedbackDataForSets: [(String, String, String, String)]
+    @Binding var workoutAnalysis: [String: Double]
 
     var body: some View {
         ScrollView {
             VStack {
                 SwiftUI.Form {
                     ForEach(feedbackDataForSets.indices, id: \.self) { index in
-                               PostWorkoutData(viewModel: viewModel, setIndex: index + 1, feedback: feedbackDataForSets[index])
+                        PostWorkoutData(viewModel: viewModel, setIndex: index + 1, feedback: feedbackDataForSets[index],workoutAnalysis: workoutAnalysis)
                            }
                 }
                 .frame(height: 600)
@@ -80,12 +96,3 @@ struct WorkoutFeedback: View {
         }
     }
 }
-
-
-
-
-
-//#Preview {
-//    //    WorkoutFeedback(viewModel: WorkoutViewModel(), feedback: ("","","",""), showGraphPopover: $showGraphPopover)
-//    //}
-//}

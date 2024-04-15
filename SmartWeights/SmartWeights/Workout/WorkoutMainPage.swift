@@ -9,6 +9,7 @@ struct WorkoutMainPage: View {
     @StateObject var storeModel = storeViewModel()
     @ObservedObject var workoutPageViewModel = WorkoutPageViewModel()
     
+    
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
     @State private var isExpanded = false
@@ -21,7 +22,11 @@ struct WorkoutMainPage: View {
     var feedback: (String,String,String,String) {
         formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
     }
+    var updateWorkoutAnalysis:(){
+        formCriteria.UpdateWorkoutAnalysis(totalSets: Int(viewModel.inputtedSets) ?? 1, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+    }
     @State var feedbackDataForSets: [(String, String, String, String)] = []
+    @State var workoutAnalysis: [String:Double] = [:]
     //TODO: IMPLEMENT THE DANGEROUS ASPECT
     var dangerousCalled = false
     var dangerous: Bool {
@@ -45,7 +50,7 @@ struct WorkoutMainPage: View {
                 if selectedTab == 0 {
                     StartWorkoutView
                 } else if selectedTab == 1 {
-                    WorkoutFeedback(viewModel: viewModel, showGraphPopover: $showGraphPopover, feedbackDataForSets: $feedbackDataForSets)
+                    WorkoutFeedback(viewModel: viewModel, showGraphPopover: $showGraphPopover, feedbackDataForSets: $feedbackDataForSets,workoutAnalysis: $workoutAnalysis)
                 }
             }
             .popover(isPresented: $showGraphPopover) {
@@ -117,6 +122,9 @@ struct WorkoutMainPage: View {
                         if newValue {
                             // Add the current feedback data when showGraphPopover is true
                             self.feedbackDataForSets.append(feedback)
+                            //TODO: Figure out why it is breaking here
+                            updateWorkoutAnalysis
+                            self.workoutAnalysis = formCriteria.workoutAnalysis
                         }
                     }
     }
