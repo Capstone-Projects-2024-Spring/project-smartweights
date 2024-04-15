@@ -25,6 +25,7 @@ struct NavigationCarousel: View {
         VStack (alignment: .leading) {
             Text("App Features")
                 .font(.title3)
+                .foregroundStyle(textColor)
                 .padding(.top)
                 .padding(.horizontal)
             ScrollView (.horizontal, showsIndicators: false) {
