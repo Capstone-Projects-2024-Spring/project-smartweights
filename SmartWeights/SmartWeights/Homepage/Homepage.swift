@@ -34,10 +34,10 @@ struct Homepage: View {
                 // Start Workout Button
                 StartWorkoutButton(tabBar: tabBar)
                 
-                // Define buttons for the additional pages carousel (NavigationCarousel)
+                // Buttons for the additional pages carousel (NavigationCarousel)
                 let postWorkout = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(PostWorkout()))
                 
-                // Place defined buttons in array to be used by the NavigationCarousel view
+                // Array of defined buttons to be used by the NavigationCarousel view
                 let buttons = [postWorkout]
                 
                 // Additional Pages Carousel
