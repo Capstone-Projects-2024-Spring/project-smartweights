@@ -19,6 +19,7 @@ class WorkoutPageViewModel: ObservableObject{
     var pet: PetModel?
     // Initializer
     init(){
+        fetchPet()
         updateXP()
     }
 
@@ -45,6 +46,35 @@ class WorkoutPageViewModel: ObservableObject{
             }
         }
         return userTotalXP = userTotalXP + value
+    }
+    func lowerHP() {
+        // Lower pet's HP by 5
+        print("I'm being called right now")
+        guard let currentPet = self.pet else {
+            print("No pet available to update health.")
+            return
+        }
+        print("Current HP: \(currentPet.health)")
+        let newHealth = max(currentPet.health - 5, 0) // Ensuring health doesn't go below 0
+        petDBManager.updatePetHealth(newHealth: newHealth) { [weak self] error in
+            if let error = error {
+                print("Error updating pet's health: \(error.localizedDescription)")
+            } else {
+                self?.pet?.health = newHealth
+                print("Pet's new HP: \(newHealth)")
+            }
+        }
+    }
+    private func fetchPet() {
+        petDBManager.fetchPet { [weak self] pet, error in
+            if let pet = pet {
+                DispatchQueue.main.async {
+                    self?.pet = pet
+                }
+            } else if let error = error {
+                print("Error fetching pet: \(error.localizedDescription)")
+            }
+        }
     }
     
 }
