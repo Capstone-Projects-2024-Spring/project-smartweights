@@ -81,7 +81,21 @@ class WorkoutViewModel: ObservableObject {
         guard !input.isEmpty, let _ = Int(input) else { return false }
         return true
     }
+    
+    
+    private func stringToInt(_ string: String) -> Int? {
+        return Int(string)
+    }
 
+    
+    enum WorkoutState {
+        case idle
+        case started
+        case paused
+        case finished
+        case final
+    }
+    
     
     func startListening() {
         guard !isListening else { return }
@@ -108,6 +122,9 @@ class WorkoutViewModel: ObservableObject {
             try audioEngine.start()
             print("Audio engine started")
             
+            
+            var WorkoutState = WorkoutState.idle
+            
             let recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] (result, error) in
                 guard let self = self else { return }
                 
@@ -122,32 +139,45 @@ class WorkoutViewModel: ObservableObject {
                     if let lastCommand = commands.last {
                         switch lastCommand {
                         case "finish":
-                            self.finishworkout()
-                            print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
-                            // Cancel the recognition task before stopping the audio engine
-                            //                        self.recognitionTask?.cancel()
-                            self.recognitionTask = nil
-                            
-                            // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            self.audioEngine.stop()
-                            inputNode.removeTap(onBus: 0)
-                            recognitionRequest.endAudio()
-                            print("Stopped listening")
-                            self.isListening = false
-                            // }
-                            return
+                            if WorkoutState == .final{
+                                self.finishworkout()
+                                print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
+                                // Cancel the recognition task before stopping the audio engine
+                                //                        self.recognitionTask?.cancel()
+                                self.recognitionTask = nil
+                                
+                                // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                self.audioEngine.stop()
+                                inputNode.removeTap(onBus: 0)
+                                recognitionRequest.endAudio()
+                                print("Stopped listening")
+                                self.isListening = false
+                                // }
+                                return
+                            }
                         case "start":
-                            self.startWorkout()
-                            print("Workout started")
+                            if WorkoutState == .idle{
+                                self.startWorkout()
+                                WorkoutState = .started
+                                print("Workout started")
+                            }
+                            
                         case "pause":
-                            self.finishset()
-                            print("Workout paused")
+                            if WorkoutState == .started {
+                                self.finishset()
+                                WorkoutState = .paused
+                                print("Workout paused")
+                            }
                         case "next":
-                            self.nextset()
-                            print("Next Set coming up")
-                        case "final":
-                            self.finalset()
-                            print("This is your final set")
+                            if WorkoutState == .paused {
+                                if let sets = stringToInt(inputtedSets), self.currentSets == sets - 1 {
+                                    self.finalset()
+                                    WorkoutState = .final
+                                } else {
+                                    self.nextset()
+                                    WorkoutState = .started
+                                }
+                            }
                         default:
                             break
                         }
@@ -224,7 +254,7 @@ class WorkoutViewModel: ObservableObject {
         ble.collectDataToggle = true
         currentMotivationalPhrase = "Last Set! Push through!"
     }
-
+    
     
     /// Function to reset progress
     func resetProgress() {
