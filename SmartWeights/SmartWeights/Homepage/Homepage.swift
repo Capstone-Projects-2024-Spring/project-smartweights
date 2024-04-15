@@ -33,33 +33,7 @@ struct Homepage: View {
                 }
                 
                 // Start Workout Button
-                Button { tabBar.changeTab(to: .workout) }
-                label: {
-                    ZStack {
-                        HStack {
-                            VStack (alignment: .leading) {
-                                HStack {
-                                    Text("Start Workout")
-                                        .font(.title2)
-                                    Image(systemName: "arrow.right")
-                                        .foregroundStyle(Color.africanViolet)
-                                }
-                                Text(currentWorkout)
-                                    .foregroundStyle(Color.lightGray)
-                                    .font(.subheadline)
-                            }
-                            .padding()
-                            Spacer()
-                            Image(systemName: "photo")
-                                .foregroundStyle(Color.lightGray)
-                                .padding()
-                        }
-                        .foregroundStyle(.white)
-                    }
-                    .background(Color.darkGray)
-                    .cornerRadius(12)
-                    .padding()
-                }
+                StartWorkoutButton(tabBar: tabBar)
                 
                 // Navigation Carousel
                 VStack (alignment: .leading) {
