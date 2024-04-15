@@ -35,52 +35,11 @@ struct Homepage: View {
                 StartWorkoutButton(tabBar: tabBar)
                 
                 // Navigation Carousel
-                VStack (alignment: .leading) {
-                    Text("App Features")
-                        .font(.title3)
-                        .padding(.top)
-                        .padding(.horizontal)
-                    ScrollView (.horizontal, showsIndicators: false) {
-                        HStack {
-                            let count = 1...6
-                            ForEach(count, id: \.self) { number in
-                                if number == 1 {
-                                    NavigationLink(destination: PostWorkout()) {
-                                        VStack {
-                                            Image(systemName: "chart.line.uptrend.xyaxis")
-                                                .foregroundStyle(Color.africanViolet
-                                                )
-                                                .background(Circle()
-                                                    .frame(width: 60, height: 60)
-                                                    .foregroundStyle(Color.darkGray)
-                                                )
-                                                .padding()
-                                            Text("Progress")
-                                                .foregroundStyle(Color.lightGray)
-                                                .font(.subheadline)
-                                        }
-                                        .padding()
-                                    }
-                                } else {
-                                    VStack {
-                                        Image(systemName: "photo")
-                                            .foregroundStyle(Color.lightGray)
-                                            .background(Circle()
-                                                .frame(width: 60, height: 60)
-                                                .foregroundStyle(Color.darkGray)
-                                            )
-                                            .padding()
-                                        Text("Page \(number)")
-                                            .foregroundStyle(Color.lightGray)
-                                            .font(.subheadline)
-                                    }
-                                    .padding()
-                                }
-                            }
-                        }
-                    }
-                }
-                .foregroundStyle(.white)
+                let postWorkout = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(PostWorkout()))
+                
+                let buttons = [postWorkout]
+                
+                NavigationCarousel(buttons: buttons, iconColor: Color.africanViolet, bgColor: .black, textColor: .black)
                 
                 // Video Carousel
                 VStack {
