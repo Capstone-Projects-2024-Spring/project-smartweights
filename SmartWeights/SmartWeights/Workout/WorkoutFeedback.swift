@@ -64,14 +64,14 @@ struct WorkoutFeedback: View {
     @State private var sets: Int = 0
     @Binding var showGraphPopover: Bool
     @Binding var feedbackDataForSets: [(String, String, String, String)]
-    @Binding var workoutAnalysis: [String: Double]
+    @Binding var workoutAnalysisForSets: [[String: Double]]
 
     var body: some View {
         ScrollView {
             VStack {
                 SwiftUI.Form {
                     ForEach(feedbackDataForSets.indices, id: \.self) { index in
-                        PostWorkoutData(viewModel: viewModel, setIndex: index + 1, feedback: feedbackDataForSets[index],workoutAnalysis: workoutAnalysis)
+                        PostWorkoutData(viewModel: viewModel, setIndex: index + 1, feedback: feedbackDataForSets[index],workoutAnalysis: workoutAnalysisForSets[index])
                            }
                 }
                 .frame(height: 600)

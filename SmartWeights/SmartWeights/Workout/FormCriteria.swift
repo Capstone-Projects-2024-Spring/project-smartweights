@@ -61,21 +61,22 @@ class FormCriteria: ObservableObject{
     ]
     
     
-    func UpdateWorkoutAnalysis(totalSets:Int,dumbbellArray: [[Int]],elbowArray: [[Int]]){
-        
-        self.workoutAnalysis["averageUpDownAcceleration"] = averageUpDownAcceleration(array: dumbbellArray)
-        self.workoutAnalysis["averageWristLeftRightRotation"] = averageWristLeftRightRotation(array: dumbbellArray)
-        self.workoutAnalysis["averageWristUpDownRotation"] = averageWristUpDownRotation(array: dumbbellArray)
-        self.workoutAnalysis["overallWorkoutUpDownAverage"] = overallWorkoutUpDownAverage(totalSets: totalSets)
-        self.workoutAnalysis["overallDumbbellTwistingUpDown"] = overallDumbbellTwisting(totalSets: totalSets).0
-        self.workoutAnalysis["overallDumbbellTwistingLeftRight"] = overallDumbbellTwisting(totalSets: totalSets).1
-        self.workoutAnalysis["averageElbowSwing"] = averageElbowSwing(array: elbowArray)
-        self.workoutAnalysis["averageElbowFlareUpDown"] = averageElbowFlareUpDown(array: elbowArray)
-        self.workoutAnalysis["averageElbowFlareForwardBackward"] = averageElbowFlareFowardBackward(array: elbowArray)
-        self.workoutAnalysis["overallWorkoutElbowSwing"] = overallWorkoutElbowSwing(totalSets: totalSets)
-        self.workoutAnalysis["overallWorkoutElbowFlareUpDown"] = overallWorkoutElbowFlare(totalSets: totalSets).0
-        self.workoutAnalysis["overallWorkoutElbowFlareForwardBackward"] = overallWorkoutElbowFlare(totalSets: totalSets).1
-        
+    func UpdateWorkoutAnalysis(totalSets:Int,dumbbellArray: [[Int]],elbowArray: [[Int]]) -> [String:Double]{
+        var workoutAnalysis: [String:Double] = [:]
+        workoutAnalysis["averageUpDownAcceleration"] = averageUpDownAcceleration(array: dumbbellArray) * 100
+        workoutAnalysis["averageWristLeftRightRotation"] = averageWristLeftRightRotation(array: dumbbellArray) * 100
+        workoutAnalysis["averageWristUpDownRotation"] = averageWristUpDownRotation(array: dumbbellArray) * 100
+        workoutAnalysis["overallWorkoutUpDownAverage"] = overallWorkoutUpDownAverage(totalSets: totalSets) * 100
+        workoutAnalysis["overallDumbbellTwistingUpDown"] = overallDumbbellTwisting(totalSets: totalSets).0 * 100
+        workoutAnalysis["overallDumbbellTwistingLeftRight"] = overallDumbbellTwisting(totalSets: totalSets).1 * 100
+        workoutAnalysis["averageElbowSwing"] = averageElbowSwing(array: elbowArray) * 100
+        workoutAnalysis["averageElbowFlareUpDown"] = averageElbowFlareUpDown(array: elbowArray) * 100
+        workoutAnalysis["averageElbowFlareForwardBackward"] = averageElbowFlareFowardBackward(array: elbowArray) * 100
+        workoutAnalysis["overallWorkoutElbowSwing"] = overallWorkoutElbowSwing(totalSets: totalSets) * 100
+        workoutAnalysis["overallWorkoutElbowFlareUpDown"] = overallWorkoutElbowFlare(totalSets: totalSets).0 * 100
+        workoutAnalysis["overallWorkoutElbowFlareForwardBackward"] = overallWorkoutElbowFlare(totalSets: totalSets).1 * 100
+        print("hello world i am calling the Update Function")
+        return workoutAnalysis
     }
     
     
