@@ -41,16 +41,18 @@ struct PostWorkoutData: View {
             }
             Text("\(feedback.0)") //gives overall acceleration
                 .font(.subheadline)
+                .foregroundColor(workoutAnalysis["averageUpDownAcceleration"]! < 70.0 ? Color.red : Color.green)
             Text("\(feedback.1)") //gives overall elbow stability
                 .font(.subheadline)
+                .foregroundColor(workoutAnalysis["averageElbowSwing"]! < 70.0 ? Color.red : Color.green)
         }
         
         if isExpanded {
             VStack(alignment: .leading){
-                Text("\(Int(workoutAnalysis["averageWristLeftRightRotation"] ?? 0.0 * 100))% wrist stability (left right)")
-                Text("\(Int(workoutAnalysis["averageWristUpDownRotation"] ?? 0.0 * 100))% wrist wrist stability (up down)")
-                Text("\(Int(workoutAnalysis["averageElbowFlareUpDown"] ?? 0.0 * 100))% elbow stability(up down)")
-                Text("\(Int(workoutAnalysis["averageElbowFlareForwardBackward"] ?? 0.0 * 100))% elbow (foward backward)")
+                Text("\(Int(workoutAnalysis["averageWristLeftRightRotation"] ?? 0.0))% wrist stability (left right)")
+                Text("\(Int(workoutAnalysis["averageWristUpDownRotation"] ?? 0.0))% wrist wrist stability (up down)")
+                Text("\(Int(workoutAnalysis["averageElbowFlareUpDown"] ?? 0.0))% elbow stability(up down)")
+                Text("\(Int(workoutAnalysis["averageElbowFlareForwardBackward"] ?? 0.0))% elbow (foward backward)")
             }
         }
     }
