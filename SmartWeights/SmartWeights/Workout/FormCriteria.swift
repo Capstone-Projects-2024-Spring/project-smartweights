@@ -36,7 +36,13 @@ class FormCriteria: ObservableObject{
     
     func resetListofData(){
         listOfDumbbellAverage.removeAll()
-        listOfDumbbellAverage.removeAll()
+        listOfWristUpDownAverage.removeAll()
+        listOfWristLeftRightAverage.removeAll()
+        listOfElbowSwingAverage.removeAll()
+        listOfElbowFlareUpDownAverage.removeAll()
+        listOfElbowFlareForwardBackAverage.removeAll()
+        print("I am clearing the data for the next workout")
+        
         
     }
     
@@ -63,19 +69,18 @@ class FormCriteria: ObservableObject{
     
     func UpdateWorkoutAnalysis(totalSets:Int,dumbbellArray: [[Int]],elbowArray: [[Int]]) -> [String:Double]{
         var workoutAnalysis: [String:Double] = [:]
-        workoutAnalysis["averageUpDownAcceleration"] = averageUpDownAcceleration(array: dumbbellArray) * 100
+        workoutAnalysis["averageUpDownAcceleration"] = averageUpDownAcceleration(array: dumbbellArray, append: true) * 100
         workoutAnalysis["averageWristLeftRightRotation"] = averageWristLeftRightRotation(array: dumbbellArray) * 100
         workoutAnalysis["averageWristUpDownRotation"] = averageWristUpDownRotation(array: dumbbellArray) * 100
         workoutAnalysis["overallWorkoutUpDownAverage"] = overallWorkoutUpDownAverage(totalSets: totalSets) * 100
         workoutAnalysis["overallDumbbellTwistingUpDown"] = overallDumbbellTwisting(totalSets: totalSets).0 * 100
         workoutAnalysis["overallDumbbellTwistingLeftRight"] = overallDumbbellTwisting(totalSets: totalSets).1 * 100
-        workoutAnalysis["averageElbowSwing"] = averageElbowSwing(array: elbowArray) * 100
+        workoutAnalysis["averageElbowSwing"] = averageElbowSwing(array: elbowArray, append: true) * 100
         workoutAnalysis["averageElbowFlareUpDown"] = averageElbowFlareUpDown(array: elbowArray) * 100
         workoutAnalysis["averageElbowFlareForwardBackward"] = averageElbowFlareFowardBackward(array: elbowArray) * 100
         workoutAnalysis["overallWorkoutElbowSwing"] = overallWorkoutElbowSwing(totalSets: totalSets) * 100
         workoutAnalysis["overallWorkoutElbowFlareUpDown"] = overallWorkoutElbowFlare(totalSets: totalSets).0 * 100
         workoutAnalysis["overallWorkoutElbowFlareForwardBackward"] = overallWorkoutElbowFlare(totalSets: totalSets).1 * 100
-        print("hello world i am calling the Update Function")
         return workoutAnalysis
     }
     
@@ -86,7 +91,7 @@ class FormCriteria: ObservableObject{
     //---------------------DUMBBELL-------------------//
     
     //read the Z axis rotation and gives an average of the up and down for that set
-    func averageUpDownAcceleration(array: [[Int]]) -> Double {
+    func averageUpDownAcceleration(array: [[Int]],append: Bool) -> Double {
         /*
         good acceleration for going up and down -180°/s, 180°/s
         bad - less than -180 or greater than 180
@@ -111,9 +116,12 @@ class FormCriteria: ObservableObject{
 
         if count != 0 {
             percentage = Double(good) / Double(count)
+           
+        }
+        if append == true{
             self.listOfDumbbellAverage.append(percentage)
         }
-
+        print("list of dumbbell average", listOfDumbbellAverage)
         return percentage
     }
     
@@ -141,8 +149,9 @@ class FormCriteria: ObservableObject{
 
         if count != 0 {
             percentage = Double(good) / Double(count)
-            self.listOfWristLeftRightAverage.append(percentage)
+            
         }
+        self.listOfWristLeftRightAverage.append(percentage)
 
         return percentage
     }
@@ -170,9 +179,10 @@ class FormCriteria: ObservableObject{
 
         if count != 0 {
             percentage = Double(good) / Double(count)
-            self.listOfWristUpDownAverage.append(percentage)
+           
         }
-
+        self.listOfWristUpDownAverage.append(percentage)
+        print(good,count)
         return percentage
     }
         
@@ -190,8 +200,9 @@ class FormCriteria: ObservableObject{
         self.listOfDumbbellAverage.forEach { (data) in
             sum += data
         }
+        let percentage = sum/Double(totalSets)
 
-        return sum / Double(totalSets)
+        return percentage
     }
         
     
@@ -214,7 +225,7 @@ class FormCriteria: ObservableObject{
 
         let averageUpDown = sumUpDown / Double(totalSets)
         let averageLeftRight = sumLeftRight / Double(totalSets)
-
+        
         return (averageUpDown, averageLeftRight)
     }
     
@@ -222,7 +233,7 @@ class FormCriteria: ObservableObject{
     
     //measures if the eblow is swinging back and forth too much
     //use MPU6050-2
-    func averageElbowSwing(array: [[Int]]) -> Double {
+    func averageElbowSwing(array: [[Int]], append: Bool) -> Double {
         var count = 0 //total data collected
         var good = 0 //data in range of good form
         var percentage: Double = 1 //return
@@ -247,6 +258,9 @@ class FormCriteria: ObservableObject{
 
         if count != 0 {
             percentage = Double(good) / Double(count)
+            
+        }
+        if append == true{
             self.listOfElbowSwingAverage.append(percentage)
         }
         return percentage
@@ -275,7 +289,7 @@ class FormCriteria: ObservableObject{
         if count != 0 {
             percentage = Double(good) / Double(count)
         }
-
+        self.listOfElbowFlareUpDownAverage.append(percentage)
         return percentage
     }
     
@@ -303,7 +317,7 @@ class FormCriteria: ObservableObject{
         if count != 0 {
             percentage = Double(good) / Double(count)
         }
-
+        self.listOfElbowFlareForwardBackAverage.append(percentage)
         return percentage
     }
     
@@ -322,7 +336,9 @@ class FormCriteria: ObservableObject{
             sum += data
         }
 
-        return sum / Double(totalSets)
+        let percentage = sum/Double(totalSets)
+        
+        return percentage
     }
     
     
@@ -345,6 +361,7 @@ class FormCriteria: ObservableObject{
 
         let averageUpDown = sumUpDown / Double(totalSets)
         let averageForwardBackward = sumForwardBackward / Double(totalSets)
+        
 
         return (averageUpDown, averageForwardBackward)
     }
@@ -454,13 +471,13 @@ class FormCriteria: ObservableObject{
     //returns a tuple of strings for the specific feedback
     func giveFeedback(dumbbellArray: [[Int]],elbowArray: [[Int]] ) -> (String,String,String,String){
     
-        let averageAcceleration = self.averageUpDownAcceleration(array: dumbbellArray)
-        let averageElbowSwing = self.averageElbowSwing(array: elbowArray)
+        let averageAcceleration = self.averageUpDownAcceleration(array: dumbbellArray, append: false)
+        let averageElbowSwing = self.averageElbowSwing(array: elbowArray, append: false)
         
         
 
-        let overallAccel = String(format: "Overall curl form: %.f%% good", averageAcceleration * 100)
-        let overallElbowSwing = String(format: "Overall elbow stability: %.f%% good", averageElbowSwing * 100)
+        let overallAccel = String(format: "Curl acceleration: %.f%% good", averageAcceleration * 100)
+        let overallElbowSwing = String(format: "Elbow stability: %.f%% good", averageElbowSwing * 100)
         var dumbbellCustomTextFeedback = ""
         var elbowCustomTextFeedback = ""
         

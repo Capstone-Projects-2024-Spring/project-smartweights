@@ -67,12 +67,15 @@ struct OverallWorkoutData: View{
             .font(.headline)
         if workoutAnalysisForSets.count == totalSets{
             if let last = workoutAnalysisForSets.last {
-                VStack {
+                VStack{
                     
-                    Text("Overall \(Int(last["averageWristLeftRightRotation"] ?? 0.0 * 100))% wrist stability (left right)")
-                    Text("Overall \(Int(last["averageWristUpDownRotation"] ?? 0.0 * 100))% wrist wrist stability (up down)")
-                    Text("Overall \(Int(last["averageElbowFlareUpDown"] ?? 0.0 * 100))% elbow stability(up down)")
-                    Text("OVerall \(Int(last["averageElbowFlareForwardBackward"] ?? 0.0 * 100))% elbow (foward backward)")
+                    Text("\(Int(last["overallWorkoutUpDownAverage"] ?? 0.0 * 100))% good curl acceleration (left right)")
+                    Text("\(Int(last["overallDumbbellTwistingLeftRight"] ?? 0.0 * 100))% wrist stability (left right)")
+                    Text("\(Int(last["overallDumbbellTwistingUpDown"] ?? 0.0 * 100))% wrist stability (up down)")
+                    
+                    Text("\(Int(last["overallWorkoutElbowSwing"] ?? 0.0 * 100))% elbow stability (swinging)")
+                    Text("\(Int(last["overallWorkoutElbowFlareUpDown"] ?? 0.0 * 100))% elbow stability (up down)")
+                    Text("\(Int(last["overallWorkoutElbowFlareForwardBackward"] ?? 0.0 * 100))% elbow stability (foward backward)")
                 }
             }
             

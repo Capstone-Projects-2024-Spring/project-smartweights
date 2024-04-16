@@ -22,7 +22,7 @@ struct WorkoutMainPage: View {
             if showGraphPopover {
                 self.feedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
                 self.feedbackDataForSets.append(feedback)
-                self.workoutAnalysis = formCriteria.UpdateWorkoutAnalysis( totalSets: totalSets, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+                self.workoutAnalysis = formCriteria.UpdateWorkoutAnalysis(totalSets: totalSets, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
                 print(self.workoutAnalysis)
                 self.workoutAnalysisForSets.append(self.workoutAnalysis)
             }
@@ -337,7 +337,7 @@ struct WorkoutMainPage: View {
             }
             .accessibilityLabel(hasWorkoutStarted ? (isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
             .sheet(isPresented: $showingWorkoutSheet) {
-                WorkoutDetailsInputView(viewModel: viewModel, ble: ble, hasWorkoutStarted: $hasWorkoutStarted, showingWorkoutSheet: $showingWorkoutSheet,feedbackDataForSets: $feedbackDataForSets, workoutAnalysisForSets: $workoutAnalysisForSets)
+                WorkoutDetailsInputView(viewModel: viewModel, ble: ble,form: formCriteria, hasWorkoutStarted: $hasWorkoutStarted, showingWorkoutSheet: $showingWorkoutSheet,feedbackDataForSets: $feedbackDataForSets, workoutAnalysisForSets: $workoutAnalysisForSets)
             }
             
             
@@ -383,6 +383,7 @@ struct WorkoutMainPage: View {
         
         @ObservedObject var viewModel: WorkoutViewModel
         @ObservedObject var ble: BLEcentral
+        @ObservedObject var form: FormCriteria
         @Binding var hasWorkoutStarted: Bool
         @Binding var showingWorkoutSheet: Bool
         @State private var showingAlert = false
@@ -450,6 +451,9 @@ struct WorkoutMainPage: View {
                                 // Initiate countdown
                                 countdownActive = true
                                 feedbackDataForSets.removeAll()
+                                workoutAnalysisForSets.removeAll()
+                                form.resetListofData()
+                                
                                 
                                
                                 
