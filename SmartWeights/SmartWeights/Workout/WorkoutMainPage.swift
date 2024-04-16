@@ -272,16 +272,16 @@ struct WorkoutMainPage: View {
                         totalSets = Int(viewModel.inputtedSets) ?? 0
 
                         // Get feedback from formCriteria
-                        let currentFeedback = formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+                        let currentFeedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
                         
                         // Check if feedback indicates poor form
-                        if currentFeedback.3 == "whoa slow down!!" {
+                        if currentFeedback.2 == "Whoa slow down!!" {
                             // Call function to reduce HP
                             workoutPageViewModel.lowerHP()
                         }
                         
                         print("hello test")
-                        print(currentFeedback.3)
+                        print(currentFeedback.2)
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
                         storeModel.addFundtoUser(price: 50)
@@ -321,16 +321,16 @@ struct WorkoutMainPage: View {
                             
                         }
                         // Get feedback from formCriteria
-                        let currentFeedback = formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+                        let currentFeedback = formCriteria.giveFeedback(dumbbellArray:ble.MPU6050_1Gyros , elbowArray:ble.MPU6050_2Gyros)
                         
                         // Check if feedback indicates poor form
-                        if currentFeedback.3 == "whoa slow down!" {
+                        if currentFeedback.2 == "Whoa slow down!!" {
                             // Call function to reduce HP
                             workoutPageViewModel.lowerHP()
                         }
                         
                         print("hello test")
-                        print(currentFeedback.3)
+                        print(currentFeedback.2)
                     } else {
                         // Resume workout from a paused state
                         viewModel.resumeTimer()
