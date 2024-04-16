@@ -7,48 +7,6 @@
 
 import SwiftUI
 
-struct Accessory: Identifiable {
-    var id = UUID()
-    var name: String
-    var imageName: String
-}
-
-struct BackgroundImage: Identifiable {
-    var id = UUID()
-    var name: String
-    var imageName: String
-}
-
-struct Pet_selection: Identifiable {
-    var id = UUID()
-    var name: String
-    var imageName: String
-}
-
-class CustomizeViewModel: ObservableObject {
-    @Published var equippedAccessory: Accessory?
-    @Published var equippedBackgroundImage: BackgroundImage?
-    @Published var equippedPet: Pet_selection? = Pet_selection(name: "Dog", imageName: "Dog") // Default pet
-    @Published var backgroundColor: Color = .white // Default background color
-    
-    // Data arrays
-    let accessories: [Accessory] = [
-        Accessory(name: "Chain", imageName: "chain"),
-        Accessory(name: "Glasses", imageName: "glasses"),
-        Accessory(name: "Jet Pack", imageName: "jetpack"),
-    ]
-    
-    let backgroundImages: [BackgroundImage] = [
-        BackgroundImage(name: "Bamboo", imageName: "Bamboo"),
-        BackgroundImage(name: "Festive", imageName: "Festive"),
-        BackgroundImage(name: "Royal", imageName: "Royal"),
-    ]
-    
-    let pets: [Pet_selection] = [
-        Pet_selection(name: "Dog", imageName: "Dog"),
-        Pet_selection(name: "Cat", imageName: "Cat"),
-    ]
-}
 
 struct Customize_page: View {
     @Environment(\.presentationMode) var presentationMode
@@ -106,75 +64,84 @@ struct Customize_page: View {
                 
                 // Grid layout for accessory for the inventory
                 TabView {
-                    ScrollView {
-                        LazyVGrid(columns: gridLayout, spacing: 20) {
-                            ForEach(viewModel.accessories) { accessory in
-                                VStack {
-                                    Image(accessory.imageName)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .onTapGesture {
-                                            viewModel.equippedAccessory = accessory
-                                        }
-                                    Text(accessory.name)
-                                        .bold()
+                    // Check if data is loaded, if it is show the grid layout
+                    if viewModel.isDataLoaded {
+                        // Grid layout for accessories
+                        ScrollView {
+                            LazyVGrid(columns: gridLayout, spacing: 20) {
+                                ForEach(viewModel.accessories) { accessory in
+                                    VStack {
+                                        Image(accessory.imageName)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .onTapGesture {
+                                                viewModel.equippedAccessory = accessory
+                                            }
+                                        Text(accessory.name)
+                                            .bold()
+                                    }
+                                    .background(Color.gray.opacity(0.5).cornerRadius(15))
+                                    
                                 }
-                                .background(Color.gray.opacity(0.5).cornerRadius(15))
-                                
-                            }
-                            placeholders(for: viewModel.accessories.count)
+                                placeholders(for: viewModel.accessories.count)
 
-                        }
-                    }
-                    .tabItem {
-                        Label("Accessories", systemImage: "bag.fill")
-                    }
-                    
-                    // Grid layout for background image
-                    ScrollView {
-                        LazyVGrid(columns: gridLayout, spacing: 20) {
-                            ForEach(viewModel.backgroundImages) { bgImage in
-                                VStack {
-                                    Image(bgImage.imageName)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .onTapGesture {
-                                            viewModel.equippedBackgroundImage = bgImage
-                                        }
-                                    Text(bgImage.name)
-                                        .bold()
-                                }
-                                .background(Color.gray.opacity(0.5).cornerRadius(15))
                             }
-                            placeholders(for: viewModel.backgroundImages.count)
+                        }
+                        .tabItem {
+                            Label("Accessories", systemImage: "bag.fill")
+                        }
+                        
+                        // Grid layout for background image
+                        ScrollView {
+                            LazyVGrid(columns: gridLayout, spacing: 20) {
+                                ForEach(viewModel.backgroundImages) { bgImage in
+                                    VStack {
+                                        Image(bgImage.imageName)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .onTapGesture {
+                                                viewModel.equippedBackgroundImage = bgImage
+                                            }
+                                        Text(bgImage.name)
+                                            .bold()
+                                    }
+                                    .background(Color.gray.opacity(0.5).cornerRadius(15))
+                                }
+                                placeholders(for: viewModel.backgroundImages.count)
 
-                        }
-                    }
-                    .tabItem {
-                        Label("Backgrounds", systemImage: "photo")
-                    }
-                    
-                    // Grid layout for the pet
-                    ScrollView {
-                        LazyVGrid(columns: gridLayout, spacing: 20) {
-                            ForEach(viewModel.pets) { pet in
-                                VStack {
-                                    Image(pet.imageName)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .onTapGesture {
-                                            viewModel.equippedPet = pet
-                                        }
-                                    Text(pet.name)
-                                        .bold()
-                                }
-                                .background(Color.gray.opacity(0.5).cornerRadius(15))
                             }
-                            placeholders(for: viewModel.pets.count)
                         }
-                    }
-                    .tabItem {
-                        Label("Pets", systemImage: "hare")
+                        .tabItem {
+                            Label("Backgrounds", systemImage: "photo")
+                        }
+                        
+                        // Grid layout for the pet
+                        ScrollView {
+                            LazyVGrid(columns: gridLayout, spacing: 20) {
+                                ForEach(viewModel.pets) { pet in
+                                    VStack {
+                                        Image(pet.imageName)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .onTapGesture {
+                                                viewModel.equippedPet = pet
+                                            }
+                                        Text(pet.name)
+                                            .bold()
+                                    }
+                                    .background(Color.gray.opacity(0.5).cornerRadius(15))
+                                }
+                                placeholders(for: viewModel.pets.count)
+                            }
+                        }
+                        .id(UUID())
+                        .tabItem {
+                            Label("Pets", systemImage: "hare")
+                        }
+                    } else { // data is not loaded, show loading indicator
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(2)
                     }
                 }
                 .frame(height: 400)
