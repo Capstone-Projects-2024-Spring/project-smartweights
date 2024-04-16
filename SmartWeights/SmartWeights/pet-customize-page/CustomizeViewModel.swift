@@ -30,14 +30,17 @@ struct Pet_selection: Identifiable {
 class CustomizeViewModel: ObservableObject {
     @Published var equippedAccessory: Accessory?
     @Published var equippedBackgroundImage: BackgroundImage?
-    @Published var equippedPet: Pet_selection? = Pet_selection(name: "Dog", imageName: "Dog") // Default pet
+    @Published var equippedPet: Pet_selection?// Default pet
     @Published var backgroundColor: Color = .white // Default background color
-
+    
     var backgroundItemDBManager = BackgroundItemDBManager()
     var clothingItemDBManager = ClothingItemDBManager()
     var petItemDBManager = PetItemDBManager()
     
-    @Published var isDataLoaded = false
+    // @Published var isDataLoaded = false
+    @Published var isPetDataLoaded = false
+    @Published var isBackgroundDataLoaded = false
+    @Published var isAccessoryDataLoaded = false
     
     // Data arrays
     var accessories: [Accessory] = [
@@ -56,9 +59,9 @@ class CustomizeViewModel: ObservableObject {
         // Pet_selection(name: "Dog", imageName: "Dog"),
         // Pet_selection(name: "Cat", imageName: "Cat"),
     ]
-
+    
     init(){
-        backgroundItemDBManager.fetchBackgroundItems { backgroundItems, error in 
+        backgroundItemDBManager.fetchBackgroundItems { backgroundItems, error in
             if let error = error {
                 print("Error fetching background items: \(error.localizedDescription)")
                 return
@@ -66,11 +69,16 @@ class CustomizeViewModel: ObservableObject {
             if let backgroundItems = backgroundItems {
                 DispatchQueue.main.async {
                     self.backgroundImages = backgroundItems.map { item in
-                        BackgroundImage(name: item.imageName, imageName: item.imageName)
+                        let backgroundImage = BackgroundImage(name: item.imageName, imageName: item.imageName)
+                        if item.isActive == 1 {
+                            self.equippedBackgroundImage = backgroundImage
+                        }
+                        return backgroundImage
                     }
+                    self.isBackgroundDataLoaded = true
                 }
             }
-        
+            
         }
         clothingItemDBManager.fetchClothingItems { clothingItems, error in
             if let error = error {
@@ -80,8 +88,13 @@ class CustomizeViewModel: ObservableObject {
             if let clothingItems = clothingItems {
                 DispatchQueue.main.async {
                     self.accessories = clothingItems.map { item in
-                        Accessory(name: item.imageName, imageName: item.imageName)
+                        let accessory = Accessory(name: item.imageName, imageName: item.imageName)
+                        if item.isActive == 1 {
+                            self.equippedAccessory = accessory
+                        }
+                        return accessory
                     }
+                    self.isAccessoryDataLoaded = true
                 }
             }
         }
@@ -93,11 +106,14 @@ class CustomizeViewModel: ObservableObject {
             if let petItems = petItems {
                 DispatchQueue.main.async {
                     self.pets = petItems.map { item in
-                        Pet_selection(name: item.imageName, imageName: item.imageName)
+                        let pet = Pet_selection(name: item.imageName, imageName: item.imageName)
+                        if item.isActive == 1 {
+                            self.equippedPet = pet
+                        }
+                        return pet
                     }
-                    print("self.pets \(self.pets)")
-
-                    self.isDataLoaded = true
+                    self.isPetDataLoaded = true
+                
                 }
             }
         }
@@ -106,6 +122,6 @@ class CustomizeViewModel: ObservableObject {
         // Save the equipped items to the database
         print("Saving customizations...")
     }
-
+    
     
 }

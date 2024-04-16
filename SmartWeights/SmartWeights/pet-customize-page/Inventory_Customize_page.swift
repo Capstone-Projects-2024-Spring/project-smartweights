@@ -76,7 +76,7 @@ struct Customize_page: View {
                 // Grid layout for accessory for the inventory
                 TabView {
                     // Check if data is loaded, if it is show the grid layout
-                    if viewModel.isDataLoaded {
+                    if viewModel.isAccessoryDataLoaded {
                         // Grid layout for accessories
                         ScrollView {
                             LazyVGrid(columns: gridLayout, spacing: 20) {
@@ -97,11 +97,17 @@ struct Customize_page: View {
                                 placeholders(for: viewModel.accessories.count)
 
                             }
-                        }
+                        }.id(UUID())
                         .tabItem {
                             Label("Accessories", systemImage: "bag.fill")
                         }
+                    } else {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(2)
+                    }
                         
+                    if viewModel.isBackgroundDataLoaded {
                         // Grid layout for background image
                         ScrollView {
                             LazyVGrid(columns: gridLayout, spacing: 20) {
@@ -121,11 +127,16 @@ struct Customize_page: View {
                                 placeholders(for: viewModel.backgroundImages.count)
 
                             }
-                        }
+                        }.id(UUID())
                         .tabItem {
                             Label("Backgrounds", systemImage: "photo")
                         }
-                        
+                    } else {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(2)
+                    }
+                    if viewModel.isPetDataLoaded {   
                         // Grid layout for the pet
                         ScrollView {
                             LazyVGrid(columns: gridLayout, spacing: 20) {
@@ -144,16 +155,20 @@ struct Customize_page: View {
                                 }
                                 placeholders(for: viewModel.pets.count)
                             }
-                        }
-                        .id(UUID())
-                        .tabItem {
-                            Label("Pets", systemImage: "hare")
-                        }
-                    } else { // data is not loaded, show loading indicator
+                            
+                        }.id(UUID())
+                            .tabItem {
+                                Label("Pets", systemImage: "hare")
+                            }
+                    } else {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
                             .scaleEffect(2)
                     }
+                        
+                        
+                        
+                    
                 }
                 .frame(height: 400)
             }
