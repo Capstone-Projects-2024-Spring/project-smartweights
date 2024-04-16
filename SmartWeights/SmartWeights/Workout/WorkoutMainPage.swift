@@ -41,7 +41,7 @@ struct WorkoutMainPage: View {
     }
     
     @State private var currentMotivationalPhrase = "Let's get started!"
-
+    
     
     
     var body: some View {
@@ -54,26 +54,26 @@ struct WorkoutMainPage: View {
                         Image(systemName: "dumbbell.fill")
                             .frame(width: 25, height: 25)
                             .foregroundColor(ble.MPU_1_Connected ? .green : .red)
-                            
+                        
                         Text("Dumbbell")
                             .font(.custom("small", size: 12))
-                            
+                        
                     }
                     .padding(.leading,200)
                     VStack{
                         Image(systemName: "figure.arms.open")
                             .frame(width: 25, height: 25)
                             .foregroundColor(ble.MPU_2_Connected ? .green : .red)
-                            
+                        
                         Text("Elbow")
                             .font(.custom("small", size: 12))
                     }
                     .padding(.leading,300)
-                   
-                
+                    
+                    
                 }
                 
-               
+                
                 
                 // Tab selection for workout or feedback
                 workoutTabSelection
@@ -100,18 +100,18 @@ struct WorkoutMainPage: View {
                         .accessibilityLabel("Close") // Accessibility label for better UX
                     }
                     .padding(.top, 10) // Give some space from the top edge
-                
+                    
                     //Text("workout Progress Graph")
                     Text("Feedback")
                         .font(.headline)
                     
-//                    LineGraph(data: graphData) // Use the dynamic data for the line graph
-//                        .stroke(Color.green, lineWidth: 2)
-//                        .frame(height: 200)
-//                        .padding()
+                    //                    LineGraph(data: graphData) // Use the dynamic data for the line graph
+                    //                        .stroke(Color.green, lineWidth: 2)
+                    //                        .frame(height: 200)
+                    //                        .padding()
                     
                     
-                   //---------------------FEEDBACK----------------//
+                    //---------------------FEEDBACK----------------//
                     VStack{
                         HStack {
                             ZStack {
@@ -130,7 +130,7 @@ struct WorkoutMainPage: View {
                         }
                         HStack{
                             
-
+                            
                             Image("Dog")
                                 .resizable()
                                 .scaledToFit()
@@ -211,8 +211,8 @@ struct WorkoutMainPage: View {
             return "Start Workout"
         }
     }
-
-
+    
+    
     
     
     
@@ -261,7 +261,7 @@ struct WorkoutMainPage: View {
                     .scaledToFit()
                     .frame(width: 400, height: 375)
             }
-
+            
             
             
             // Start/Reset workout button
@@ -285,7 +285,7 @@ struct WorkoutMainPage: View {
                         showGraphPopover = true
                         currentMotivationalPhrase = "Let's get started with a New Workout!"
                         
-
+                        
                         
                     } else if buttonText == "Final Set" {
                         // Logic for transitioning from the final set to finishing the workout
@@ -323,7 +323,7 @@ struct WorkoutMainPage: View {
                     viewModel.resumeTimer()
                     showingWorkoutSheet = true
                     showGraphPopover = false
-        
+                    
                 }
             }) {
                 RoundedRectangle(cornerRadius: 25)
@@ -455,7 +455,7 @@ struct WorkoutMainPage: View {
                                 form.resetListofData()
                                 
                                 
-                               
+                                
                                 
                             } else {
                                 alertMessage = "Please enter valid numbers for sets, reps, and lbs."

@@ -17,11 +17,11 @@ struct PostWorkoutData: View {
     let workoutAnalysis: [String:Double]
     
     init(viewModel: WorkoutViewModel, setIndex: Int, feedback: (String, String, String, String),workoutAnalysis: [String:Double]) {
-            self.viewModel = viewModel
-            self.setIndex = setIndex
-            self.feedback = feedback // Initialize feedback
-            self.workoutAnalysis = workoutAnalysis //initialize all workout data
-        }
+        self.viewModel = viewModel
+        self.setIndex = setIndex
+        self.feedback = feedback // Initialize feedback
+        self.workoutAnalysis = workoutAnalysis //initialize all workout data
+    }
     
     var body: some View {
         VStack{
@@ -58,8 +58,8 @@ struct PostWorkoutData: View {
 
 struct OverallWorkoutData: View{
     @Binding var workoutAnalysisForSets: [[String: Double]]
-       @ObservedObject var viewModel: WorkoutViewModel
-       var totalSets: Int
+    @ObservedObject var viewModel: WorkoutViewModel
+    var totalSets: Int
     
     
     var body: some View{
@@ -67,7 +67,7 @@ struct OverallWorkoutData: View{
             .font(.headline)
         if workoutAnalysisForSets.count == totalSets{
             if let last = workoutAnalysisForSets.last {
-                VStack{
+                VStack(alignment: .leading){
                     
                     Text("\(Int(last["overallWorkoutUpDownAverage"] ?? 0.0 * 100))% good curl acceleration (left right)")
                     Text("\(Int(last["overallDumbbellTwistingLeftRight"] ?? 0.0 * 100))% wrist stability (left right)")
@@ -79,10 +79,10 @@ struct OverallWorkoutData: View{
                 }
             }
             
-        
+            
         }
         else{
-            Text("Finish Workout to see overall feedback")
+            Text("Finish workout to see overall feedback")
         }
     }
 }
@@ -103,9 +103,9 @@ struct WorkoutFeedback: View {
                 SwiftUI.Form {
                     ForEach(feedbackDataForSets.indices, id: \.self) { index in
                         PostWorkoutData(viewModel: viewModel, setIndex: index + 1, feedback: feedbackDataForSets[index],workoutAnalysis: workoutAnalysisForSets[index])
-                           }
+                    }
                 }
-                .frame(height: 550)
+                .frame(height: 500)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.gray, lineWidth: 1)
@@ -115,7 +115,7 @@ struct WorkoutFeedback: View {
                 .scrollContentBackground(.hidden)
                 OverallWorkoutData(workoutAnalysisForSets: $workoutAnalysisForSets, viewModel: viewModel, totalSets: totalSets)
                 
-
+                
                 Spacer()
             }
         }

@@ -93,14 +93,14 @@ class FormCriteria: ObservableObject{
     //read the Z axis rotation and gives an average of the up and down for that set
     func averageUpDownAcceleration(array: [[Int]],append: Bool) -> Double {
         /*
-        good acceleration for going up and down -180°/s, 180°/s
-        bad - less than -180 or greater than 180
-        */
+         good acceleration for going up and down -180°/s, 180°/s
+         bad - less than -180 or greater than 180
+         */
         
         var count = 0 //total data collected
         var good = 0 //data in range of good form
         var percentage: Double = 1 //return
-
+        
         array.forEach { (data) in
             if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
                 //ignore resting data
@@ -113,10 +113,10 @@ class FormCriteria: ObservableObject{
                 count += 1
             }
         }
-
+        
         if count != 0 {
             percentage = Double(good) / Double(count)
-           
+            
         }
         if append == true{
             self.listOfDumbbellAverage.append(percentage)
@@ -133,7 +133,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0 //data in range of good form
         var percentage: Double = 1 //return
-
+        
         array.forEach { (data) in
             if data[0] < 10 && data[1] > -10 { //the user isnt making a rep, could be between reps
                 //ignore resting data
@@ -146,13 +146,13 @@ class FormCriteria: ObservableObject{
                 count += 1
             }
         }
-
+        
         if count != 0 {
             percentage = Double(good) / Double(count)
             
         }
         self.listOfWristLeftRightAverage.append(percentage)
-
+        
         return percentage
     }
     
@@ -163,7 +163,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0 //data in range of good form
         var percentage: Double = 1 //return
-
+        
         array.forEach { (data) in
             if data[1] < 10 && data[1] > -10 { //the user isn't making a rep, could be between reps
                 //ignore resting data
@@ -176,53 +176,53 @@ class FormCriteria: ObservableObject{
                 count += 1
             }
         }
-
+        
         if count != 0 {
             percentage = Double(good) / Double(count)
-           
+            
         }
         self.listOfWristUpDownAverage.append(percentage)
         print(good,count)
         return percentage
     }
-        
-        
-        
-        //get the average of each set and compute the overall average for the workout
-        //(sum of averages from sets)/total sets
+    
+    
+    
+    //get the average of each set and compute the overall average for the workout
+    //(sum of averages from sets)/total sets
     func overallWorkoutUpDownAverage(totalSets: Int) -> Double {
         guard totalSets != 0 else {
             return 1.0
         }
-
+        
         var sum: Double = 0
-
+        
         self.listOfDumbbellAverage.forEach { (data) in
             sum += data
         }
         let percentage = sum/Double(totalSets)
-
+        
         return percentage
     }
-        
+    
     
     
     func overallDumbbellTwisting(totalSets: Int) -> (Double, Double) {
         guard totalSets != 0 else {
             return (1.0, 1.0)
         }
-
+        
         var sumUpDown: Double = 0
         var sumLeftRight: Double = 0
-
+        
         self.listOfWristUpDownAverage.forEach { (data) in
             sumUpDown += data
         }
-
+        
         self.listOfWristLeftRightAverage.forEach { (data) in
             sumLeftRight += data
         }
-
+        
         let averageUpDown = sumUpDown / Double(totalSets)
         let averageLeftRight = sumLeftRight / Double(totalSets)
         
@@ -237,7 +237,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0 //data in range of good form
         var percentage: Double = 1 //return
-
+        
         //data[x,y,z]
         array.forEach { (data) in
             if data[0] < 10 && data[0] > -10 { //the user isn't making a rep, could be between reps
@@ -249,13 +249,13 @@ class FormCriteria: ObservableObject{
             if data[0] > 10 || data[0] < -10 { //only add when they are moving not resting
                 count += 1
             }
-           
+            
         }
         print("this is good")
         print(good)
         print("this is count")
         print(count)
-
+        
         if count != 0 {
             percentage = Double(good) / Double(count)
             
@@ -272,7 +272,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0 //data in range of good form
         var percentage: Double = 1 //return
-
+        
         //data[x,y,z]
         array.forEach { (data) in
             if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
@@ -285,7 +285,7 @@ class FormCriteria: ObservableObject{
                 count += 1
             }
         }
-
+        
         if count != 0 {
             percentage = Double(good) / Double(count)
         }
@@ -300,7 +300,7 @@ class FormCriteria: ObservableObject{
         var count = 0 //total data collected
         var good = 0 //data in range of good form
         var percentage: Double = 1 //return
-
+        
         //data[x,y,z]
         array.forEach { (data) in
             if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
@@ -313,7 +313,7 @@ class FormCriteria: ObservableObject{
                 count += 1
             }
         }
-
+        
         if count != 0 {
             percentage = Double(good) / Double(count)
         }
@@ -329,13 +329,13 @@ class FormCriteria: ObservableObject{
         guard totalSets != 0 else {
             return 1.0
         }
-
+        
         var sum: Double = 0
-
+        
         self.listOfElbowSwingAverage.forEach { (data) in
             sum += data
         }
-
+        
         let percentage = sum/Double(totalSets)
         
         return percentage
@@ -347,25 +347,25 @@ class FormCriteria: ObservableObject{
         guard totalSets != 0 else {
             return (1.0, 1.0)
         }
-
+        
         var sumUpDown: Double = 0
         var sumForwardBackward: Double = 0
-
+        
         self.listOfElbowFlareUpDownAverage.forEach { (data) in
             sumUpDown += data
         }
-
+        
         self.listOfElbowFlareForwardBackAverage.forEach { (data) in
             sumForwardBackward += data
         }
-
+        
         let averageUpDown = sumUpDown / Double(totalSets)
         let averageForwardBackward = sumForwardBackward / Double(totalSets)
         
-
+        
         return (averageUpDown, averageForwardBackward)
     }
-
+    
     
     
     
@@ -414,12 +414,12 @@ class FormCriteria: ObservableObject{
             if abs(data[1]) > 10 {
                 wristTwistUDcount += 1
             }
-
+            
             if abs(data[2]) > 10 {
                 dumbbellSwingCount += 1
             }
         }
-
+        
         elbowArray.forEach { (data) in
             if abs(data[0]) > 200{
                 elbowSwingDanger += 1
@@ -444,7 +444,7 @@ class FormCriteria: ObservableObject{
             if abs(data[2]) > 10 {
                 elbowFlareUPcount += 1
             }
-
+            
         }
         
         
@@ -454,8 +454,8 @@ class FormCriteria: ObservableObject{
         let isElbowSwingDangerous = Double(elbowSwingDanger) / Double(elbowSwingCount) >= 0.1
         let isElbowFlareLRDangerous = Double(elbowFlareLRdanger) / Double(elbowFlareLRcount) >= 0.1
         let isElbowFlareUPDangerous = Double(elbowFlareUPdanger) / Double(elbowFlareUPcount) >= 0.1
-    
-
+        
+        
         let dangerous = isDumbbellSwingDangerous || isWristTwistLRDangerous || isWristTwistUDDangerous || isElbowSwingDangerous || isElbowFlareLRDangerous || isElbowFlareUPDangerous
         
         //TODO: show dangerous movements be returning a tuple of bool or just one bool
@@ -470,12 +470,12 @@ class FormCriteria: ObservableObject{
     
     //returns a tuple of strings for the specific feedback
     func giveFeedback(dumbbellArray: [[Int]],elbowArray: [[Int]] ) -> (String,String,String,String){
-    
+        
         let averageAcceleration = self.averageUpDownAcceleration(array: dumbbellArray, append: false)
         let averageElbowSwing = self.averageElbowSwing(array: elbowArray, append: false)
         
         
-
+        
         let overallAccel = String(format: "Curl acceleration: %.f%% good", averageAcceleration * 100)
         let overallElbowSwing = String(format: "Elbow stability: %.f%% good", averageElbowSwing * 100)
         var dumbbellCustomTextFeedback = ""
