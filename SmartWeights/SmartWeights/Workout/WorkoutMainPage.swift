@@ -9,6 +9,7 @@ struct WorkoutMainPage: View {
     @StateObject var storeModel = storeViewModel()
     @ObservedObject var workoutPageViewModel = WorkoutPageViewModel()
     
+    @State private var currentWorkoutSession: WorkoutSession?
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
     @State private var isExpanded = false
@@ -23,9 +24,8 @@ struct WorkoutMainPage: View {
        }
     
     @State private var currentMotivationalPhrase = "Let's get started!"
+    let coreDataManager = CoreDataManager()
 
-    
-    
     var body: some View {
         ZStack {
             
@@ -217,35 +217,41 @@ struct WorkoutMainPage: View {
             // Start/Reset workout button
             Button(action: {
                 if hasWorkoutStarted {
+                    // If the workout has started, get the next workout number and create a new workout session
+                    let workoutNum = coreDataManager.getNextWorkoutNumber()
+                    currentWorkoutSession = coreDataManager.createWorkoutSession(dateTime: Date(), workoutNum: workoutNum)
+                    
                     if buttonText == "Finish Workout" {
-                        // Get feedback from formCriteria
-                        let currentFeedback = formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
-                        
-                        // Check if feedback indicates poor form
-                        if currentFeedback.3 == "whoa slow down!" {
-                            // Call function to reduce HP
-                            workoutPageViewModel.lowerHP()
+                        if let workoutSession = currentWorkoutSession{
+                            // Get feedback from formCriteria
+                            let currentFeedback = formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+                            
+                            let setNum = workoutSession.sets?.count ?? 0 + 1
+                            
+                            // Check if feedback indicates poor form
+                            if currentFeedback.3 == "whoa slow down!" {
+                                // Call function to reduce HP
+                                workoutPageViewModel.lowerHP()
+                            }
+                            
+                            print("hello test")
+                            print(currentFeedback.3)
+                            
+                            // Logic for completing the workout
+                            generateRandomData(for: .overallWorkout) // Generate overall workout data
+                            storeModel.addFundtoUser(price: 50)
+                            workoutPageViewModel.AddXP(value: 25)
+                            viewModel.resetWorkoutState()
+                            hasWorkoutStarted = false
+                            isWorkoutPaused = false
+                            ble.collectDataToggle = false //stops collecting data
+                            print("hello")
+                            //ble.MPU6050_1Gyros.removeAll()
+                            //need to add this data to another array to store for workout history
+                            ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
+                            showGraphPopover = true
+                            currentMotivationalPhrase = "Let's get started with a New Workout!"
                         }
-                        
-                        print("hello test")
-                        print(currentFeedback.3)
-                        
-                        // Logic for completing the workout
-                        generateRandomData(for: .overallWorkout) // Generate overall workout data
-                        storeModel.addFundtoUser(price: 50)
-                        workoutPageViewModel.AddXP(value: 25)
-                        viewModel.resetWorkoutState()
-                        hasWorkoutStarted = false
-                        isWorkoutPaused = false
-                        ble.collectDataToggle = false //stops collecting data
-                        print("hello")
-                        //ble.MPU6050_1Gyros.removeAll()
-                        //need to add this data to another array to store for workout history
-                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
-                        showGraphPopover = true
-                        currentMotivationalPhrase = "Let's get started with a New Workout!"
-
-                        
                     } else if buttonText == "Final Set" {
                         // Logic for transitioning from the final set to finishing the workout
                         viewModel.currentSets += 1 // This will push the state to "Finish Workout"

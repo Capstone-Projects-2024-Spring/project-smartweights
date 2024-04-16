@@ -66,6 +66,18 @@ class CoreDataManager {
             return []
         }
     }
-
-
+    
+    func getNextWorkoutNumber() -> Int {
+        let fetchRequest: NSFetchRequest<WorkoutSession> = WorkoutSession.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "workoutNum", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        
+        do {
+            let lastSession = try persistentContainer.viewContext.fetch(fetchRequest).first
+            return Int((lastSession?.workoutNum ?? 0) + 1)
+        } catch {
+            print("Failed to fetch last workout number: \(error)")
+            return 1 // If fetch fails, start with 1
+        }
+    }
 }
