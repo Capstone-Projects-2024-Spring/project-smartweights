@@ -135,7 +135,7 @@ class FormCriteria: ObservableObject{
         var percentage: Double = 1 //return
         
         array.forEach { (data) in
-            if data[0] < 10 && data[1] > -10 { //the user isnt making a rep, could be between reps
+            if data[0] < 10 && data[0] > -10 { //the user isnt making a rep, could be between reps
                 //ignore resting data
             }
             else if data[0] > -50 && data[0] < 50 { //between good threshold
@@ -303,13 +303,13 @@ class FormCriteria: ObservableObject{
         
         //data[x,y,z]
         array.forEach { (data) in
-            if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
+            if data[1] < 10 && data[1] > -10 { //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[2] > -50 && data[2] < 50 { //in good threshold of elbow flare
+            else if data[1] > -50 && data[1] < 50 { //in good threshold of elbow flare
                 good += 1
             }
-            if data[2] > 10 || data[2] < -10 { //only add when they are moving not resting
+            if data[1] > 10 || data[1] < -10 { //only add when they are moving not resting
                 count += 1
             }
         }

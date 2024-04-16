@@ -63,7 +63,7 @@ struct OverallWorkoutData: View{
     
     
     var body: some View{
-        Text("Overall Feedback")
+        Text("Overall Workout Feedback")
             .font(.headline)
         if workoutAnalysisForSets.count == totalSets{
             if let last = workoutAnalysisForSets.last {
