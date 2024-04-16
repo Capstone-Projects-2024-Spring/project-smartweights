@@ -25,7 +25,7 @@ enum Tab: String, CaseIterable {
         case .workout:
             return AnyView(WorkoutMainPage())
         case .challenges:
-            return AnyView(ChallengesTab())
+            return AnyView(AchievementsPageView())
         case .profile:
             return AnyView(MorePageView())
         }
