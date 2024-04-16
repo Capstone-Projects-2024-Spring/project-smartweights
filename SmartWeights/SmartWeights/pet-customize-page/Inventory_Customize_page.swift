@@ -14,7 +14,7 @@ struct Customize_page: View {
     
     @ObservedObject var viewModel = CustomizeViewModel()
     
-    private let minSquares = 6
+    private let minSquares = 5
     private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
     
     var body: some View {
@@ -95,7 +95,17 @@ struct Customize_page: View {
                                     
                                 }
                                 placeholders(for: viewModel.accessories.count)
-
+                                // Unequip option
+                                VStack {
+                                    Image(systemName: "xmark") 
+                                        .resizable()
+                                        .scaledToFit()
+                                        .onTapGesture {
+                                            viewModel.equippedAccessory = nil
+                                        }
+                                    Text("Unequip")
+                                        .bold()
+                                }
                             }
                         }.id(UUID())
                         .tabItem {
@@ -125,7 +135,18 @@ struct Customize_page: View {
                                     .background(Color.gray.opacity(0.5).cornerRadius(15))
                                 }
                                 placeholders(for: viewModel.backgroundImages.count)
-
+                                   // Unequip option
+                                VStack {
+                                    Image(systemName: "xmark") 
+                                        .resizable()
+                                        .scaledToFit()
+                                        .onTapGesture {
+                                            viewModel.equippedBackgroundImage = nil
+                                        }
+                                    Text("Unequip")
+                                        .bold()
+                                }
+                                .background(Color.gray.opacity(0.5).cornerRadius(15))
                             }
                         }.id(UUID())
                         .tabItem {
