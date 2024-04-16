@@ -56,12 +56,23 @@ struct Customize_page: View {
                 }
                 
                 // Background color picker
-                ColorPicker("Set the background color", selection: $viewModel.backgroundColor)
-                    .frame(width: 350, height: 50, alignment: .center)
-                    .font(.system(size: 18).bold())
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(15)
-                
+//                ColorPicker("Set the background color", selection: $viewModel.backgroundColor)
+//                    .frame(width: 350, height: 50, alignment: .center)
+//                    .font(.system(size: 18).bold())
+//                    .background(Color.gray.opacity(0.1))
+//                    .cornerRadius(15)
+                Button(action: {
+                    viewModel.saveCustomizations()
+                }) {
+                    Text("Save")
+                        .foregroundColor(.white)
+                        .font(.system(size: 18).bold())
+                        .frame(width: 200, height: 50)
+                        .background(Color.blue)
+                        .cornerRadius(15)
+                }
+
+
                 // Grid layout for accessory for the inventory
                 TabView {
                     // Check if data is loaded, if it is show the grid layout

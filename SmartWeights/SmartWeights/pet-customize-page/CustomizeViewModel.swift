@@ -102,4 +102,10 @@ class CustomizeViewModel: ObservableObject {
             }
         }
     }
+    func saveCustomizations(){
+        // Save the equipped items to the database
+        print("Saving customizations...")
+    }
+
+    
 }
