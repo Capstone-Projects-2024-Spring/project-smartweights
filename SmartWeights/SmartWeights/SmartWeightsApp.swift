@@ -15,7 +15,7 @@ struct SmartWeightsApp: App {
             //bleView(ble: BLEcentral())
             WorkoutMainPage()
                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-
+//            testview()
         }
     }
 }

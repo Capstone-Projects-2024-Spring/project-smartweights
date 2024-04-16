@@ -10,8 +10,8 @@ import SwiftUI
 
 struct Pet_Page: View {
     @ObservedObject var viewModel = PetPageFunction()
+    @State var activePet: String = ""
 
-    
     var body: some View {
         NavigationView {
             VStack {
@@ -20,6 +20,11 @@ struct Pet_Page: View {
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
                 
+                /*
+                Button("testing XP"){
+                    viewModel.AddXP(value: 75)
+                }
+                */
                 HStack {
                     HamburgerMenu(
                         navigateToShop: { viewModel.showShop = true },
@@ -70,7 +75,7 @@ struct Pet_Page: View {
                 }
                 .padding(.horizontal, 25)
                 
-                Image("Dog")
+                Image(viewModel.activePet)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 500, height: 400, alignment: .center)
@@ -81,15 +86,15 @@ struct Pet_Page: View {
                         .frame(height: 20)
                         .padding()
                     
-                    /*
+                    
                     // Display Current Level
                     Text("Level \(viewModel.currentLevel)")
                         .font(.system(size: 20))
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 10)
-                     */
-                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                     
+                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                         .frame(height: 20)
                         .padding()
                     
@@ -181,5 +186,4 @@ struct PetPage_Previews: PreviewProvider {
         Pet_Page()
     }
 }
-
 

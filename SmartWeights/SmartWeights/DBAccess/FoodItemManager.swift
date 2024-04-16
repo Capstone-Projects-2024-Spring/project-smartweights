@@ -80,8 +80,13 @@ class FoodItemDBManager: ObservableObject{
             FoodItemModel(recordId: nil, name: "Juice", quantity: 0, imageName: "Juice"),
         ]
         for foodItem in foodItems {
-            let foodItemRecord = foodItem.record
-            self.CKManager.savePrivateItem(record: foodItemRecord)
+            createFoodItem(name: foodItem.name, quantity: 0){
+                error in
+                if let error = error {
+                    print("Error creating food item: \(error.localizedDescription)")
+                }
+            
+            }
         }
     }
     func createFoodItem(name: String, quantity: Int64, completion: @escaping (Error?) -> Void) {

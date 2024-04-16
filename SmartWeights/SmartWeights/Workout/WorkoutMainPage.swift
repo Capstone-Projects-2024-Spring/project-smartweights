@@ -268,7 +268,20 @@ struct WorkoutMainPage: View {
             Button(action: {
                 if hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
+
                         totalSets = Int(viewModel.inputtedSets) ?? 0
+
+                        // Get feedback from formCriteria
+                        let currentFeedback = formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+                        
+                        // Check if feedback indicates poor form
+                        if currentFeedback.3 == "whoa slow down!!" {
+                            // Call function to reduce HP
+                            workoutPageViewModel.lowerHP()
+                        }
+                        
+                        print("hello test")
+                        print(currentFeedback.3)
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
                         storeModel.addFundtoUser(price: 50)
@@ -307,6 +320,17 @@ struct WorkoutMainPage: View {
                             viewModel.currentSets += 1
                             
                         }
+                        // Get feedback from formCriteria
+                        let currentFeedback = formCriteria.giveFeedback(array: ble.MPU6050_1Gyros)
+                        
+                        // Check if feedback indicates poor form
+                        if currentFeedback.3 == "whoa slow down!" {
+                            // Call function to reduce HP
+                            workoutPageViewModel.lowerHP()
+                        }
+                        
+                        print("hello test")
+                        print(currentFeedback.3)
                     } else {
                         // Resume workout from a paused state
                         viewModel.resumeTimer()
