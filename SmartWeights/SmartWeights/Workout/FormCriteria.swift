@@ -494,7 +494,7 @@ class FormCriteria: ObservableObject{
             elbowCustomTextFeedback = "Keep that elbow steady!"
         }
         else{
-            elbowCustomTextFeedback = "Elbows are looking good!!!"
+            elbowCustomTextFeedback = "Elbow is looking good!!!"
         }
         
         
