@@ -21,115 +21,51 @@ class CoreDataManager {
         }
     }
     
-    func createWorkout(userID: Int32, workoutID: Int32, speed: Float, velocity: Float, angle: Float, dateTime: Date, xCoord: Float, yCoord: Float, zCoord: Float) -> Workout? {
+    func createWorkoutSession(dateTime: Date, workoutNum: Int) -> WorkoutSession? {
         let context = persistentContainer.viewContext
-        let workout = NSEntityDescription.insertNewObject(forEntityName: "Workout", into: context) as! Workout
-
-        workout.user_id = userID
-        workout.workout_id = workoutID
-        workout.speed = speed
-        workout.velocity = velocity
-        workout.angle = angle
-        workout.dateTime = dateTime
-        workout.x_coord = xCoord
-        workout.y_coord = yCoord
-        workout.z_coord = zCoord
+        let workoutSession = WorkoutSession(context: context)
+        workoutSession.dateTime = dateTime
+        workoutSession.workoutNum = Int64(workoutNum)
         
         do {
             try context.save()
-            return workout
+            return workoutSession
         } catch {
-            print("Failed to save workout: \(error)")
+            print("Failed to create workout session: \(error)")
             return nil
         }
     }
-    
-    func fetchWorkouts() -> [Workout] {
+
+    func createSet(workoutSession: WorkoutSession, setNum: Int, feedback: String, elbowStability: Double, wristStability: Double, velocity: Double) -> Set? {
         let context = persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<Workout>(entityName: "Workout")
+        let set = Set(context: context)
+        set.workoutSession = workoutSession
+        set.setNum = Int64(setNum)
+        set.feedback = feedback
+        set.elbowStabilityLeftRight = elbowStability
+        set.elbowStabilityUpDown = elbowStability
+        set.wristStabilityLeftRight = wristStability
+        set.wristStabilityUpDown = wristStability
+        set.velocity = velocity
         
         do {
-            return try context.fetch(fetchRequest)
+            try context.save()
+            return set
         } catch {
-            print("Failed to fetch workouts: \(error)")
+            print("Failed to create set: \(error)")
+            return nil
+        }
+    }
+
+    func fetchWorkoutSessions() -> [WorkoutSession] {
+        let fetchRequest: NSFetchRequest<WorkoutSession> = WorkoutSession.fetchRequest()
+        do {
+            return try persistentContainer.viewContext.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch workout sessions: \(error)")
             return []
         }
     }
 
-    func updateWorkout(workout: Workout) {
-        let context = persistentContainer.viewContext
-        
-        // Changes to the `Workout` object would be made before this function is called
-                
-        do {
-            try context.save()
-        } catch {
-            print("Failed to update workout: \(error)")
-        }
-    }
-    
-    func deleteWorkout(workout: Workout) {
-        let context = persistentContainer.viewContext
-        context.delete(workout)
-        
-        do {
-            try context.save()
-        } catch {
-            print("Failed to delete workout: \(error)")
-        }
-    }
-    
-    func createForm(workout: Workout, formID: Int16, score: Int16, feedback: String, dateTimeForm: Date) -> Form? {
-        let context = persistentContainer.viewContext
-        let form = NSEntityDescription.insertNewObject(forEntityName: "Form", into: context) as! Form
 
-        form.form_id = formID
-        form.score = score
-        form.feedback = feedback
-        form.dateTimeForm = dateTimeForm
-        
-        do {
-            try context.save()
-            return form
-        } catch {
-            print("Failed to save form: \(error)")
-            return nil
-        }
-    }
-    
-    func fetchForms(for workout: Workout) -> [Form] {
-        let context = persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<Form> = Form.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "workout == %@", workout)
-        
-        do {
-            return try context.fetch(fetchRequest)
-        } catch {
-            print("Failed to fetch forms: \(error)")
-            return []
-        }
-    }
-    
-    func updateForm(form: Form) {
-        let context = persistentContainer.viewContext
-        
-        // Changes to the `form` object would be made before this function is called
-        
-        do {
-            try context.save()
-        } catch {
-            print("Failed to update form: \(error)")
-        }
-    }
-    
-    func deleteForm(form: Form) {
-        let context = persistentContainer.viewContext
-        context.delete(form)
-        
-        do {
-            try context.save()
-        } catch {
-            print("Failed to delete form: \(error)")
-        }
-    }
 }
