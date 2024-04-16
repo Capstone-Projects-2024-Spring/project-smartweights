@@ -22,7 +22,7 @@ struct WorkoutMainPage: View {
             if showGraphPopover {
                 self.feedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
                 self.feedbackDataForSets.append(feedback)
-                self.workoutAnalysis = formCriteria.UpdateWorkoutAnalysis( totalSets: Int(viewModel.inputtedSets) ?? 0, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+                self.workoutAnalysis = formCriteria.UpdateWorkoutAnalysis( totalSets: totalSets, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
                 print(self.workoutAnalysis)
                 self.workoutAnalysisForSets.append(self.workoutAnalysis)
             }
@@ -33,6 +33,7 @@ struct WorkoutMainPage: View {
     @State var feedbackDataForSets: [(String, String, String, String)] = []
     @State var workoutAnalysis: [String:Double] = [:]
     @State var workoutAnalysisForSets:[[String:Double]] = []
+    @State var totalSets:Int = 0
     //TODO: IMPLEMENT THE DANGEROUS ASPECT
     var dangerousCalled = false
     var dangerous: Bool {
@@ -81,7 +82,7 @@ struct WorkoutMainPage: View {
                 if selectedTab == 0 {
                     StartWorkoutView
                 } else if selectedTab == 1 {
-                    WorkoutFeedback(viewModel: viewModel, showGraphPopover: $showGraphPopover, feedbackDataForSets: $feedbackDataForSets,workoutAnalysisForSets: $workoutAnalysisForSets)
+                    WorkoutFeedback(viewModel: viewModel, showGraphPopover: $showGraphPopover, feedbackDataForSets: $feedbackDataForSets,workoutAnalysisForSets: $workoutAnalysisForSets,totalSets: $totalSets)
                 }
             }
             .popover(isPresented: $showGraphPopover) {
@@ -267,6 +268,7 @@ struct WorkoutMainPage: View {
             Button(action: {
                 if hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
+                        totalSets = Int(viewModel.inputtedSets) ?? 0
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
                         storeModel.addFundtoUser(price: 50)
@@ -303,6 +305,7 @@ struct WorkoutMainPage: View {
                         currentMotivationalPhrase = "Take a breather, then keep going!"
                         if let totalSets = Int(viewModel.inputtedSets), viewModel.currentSets < totalSets {
                             viewModel.currentSets += 1
+                            
                         }
                     } else {
                         // Resume workout from a paused state

@@ -57,10 +57,30 @@ struct PostWorkoutData: View {
 }
 
 struct OverallWorkoutData: View{
+    @Binding var workoutAnalysisForSets: [[String: Double]]
+       @ObservedObject var viewModel: WorkoutViewModel
+       var totalSets: Int
+    
     
     var body: some View{
-        Text("overall dumbbell form  goes here")
-        Text("overall elbow stability goes here")
+        Text("Overall Feedback")
+            .font(.headline)
+        if workoutAnalysisForSets.count == totalSets{
+            if let last = workoutAnalysisForSets.last {
+                VStack {
+                    
+                    Text("Overall \(Int(last["averageWristLeftRightRotation"] ?? 0.0 * 100))% wrist stability (left right)")
+                    Text("Overall \(Int(last["averageWristUpDownRotation"] ?? 0.0 * 100))% wrist wrist stability (up down)")
+                    Text("Overall \(Int(last["averageElbowFlareUpDown"] ?? 0.0 * 100))% elbow stability(up down)")
+                    Text("OVerall \(Int(last["averageElbowFlareForwardBackward"] ?? 0.0 * 100))% elbow (foward backward)")
+                }
+            }
+            
+        
+        }
+        else{
+            Text("Finish Workout to see overall feedback")
+        }
     }
 }
 
@@ -73,7 +93,7 @@ struct WorkoutFeedback: View {
     @Binding var showGraphPopover: Bool
     @Binding var feedbackDataForSets: [(String, String, String, String)]
     @Binding var workoutAnalysisForSets: [[String: Double]]
-
+    @Binding var totalSets:Int
     var body: some View {
         ScrollView {
             VStack {
@@ -82,7 +102,7 @@ struct WorkoutFeedback: View {
                         PostWorkoutData(viewModel: viewModel, setIndex: index + 1, feedback: feedbackDataForSets[index],workoutAnalysis: workoutAnalysisForSets[index])
                            }
                 }
-                .frame(height: 600)
+                .frame(height: 550)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.gray, lineWidth: 1)
@@ -90,7 +110,7 @@ struct WorkoutFeedback: View {
                 .foregroundColor(.black)
                 .background(Color.blue)
                 .scrollContentBackground(.hidden)
-                OverallWorkoutData()
+                OverallWorkoutData(workoutAnalysisForSets: $workoutAnalysisForSets, viewModel: viewModel, totalSets: totalSets)
                 
 
                 Spacer()
