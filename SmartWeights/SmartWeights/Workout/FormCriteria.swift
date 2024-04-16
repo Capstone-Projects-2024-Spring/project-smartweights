@@ -102,10 +102,10 @@ class FormCriteria: ObservableObject{
         var percentage: Double = 1 //return
         
         array.forEach { (data) in
-            if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
+            if data[2] <= 10 && data[2] >= -10 { //the user isn't making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[2] > -180 && data[2] < 180 { //between good threshold
+            else if data[2] > -200 && data[2] < 200 { //between good threshold
                 good += 1
             }
             //ignoring resting movements
@@ -121,7 +121,6 @@ class FormCriteria: ObservableObject{
         if append == true{
             self.listOfDumbbellAverage.append(percentage)
         }
-        print("list of dumbbell average", listOfDumbbellAverage)
         return percentage
     }
     
@@ -135,10 +134,10 @@ class FormCriteria: ObservableObject{
         var percentage: Double = 1 //return
         
         array.forEach { (data) in
-            if data[0] < 10 && data[0] > -10 { //the user isnt making a rep, could be between reps
+            if data[0] <= 10 && data[0] >= -10 { //the user isnt making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[0] > -50 && data[0] < 50 { //between good threshold
+            else if data[0] > -100 && data[0] < 100 { //between good threshold
                 good += 1
             }
             //ignoring resting movements
@@ -165,10 +164,10 @@ class FormCriteria: ObservableObject{
         var percentage: Double = 1 //return
         
         array.forEach { (data) in
-            if data[1] < 10 && data[1] > -10 { //the user isn't making a rep, could be between reps
+            if data[1] <= 10 && data[1] >= -10 { //the user isn't making a rep, could be between reps
                 //ignore resting data
             }
-            else if data[1] > -50 && data[1] < 50 { //between good threshold
+            else if data[1] > -100 && data[1] < 100 { //between good threshold
                 good += 1
             }
             //ignoring resting movements
@@ -240,10 +239,10 @@ class FormCriteria: ObservableObject{
         
         //data[x,y,z]
         array.forEach { (data) in
-            if data[0] < 10 && data[0] > -10 { //the user isn't making a rep, could be between reps
+            if data[0] <= 10 && data[0] >= -10 { //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[0] > -50 && data[0] < 50 { //in good threshold of elbow swing
+            else if data[0] > -100 && data[0] < 100 { //in good threshold of elbow swing
                 good += 1
             }
             if data[0] > 10 || data[0] < -10 { //only add when they are moving not resting
@@ -275,10 +274,10 @@ class FormCriteria: ObservableObject{
         
         //data[x,y,z]
         array.forEach { (data) in
-            if data[2] < 10 && data[2] > -10 { //the user isn't making a rep, could be between reps
+            if data[2] <= 10 && data[2] >= -10 { //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[2] > -50 && data[2] < 50 { //in good threshold of elbow flare
+            else if data[2] > -100 && data[2] < 100 { //in good threshold of elbow flare
                 good += 1
             }
             if data[2] > 10 || data[2] < -10 { //only add when they are moving not resting
@@ -303,10 +302,10 @@ class FormCriteria: ObservableObject{
         
         //data[x,y,z]
         array.forEach { (data) in
-            if data[1] < 10 && data[1] > -10 { //the user isn't making a rep, could be between reps
+            if data[1] <= 10 && data[1] >= -10 { //the user isn't making a rep, could be between reps
                 //ignore it
             }
-            else if data[1] > -50 && data[1] < 50 { //in good threshold of elbow flare
+            else if data[1] > -100 && data[1] < 100 { //in good threshold of elbow flare
                 good += 1
             }
             if data[1] > 10 || data[1] < -10 { //only add when they are moving not resting
@@ -395,11 +394,11 @@ class FormCriteria: ObservableObject{
         
         dumbbellArray.forEach{ (data) in
             //wristLR
-            if abs(data[0]) > 100{
+            if abs(data[0]) > 300{
                 wristTwistLRdanger += 1
             }
             
-            if abs(data[1]) > 100 {
+            if abs(data[1]) > 300 {
                 wristTwistUDdanger += 1
             }
             
@@ -421,15 +420,15 @@ class FormCriteria: ObservableObject{
         }
         
         elbowArray.forEach { (data) in
-            if abs(data[0]) > 200{
+            if abs(data[0]) > 300{
                 elbowSwingDanger += 1
             }
             
-            if abs(data[1]) > 200 {
+            if abs(data[1]) > 300 {
                 elbowFlareLRdanger += 1
             }
             
-            if abs(data[2]) > 200 {
+            if abs(data[2]) > 300 {
                 elbowFlareUPdanger += 1
             }
             
