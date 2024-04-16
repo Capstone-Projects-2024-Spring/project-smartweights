@@ -34,6 +34,23 @@ struct SettingsPageView: View {
     @AppStorage("lastName") var lastName: String = ""
     @AppStorage("userID") var userID: String = ""
     
+    @ObservedObject var viewModel = fitnessPlanViewModel()
+    let daysPerWeek = Array(0...7)
+    let weeks = Array(0...3)
+    let weight = Array(0...200)
+    let sets = Array(0...10)
+    let reps = Array(0...20)
+    @State private var showClearConfirmation = false
+    @State private var isEditing: Bool = false // Track whether fitness plan editing mode is active
+    
+    /// struct function to print date with only month/date/year and prevent the time and time zone from displayin
+    var formattedDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        return dateFormatter.string(from: viewModel.selectedDate)
+    }
+    
     var body: some View {
         NavigationStack {
             SwiftUI.Form {
@@ -64,13 +81,47 @@ struct SettingsPageView: View {
                         }
                     }
                 }
-                // button for FitnessPlanPage
-                NavigationLink(destination: FitnessPlanPage()) {
-                    Text("Fitness Plan")
-                        .font(.system(size: 18))
-                        .foregroundColor(.black)
+                
+                Section(header: Text("Fitness Plan Summary")) {
+                    Group {
+                        VStack(alignment: .center) {
+                            // Workouts goal
+                            Text("Workouts per week: \(viewModel.daysPerWeekGoal)")
+                                .font(.system(size: 20))
+                            
+                            // Weeks goal
+                            Text("Goal End Date: \(formattedDate)")
+                                .font(.system(size: 20))
+                            
+                            // Weight goal
+                            Text("Weight Goal: \(viewModel.weightGoal * 5)") // Multiply by 5 to match your scale
+                                .font(.system(size: 20))
+                            
+                            // Set goal
+                            Text("Sets Goal: \(viewModel.setGoal)")
+                                .font(.system(size: 20))
+                            
+                            // rep goal
+                            Text("Reps Goal: \(viewModel.repGoal)")
+                                .font(.system(size: 20))
+                            
+                            // user notes
+                            Text("Notes: \(viewModel.notes)")
+                                .font(.system(size: 20))
+                        }
+                        .padding()
+                        .cornerRadius(10)
+                    }
+                    
+                    // Navigation Link to Edit Fitness Plan
+                    NavigationLink(destination: FitnessPlanPage(viewModel: viewModel)) {
+                        Text("Edit Fitness Plan")
+                            //.padding() // if want navigation button to be bigger
+                    }
                 }
-                            .padding()
+                .navigationTitle("Fitness Plan")
+
+                
                 Section(header: Text("Body Measurements")) {
                     Picker("Weight", selection: $selectedWeight) {
                         ForEach(weightsArray, id: \.self) { weight in
@@ -130,12 +181,6 @@ struct SettingsPageView: View {
                             .navigationBarTitleDisplayMode(.inline)
                         }
                     }
-                   /* HStack {
-                        Image(systemName: "heart")
-                        Toggle(isOn: $healthKitEnabled, label: {
-                            Text("Enable HealthKit")
-                        })
-                         } */ 
                 }
                 Button("Logout", systemImage: "rectangle.portrait.and.arrow.right") {
                     // Implement logout button functionality
