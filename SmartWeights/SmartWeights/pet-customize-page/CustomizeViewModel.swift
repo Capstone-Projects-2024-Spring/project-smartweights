@@ -41,7 +41,7 @@ class CustomizeViewModel: ObservableObject {
     @Published var isPetDataLoaded = false
     @Published var isBackgroundDataLoaded = false
     @Published var isAccessoryDataLoaded = false
-    
+    @Published var isDataLoaded = false
     // Data arrays
     var accessories: [Accessory] = [
         // Accessory(name: "Chain", imageName: "chain"),
@@ -61,6 +61,9 @@ class CustomizeViewModel: ObservableObject {
     ]
     
     init(){
+        refreshFetch()
+    }
+    func refreshFetch(){
         backgroundItemDBManager.fetchBackgroundItems { backgroundItems, error in
             if let error = error {
                 print("Error fetching background items: \(error.localizedDescription)")
@@ -76,6 +79,7 @@ class CustomizeViewModel: ObservableObject {
                         return backgroundImage
                     }
                     self.isBackgroundDataLoaded = true
+                    self.checkDataLoaded()
                 }
             }
             
@@ -95,6 +99,7 @@ class CustomizeViewModel: ObservableObject {
                         return accessory
                     }
                     self.isAccessoryDataLoaded = true
+                    self.checkDataLoaded()
                 }
             }
         }
@@ -113,14 +118,58 @@ class CustomizeViewModel: ObservableObject {
                         return pet
                     }
                     self.isPetDataLoaded = true
-                
+                    self.checkDataLoaded()
                 }
             }
+        }
+    }
+    
+    private func checkDataLoaded() {
+        if isBackgroundDataLoaded && isAccessoryDataLoaded && isPetDataLoaded {
+            self.isDataLoaded = true
         }
     }
     func saveCustomizations(){
         // Save the equipped items to the database
         print("Saving customizations...")
+        if equippedAccessory == nil {
+            clothingItemDBManager.setUnactiveAllClothingItems{ error in 
+                if let error = error {
+                    print("Error setting all clothing items to inactive: \(error.localizedDescription)")
+                    return
+                }
+            }
+        } else {
+            clothingItemDBManager.setActiveClothingItem(imageName: equippedAccessory!.imageName){ clothing, error in
+                if let error = error {
+                    print("Error setting active clothing item: \(error.localizedDescription)")
+                    return
+                }
+            }
+        }
+
+        if equippedBackgroundImage == nil {
+            backgroundItemDBManager.setUnactiveAllBackgroundItems{ error in
+                if let error = error {
+                    print("Error setting all background items to inactive: \(error.localizedDescription)")
+                    return
+                }
+            }
+        } else {
+            backgroundItemDBManager.setActiveBackgroundItem(imageName: equippedBackgroundImage!.imageName){ background, error in
+                if let error = error {
+                    print("Error setting active background item: \(error.localizedDescription)")
+                    return
+                }
+            }
+        }
+
+        petItemDBManager.setActivePetItem(imageName: equippedPet!.imageName){ pet, error in
+            if let error = error {
+                print("Error setting active pet: \(error.localizedDescription)")
+                return
+            }
+        }
     }
     
     

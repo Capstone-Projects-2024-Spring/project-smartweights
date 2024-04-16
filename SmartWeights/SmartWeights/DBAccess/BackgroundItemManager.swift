@@ -128,6 +128,31 @@ class BackgroundItemDBManager : ObservableObject{
             }
         }
     }
+    //unequips all clothing items
+    func setUnactiveAllBackgroundItems(completion: @escaping (Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "BackgroundItem") { records, error in
+            if let error = error {
+                completion(error)
+                return
+            }
+            
+            guard let records = records else {
+                print("No background items found.")
+                completion(nil)
+                return
+            }
+            let dispatchGroup = DispatchGroup()
+            for record in records {
+                dispatchGroup.enter()
+                record["isActive"] = 0
+                self.CKManager.savePrivateItem(record: record)
+                dispatchGroup.leave()
+            }
+            dispatchGroup.notify(queue: .main) {
+                completion(nil)
+            }
+        }
+    }
 
     
 }

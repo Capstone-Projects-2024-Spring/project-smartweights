@@ -74,9 +74,8 @@ struct Customize_page: View {
 
 
                 // Grid layout for accessory for the inventory
-                TabView {
-                    // Check if data is loaded, if it is show the grid layout
-                    if viewModel.isAccessoryDataLoaded {
+                if viewModel.isDataLoaded {
+                    TabView {
                         // Grid layout for accessories
                         ScrollView {
                             LazyVGrid(columns: gridLayout, spacing: 20) {
@@ -111,13 +110,7 @@ struct Customize_page: View {
                         .tabItem {
                             Label("Accessories", systemImage: "bag.fill")
                         }
-                    } else {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .scaleEffect(2)
-                    }
                         
-                    if viewModel.isBackgroundDataLoaded {
                         // Grid layout for background image
                         ScrollView {
                             LazyVGrid(columns: gridLayout, spacing: 20) {
@@ -152,12 +145,7 @@ struct Customize_page: View {
                         .tabItem {
                             Label("Backgrounds", systemImage: "photo")
                         }
-                    } else {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .scaleEffect(2)
-                    }
-                    if viewModel.isPetDataLoaded {   
+                        
                         // Grid layout for the pet
                         ScrollView {
                             LazyVGrid(columns: gridLayout, spacing: 20) {
@@ -181,17 +169,14 @@ struct Customize_page: View {
                             .tabItem {
                                 Label("Pets", systemImage: "hare")
                             }
-                    } else {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .scaleEffect(2)
-                    }
                         
-                        
-                        
-                    
+                    }.frame(height: 400)
+                } else {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(2)
                 }
-                .frame(height: 400)
+                
             }
         }
     }
