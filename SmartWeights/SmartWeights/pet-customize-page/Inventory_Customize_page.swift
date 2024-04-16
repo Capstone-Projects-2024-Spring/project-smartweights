@@ -61,15 +61,35 @@ struct Customize_page: View {
 //                    .font(.system(size: 18).bold())
 //                    .background(Color.gray.opacity(0.1))
 //                    .cornerRadius(15)
-                Button(action: {
-                    viewModel.saveCustomizations()
-                }) {
-                    Text("Save")
-                        .foregroundColor(.white)
-                        .font(.system(size: 18).bold())
-                        .frame(width: 200, height: 50)
-                        .background(Color.blue)
-                        .cornerRadius(15)
+                HStack(spacing: 20) {
+                    Button(action:{
+                        viewModel.equippedAccessory = nil
+                        viewModel.equippedBackgroundImage = nil
+                        viewModel.equippedPet = nil
+                    }){
+                        Text("Unequip All")
+                            .foregroundColor(.white)
+                            .font(.system(size: 18).bold())
+                            .frame(width: 125, height: 50)
+                            .background(Color.red)
+                            .cornerRadius(15)
+                    }
+                    Button(action: {
+                        viewModel.saveCustomizations()
+                    }) {
+                        Text("Save")
+                            .foregroundColor(.white)
+                            .font(.system(size: 18).bold())
+                            .frame(width: 200, height: 50)
+                            .background(Color.blue)
+                            .cornerRadius(15)
+                    }
+                    
+                    
+                   
+                   
+                    
+                    
                 }
 
 
