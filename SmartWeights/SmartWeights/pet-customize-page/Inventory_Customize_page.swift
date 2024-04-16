@@ -56,11 +56,11 @@ struct Customize_page: View {
                 }
                 
                 // Background color picker
-//                ColorPicker("Set the background color", selection: $viewModel.backgroundColor)
-//                    .frame(width: 350, height: 50, alignment: .center)
-//                    .font(.system(size: 18).bold())
-//                    .background(Color.gray.opacity(0.1))
-//                    .cornerRadius(15)
+                //                ColorPicker("Set the background color", selection: $viewModel.backgroundColor)
+                //                    .frame(width: 350, height: 50, alignment: .center)
+                //                    .font(.system(size: 18).bold())
+                //                    .background(Color.gray.opacity(0.1))
+                //                    .cornerRadius(15)
                 HStack(spacing: 20) {
                     Button(action:{
                         viewModel.equippedAccessory = nil
@@ -86,13 +86,13 @@ struct Customize_page: View {
                     }
                     
                     
-                   
-                   
+                    
+                    
                     
                     
                 }
-
-
+                
+                
                 // Grid layout for accessory for the inventory
                 if viewModel.isDataLoaded {
                     TabView {
@@ -127,9 +127,9 @@ struct Customize_page: View {
                                 }
                             }
                         }.id(UUID())
-                        .tabItem {
-                            Label("Accessories", systemImage: "bag.fill")
-                        }
+                            .tabItem {
+                                Label("Accessories", systemImage: "bag.fill")
+                            }
                         
                         // Grid layout for background image
                         ScrollView {
@@ -148,7 +148,7 @@ struct Customize_page: View {
                                     .background(Color.gray.opacity(0.5).cornerRadius(15))
                                 }
                                 placeholders(for: viewModel.backgroundImages.count)
-                                   // Unequip option
+                                // Unequip option
                                 VStack {
                                     Image(systemName: "xmark") 
                                         .resizable()
@@ -162,9 +162,9 @@ struct Customize_page: View {
                                 .background(Color.gray.opacity(0.5).cornerRadius(15))
                             }
                         }.id(UUID())
-                        .tabItem {
-                            Label("Backgrounds", systemImage: "photo")
-                        }
+                            .tabItem {
+                                Label("Backgrounds", systemImage: "photo")
+                            }
                         
                         // Grid layout for the pet
                         ScrollView {

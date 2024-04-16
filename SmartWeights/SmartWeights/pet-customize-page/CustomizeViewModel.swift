@@ -147,7 +147,7 @@ class CustomizeViewModel: ObservableObject {
                 }
             }
         }
-
+        
         if equippedBackgroundImage == nil {
             backgroundItemDBManager.setUnactiveAllBackgroundItems{ error in
                 if let error = error {
@@ -163,7 +163,7 @@ class CustomizeViewModel: ObservableObject {
                 }
             }
         }
-
+        
         petItemDBManager.setActivePetItem(imageName: equippedPet!.imageName){ pet, error in
             if let error = error {
                 print("Error setting active pet: \(error.localizedDescription)")
