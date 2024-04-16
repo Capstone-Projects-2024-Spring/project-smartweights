@@ -61,6 +61,7 @@ struct AchievementRow: View {
                                 .foregroundStyle(Color.green)
                                 .frame(width: 50, height: 25)
                             Text("Claim")
+                                .font(.subheadline)
                         }
                     })
                 }
