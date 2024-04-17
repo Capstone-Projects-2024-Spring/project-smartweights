@@ -10,21 +10,25 @@ import SwiftUI
 
 struct Pet_Page: View {
     @ObservedObject var viewModel = PetPageFunction()
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
+    @ObservedObject var petItemDBManager = PetItemDBManager()
     @State var activePet: String = ""
-
+    
     var body: some View {
         NavigationView {
             VStack {
+                /*
                 Text("Pet Name")
                     .font(.system(size: 45))
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
                 
-                /*
-                Button("testing XP"){
-                    viewModel.AddXP(value: 75)
-                }
-                */
+                
+                 Button("testing XP"){
+                 viewModel.AddXP(value: 75)
+                 }
+                 */
                 HStack {
                     HamburgerMenu(
                         navigateToShop: { viewModel.showShop = true },
@@ -74,31 +78,52 @@ struct Pet_Page: View {
                     
                 }
                 .padding(.horizontal, 25)
-                
-                Image(viewModel.activePet)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 500, height: 400, alignment: .center)
-                    .padding(.bottom, 0)
-                
+                ZStack{
+                    ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
+                    
+                    Image(backgroundItemDBManager.activeBackground)
+                        .resizable()
+                        .frame(width: 475, height: 475)
+                    
+                    
+                    
+                    // .frame(width: 500, height: 400, alignment: .center)
+                    // .padding(.bottom, 0)
+                    
+                    Image(petItemDBManager.activePet)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 475, height: 475)
+                    Image(clothingItemDBManager.activeClothing)
+                        .resizable()
+                        .scaledToFit()
+                    
+                    // Image(viewModel.activePet)
+                    //     .resizable()
+                    //     .scaledToFit()
+                    //     .frame(width: 500, height: 400, alignment: .center)
+                    //     .padding(.bottom, 0)
+                }
                 VStack {
+                    // Health Bar
                     CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
                         .frame(height: 20)
-                        .padding()
+                        .padding(.bottom, 25)
+                        // Display Current Level
+                        Text("Level \(viewModel.currentLevel)")
+                            .font(.system(size: 20))
+                            .bold()
+                        
+                        
+                        // XP Progress Bar
+                        CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                            .frame(height: 20)
+                            .padding(.top, -5)
                     
-                    
-                    // Display Current Level
-                    Text("Level \(viewModel.currentLevel)")
-                        .font(.system(size: 20))
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 10)
-                     
-                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
-                        .frame(height: 20)
-                        .padding()
+
                     
                 }
+
                 .padding(.top, -20)
                 Spacer()
             }
