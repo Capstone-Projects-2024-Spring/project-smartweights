@@ -32,7 +32,8 @@ struct StartWorkoutButton: View {
                 }
             }
             .foregroundStyle(.black)
-            .cornerRadius(12)
+            .background(Color.africanViolet)
+                .cornerRadius(12)
             .padding()
         }
     }
