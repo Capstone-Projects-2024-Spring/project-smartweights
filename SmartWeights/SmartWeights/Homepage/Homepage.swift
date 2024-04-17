@@ -28,6 +28,7 @@ struct Homepage: View {
                         .font(.title)
                         .padding(.top)
                         .padding(.horizontal)
+                        .foregroundStyle(.black)
                     Spacer()
                 }
                 
@@ -52,6 +53,7 @@ struct Homepage: View {
                 // Video Carousel
                 VideoCarousel(videoCards: videos)
             }
+            .background(.white)
         }
        
     }
