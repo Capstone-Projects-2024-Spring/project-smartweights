@@ -372,7 +372,7 @@ class FormCriteria: ObservableObject{
         //300 degrees per second is the dangerous threshold
 
         //returns true if any of the data is greater than 300
-        return (dumbbellData[0] > 800 || dumbbellData[1] > 800 || dumbbellData[2] > 800 || elbowData[0] > 800 || elbowData[1] > 800 || elbowData[2] > 800)
+        return (dumbbellData[0] >= 500 || dumbbellData[1] >= 500 || dumbbellData[2] >= 500 || elbowData[0] >= 300 || elbowData[1] >= 300 || elbowData[2] >= 300)
 
     }
     

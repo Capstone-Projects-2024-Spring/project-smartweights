@@ -343,15 +343,22 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func playSound() {
-    guard let url = Bundle.main.url(forResource: "alarm", withExtension: "mp3") else {
-        print("Unable to locate audio file")
-        return
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+        } catch {
+            print("Failed to set audio session category: \(error)")
         }
+
+        guard let url = Bundle.main.url(forResource: "alarm", withExtension: "mp3") else {
+            print("Unable to locate audio file")
+            return
+        }
+
         do {
             player = try AVAudioPlayer(contentsOf: url)
             player!.play()
         } catch {
-            print("Failed to play audio: \(error)")
+            print("Failed to create audio player: \(error)")
         }
     }
 
