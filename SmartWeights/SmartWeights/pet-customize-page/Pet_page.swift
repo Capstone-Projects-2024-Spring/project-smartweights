@@ -114,10 +114,11 @@ struct Pet_Page: View {
                         Text("Level \(viewModel.currentLevel)")
                             .font(.system(size: 20))
                             .bold()
+                            .foregroundStyle(.black)
                         
                         
                         // XP Progress Bar
-                        CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                        CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .africanViolet, backgroundColor: .gray)
                             .frame(height: 20)
                             .padding(.top, -5)
                             .padding(.horizontal)
@@ -130,8 +131,9 @@ struct Pet_Page: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 15)
                         .padding(.bottom, -20)
+                        .foregroundStyle(.black)
                     
-                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .africanViolet, backgroundColor: .gray)
                         .frame(height: 20)
                         .padding()
                     
@@ -140,6 +142,7 @@ struct Pet_Page: View {
                 .padding(.top, -20)
                 Spacer()
             }
+            .background(.white)
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(
                     title: Text(viewModel.alertTitle),
