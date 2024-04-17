@@ -40,8 +40,12 @@ struct FitnessPlanPage: View {
                     DatePicker("Goal End Date", selection: $draftSelectedDate, displayedComponents: .date)
                         .datePickerStyle(.compact)
                     
-                    TextField("Dumbbell Weight Goal", value: $draftWeightGoal, formatter: NumberFormatter())
-                        .keyboardType(.numberPad)
+                    Picker("Dumbbell Weight Goal", selection: $draftWeightGoal) {
+                                            ForEach(weight.filter { $0 % 5 == 0 }, id: \.self) { weight in
+                                                Text("\(weight)").tag(weight)
+                                            }
+                                        }
+                                        .pickerStyle(.menu)
                     Picker("Set Goal", selection: $draftSetGoal) {
                         ForEach(sets, id: \.self) { sets in
                             Text("\(sets)").tag(sets)

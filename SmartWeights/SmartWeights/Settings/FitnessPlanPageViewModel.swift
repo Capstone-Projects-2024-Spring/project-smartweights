@@ -17,6 +17,7 @@ class fitnessPlanViewModel: ObservableObject {
     @Published var notes: String = ""
     @Published var selectedDate: Date = Date() // current date
     
+    var fitnessPlanDBManager = FitnessPlanDBManager()
     /// viewModel function to reset all variables
     func clearAllInputs() {
         self.hasPlan = false
@@ -36,5 +37,15 @@ class fitnessPlanViewModel: ObservableObject {
         self.repGoal = repGoal
         self.notes = notes
         self.selectedDate = selectedDate
+
+        // Save the fitness plan to the database
+        fitnessPlanDBManager.createFitnessPlan(
+            daysPerWeekGoal: Int64(daysPerWeekGoal),
+            dumbbellWeightGoal: Int64(weightGoal),
+            setGoal: Int64(setGoal),
+            repGoal: Int64(repGoal),
+            notes: notes,
+            selectedDate: selectedDate
+        )
     }
 }
