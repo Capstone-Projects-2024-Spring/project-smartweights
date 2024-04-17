@@ -60,18 +60,23 @@ class MorePageViewModel: NSObject, ObservableObject {
     }
     
     func takeScreenshot() {
-        let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow })
-        let scale = UIScreen.main.scale
-        let bounds = window?.bounds ?? .zero
+    let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow })
+    let scale = UIScreen.main.scale
+    let bounds = window?.bounds ?? .zero
 
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale)
-        if let context = UIGraphicsGetCurrentContext() {
-            window?.layer.render(in: context)
-        }
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+    UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale)
+    if let context = UIGraphicsGetCurrentContext() {
+        window?.layer.render(in: context)
+    }
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
 
-        if let img = image {
+    if let img = image {
+        // Define the crop area (you can adjust these values to fit your needs)
+        let cropArea = CGRect(x: 0, y: 300, width: 10000, height: 2100)
+        if let cgImage = img.cgImage?.cropping(to: cropArea) {
+            let croppedImage = UIImage(cgImage: cgImage)
+
             // Define a closure for the completion handler
             let completionHandler: (UIImage, Error?, UnsafeMutableRawPointer?) -> Void = { _, error, _ in
                 if error == nil {
@@ -84,9 +89,10 @@ class MorePageViewModel: NSObject, ObservableObject {
                 }
             }
             // Use the completion handler with UIImageWriteToSavedPhotosAlbum
-            UIImageWriteToSavedPhotosAlbum(img, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+            UIImageWriteToSavedPhotosAlbum(croppedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
         }
     }
+}
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeMutableRawPointer) {
             DispatchQueue.main.async {
