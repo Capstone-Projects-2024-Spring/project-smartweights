@@ -12,8 +12,7 @@ struct SmartWeightsApp: App {
     let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
-            //bleView(ble: BLEcentral())
-            WorkoutMainPage()
+            LoginView()
                .environment(\.managedObjectContext, persistenceController.container.viewContext)
 //            testview()
         }

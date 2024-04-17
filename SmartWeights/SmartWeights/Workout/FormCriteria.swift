@@ -181,7 +181,7 @@ class FormCriteria: ObservableObject{
             
         }
         self.listOfWristUpDownAverage.append(percentage)
-        print(good,count)
+        
         return percentage
     }
     
@@ -250,10 +250,6 @@ class FormCriteria: ObservableObject{
             }
             
         }
-        print("this is good")
-        print(good)
-        print("this is count")
-        print(count)
         
         if count != 0 {
             percentage = Double(good) / Double(count)
