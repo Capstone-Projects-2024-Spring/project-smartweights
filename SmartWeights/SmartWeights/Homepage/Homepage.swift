@@ -41,7 +41,7 @@ struct Homepage: View {
                 let buttons = [postWorkout]
                 
                 // Additional Pages Carousel
-                NavigationCarousel(buttons: buttons, iconColor: Color.africanViolet, bgColor: .black, textColor: .black)
+                NavigationCarousel(buttons: buttons, iconColor: .black, bgColor: .africanViolet, textColor: .black)
                 
                 // Videos for video carousel
                 let bicepCurlVideo = VideoCard(videoId: "ykJmrZ5v0Oo", title: "How to Do a Dumbbell Bicep Curl", description: "Howcast")
