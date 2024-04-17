@@ -3,17 +3,17 @@ sidebar_position: 3
 ---
 
 # General Requirements
-- iOS
+- iPhone with iOS 17
 - Dumbbells
-- Workout Bench
-- 3D printer
 - Sensors (IMUs, Barometers)
 - Raspberry Pi Pico W
 - Mobile Application Development Environment
-- IDE/text editor
-- Project management (Jira)
+- IDE/Text Editor
+- Project Management (Jira)
 - Version Control management (GitHub/Git)
-- Database (Firebase & NoSQL)
+- Database (Apple CloudKit)
+- TestFlight
+- 3D Printer
 - CAD Software
 
 
