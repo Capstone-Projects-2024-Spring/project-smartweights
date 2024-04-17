@@ -25,6 +25,7 @@ struct FitnessPlanPage: View {
     @State private var draftNotes: String = ""
     @State private var draftSelectedDate = Date()
     
+    let characterLimit = 200
     var body: some View {
         NavigationStack {
             SwiftUI.Form {
@@ -39,12 +40,8 @@ struct FitnessPlanPage: View {
                     DatePicker("Goal End Date", selection: $draftSelectedDate, displayedComponents: .date)
                         .datePickerStyle(.compact)
                     
-                    Picker("Weight Goal", selection: $draftWeightGoal) {
-                        ForEach(weight.filter { $0 % 5 == 0 }, id: \.self) { weight in
-                            Text("\(weight)").tag(weight)
-                        }
-                    }
-                    .pickerStyle(.menu)
+                    TextField("Dumbbell Weight Goal", value: $draftWeightGoal, formatter: NumberFormatter())
+                        .keyboardType(.numberPad)
                     Picker("Set Goal", selection: $draftSetGoal) {
                         ForEach(sets, id: \.self) { sets in
                             Text("\(sets)").tag(sets)
@@ -58,11 +55,27 @@ struct FitnessPlanPage: View {
                     }
                     .pickerStyle(.menu)
                     // Text field for entering notes
-                    TextField("Enter fitness plan notes here...", text: $draftNotes)
-                        .padding(10)
-                        .background(Color.white)
-                    //.border(Color.black, width: 1)
-                        .cornerRadius(5)
+                    ZStack(alignment: .topTrailing) {
+                        TextEditor(text: $draftNotes)
+                            .frame(minHeight: 100) // Set a minimum height to allow scrolling
+                            .padding(2)
+                            .background(Color.white)
+                            .cornerRadius(5)
+                        if draftNotes.isEmpty {
+                            Text("Enter your notes here...")
+                                .foregroundColor(.gray)
+                                .padding(6)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        Text("\(draftNotes.count)/\(characterLimit)")
+                            .foregroundColor(draftNotes.count > characterLimit ? .red : .primary)
+                            .font(.caption)
+                            .padding(.trailing, 5)
+                            .padding(.top, 5)
+                            .offset(y: -5)
+                    }
+                    .frame(maxHeight: .infinity) // Allow the ZStack to expand vertically
+                    .padding()
                     
                     // save temp variables to viewModel variables, will update previous page
                     Button("Save") {
