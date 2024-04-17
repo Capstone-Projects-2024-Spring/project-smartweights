@@ -198,15 +198,12 @@ struct HamburgerMenu: View {
             Button("Customize", action: navigateToCustomize)
                 .accessibilityIdentifier("Customize")
         } label: {
-            Label {
-                Text("")
-            } icon: {
+            Label { }
+                icon: {
                 Image(systemName: "line.horizontal.3")
-                    .foregroundColor(.blue)
+                    .foregroundColor(.africanViolet)
                     .font(.title)
                     .padding()
-                    .background(Circle().fill(Color.gray))
-                    .shadow(radius: 5)
             }
             .accessibilityIdentifier("HamburgerMenuButton")
         }
