@@ -114,6 +114,7 @@ class WorkoutViewModel: ObservableObject {
             feedbackDataForSets.removeAll()
             workoutAnalysisForSets.removeAll()
             formCriteria.resetListofData()
+            print("reset data has been reset hello")
         } else {
             alertMessage = "Please enter valid numbers for sets, reps, and weights."
             showingAlert = true
