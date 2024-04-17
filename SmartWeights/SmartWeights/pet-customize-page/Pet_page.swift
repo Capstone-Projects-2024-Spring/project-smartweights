@@ -109,6 +109,7 @@ struct Pet_Page: View {
                     CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
                         .frame(height: 20)
                         .padding(.bottom, 25)
+                        .padding(.horizontal)
                         // Display Current Level
                         Text("Level \(viewModel.currentLevel)")
                             .font(.system(size: 20))
@@ -119,6 +120,7 @@ struct Pet_Page: View {
                         CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                             .frame(height: 20)
                             .padding(.top, -5)
+                            .padding(.horizontal)
                     
                     
                     // Display Current Level
