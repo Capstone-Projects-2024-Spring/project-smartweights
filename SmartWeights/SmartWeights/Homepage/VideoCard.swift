@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct VideoCard: View {
+struct VideoCard: View, Identifiable {
     
     var videoId: String
     var title: String
     var description: String
+    var id: String { videoId }
     
     var body: some View {
         VStack {
