@@ -48,6 +48,7 @@ struct Pet_Page: View {
                         }
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
+                        .foregroundStyle(Color.africanViolet)
                     }
                     .accessibilityIdentifier("ChangeFoodButton")
                     .sheet(isPresented: $viewModel.showFoodSelection) {
@@ -108,7 +109,7 @@ struct Pet_Page: View {
                     // Health Bar
                     CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
                         .frame(height: 20)
-                        .padding(.bottom, 25)
+                        .padding(.bottom, 20)
                         .padding(.horizontal)
                         // Display Current Level
                         Text("Level \(viewModel.currentLevel)")
@@ -129,7 +130,7 @@ struct Pet_Page: View {
                         .font(.system(size: 20))
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 15)
+                        .padding(.top, 20)
                         .padding(.bottom, -20)
                         .foregroundStyle(.black)
                     
