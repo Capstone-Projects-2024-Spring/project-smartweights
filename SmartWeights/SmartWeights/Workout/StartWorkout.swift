@@ -274,20 +274,46 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func finishworkout(){
+//        // Logic for completing the workout
+//        //generateRandomData(for: .overallWorkout) // Generate overall workout data
+//        storeModel.addFundtoUser(price: 50)
+//        workoutPageViewModel.AddXP(value: 25)
+//        resetWorkoutState()
+//        hasWorkoutStarted = false
+//        isWorkoutPaused = false
+//        ble.collectDataToggle = false //stops collecting data
+//        print("hello")
+//        //ble.MPU6050_1Gyros.removeAll()
+//        //need to add this data to another array to store for workout history
+//        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
+//        ble.MPU6050_2_All_Gyros.removeAll()
+//        showGraphPopover = true
+//        currentMotivationalPhrase = "Let's get started with a New Workout!"
+        totalSets = Int(inputtedSets) ?? 0
+        
+        // Get feedback from formCriteria
+        let currentFeedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+        
+        // Check if feedback indicates poor form
+        if currentFeedback.2 == "Whoa slow down!!" {
+            // Call function to reduce HP
+            workoutPageViewModel.lowerHP()
+        }
+        
+        print("hello test, looking for bad form hehehe")
+        print(currentFeedback.2)
         // Logic for completing the workout
-        //generateRandomData(for: .overallWorkout) // Generate overall workout data
         storeModel.addFundtoUser(price: 50)
         workoutPageViewModel.AddXP(value: 25)
         resetWorkoutState()
         hasWorkoutStarted = false
         isWorkoutPaused = false
         ble.collectDataToggle = false //stops collecting data
-        print("hello")
-        //ble.MPU6050_1Gyros.removeAll()
-        //need to add this data to another array to store for workout history
         ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
+        ble.MPU6050_2_All_Gyros.removeAll()
         showGraphPopover = true
         currentMotivationalPhrase = "Let's get started with a New Workout!"
+        
     }
     
     func finalset(){
@@ -295,6 +321,7 @@ class WorkoutViewModel: ObservableObject {
         showGraphPopover = false
         resumeTimer()
         ble.MPU6050_1Gyros.removeAll()
+        ble.MPU6050_2Gyros.removeAll()
         ble.collectDataToggle = true
         currentMotivationalPhrase = "Last Set! Push through!"
     }

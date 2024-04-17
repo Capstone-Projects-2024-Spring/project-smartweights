@@ -250,31 +250,31 @@ struct WorkoutMainPage: View {
             Button(action: {
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
-                        
-                        viewModel.totalSets = Int(viewModel.inputtedSets) ?? 0
-                        
-                        // Get feedback from formCriteria
-                        let currentFeedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
-                        
-                        // Check if feedback indicates poor form
-                        if currentFeedback.2 == "Whoa slow down!!" {
-                            // Call function to reduce HP
-                            workoutPageViewModel.lowerHP()
-                        }
-                        
-                        print("hello test, looking for bad form hehehe")
-                        print(currentFeedback.2)
-                        // Logic for completing the workout
-                        storeModel.addFundtoUser(price: 50)
-                        workoutPageViewModel.AddXP(value: 25)
-                        viewModel.resetWorkoutState()
-                        viewModel.hasWorkoutStarted = false
-                        viewModel.isWorkoutPaused = false
-                        ble.collectDataToggle = false //stops collecting data
-                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
-                        ble.MPU6050_2_All_Gyros.removeAll()
-                        viewModel.showGraphPopover = true
-                        currentMotivationalPhrase = "Let's get started with a New Workout!"
+                        viewModel.finishworkout()
+//                        viewModel.totalSets = Int(viewModel.inputtedSets) ?? 0
+//                        
+//                        // Get feedback from formCriteria
+//                        let currentFeedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+//                        
+//                        // Check if feedback indicates poor form
+//                        if currentFeedback.2 == "Whoa slow down!!" {
+//                            // Call function to reduce HP
+//                            workoutPageViewModel.lowerHP()
+//                        }
+//                        
+//                        print("hello test, looking for bad form hehehe")
+//                        print(currentFeedback.2)
+//                        // Logic for completing the workout
+//                        storeModel.addFundtoUser(price: 50)
+//                        workoutPageViewModel.AddXP(value: 25)
+//                        viewModel.resetWorkoutState()
+//                        viewModel.hasWorkoutStarted = false
+//                        viewModel.isWorkoutPaused = false
+//                        ble.collectDataToggle = false //stops collecting data
+//                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
+//                        ble.MPU6050_2_All_Gyros.removeAll()
+//                        viewModel.showGraphPopover = true
+//                        currentMotivationalPhrase = "Let's get started with a New Workout!"
                         
                         
                         
