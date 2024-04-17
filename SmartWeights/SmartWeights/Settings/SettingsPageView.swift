@@ -88,6 +88,7 @@ struct SettingsPageView: View {
                             // Workouts goal
                             Text("Workouts per week: \(viewModel.daysPerWeekGoal)")
                                 .font(.system(size: 20))
+                                .frame(maxWidth: .infinity, alignment: .center)
                             
                             // Weeks goal
                             Text("Goal End Date: \(formattedDate)")
@@ -112,15 +113,14 @@ struct SettingsPageView: View {
                         .padding()
                         .cornerRadius(10)
                     }
+                    .frame(maxWidth: .infinity)
                     
                     // Navigation Link to Edit Fitness Plan
                     NavigationLink(destination: FitnessPlanPage(viewModel: viewModel)) {
                         Text("Edit Fitness Plan")
-                            //.padding() // if want navigation button to be bigger
+                        //.padding() // if want navigation button to be bigger
                     }
                 }
-                .navigationTitle("Fitness Plan")
-
                 
                 Section(header: Text("Body Measurements")) {
                     Picker("Weight", selection: $selectedWeight) {
