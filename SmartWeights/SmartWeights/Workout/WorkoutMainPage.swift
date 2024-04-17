@@ -105,12 +105,40 @@ struct WorkoutMainPage: View {
                             ZStack {
                                 Image("bubble2")
                                     .resizable()
-                                    .frame(width: 250, height: 150)
+                                    .frame(width: 270, height: 150)
                                 VStack{
-                                    Text("\(viewModel.feedback.2)")
-                                        .foregroundColor(viewModel.feedback.2 == "Whoa slow down!!" ? Color.red : Color.green)
-                                    Text("\(viewModel.feedback.3)")
-                                        .foregroundColor(viewModel.feedback.3 == "Keep that elbow steady!" ? Color.red : Color.green)
+                                    HStack{
+                                        Text("\(viewModel.feedback.2)")
+                                            .foregroundColor(.black)
+                                            .bold()
+                                        if viewModel.feedback.2 == "Whoa slow down!!"{
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        }
+                                        else{
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    HStack{
+                                        Text("\(viewModel.feedback.3)")
+                                            .foregroundColor(.black)
+                                            .bold()
+                                        if viewModel.feedback.2 == "Keep that elbow steady!"{
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        }
+                                        else{
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+
+                                        }
+                                    }
+                                    
                                 }
                                 
                             }
@@ -126,8 +154,10 @@ struct WorkoutMainPage: View {
                         }
                         Text("\(viewModel.feedback.0)") //gives overall acceleration
                             .font(.subheadline)
+                            .bold()
                         Text("\(viewModel.feedback.1)") //gives overall elbow stability
                             .font(.subheadline)
+                            .bold()
                     }
                     .padding(.bottom, 30)
                     
@@ -279,7 +309,7 @@ struct WorkoutMainPage: View {
                             workoutPageViewModel.lowerHP()
                         }
                         
-                        print("hello test")
+                        print("hello testing remove hp from bad form")
                         print(currentFeedback.2)
                     } else {
                         // Resume workout from a paused state

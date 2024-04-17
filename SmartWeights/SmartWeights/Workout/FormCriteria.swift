@@ -27,7 +27,7 @@ class FormCriteria: ObservableObject{
     
     
     //phrases
-    private var goodFormPhrases: [String] = ["Keep up the good work!!","Looking good","Phew, Good job","Those curls were nice!"]
+    private var goodFormPhrases: [String] = ["Keep up the good work!!","Beautiful curls!","Phew, good job","Those curls were nice!","I'm proud of you"]
     
     func getRandomGoodFormPhrase() -> String {
         let randomIndex = Int.random(in: 0..<goodFormPhrases.count)

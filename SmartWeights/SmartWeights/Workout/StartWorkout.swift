@@ -69,7 +69,6 @@ class WorkoutViewModel: ObservableObject {
                 self.workoutAnalysis = formCriteria.UpdateWorkoutAnalysis(totalSets: totalSets, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
                 print(self.workoutAnalysis)
                 self.workoutAnalysisForSets.append(self.workoutAnalysis)
-                print(totalSets,"THIS IS THE TOTAL SETS")
                 print("hello i am showing that graph popup is working and that the functions are being called")
             }
         }
@@ -114,7 +113,6 @@ class WorkoutViewModel: ObservableObject {
             feedbackDataForSets.removeAll()
             workoutAnalysisForSets.removeAll()
             formCriteria.resetListofData()
-            print("reset data has been reset hello")
         } else {
             alertMessage = "Please enter valid numbers for sets, reps, and weights."
             showingAlert = true
@@ -285,7 +283,7 @@ class WorkoutViewModel: ObservableObject {
             workoutPageViewModel.lowerHP()
         }
         
-        print("hello test, looking for bad form hehehe")
+        print("hello test, removing hp from bad form")
         print(currentFeedback.2)
         // Logic for completing the workout
         storeModel.addFundtoUser(price: 50)
