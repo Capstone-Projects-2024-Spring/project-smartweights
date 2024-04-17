@@ -46,8 +46,11 @@ struct Homepage: View {
                 // Videos for video carousel
                 let bicepCurlVideo = VideoCard(videoId: "ykJmrZ5v0Oo", title: "How to Do a Dumbbell Bicep Curl", description: "Howcast")
                 
+                // Array of defined videos. Used by VideoCarousel view.
+                let videos = [bicepCurlVideo]
+                
                 // Video Carousel
-                VideoCarousel(videoCards: [bicepCurlVideo])
+                VideoCarousel(videoCards: videos)
             }
         }
        
