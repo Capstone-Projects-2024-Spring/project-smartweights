@@ -72,7 +72,7 @@ struct Homepage: View {
                             let count = 1...6
                             ForEach(count, id: \.self) { number in
                                 if number == 1 {
-                                    NavigationLink(destination: PostWorkout()) {
+                                    NavigationLink(destination: allFeedback()) {
                                         VStack {
                                             Image(systemName: "chart.line.uptrend.xyaxis")
                                                 .foregroundStyle(Color.africanViolet

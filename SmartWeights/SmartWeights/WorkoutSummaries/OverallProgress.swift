@@ -129,8 +129,7 @@ struct SelectedDateData: View {
                 .sheet(isPresented: $isSheetPresented) {
                     // Content of the sheet
                     moreFeedbackSheetView()
-                        .background(Color.black)
-                       
+                
                     
                 }
                 
@@ -143,7 +142,7 @@ struct SelectedDateData: View {
     
 }
 
-struct PostWorkout: View {
+struct allFeedback: View {
     
     @ObservedObject var viewModel =  OverallProgressViewModel()
     @State var isFormGraph: Bool = true
@@ -159,7 +158,7 @@ struct PostWorkout: View {
                     //Title of the page
                     HStack(alignment: .firstTextBaseline){
                         
-                        Text("Workout Progress")
+                        Text("All Feedback")
                             .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                             .bold()
                             .fontDesign(.monospaced)
@@ -176,76 +175,76 @@ struct PostWorkout: View {
                     
                     //display data for that day
                     
-                    VStack{
-                        Button(action: {
-                            // Action to perform when the button is tapped
-                        }) {
-                            ZStack {
-                                Menu("Graphs") {
-                                    Button(action: {
-                                        isFormGraph = true
-                                        isVelocityGraph = false
+                    // VStack{
+                    //     Button(action: {
+                    //         // Action to perform when the button is tapped
+                    //     }) {
+                    //         ZStack {
+                    //             Menu("Graphs") {
+                    //                 Button(action: {
+                    //                     isFormGraph = true
+                    //                     isVelocityGraph = false
                                         
-                                    }, label: {
-                                        Text("Form")
-                                    })
-                                    Button(action: {
-                                        isFormGraph = false
-                                        isVelocityGraph = true
+                    //                 }, label: {
+                    //                     Text("Form")
+                    //                 })
+                    //                 Button(action: {
+                    //                     isFormGraph = false
+                    //                     isVelocityGraph = true
                                         
-                                    }, label: {
-                                        Text("Velocity")
-                                    })
-                                }
-                                .font(.title2)
-                                .bold()
+                    //                 }, label: {
+                    //                     Text("Velocity")
+                    //                 })
+                    //             }
+                    //             .font(.title2)
+                    //             .bold()
                                 
-                                Image(systemName: "cursorarrow.click")
-                                    .padding(.leading, 100)
-                            }
-                        }
-                        .accessibilityLabel("SelectGraphButton")
+                    //             Image(systemName: "cursorarrow.click")
+                    //                 .padding(.leading, 100)
+                    //         }
+                    //     }
+                    //     .accessibilityLabel("SelectGraphButton")
                         
-                        VStack{
-                            if isFormGraph{
+                    //     VStack{
+                    //         if isFormGraph{
                                 
-                                Text("Form Progress")
-                                    .font(.title2)
-                                    .bold()
-                                WorkoutGraphForm()
-                            }
-                            else if isVelocityGraph{
+                    //             Text("Form Progress")
+                    //                 .font(.title2)
+                    //                 .bold()
+                    //             WorkoutGraphForm()
+                    //         }
+                    //         else if isVelocityGraph{
                                 
-                                Text("Velocity Progress")
-                                    .font(.title2)
-                                    .bold()
-                                WorkoutGraphVelocity()
+                    //             Text("Velocity Progress")
+                    //                 .font(.title2)
+                    //                 .bold()
+                    //             WorkoutGraphVelocity()
                                 
-                            }
-                        }
-                        .shadow(color: Color.blue.opacity(0.5), radius: 10, x: 0, y: 5)
+                    //         }
+                    //     }
+                    //     .shadow(color: Color.blue.opacity(0.5), radius: 10, x: 0, y: 5)
                         
                         
-                    }
-                    VStack {
-                        HStack{
-                            VStack(alignment: .leading){
-                                Text("Overall Form - 80%")
-                                Text("Overall Velocity - 70%")
-                            }
-                            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                            .padding(.leading,20)
-                            Spacer()
-                            Image("dinosaur")
-                                .resizable()
-                                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/,height: 100)
-                                .cornerRadius(50)
-                                .padding(.trailing, 20)
+                    // }
+                    // VStack {
+                    //     HStack{
+                    //         VStack(alignment: .leading){
+                    //             Text("Overall Form - 80%")
+                    //             Text("Overall Velocity - 70%")
+                    //         }
+                    //         .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                    //         .padding(.leading,20)
+                    //         Spacer()
+                    //         Image("dinosaur")
+                    //             .resizable()
+                    //             .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/,height: 100)
+                    //             .cornerRadius(50)
+                    //             .padding(.trailing, 20)
                             
-                        }
-                        Spacer()
-                    }
-                    .frame(height: 150)
+                    //     }
+                    //     Spacer()
+                    // }
+                    // .frame(height: 150)
                     
                     
                     
@@ -254,8 +253,8 @@ struct PostWorkout: View {
                 }
             }
         }
-        .background(Color.black)
-        .foregroundColor(.white)
+//        .background(Color.black)
+//        .foregroundColor(.white)
         
         
     }
@@ -263,5 +262,5 @@ struct PostWorkout: View {
 
 
 #Preview {
-    PostWorkout(viewModel: OverallProgressViewModel())
+    allFeedback(viewModel: OverallProgressViewModel())
 }
