@@ -54,6 +54,7 @@ struct SettingsPageView: View {
     var body: some View {
         NavigationStack {
             SwiftUI.Form {
+                /*
                 Section(header: Text("Profile")) {
                     Group {
                         HStack {
@@ -81,7 +82,7 @@ struct SettingsPageView: View {
                         }
                     }
                 }
-                
+                */
                 Section(header: Text("Fitness Plan Summary")) {
                     Group {
                         VStack(alignment: .center) {
