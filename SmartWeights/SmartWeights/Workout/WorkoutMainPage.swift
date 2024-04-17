@@ -37,6 +37,18 @@ struct WorkoutMainPage: View {
         ZStack {
             
             VStack {
+                Button(action: {
+                       viewModel.playSound()
+                   
+                   }, label: {
+                       Text("Play")
+                   })
+                Button(action: {
+                    viewModel.stopSound()
+                   }, label: {
+                       Text("stop")
+                   })
+              
                 ZStack{
                     workoutTitleView
                     VStack{

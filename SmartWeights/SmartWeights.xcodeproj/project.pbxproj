@@ -38,7 +38,6 @@
 		6BEA786B2BC0470C00239AB0 /* PetPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA786A2BC0470C00239AB0 /* PetPageViewModel.swift */; };
 		6BEA786D2BC0780E00239AB0 /* FoodItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA786C2BC0780E00239AB0 /* FoodItemManager.swift */; };
 		6BEA786F2BC08E4700239AB0 /* WorkoutPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA786E2BC08E4700239AB0 /* WorkoutPageViewModel.swift */; };
-
 		6BEA78732BC1E93F00239AB0 /* PetItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA78722BC1E93F00239AB0 /* PetItemManager.swift */; };
 		77C430C32BC080C8006E1FBE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C430C22BC080C8006E1FBE /* CoreDataManager.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
@@ -54,6 +53,7 @@
 		9118993C2B8CE1400071232A /* WorkoutFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993B2B8CE1400071232A /* WorkoutFeedback.swift */; };
 		9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993D2B8CE1570071232A /* WorkoutMainPage.swift */; };
 		912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912241702B90EA9F00D03638 /* WorkoutUITests.swift */; };
+		912BD2452BD0631300029A32 /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 912BD2442BD0631300029A32 /* alarm.mp3 */; };
 		918037962BA9026700802D01 /* central.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037952BA9026700802D01 /* central.swift */; };
 		918037982BB4647A00802D01 /* central_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037972BB4647A00802D01 /* central_v2.swift */; };
 		9180379A2BBF719B00802D01 /* FormCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037992BBF719B00802D01 /* FormCriteria.swift */; };
@@ -136,6 +136,7 @@
 		9118993B2B8CE1400071232A /* WorkoutFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedback.swift; sourceTree = "<group>"; };
 		9118993D2B8CE1570071232A /* WorkoutMainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMainPage.swift; sourceTree = "<group>"; };
 		912241702B90EA9F00D03638 /* WorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutUITests.swift; sourceTree = "<group>"; };
+		912BD2442BD0631300029A32 /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
 		918037952BA9026700802D01 /* central.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = central.swift; sourceTree = "<group>"; };
 		918037972BB4647A00802D01 /* central_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = central_v2.swift; sourceTree = "<group>"; };
 		918037992BBF719B00802D01 /* FormCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCriteria.swift; sourceTree = "<group>"; };
@@ -257,6 +258,7 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				912BD2432BD061EA00029A32 /* Sounds */,
 				E5297D242BB4588A0078A9E6 /* Homepage */,
 				E56BD7D92BAFB0D900863D4D /* Extensions */,
 				E56BD7D62BAFA29700863D4D /* Tab Bar */,
@@ -324,6 +326,14 @@
 				6BEA786E2BC08E4700239AB0 /* WorkoutPageViewModel.swift */,
 			);
 			path = Workout;
+			sourceTree = "<group>";
+		};
+		912BD2432BD061EA00029A32 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				912BD2442BD0631300029A32 /* alarm.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		918037902BA09AD600802D01 /* bluetooth */ = {
@@ -488,6 +498,7 @@
 			files = (
 				91065F842B7A7E4900BC62E6 /* Preview Assets.xcassets in Resources */,
 				91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */,
+				912BD2452BD0631300029A32 /* alarm.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,6 +15,8 @@ class WorkoutViewModel: ObservableObject {
     }
     let storeModel = storeViewModel()
     let workoutPageViewModel = WorkoutPageViewModel()
+
+    var player: AVAudioPlayer!
     
     
     var feedback: (String, String, String, String) = ("", "", "", "")
@@ -333,12 +335,29 @@ class WorkoutViewModel: ObservableObject {
                 if self.formCriteria.dangerousForm(dumbbellData: self.ble.MPU6050_1_Gyro, elbowData: self.ble.MPU6050_2_Gyro){
                     DispatchQueue.main.async {
                         print("DANGEROUS")
+                        self.playSound()
                     }
                 }
             }
         }
     }
     
+    func playSound() {
+    guard let url = Bundle.main.url(forResource: "alarm", withExtension: "mp3") else {
+        print("Unable to locate audio file")
+        return
+        }
+        do {
+            player = try AVAudioPlayer(contentsOf: url)
+            player!.play()
+        } catch {
+            print("Failed to play audio: \(error)")
+        }
+    }
+
+    func stopSound() {
+        player?.stop()
+    }
     
     /// Function to start timer
     func startTimer() {
@@ -415,7 +434,12 @@ class WorkoutViewModel: ObservableObject {
     func generateRandomNumber() -> Double {
         return Double.random(in: 0..<1)
     }
+    
+    
 }
+
+
+
 
 
 #Preview{
