@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct MorePageView: View {
     @ObservedObject var viewModel = MorePageViewModel()
@@ -95,8 +96,13 @@ struct MorePageView: View {
                     }
                 }
             }
-            .alert("Screenshot Saved", isPresented: $viewModel.showingScreenshotSavedAlert) {
-                    Button("OK", role: .cancel) { }
+        }
+        .sheet(isPresented: $viewModel.showingShareSheet, onDismiss: {
+//            to reset the screenshot
+            viewModel.screenshot = nil
+        }) {
+            if let screenshot = viewModel.screenshot {
+                ShareSheetView(items: [screenshot])
             }
         }
     }
@@ -120,6 +126,17 @@ struct Achievement: Identifiable {
     mutating func claim() {
         isClaimed = true
     }
+}
+
+struct ShareSheetView: UIViewControllerRepresentable {
+    var items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 #Preview {
