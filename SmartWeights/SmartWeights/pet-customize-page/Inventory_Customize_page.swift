@@ -21,15 +21,16 @@ struct Customize_page: View {
         NavigationView {
             VStack {
                 ZStack {
+                    /*
                     viewModel.backgroundColor
                         .frame(width: 300, height: 320)
                         .cornerRadius(15)
-                    
+                    */
                     // Background image
                     if let bgImage = viewModel.equippedBackgroundImage {
                         Image(bgImage.imageName)
                             .resizable()
-                            .frame(width: 400, height: 350)
+                            .frame(width: 350, height: 300)
                     }
                     
                     // Conditionally render the Jet Pack behind the dog
@@ -44,7 +45,7 @@ struct Customize_page: View {
                         Image(pet.imageName)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 300, height: 300)
+                            .frame(width: 350, height: 300)
                     }
                     
                     // Accessory image
@@ -84,12 +85,6 @@ struct Customize_page: View {
                             .background(Color.blue)
                             .cornerRadius(15)
                     }
-                    
-                    
-                    
-                    
-                    
-                    
                 }
                 
                 

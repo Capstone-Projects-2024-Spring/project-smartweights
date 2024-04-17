@@ -18,12 +18,13 @@ struct Pet_Page: View {
     var body: some View {
         NavigationView {
             VStack {
+                /*
                 Text("Pet Name")
                     .font(.system(size: 45))
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
                 
-                /*
+                
                  Button("testing XP"){
                  viewModel.AddXP(value: 75)
                  }
@@ -82,7 +83,7 @@ struct Pet_Page: View {
                     
                     Image(backgroundItemDBManager.activeBackground)
                         .resizable()
-                        .frame(width: 500, height: 500)
+                        .frame(width: 475, height: 475)
                     
                     
                     
@@ -92,7 +93,7 @@ struct Pet_Page: View {
                     Image(petItemDBManager.activePet)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 300, height: 300)
+                        .frame(width: 475, height: 475)
                     Image(clothingItemDBManager.activeClothing)
                         .resizable()
                         .scaledToFit()
@@ -104,23 +105,25 @@ struct Pet_Page: View {
                     //     .padding(.bottom, 0)
                 }
                 VStack {
+                    // Health Bar
                     CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
                         .frame(height: 20)
-                        .padding()
+                        .padding(.bottom, 25)
+                        // Display Current Level
+                        Text("Level \(viewModel.currentLevel)")
+                            .font(.system(size: 20))
+                            .bold()
+                        
+                        
+                        // XP Progress Bar
+                        CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                            .frame(height: 20)
+                            .padding(.top, -5)
                     
-                    
-                    // Display Current Level
-                    Text("Level \(viewModel.currentLevel)")
-                        .font(.system(size: 20))
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 10)
-                    
-                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
-                        .frame(height: 20)
-                        .padding()
+
                     
                 }
+
                 .padding(.top, -20)
                 Spacer()
             }
