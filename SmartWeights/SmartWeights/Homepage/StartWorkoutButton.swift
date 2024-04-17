@@ -21,17 +21,17 @@ struct StartWorkoutButton: View {
                             Text("Start Workout")
                                 .font(.title2)
                             Image(systemName: "arrow.right")
-                                .foregroundStyle(Color.africanViolet)
                         }
                         Text(currentWorkout)
                             .font(.subheadline)
                     }
                     .padding()
                     Spacer()
-                    Image(systemName: "photo")
+                    Image(systemName: "figure.strengthtraining.traditional")
                         .padding()
                 }
             }
+            .foregroundStyle(.black)
             .cornerRadius(12)
             .padding()
         }
