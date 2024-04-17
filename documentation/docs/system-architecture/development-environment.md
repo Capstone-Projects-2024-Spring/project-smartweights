@@ -7,10 +7,9 @@ sidebar_position: 4
 - Docusaurus
   
 ## Programming Languages
-- Swift (iOS Application)
-- Python (Pico-W)
+- Swift
+- Python
 
 ## Editors
-- Thonny
 - XCode
 - VS Code

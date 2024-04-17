@@ -1,32 +1,36 @@
-/// `CloudKitManager` is a singleton class that manages the CloudKit container and databases.
-///
 import CloudKit
 import SwiftUI
+/// `CloudKitManager` is a singleton class that manages the CloudKit container and databases.
 class CloudKitManager {
     /// The shared singleton instance of `CloudKitManager`.
     static let shared = CloudKitManager()
-    
+    //    let containerIdentifier = "iCloud.SmartWeights"
     let container: CKContainer
     let publicDatabase: CKDatabase
     let privateDatabase: CKDatabase
     
+    
     @Published var isSignedInToiCloud: Bool = false
     @Published var error: String = ""
+    //    @Published var userName: String = ""
+    //    @Published var permissionStatus: Bool = false
     @Published var text: String = ""
+    //    @Published var userRecord: CKRecord.Reference?
     
     /// Initializes the `CloudKitManager` singleton instance.
     init() {
+        //        container = CKContainer(identifier: containerIdentifier)
         container = CKContainer.default()
         publicDatabase = container.publicCloudDatabase
         privateDatabase = container.privateCloudDatabase
         getiCloudStatus()
     }
     
-    /// Retrieves the iCloud account status and updates the `isSignedInToiCloud` property accordingly.
-    private func getiCloudStatus() {
-        CKContainer.default().accountStatus { [weak self] returnedStatus, returnedError in
-            DispatchQueue.main.async {
-                switch returnedStatus {
+    
+    private func getiCloudStatus(){
+        CKContainer.default().accountStatus{[weak self] returnedStatus, returnedError in
+            DispatchQueue.main.async{
+                switch returnedStatus{
                 case .available:
                     self?.isSignedInToiCloud = true
                 case .noAccount:
@@ -39,36 +43,25 @@ class CloudKitManager {
                     self?.error = CloudKitError.iCloudAccountUnknown.localizedDescription
                 }
             }
+            
         }
     }
-    
-    /// Enum representing CloudKit errors.
-    enum CloudKitError: LocalizedError {
+    enum CloudKitError: LocalizedError{
         case iCloudAccountNotFound
         case iCloudAccountNotDetermined
         case iCloudAccountRestricted
         case iCloudAccountUnknown
     }
-    
-    /// Saves a record to the public database.
-    /// - Parameter record: The record to be saved.
     func saveItem(record: CKRecord) {
         p_saveRecord(record: record, usePrivateDatabase: false)
     }
-    
-    /// Saves a record to the private database.
-    /// - Parameter record: The record to be saved.
+
     func savePrivateItem(record: CKRecord) {
         p_saveRecord(record: record, usePrivateDatabase: true)
     }
-    
-    /// Private method to save a record to the specified database.
-    /// - Parameters:
-    ///   - record: The record to be saved.
-    ///   - usePrivateDatabase: A flag indicating whether to use the private database or not.
+
     private func p_saveRecord(record: CKRecord, usePrivateDatabase: Bool) {
-        // switch to private database if specified
-        let database = usePrivateDatabase ? privateDatabase : publicDatabase
+        let database = usePrivateDatabase ? CKContainer.default().privateCloudDatabase : CKContainer.default().publicCloudDatabase
         database.save(record) { [weak self] returnedRecord, returnedError in
             print("Record: \(String(describing: returnedRecord))")
             print("Error: \(String(describing: returnedError))")
@@ -77,24 +70,16 @@ class CloudKitManager {
             }
         }
     }
-    
-    /// Private method to fetch records from the specified database.
-    /// - Parameters:
-    ///   - recordType: The type of records to fetch.
-    ///   - usePrivateDatabase: A flag indicating whether to use the private database or not.
-    ///   - user: An optional user reference to filter the records.
-    ///   - completion: A closure to be called with the fetched records or an error.
-    private func p_fetchRecord(recordType: String, usePrivateDatabase: Bool, fieldName: String? = nil, fieldValue: Any? = nil, completion: @escaping ([CKRecord]?, Error?) -> Void) {
+    // fetch record, user reference is optional,
+    private func p_fetchRecord(recordType: String, usePrivateDatabase: Bool, user: CKRecord.Reference? = nil, completion: @escaping ([CKRecord]?, Error?) -> Void) {
         let predicate: NSPredicate
-        // set the predicate to user if not nil, otherwise true
-        if let fieldName = fieldName, let fieldValue = fieldValue {
-            predicate = NSPredicate(format: "%K == %@", fieldName, fieldValue as! CKRecordValue as! CVarArg)
+        if let user = user {
+            predicate = NSPredicate(format: "user == %@", user)
         } else {
             predicate = NSPredicate(value: true)
         }
-        // switch to private database if specified
+        // if usePrivateDatabase is true, use private database, else use public database
         let database = usePrivateDatabase ? privateDatabase : publicDatabase
-        // query the database with recordType, predicate being user if not nil, and no desired keys
         let query = CKQuery(recordType: recordType, predicate: predicate)
         database.fetch(withQuery: query, inZoneWith: nil, desiredKeys: nil, resultsLimit: CKQueryOperation.maximumResults) { (result: Result<(matchResults: [(CKRecord.ID, Result<CKRecord, Error>)], queryCursor: CKQueryOperation.Cursor?), Error>) in
             switch result {
@@ -106,7 +91,6 @@ class CloudKitManager {
                     print("No records found")
                     completion(nil, nil)
                 } else {
-                    // compactMap to get the records from the matchResults
                     let records = matchResults.compactMap { (recordID, recordResult) in
                         do {
                             return try recordResult.get()
@@ -120,114 +104,25 @@ class CloudKitManager {
             }
         }
     }
-    
-    
-    /// Fetches public records from the CloudKit database based on a specified field name and value.
-    /// - Parameters:
-    ///   - recordType: The type of record to fetch.
-    ///   - fieldName: The name of the field to filter the records by.
-    ///   - fieldValue: The value of the field to filter the records by.
-    ///   - completion: The completion handler that is called when the fetch operation is complete. It returns an array of fetched CKRecords and an optional error.
-    func fetchPublicRecord(recordType: String, fieldName: String, fieldValue: Any? = nil, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
-        p_fetchRecord(recordType: recordType, usePrivateDatabase: false, fieldName: fieldName, fieldValue: fieldValue, completion: completion)
+    // fetch record with user reference
+    func fetchPublicRecord(recordType: String, user: CKRecord.Reference, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: false, user: user, completion: completion)
     }
-    
-    /// Fetches public records from the CloudKit database of a specified record type.
-    /// - Parameters:
-    ///   - recordType: The type of record to fetch.
-    ///   - completion: The completion handler that is called when the fetch operation is complete. It returns an array of fetched CKRecords and an optional error.
-    func fetchPublicRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void) {
-        p_fetchRecord(recordType: recordType, usePrivateDatabase: false, fieldName: nil, fieldValue: nil, completion: completion)
+    // fetch record without user reference
+    func fetchPublicRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: false, user: nil, completion: completion)
     }
-    /// Fetches private records from the CloudKit database based on a specified field name and value.
-    /// - Parameters:
-    ///   - recordType: The type of record to fetch.
-    ///   - fieldName: The name of the field to filter the records by.
-    ///   - fieldValue: The value of the field to filter the records by.
-    ///   - completion: The completion handler that is called when the fetch operation is complete. It returns an array of fetched CKRecords and an optional error.
-    func fetchPrivateRecord<T>(recordType: String, fieldName: String, fieldValue: T, completion: @escaping ([CKRecord]?, Error?) -> Void) {
-        p_fetchRecord(recordType: recordType, usePrivateDatabase: true, fieldName: fieldName, fieldValue: fieldValue, completion: completion)
-    }
-    
-    /// Fetches private records from the CloudKit database of a specified record type.
-    /// - Parameters:
-    ///   - recordType: The type of record to fetch.
-    ///   - completion: The completion handler that is called when the fetch operation is complete. It returns an array of fetched CKRecords and an optional error.
-    func fetchPrivateRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void) {
-        p_fetchRecord(recordType: recordType, usePrivateDatabase: true, fieldName: nil, fieldValue: nil, completion: completion)
-    }
-    
-    /// Fetches a single private record from the CloudKit database by its ID.
-    /// - Parameters:
-    ///   - recordID: The ID of the record to fetch.
-    ///   - completion: The completion handler that is called when the fetch operation is complete. It returns the fetched CKRecord and an optional error.
-    func fetchPrivateRecord(recordID: CKRecord.ID, completion: @escaping (CKRecord?, Error?) -> Void) {
-        privateDatabase.fetch(withRecordID: recordID) { (record, error) in
-            DispatchQueue.main.async {
-                completion(record, error)
-            }
-        }
-    }
-    // Add a completion handler to your savePrivateItem method.
-    func savePrivateItem(record: CKRecord, completion: @escaping (Error?) -> Void) {
-        privateDatabase.save(record) { _, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    print("Error saving item: \(error.localizedDescription)")
-                } else {
-                    print("Item saved successfully.")
-                }
-                completion(error)
-            }
-        }
+    // fetch private record with user reference
+    func fetchPrivateRecord(recordType: String, user: CKRecord.Reference, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: true, user: user, completion: completion)
     }
 
-
-
+    // fetch private record without user reference
+    func fetchPrivateRecord(recordType: String, completion: @escaping ([CKRecord]?, Error?) -> Void)  {
+        p_fetchRecord(recordType: recordType, usePrivateDatabase: true, user: nil, completion: completion)
+    }
+    
 }
-
-
-
-
-
-// possible deprecated funcs
-/*private func getiCloudStatus(){
- CKContainer.default().accountStatus{[weak self] returnedStatus, returnedError in
- DispatchQueue.main.async{
- switch returnedStatus{
- case .available:
- self?.isSignedInToiCloud = true
- case .noAccount:
- self?.error = CloudKitError.iCloudAccountNotFound.localizedDescription
- case .couldNotDetermine:
- self?.error = CloudKitError.iCloudAccountNotDetermined.localizedDescription
- case .restricted:
- self?.error = CloudKitError.iCloudAccountRestricted.localizedDescription
- default:
- self?.error = CloudKitError.iCloudAccountUnknown.localizedDescription
- }
- }
- 
- }
- }
- enum CloudKitError: LocalizedError{
- case iCloudAccountNotFound
- case iCloudAccountNotDetermined
- case iCloudAccountRestricted
- case iCloudAccountUnknown
- }
- func requestPermission(){
- CKContainer.default().requestApplicationPermission([.userDiscoverability]){
- [weak self] returnedStatus, returnedError in
- DispatchQueue.main.async{
- if returnedStatus == .granted{
- self?.permissionStatus = true
- }
- }
- }
- }*/
-
-
 
 
 struct testview : View{
@@ -235,8 +130,6 @@ struct testview : View{
     var cloudKitManager = CloudKitManager.shared
     @State var record = CKRecord(recordType: "Test")
     @State var user = CKRecord.Reference(recordID: CKRecord.ID(recordName: "Test"), action: .none)
-    var foodItemDBManager = FoodItemDBManager()
-    var petItemDBManager = PetItemDBManager()
     var body: some View{
         VStack{
             Button("Save"){
@@ -254,125 +147,6 @@ struct testview : View{
                     print("Records: \(records)")
                 }
             }
-            Button("Fetch food items"){
-                foodItemDBManager.fetchFoodItems { foodItems, error in
-                    if let error = error {
-                        print("Error fetching food items: \(error.localizedDescription)")
-                        return
-                    }
-                    guard let foodItems = foodItems else {
-                        print("No food items found")
-                        return
-                    }
-                    print("Food items HERE: \(foodItems)")
-                }
-            }
-            Button("Fetch food item Orange"){
-                foodItemDBManager.fetchSpecificFoodItem(name: "Orange"){ foodItem, error in
-                    if let error = error {
-                        print("Error fetching food item: \(error.localizedDescription)")
-                        return
-                    }
-                    guard let foodItem = foodItem else {
-                        print("No food item found")
-                        return
-                    }
-                    print("Food item: \(foodItem)")
-                }
-            }
-            Button("Fetch quantity Orange"){
-                foodItemDBManager.fetchQuantity(name: "Orange"){ quantity, error in
-                    if let error = error {
-                        print("Error fetching quantity: \(error.localizedDescription)")
-                        return
-                    }
-                    guard let quantity = quantity else {
-                        print("No quantity found")
-                        return
-                    }
-                    print("Quantity: \(quantity)")
-                }
-                
-                
-            }
-            Button("Fetch pet items"){
-                petItemDBManager.fetchPetItems { petItems, error in
-                    if let error = error {
-                        print("Error fetching pet items: \(error.localizedDescription)")
-                        return
-                    }
-                    guard let petItems = petItems else {
-                        print("No pet items found")
-                        return
-                    }
-                    print("Pet items: \(petItems)")
-                }
-            }
-            Button("Fetch Specific Dog Item"){
-                petItemDBManager.fetchSpecificPetItem(imageName: "Dog"){ petItem, error in
-                    if let error = error {
-                        print("Error fetching pet item: \(error.localizedDescription)")
-                        return
-                    }
-                    guard let petItem = petItem else {
-                        print("No pet item found")
-                        return
-                    }
-                    print("Pet item: \(petItem)")
-                }
-            }
-            Button("Create new pet item"){
-                petItemDBManager.createPetItem(imageName: "Dog"){ error in
-                    if let error = error {
-                        print("Error creating pet item: \(error.localizedDescription)")
-                        return
-                    }
-                    print("Pet item created")
-                }
-            }
-            Button("set dog active"){
-                petItemDBManager.setActivePetItem(imageName: "Dog"){ activePet, error in
-                    if let error = error {
-                        print("Error setting active: \(error.localizedDescription)")
-                        return
-                    }
-                    print("Active set")
-                }
-            }
-            Button("set cat active"){
-                petItemDBManager.setActivePetItem(imageName: "Cat"){ activePet, error in
-                    if let error = error {
-                        print("Error setting active: \(error.localizedDescription)")
-                        return
-                    }
-                    print("Active set")
-                }
-            }
-//            Button("Add new orange"){
-//                foodItemDBManager.createFoodItem(name: "Orange", quantity: 5){ error in
-//                    if let error = error {
-//                        print("Error creating food item: \(error.localizedDescription)")
-//                        return
-//                    }
-//                    print("Food item created")
-//                }
-//            }
-//            Button("add four to orange quantity"){
-//                foodItemDBManager.updateQuantity(name: "Orange", quantity: 4){ error in
-//                    if let error = error {
-//                        print("Error updating quantity: \(error.localizedDescription)")
-//                        return
-//                    }
-//                    print("Quantity updated")
-//                }
-//                
-//            }
-        }
-    }
-    // preview
-    struct testview_Previews: PreviewProvider {
-        static var previews: some View {
-            testview()
         }
     }
 }

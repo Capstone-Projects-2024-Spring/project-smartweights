@@ -1,5 +1,5 @@
 # Database Integration
 
-[CloudKit](CloudKit.md)
+[Firebase](firebase.md)
 
 [Coredata](Local-coredata-database.md)

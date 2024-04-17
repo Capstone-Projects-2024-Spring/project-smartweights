@@ -57,7 +57,7 @@ struct MorePageView: View {
                     }
                 }
                 Divider()
-                Image("Dog")
+                Image("dog")
                     .resizable()
                     .scaledToFit()
                     .frame(

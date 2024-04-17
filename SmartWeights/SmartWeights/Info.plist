@@ -9,7 +9,7 @@
 	<key>CFBundleIconName</key>
 	<string>AppIcon</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Bluetooth Access is needed for connecting to a SmartWeights sensor.</string>
+	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need access to your microphone to enable hands-free voice recognition for starting workouts.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>

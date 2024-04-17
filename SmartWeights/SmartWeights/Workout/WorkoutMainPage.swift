@@ -3,70 +3,26 @@ import Combine
 
 /// Main structure to display the workout page with integrated UI components
 struct WorkoutMainPage: View {
-    @StateObject var ble:BLEcentral
-    @StateObject var formCriteria:FormCriteria
+    @StateObject var viewModel = WorkoutViewModel()
+    @StateObject var bleManager = BLEManager()
     @StateObject var storeModel = storeViewModel()
-    @StateObject var workoutPageViewModel = WorkoutPageViewModel()
-    @StateObject var viewModel: WorkoutViewModel
-    
-    init() {
-        let ble = BLEcentral()
-        let formCriteria = FormCriteria()
-        self._ble = StateObject(wrappedValue: ble)
-        self._formCriteria = StateObject(wrappedValue: formCriteria)
-        self._viewModel = StateObject(wrappedValue: WorkoutViewModel(ble: ble, formCriteria: formCriteria))
-    }
-    
     
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
     @State private var isExpanded = false
+    @State private var hasWorkoutStarted = false
+    @State private var showingWorkoutSheet = false
+    @State private var isWorkoutPaused = false
+    
+    @State private var showGraphPopover = false
     @State private var graphData: [Double] = []
-//    @State private var feedback: (String, String, String, String) = ("", "", "", "")
-//    @State var feedbackDataForSets: [(String, String, String, String)] = []
-//    @State var workoutAnalysis: [String:Double] = [:]
-//    @State var workoutAnalysisForSets:[[String:Double]] = []
-//    @State var totalSets:Int = 0
-    //TODO: IMPLEMENT THE DANGEROUS ASPECT
-    var dangerousCalled = false
-    var dangerous: Bool {
-        formCriteria.dangerousForm(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
-    }
-    
-    @State private var currentMotivationalPhrase = "Let's get started!"
-    
     
     
     var body: some View {
         ZStack {
-            
             VStack {
-                ZStack{
-                    workoutTitleView
-                    VStack{
-                        Image(systemName: "dumbbell.fill")
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(ble.MPU_1_Connected ? .green : .red)
-                        
-                        Text("Dumbbell")
-                            .font(.custom("small", size: 12))
-                        
-                    }
-                    .padding(.leading,200)
-                    VStack{
-                        Image(systemName: "figure.arms.open")
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(ble.MPU_2_Connected ? .green : .red)
-                        
-                        Text("Elbow")
-                            .font(.custom("small", size: 12))
-                    }
-                    .padding(.leading,300)
-                    
-                    
-                }
-                
-                
+                // Title and microphone button for workout voice control
+                workoutTitleView
                 
                 // Tab selection for workout or feedback
                 workoutTabSelection
@@ -75,16 +31,15 @@ struct WorkoutMainPage: View {
                 if selectedTab == 0 {
                     StartWorkoutView
                 } else if selectedTab == 1 {
-                    WorkoutFeedback(viewModel: viewModel, feedbackDataForSets: $viewModel.feedbackDataForSets,workoutAnalysisForSets: $viewModel.workoutAnalysisForSets,totalSets: $viewModel.totalSets)
+                    WorkoutFeedback(viewModel: viewModel)
                 }
             }
-            
-            .popover(isPresented: $viewModel.showGraphPopover) {
+            .popover(isPresented: $showGraphPopover) {
                 VStack {
                     HStack {
                         Spacer() // Pushes the button to the right
                         Button(action: {
-                            viewModel.showGraphPopover = false // Close the popover
+                            showGraphPopover = false // Close the popover
                         }) {
                             Image(systemName: "xmark.circle.fill") // Stylish X mark
                                 .font(.title) // Increases the size a bit
@@ -95,51 +50,21 @@ struct WorkoutMainPage: View {
                     }
                     .padding(.top, 10) // Give some space from the top edge
                     
-                    //Text("workout Progress Graph")
-                    Text("Feedback")
+                    Text("Workout Progress Graph")
                         .font(.headline)
+                        .padding()
                     
-                    //---------------------FEEDBACK----------------//
-                    VStack{
-                        HStack {
-                            ZStack {
-                                Image("bubble2")
-                                    .resizable()
-                                    .frame(width: 250, height: 150)
-                                VStack{
-                                    Text("\(viewModel.feedback.2)")
-                                        .foregroundColor(viewModel.feedback.2 == "Whoa slow down!!" ? Color.red : Color.green)
-                                    Text("\(viewModel.feedback.3)")
-                                        .foregroundColor(viewModel.feedback.3 == "Keep that elbow steady!" ? Color.red : Color.green)
-                                }
-                                
-                            }
-                            .padding(.bottom, -40)
-                        }
-                        HStack{
-                            
-                            
-                            Image("Dog")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 200, height: 175)
-                        }
-                        Text("\(viewModel.feedback.0)") //gives overall acceleration
-                            .font(.subheadline)
-                        Text("\(viewModel.feedback.1)") //gives overall elbow stability
-                            .font(.subheadline)
-                    }
-                    .padding(.bottom, 30)
-                    
+                    LineGraph(data: graphData) // Use the dynamic data for the line graph
+                        .stroke(Color.green, lineWidth: 2)
+                        .frame(height: 200)
+                        .padding()
                 }
-                .frame(width: 400, height: 500)
+                .frame(width: 400, height: 400)
                 .background(Color.white.opacity(0.9))
                 .cornerRadius(20)
                 .shadow(radius: 10)
             }
-            
         }
-        
     }
     
     enum SetType {
@@ -162,6 +87,21 @@ struct WorkoutMainPage: View {
             Text("Workout")
                 .font(.title)
                 .bold()
+            
+            if selectedTab == 0 {
+                VStack {
+                    Button(action: {
+                        viewModel.startListening()
+                    }) {
+                        Image(systemName: "mic.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                    }
+                    .accessibilityLabel("micWorkoutButton")
+                    .padding(.trailing, 42)
+                }
+                .padding(.leading, 300)
+            }
         }
     }
     
@@ -179,32 +119,30 @@ struct WorkoutMainPage: View {
     // Compute the button text based on current and total sets
     private var buttonText: String {
         let totalSets = Int(viewModel.inputtedSets) ?? 0
-        if viewModel.hasWorkoutStarted {
+        if hasWorkoutStarted {
             if viewModel.currentSets >= totalSets {
-                return "Finish Workout" // When all sets are completed, regardless of the number of sets
-            } else if totalSets == 1 {
-                // If there is only 1 set, the button should immediately suggest finishing the workout
-                // This case is handled upfront to ensure "Finish Workout" is shown for a single set scenario
-                return "Finish Workout"
+                return "Finish Workout" // Changes here to ensure "Finish Workout" shows up right after the final set
             } else if viewModel.currentSets == totalSets - 1 {
-                // For more than one set, this becomes the "Final Set" before "Finish Workout"
                 return "Final Set"
+            } else if viewModel.currentSets < totalSets {
+                return isWorkoutPaused ? "Next Set" : "Finish Set"
             } else {
-                // Default case for any sets that are not the last or only set
-                return viewModel.isWorkoutPaused ? "Start Next Set" : "Finish Set"
+                return "Complete Workout"
             }
         } else {
-            // Before the workout starts
             return "Start Workout"
         }
     }
     
+    
+    
     private var StartWorkoutView: some View {
         VStack {
-            if !viewModel.hasWorkoutStarted {
+            if !hasWorkoutStarted {
                 Text("Prepare for your workout")
                     .bold()
             }
+            
             
             ZStack{
                 // Time rectangel box
@@ -221,99 +159,118 @@ struct WorkoutMainPage: View {
                         .bold()
                         .foregroundStyle(.green)
                 }
-            }
-            .padding(.bottom, -15)
-            
-            
-            
-            HStack {
-                ZStack {
-                    Image("bubble2")
-                        .resizable()
-                        .frame(width: 350, height: 135)
-                    Text(viewModel.currentMotivationalPhrase)
-                        .foregroundStyle(Color.black)
-                }
-                .padding(.bottom, -50)
-            }
-            HStack{
                 
-                Image("Dog")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 400, height: 375)
             }
             
+            // Reps count display
+            if hasWorkoutStarted {
+                HStack {
+                    Text("Sets: ")
+                        .font(.title2)
+                        .bold()
+                    
+                    Text("\(viewModel.currentSets) / \(viewModel.inputtedSets)")
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(.orange)
+                }
+                .padding()
+            }
+            
+            
+            HStack{
+                ZStack{
+                    // Form Rectangle box
+                    RoundedRectangle(cornerRadius:  25)
+                        .frame(width: 150, height: 150)
+                        .foregroundColor(.gray)
+                    Text("Form")
+                        .font(.system(size: 14))
+                        .bold()
+                        .foregroundColor(.white)
+                    CircularProgressView(progress: viewModel.progress)
+                    
+                }
+                ZStack{
+                    // Accel Rectange box
+                    RoundedRectangle(cornerRadius:  25)
+                        .frame(width: 150, height: 150)
+                        .foregroundColor(.gray)
+                    Text("Accel")
+                        .font(.system(size: 14))
+                        .bold()
+                        .foregroundColor(.white)
+                    CircularProgressView(progress: viewModel.progress)
+                }
+            }
             
             
             // Start/Reset workout button
             Button(action: {
-                if viewModel.hasWorkoutStarted {
+                if hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
-                        viewModel.finishworkout()
+                        // Logic for completing the workout
+                        generateRandomData(for: .overallWorkout) // Generate overall workout data
+                        storeModel.addFundtoUser(price: 50)
+                        viewModel.resetWorkoutState()
+                        hasWorkoutStarted = false
+                        isWorkoutPaused = false
+                        showGraphPopover = true
                     } else if buttonText == "Final Set" {
-                        viewModel.finalset()
                         // Logic for transitioning from the final set to finishing the workout
-//                        viewModel.currentSets += 1 // This will push the state to "Finish Workout"
-//                        viewModel.showGraphPopover = false
-//                        viewModel.resumeTimer()
-//                        ble.MPU6050_1Gyros.removeAll()
-//                        ble.MPU6050_2Gyros.removeAll()
-//                        ble.collectDataToggle = true
-//                        viewModel.currentMotivationalPhrase = "Last Set! Push through!"
-                    } else if !viewModel.isWorkoutPaused {
-                        ble.collectDataToggle = false
+                        viewModel.currentSets += 1 // This will push the state to "Finish Workout"
+                        showGraphPopover = false
+                        viewModel.resumeTimer()
+                    } else if !isWorkoutPaused {
                         viewModel.pauseTimer()
-                        viewModel.showGraphPopover = true
-                        viewModel.isWorkoutPaused = true
-                        viewModel.currentMotivationalPhrase = "Take a breather, then keep going!"
+                        generateRandomData(for: .perSet) // Generate per-set data
+                        showGraphPopover = true
+                        isWorkoutPaused = true
+                        
                         if let totalSets = Int(viewModel.inputtedSets), viewModel.currentSets < totalSets {
-                            viewModel.currentSets += 1 
+                            viewModel.currentSets += 1
                         }
-                        // Get feedback from formCriteria
-                        let currentFeedback = formCriteria.giveFeedback(dumbbellArray:ble.MPU6050_1Gyros , elbowArray:ble.MPU6050_2Gyros)
-                        
-                        // Check if feedback indicates poor form
-                        if currentFeedback.2 == "Whoa slow down!!" {
-                            // Call function to reduce HP
-                            workoutPageViewModel.lowerHP()
-                        }
-                        
-                        print("hello test")
-                        print(currentFeedback.2)
                     } else {
                         // Resume workout from a paused state
                         viewModel.resumeTimer()
-                        viewModel.showGraphPopover = false
-                        viewModel.isWorkoutPaused = false
-                        ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
-                        ble.MPU6050_2Gyros.removeAll()
-                        ble.collectDataToggle = true //Stars collecting data again
-                        viewModel.currentMotivationalPhrase = "You're doing great!"
+                        showGraphPopover = false
+                        isWorkoutPaused = false
                     }
                 } else {
                     // Start the workout
-                    viewModel.currentMotivationalPhrase = "First set, let's go!"
                     viewModel.resumeTimer()
-                    viewModel.showingWorkoutSheet = true
-                    viewModel.showGraphPopover = false
+                    showingWorkoutSheet = true
+                    showGraphPopover = false
+                    
                     
                 }
             }) {
                 RoundedRectangle(cornerRadius: 25)
                     .frame(width: 300, height: 80)
-                    .foregroundColor(buttonText == "Finish Workout" ? .red : (viewModel.hasWorkoutStarted ? (viewModel.isWorkoutPaused ? .blue : .red) : .gray))
+                    .foregroundColor(hasWorkoutStarted ? (isWorkoutPaused ? .blue : .red) : .gray)
                     .overlay(
                         Text(buttonText)
                             .bold()
                             .foregroundColor(.white)
                     )
             }
-            .accessibilityLabel(viewModel.hasWorkoutStarted ? (viewModel.isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
-            .sheet(isPresented: $viewModel.showingWorkoutSheet) {
-                WorkoutDetailsInputView(viewModel: viewModel, ble: ble,form: formCriteria, hasWorkoutStarted: $viewModel.hasWorkoutStarted, showingWorkoutSheet: $viewModel.showingWorkoutSheet,feedbackDataForSets: $viewModel.feedbackDataForSets, workoutAnalysisForSets: $viewModel.workoutAnalysisForSets)
+            .accessibilityLabel(hasWorkoutStarted ? (isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
+            .sheet(isPresented: $showingWorkoutSheet) {
+                WorkoutDetailsInputView(viewModel: viewModel, hasWorkoutStarted: $hasWorkoutStarted, showingWorkoutSheet: $showingWorkoutSheet)
             }
             
+            
+            /*
+             // Connection status and acceleration data
+             if bleManager.isConnected {
+             Text("Sensor connected")
+             } else {
+             Text("Sensor disconnected")
+             }
+             Text("Acceleration - X: \(bleManager.accelerations[0]) Y: \(bleManager.accelerations[1]) Z: \(bleManager.accelerations[2])")
+             .padding()
+             Spacer()
+             */
             Spacer()
         }
         
@@ -354,47 +311,30 @@ struct WorkoutMainPage: View {
     // Define a new view for the workout details input form
     struct WorkoutDetailsInputView: View {
         @ObservedObject var viewModel: WorkoutViewModel
-        @ObservedObject var ble: BLEcentral
-        @ObservedObject var form: FormCriteria
         @Binding var hasWorkoutStarted: Bool
         @Binding var showingWorkoutSheet: Bool
-        @Binding var feedbackDataForSets: [(String, String, String, String)]
-        @Binding var workoutAnalysisForSets: [[String:Double]]
+        @State private var showingAlert = false
+        @State private var alertMessage = ""
+        @State private var countdown = 5 // New state variable for countdown
+        @State private var countdownTimer: AnyCancellable? // Timer for countdown
+        @State private var countdownActive = false // Indicates if the countdown is active
         
         var body: some View {
-            
             ZStack {
-                RoundedRectangle(cornerRadius: 3)
-                    .frame(width: 60, height: 6)
-                    .foregroundColor(.gray)
-                    .opacity(0.5)
-                    .padding(.top, 5)
                 VStack {
-                    if viewModel.countdownActive {
+                    if countdownActive {
                         // Countdown UI
-                        Text("Starting in \(viewModel.countdown)")
+                        Text("Starting in \(countdown)")
                             .font(.largeTitle)
                             .padding()
                             .onAppear {
-                                viewModel.startCountdown()
+                                startCountdown()
                             }
                     } else {
                         // Regular input form
-                        HStack {
-                            Text("Enter Workout Details")
-                                .font(.headline)
-                            
-                            Button(action: {
-                                viewModel.startListening()
-                            }) {
-                                Image(systemName: "mic.circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25) // Adjusted size for better fit
-                                    .padding(.leading, 5)
-                            }
-                            .accessibilityLabel("Start Voice Command")
-                        }
-                        .padding()
+                        Text("Enter Workout Details")
+                            .font(.headline)
+                            .padding()
                         
                         TextField("Sets", text: $viewModel.inputtedSets)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -411,16 +351,21 @@ struct WorkoutMainPage: View {
                             .keyboardType(.numberPad)
                             .padding()
                         
-                        
                         Button("Start Workout") {
-                            viewModel.validateAndStartCountdown(sets: viewModel.inputtedSets, reps: viewModel.inputtedReps, weights: viewModel.inputtedWeights)
+                            if isValidInput(viewModel.inputtedSets) && isValidInput(viewModel.inputtedReps) && isValidInput(viewModel.inputtedWeights) {
+                                // Initiate countdown
+                                countdownActive = true
+                            } else {
+                                alertMessage = "Please enter valid numbers for sets, reps, and lbs."
+                                showingAlert = true
+                            }
                         }
                         .padding()
                         .foregroundColor(.white)
                         .background(Color.blue)
                         .cornerRadius(10)
-                        .alert(isPresented: $viewModel.showingAlert) {
-                            Alert(title: Text("Invalid Input"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
+                        .alert(isPresented: $showingAlert) {
+                            Alert(title: Text("Invalid Input"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                         }
                     }
                 }
@@ -428,6 +373,54 @@ struct WorkoutMainPage: View {
                 .background(Color.white.opacity(0.9))
                 .cornerRadius(20)
                 .shadow(radius: 10)
+            }
+        }
+        
+        private func isValidInput(_ input: String) -> Bool {
+            guard !input.isEmpty, let _ = Int(input) else { return false }
+            return true
+        }
+        
+        private func startCountdown() {
+            countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { _ in
+                if countdown > 0 {
+                    countdown -= 1
+                } else {
+                    countdownTimer?.cancel() // Stop the countdown timer
+                    DispatchQueue.main.async {
+                        hasWorkoutStarted = true // Ensure this change is captured by the UI
+                        showingWorkoutSheet = false // Dismiss or update UI as needed
+                        viewModel.startTimer() // Start the main workout timer after countdown
+                    }
+                }
+            }
+        }
+    }
+    
+    ///view to show the progress bar
+    struct CircularProgressView: View {
+        let progress: Double
+        
+        var body: some View {
+            ZStack {
+                Circle()
+                    .stroke(
+                        Color.pink.opacity(0.5),
+                        lineWidth: 10
+                    )
+                    .frame(width: 80)
+                Circle()
+                    .trim(from: 0, to: progress / 100) // Adjust this line if `progress` is a percentage
+                    .stroke(
+                        Color.blue,
+                        style: StrokeStyle(
+                            lineWidth: 10,
+                            lineCap: .round
+                        )
+                    )
+                    .rotationEffect(.degrees(-90))
+                    .animation(.easeOut, value: progress)
+                    .frame(width: 80)
             }
         }
     }

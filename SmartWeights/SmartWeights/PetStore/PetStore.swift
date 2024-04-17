@@ -8,6 +8,16 @@
 import Foundation
 import SwiftUI
 
+/// SellingItem struct that contains essential item attributes.
+struct SellingItem: Identifiable {
+    var id = Int() // universal identifier for item number
+    var name: String
+    var category: String
+    var price: String
+    var image: Image //  property for the image itself
+    var description: String
+    var isBought = false
+}
 
 /// Grid for displaying items.
 private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
@@ -85,31 +95,24 @@ struct PetStore: View {
                                         .frame(width: 100, height: 100)
                                     
                                     Text(item.name)
-                                        .fontWeight(.bold) // Makes the item name bold for better visibility
-                                    
-                                    // Adding price below the name
-                                    Text(item.price)
-                                        .foregroundColor(.green)
-                                        .bold()
-                                        .font(.system(size: 18))
+                                    // Displaying price with your existing logic...
                                 }
+                                .frame(width: 130, height: 175)
+                                .padding()
+                                .background(Color.gray.opacity(0.2))
+                                .cornerRadius(10)
                             }
-                            .frame(width: 130, height: 175)
-                            .padding()
-                            .background(Color.gray.opacity(0.2))
-                            .cornerRadius(10)
                         }
                     }
+                    .padding([.leading, .trailing, .bottom])
                 }
-                .padding([.leading, .trailing, .bottom])
             }
-        }
-        .sheet(item: $selectedItem) { item in
-            ItemDetailView(item: item, viewModel: viewModel, userCur: viewModel.userCur)
+            .sheet(item: $selectedItem) { item in
+                ItemDetailView(item: item, viewModel: viewModel, userCur: viewModel.userCur)
+            }
         }
     }
 }
-
 
 /// Display view for previewing and purchasing and item.
 struct ItemDetailView: View {
@@ -120,13 +123,6 @@ struct ItemDetailView: View {
     
     var body: some View {
         VStack {
-            // Swipe down indicator
-            RoundedRectangle(cornerRadius: 3)
-                .frame(width: 60, height: 6)
-                .foregroundColor(.gray)
-                .opacity(0.5)
-                .padding(.top, 5) // Add some padding at the top of the sheet
-            
             VStack { // handles preview logic, currently will default dog if showing background or outfit
                 if(item.category == "Foods") {
                     item.image
@@ -153,13 +149,13 @@ struct ItemDetailView: View {
                                     .padding(.bottom, 50)
                                 
                             }
-                            Image("Dog") // Display pet image
+                            Image("dog") // Display pet image
                                 .resizable()
                                 .scaledToFit()
                                 .padding(.bottom, 50)
                             
                         } else { // outfit that goes in front of pet
-                            Image("Dog") // Display pet image
+                            Image("dog") // Display pet image
                                 .resizable()
                                 .scaledToFit()
                                 .padding(.bottom, 50)
@@ -197,21 +193,31 @@ struct ItemDetailView: View {
             Button(action: {
                 // Handle purchase action
                 viewModel.purchaseItem(item: item)
+                // This is to force SwiftUI to reevaluate the `isBought` state of our item.
+                // SwiftUI will now check the `isBought` property again to determine the correct label and color for the button.
             }) {
-                // Purchase Button UI
-                Text(viewModel.items.first(where: { $0.id == item.id })?.isBought ?? false ? "Purchased" : "Purchase")
-                    .padding()
-                    .background(userCur >= Int(item.price) ?? 0 ? Color.blue : Color.gray)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .font(.system(size: 20))
+                // Dynamically checking `isBought` status from the viewModel's items to ensure it's up-to-date
+                if viewModel.items.first(where: { $0.id == item.id })?.isBought ?? false {
+                    Text("Purchased")
+                        .padding()
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .font(.system(size: 20))
+                } else {
+                    Text("Purchase")
+                        .padding()
+                        .background(userCur >= Int(item.price) ?? 0 ? Color.blue : Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .font(.system(size: 20))
+                }
             }
             .disabled(userCur < Int(item.price) ?? 0 || viewModel.items.first(where: { $0.id == item.id })?.isBought ?? false)
             .padding()
         }
     }
 }
-
 
 /// Preview Pet Store page
 #Preview {
