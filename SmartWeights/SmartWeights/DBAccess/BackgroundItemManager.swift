@@ -49,6 +49,7 @@ class BackgroundItemDBManager : ObservableObject{
             // }
             // self.backgroundItems = backgroundItems
         }
+        
     }
     //gets all
     func fetchBackgroundItems(completion: @escaping ([BackgroundItemModel]?, Error?) -> Void) {
@@ -62,10 +63,20 @@ class BackgroundItemDBManager : ObservableObject{
                 completion(nil, nil)
                 return
             }
-            self.backgroundItems = records.map { record in
-                BackgroundItemModel(recordId: record.recordID, isActive: record[BackgroundItemRecordKeys.isActive.rawValue] as? Int64 ?? 0, imageName: record[BackgroundItemRecordKeys.imageName.rawValue] as? String ?? "")
+            var backgroundItems: [BackgroundItemModel] = []
+            for record in records {
+                let backgroundItem = BackgroundItemModel(recordId: record.recordID,  isActive: record[ClothingItemRecordKeys.isActive.rawValue] as! Int64, imageName: record[ClothingItemRecordKeys.imageName.rawValue] as! String)
+                backgroundItems.append(backgroundItem)
+                if backgroundItem.isActive == 1 {
+                    self.activeBackground = backgroundItem.imageName
+                }
             }
-            completion(self.backgroundItems, nil)
+            completion(backgroundItems, nil)
+            self.backgroundItemExists = true
+            // self.backgroundItems = records.map { record in
+            //     BackgroundItemModel(recordId: record.recordID, isActive: record[BackgroundItemRecordKeys.isActive.rawValue] as? Int64 ?? 0, imageName: record[BackgroundItemRecordKeys.imageName.rawValue] as? String ?? "")
+            // }
+            // completion(self.backgroundItems, nil)
         }
     }
     
@@ -125,6 +136,31 @@ class BackgroundItemDBManager : ObservableObject{
             }
             dispatchGroup.notify(queue: .main){
                 completion(self.activeBackground, nil)
+            }
+        }
+    }
+    //unequips all clothing items
+    func setUnactiveAllBackgroundItems(completion: @escaping (Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "BackgroundItem") { records, error in
+            if let error = error {
+                completion(error)
+                return
+            }
+            
+            guard let records = records else {
+                print("No background items found.")
+                completion(nil)
+                return
+            }
+            let dispatchGroup = DispatchGroup()
+            for record in records {
+                dispatchGroup.enter()
+                record["isActive"] = 0
+                self.CKManager.savePrivateItem(record: record)
+                dispatchGroup.leave()
+            }
+            dispatchGroup.notify(queue: .main) {
+                completion(nil)
             }
         }
     }

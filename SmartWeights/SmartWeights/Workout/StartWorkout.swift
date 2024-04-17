@@ -6,6 +6,28 @@ import AVFoundation
 ///view model to handle the workout data
 // Define ViewModel
 class WorkoutViewModel: ObservableObject {
+    //inherited view models from the parent view
+    @ObservedObject var ble: BLEcentral
+    @ObservedObject var formCriteria: FormCriteria
+    init(ble: BLEcentral, formCriteria: FormCriteria) {
+        self.ble = ble
+        self.formCriteria = formCriteria
+    }
+    let storeModel = storeViewModel()
+    let workoutPageViewModel = WorkoutPageViewModel()
+    
+    
+    var feedback: (String, String, String, String) = ("", "", "", "")
+    var feedbackDataForSets: [(String, String, String, String)] = []
+    var workoutAnalysis: [String:Double] = [:]
+    var workoutAnalysisForSets:[[String:Double]] = []
+    var totalSets:Int = 0
+    //TODO: IMPLEMENT THE DANGEROUS ASPECT
+    var dangerousCalled = false
+    var dangerous: Bool {
+        formCriteria.dangerousForm(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+    }
+
     @Published var progress: Double = 0
     
     //for user input
@@ -36,10 +58,88 @@ class WorkoutViewModel: ObservableObject {
         return workoutInProgressSubject.eraseToAnyPublisher()
     }
     
-    //    override init() {
-    //        super.init()
-    //        speechRecognizer.delegate = self
-    //    }
+    @Published var showGraphPopover = false {
+        didSet {
+            print(showGraphPopover,"pop up is showing up")
+            if showGraphPopover {
+                self.feedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
+                print(formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros))
+                print(feedback,"this is the feedback")
+                self.feedbackDataForSets.append(feedback)
+                self.workoutAnalysis = formCriteria.UpdateWorkoutAnalysis(totalSets: totalSets, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+                print(self.workoutAnalysis)
+                self.workoutAnalysisForSets.append(self.workoutAnalysis)
+                print(totalSets,"THIS IS THE TOTAL SETS")
+                print("hello i am showing that graph popup is working and that the functions are being called")
+            }
+        }
+    }
+    @Published var isWorkoutPaused = false
+    @Published var hasWorkoutStarted = false
+    @Published var showingWorkoutSheet = false
+    @Published var countdown = 5
+    @Published var countdownActive = false
+    @Published var showingAlert = false
+    @Published var alertMessage = ""
+    @Published var currentMotivationalPhrase = "Let's get started!"
+    
+    private var countdownTimer: AnyCancellable?
+    
+    
+    
+
+
+    
+    func startCountdown() {
+        countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
+            guard let self = self else { return }
+            if self.countdown > 0 {
+                self.countdown -= 1
+            } else {
+                self.countdownTimer?.cancel()
+                self.startTimer()
+                self.hasWorkoutStarted = true
+                self.showingWorkoutSheet = false
+                ble.MPU6050_1Gyros.removeAll() //Clear the collected Data for previous set
+                ble.MPU6050_2Gyros.removeAll()
+                ble.collectDataToggle = true //Start collecting data for the current workout
+            }
+        }
+    }
+    
+    func validateAndStartCountdown(sets: String, reps: String, weights: String) {
+        if isValidInput(sets) && isValidInput(reps) && isValidInput(weights) {
+            countdownActive = true
+            startCountdown()
+            feedbackDataForSets.removeAll()
+            workoutAnalysisForSets.removeAll()
+            formCriteria.resetListofData()
+            print("reset data has been reset hello")
+        } else {
+            alertMessage = "Please enter valid numbers for sets, reps, and weights."
+            showingAlert = true
+        }
+    }
+    
+    private func isValidInput(_ input: String) -> Bool {
+        guard !input.isEmpty, let _ = Int(input) else { return false }
+        return true
+    }
+    
+    
+    private func stringToInt(_ string: String) -> Int? {
+        return Int(string)
+    }
+
+    
+    enum WorkoutState {
+        case idle
+        case started
+        case paused
+        case finished
+        case final
+    }
+    
     
     func startListening() {
         guard !isListening else { return }
@@ -48,14 +148,13 @@ class WorkoutViewModel: ObservableObject {
         let recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         
         do {
-            print("listening started")
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.record)
-            try AVAudioSession.sharedInstance().setMode(AVAudioSession.Mode.measurement)
+            print("Listening started")
+            try AVAudioSession.sharedInstance().setCategory(.record)
+            try AVAudioSession.sharedInstance().setMode(.measurement)
             try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
             
             let inputNode = audioEngine.inputNode
             recognitionRequest.shouldReportPartialResults = true
-            
             recognitionRequest.taskHint = .dictation
             
             let recordingFormat = inputNode.outputFormat(forBus: 0)
@@ -65,7 +164,11 @@ class WorkoutViewModel: ObservableObject {
             
             audioEngine.prepare()
             try audioEngine.start()
-            print("still listening")
+            print("Audio engine started")
+            
+            
+            var WorkoutState = WorkoutState.idle
+            
             let recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] (result, error) in
                 guard let self = self else { return }
                 
@@ -73,34 +176,56 @@ class WorkoutViewModel: ObservableObject {
                 
                 if let result = result {
                     let bestString = result.bestTranscription.formattedString.lowercased()
-                    if bestString.contains("finish workout") {
-                        // Detected "start workout" command, initiate workout
-                        //                        self.stopWorkout()
-                        stopTimer()
-                        
-                        // self.workoutInProgress = false
-                        
-                        print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
-                        // Cancel the recognition task before stopping the audio engine
-                        //                        self.recognitionTask?.cancel()
-                        self.recognitionTask = nil
-                        
-                        // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        self.audioEngine.stop()
-                        inputNode.removeTap(onBus: 0)
-                        recognitionRequest.endAudio()
-                        print("Stopped listening")
-                        self.isListening = false
-                        // }
-                        return
-                    } else if bestString.contains("start workout") {
-                        // Detected "finish workout" command, stop workout
-                        //                        self.startWorkout()
-                        startTimer()
-                        // self.workoutInProgress = true
-                        
+                    print("Recognized string: \(bestString)")
+                    
+                    // Use last recognized phrase for command detection to avoid overlapping commands
+                    let commands = bestString.components(separatedBy: " ")
+                    if let lastCommand = commands.last {
+                        switch lastCommand {
+                        case "finish":
+                            if WorkoutState == .final{
+                                self.finishworkout()
+                                print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
+                                // Cancel the recognition task before stopping the audio engine
+                                self.recognitionTask?.cancel()
+                                self.recognitionTask = nil
+                                
+                                // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                self.audioEngine.stop()
+                                inputNode.removeTap(onBus: 0)
+                                recognitionRequest.endAudio()
+                                print("Stopped listening")
+                                self.isListening = false
+                                // }
+                                return
+                            }
+                        case "start":
+                            if WorkoutState == .idle{
+                                self.startWorkout()
+                                WorkoutState = .started
+                                print("Workout started")
+                            }
+                            
+                        case "pause":
+                            if WorkoutState == .started {
+                                self.finishset()
+                                WorkoutState = .paused
+                                print("Workout paused")
+                            }
+                        case "next":
+                            if WorkoutState == .paused {
+                                if let sets = stringToInt(inputtedSets), self.currentSets == sets - 1 {
+                                    self.finalset()
+                                    WorkoutState = .final
+                                } else {
+                                    self.nextset()
+                                    WorkoutState = .started
+                                }
+                            }
+                        default:
+                            break
+                        }
                     }
-                    print("bestString: \(bestString)")
                     
                     isFinal = result.isFinal
                 }
@@ -121,43 +246,71 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
-    private func startWorkout() {
-        // Call your ViewModel or Model function to start the workout
-        if !workoutInProgress {
-            workoutInProgress = true
-            print("Workout started!")
-            workoutInProgressSubject.send(true)
-            startTimer()
+    
+    
+    
+    func finishset(){
+        ble.collectDataToggle = false// continue the data collection
+        pauseTimer()
+        //generateRandomData(for: .perSet) // Generate per-set data
+        showGraphPopover = true
+        isWorkoutPaused = true
+        currentMotivationalPhrase = "Take a breather, then keep going!"
+        currentSets += 1
+    }
+    
+    func nextset(){
+        resumeTimer()
+        showGraphPopover = false
+        isWorkoutPaused = false
+        ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
+        ble.collectDataToggle = true //Stars collecting data again
+        currentMotivationalPhrase = "You're doing great!"
+    }
+    
+    
+    func startWorkout() {
+        validateAndStartCountdown(sets: inputtedSets, reps: inputtedReps, weights: inputtedWeights)
+    }
+    
+    func finishworkout(){
+        totalSets = Int(inputtedSets) ?? 0
+        
+        // Get feedback from formCriteria
+        let currentFeedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+        
+        // Check if feedback indicates poor form
+        if currentFeedback.2 == "Whoa slow down!!" {
+            // Call function to reduce HP
+            workoutPageViewModel.lowerHP()
         }
         
-        // Synthesize speech
-        //               let speechUtterance = AVSpeechUtterance(string: "Workout started")
-        //               speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        //               speechSynthesizer.speak(speechUtterance)
+        print("hello test, looking for bad form hehehe")
+        print(currentFeedback.2)
+        // Logic for completing the workout
+        storeModel.addFundtoUser(price: 50)
+        workoutPageViewModel.AddXP(value: 25)
+        resetWorkoutState()
+        hasWorkoutStarted = false
+        isWorkoutPaused = false
+        ble.collectDataToggle = false //stops collecting data
+        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
+        ble.MPU6050_2_All_Gyros.removeAll()
+        showGraphPopover = true
+        currentMotivationalPhrase = "Let's get started with a New Workout!"
         
     }
-    private func stopWorkout(){
-        if workoutInProgress {
-            workoutInProgress = false
-            print("Workout stopped!")
-            workoutInProgressSubject.send(false) // Notify subscribers that the workout has stopped
-            stopTimer()
-        }
-        
+    
+    func finalset(){
+        currentSets += 1 // This will push the state to "Finish Workout"
+        showGraphPopover = false
+        resumeTimer()
+        ble.MPU6050_1Gyros.removeAll()
+        ble.MPU6050_2Gyros.removeAll()
+        ble.collectDataToggle = true
+        currentMotivationalPhrase = "Last Set! Push through!"
     }
     
-    /// Function to reset progress
-    func resetProgress() {
-        progress = 0
-    }
-    
-    /// Function to add progress
-    /// - Parameters:
-    ///   - data: double
-    
-    func addProgress(data: Double) {
-        progress = data
-    }
     
     /// Function to start timer
     
@@ -203,6 +356,9 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func resetWorkoutState() {
+        countdownActive = false
+        countdown = 5 // Reset to your initial countdown value
+        
         // Reset progress
         progress = 0
         inputtedSets = ""
@@ -236,5 +392,5 @@ class WorkoutViewModel: ObservableObject {
 
 
 #Preview{
-    WorkoutMainPage(viewModel: WorkoutViewModel())
+    WorkoutMainPage()
 }

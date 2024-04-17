@@ -21,6 +21,7 @@
 		32E2885A2B83CD2800458FB1 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E288592B83CD2800458FB1 /* Calendar.swift */; };
 		32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */; };
 		32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */; };
+		6B32AA152BC9D30000AE988A /* CustomizeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B32AA142BC9D30000AE988A /* CustomizeViewModel.swift */; };
 		6B50EDF12BC6EB810094C715 /* ClothingItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50EDF02BC6EB810094C715 /* ClothingItemManager.swift */; };
 		6B50EDF32BC700E60094C715 /* BackgroundItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50EDF22BC700E60094C715 /* BackgroundItemManager.swift */; };
 		6B8762AB2BA26891005627CE /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762A92BA26891005627CE /* CloudKitManager.swift */; };
@@ -37,6 +38,7 @@
 		6BEA786B2BC0470C00239AB0 /* PetPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA786A2BC0470C00239AB0 /* PetPageViewModel.swift */; };
 		6BEA786D2BC0780E00239AB0 /* FoodItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA786C2BC0780E00239AB0 /* FoodItemManager.swift */; };
 		6BEA786F2BC08E4700239AB0 /* WorkoutPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA786E2BC08E4700239AB0 /* WorkoutPageViewModel.swift */; };
+
 		6BEA78732BC1E93F00239AB0 /* PetItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA78722BC1E93F00239AB0 /* PetItemManager.swift */; };
 		77C430C32BC080C8006E1FBE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C430C22BC080C8006E1FBE /* CoreDataManager.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
@@ -57,6 +59,7 @@
 		9180379A2BBF719B00802D01 /* FormCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037992BBF719B00802D01 /* FormCriteria.swift */; };
 		B90B6FDA2B7FAD1C009866FD /* PetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90B6FD92B7FAD1C009866FD /* PetStore.swift */; };
 		B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */; };
+		B9D41D862BBE131B007CDCC3 /* FitnessPlanPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D41D852BBE131B007CDCC3 /* FitnessPlanPage.swift */; };
 		B9D41D862BBE131B007CDCC3 /* FitnessPlanPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D41D852BBE131B007CDCC3 /* FitnessPlanPage.swift */; };
 		E5297D262BB4596D0078A9E6 /* EmbeddedVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5297D252BB4596D0078A9E6 /* EmbeddedVideo.swift */; };
 		E5297D282BB45D110078A9E6 /* VideoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5297D272BB45D110078A9E6 /* VideoCard.swift */; };
@@ -100,6 +103,7 @@
 		32E288592B83CD2800458FB1 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		32E2885B2B83CD4300458FB1 /* OverallProgressGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallProgressGraph.swift; sourceTree = "<group>"; };
 		32E2885D2B83CD6E00458FB1 /* OverallProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallProgress.swift; sourceTree = "<group>"; };
+		6B32AA142BC9D30000AE988A /* CustomizeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeViewModel.swift; sourceTree = "<group>"; };
 		6B50EDF02BC6EB810094C715 /* ClothingItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItemManager.swift; sourceTree = "<group>"; };
 		6B50EDF22BC700E60094C715 /* BackgroundItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundItemManager.swift; sourceTree = "<group>"; };
 		6B8762A92BA26891005627CE /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
@@ -141,6 +145,7 @@
 		918037992BBF719B00802D01 /* FormCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCriteria.swift; sourceTree = "<group>"; };
 		B90B6FD92B7FAD1C009866FD /* PetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStore.swift; sourceTree = "<group>"; };
 		B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFirstPet.swift; sourceTree = "<group>"; };
+		B9D41D852BBE131B007CDCC3 /* FitnessPlanPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessPlanPage.swift; sourceTree = "<group>"; };
 		B9D41D852BBE131B007CDCC3 /* FitnessPlanPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessPlanPage.swift; sourceTree = "<group>"; };
 		E5297D252BB4596D0078A9E6 /* EmbeddedVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedVideo.swift; sourceTree = "<group>"; };
 		E5297D272BB45D110078A9E6 /* VideoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCard.swift; sourceTree = "<group>"; };
@@ -202,6 +207,7 @@
 				320276212B892D55001A86B8 /* Pet_page.swift */,
 				6BEA786A2BC0470C00239AB0 /* PetPageViewModel.swift */,
 				327C4B012BA9C38800E160EE /* Inventory_Customize_page.swift */,
+				6B32AA142BC9D30000AE988A /* CustomizeViewModel.swift */,
 			);
 			path = "pet-customize-page";
 			sourceTree = "<group>";
@@ -549,6 +555,7 @@
 				0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */,
 				6BEA78552BBCE5E300239AB0 /* Inventory.swift in Sources */,
 				91065F892B7A7E4900BC62E6 /* SmartWeights.xcdatamodeld in Sources */,
+				6B32AA152BC9D30000AE988A /* CustomizeViewModel.swift in Sources */,
 				9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */,
 				9180379A2BBF719B00802D01 /* FormCriteria.swift in Sources */,
 				E5D7FE6A2BCD8E110097A175 /* VideoCarousel.swift in Sources */,
@@ -659,7 +666,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -716,7 +723,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
