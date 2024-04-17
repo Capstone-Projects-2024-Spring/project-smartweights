@@ -24,11 +24,11 @@ struct Pet_Page: View {
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
                 
+                Button("testing XP"){
+                    viewModel.AddXP(value: 75)
+                }
+                */
                 
-                 Button("testing XP"){
-                 viewModel.AddXP(value: 75)
-                 }
-                 */
                 HStack {
                     HamburgerMenu(
                         navigateToShop: { viewModel.showShop = true },
@@ -120,7 +120,18 @@ struct Pet_Page: View {
                             .frame(height: 20)
                             .padding(.top, -5)
                     
-
+                    
+                    // Display Current Level
+                    Text("Level \(viewModel.currentLevel)")
+                        .font(.system(size: 20))
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, 15)
+                        .padding(.bottom, -20)
+                    
+                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                        .frame(height: 20)
+                        .padding()
                     
                 }
 
