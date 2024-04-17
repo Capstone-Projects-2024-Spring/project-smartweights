@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import SwiftUI
 /// The fitnessPlanViewModel class contains variables for a user's fitness goals.
 class fitnessPlanViewModel: ObservableObject {
     @Published var hasPlan: Bool = false // default to false
@@ -18,6 +18,31 @@ class fitnessPlanViewModel: ObservableObject {
     @Published var selectedDate: Date = Date() // current date
     
     var fitnessPlanDBManager = FitnessPlanDBManager()
+    @Published var fitnessPlan: FitnessPlanModel?
+    init(){
+        fitnessPlanDBManager.fetchFitnessPlan{ fitnessPlan, error in
+            if let error = error {
+                print("Error fetching fitness plan: \(error.localizedDescription)")
+                return
+            }
+            guard let fitnessPlan = fitnessPlan else {
+                print("No fitness plan found")
+                return
+            }
+            DispatchQueue.main.async{
+                self.fitnessPlan = fitnessPlan
+                self.hasPlan = true
+                self.daysPerWeekGoal = Int(fitnessPlan.daysPerWeekGoal)
+                self.weightGoal = Int(fitnessPlan.dumbbellWeightGoal)
+                self.setGoal = Int(fitnessPlan.setGoal)
+                self.repGoal = Int(fitnessPlan.repGoal)
+                self.notes = fitnessPlan.notes
+                self.selectedDate = fitnessPlan.selectedDate
+            }
+        
+
+        }
+    }
     /// viewModel function to reset all variables
     func clearAllInputs() {
         self.hasPlan = false
