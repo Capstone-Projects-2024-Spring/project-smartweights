@@ -72,8 +72,8 @@ class MorePageViewModel: NSObject, ObservableObject {
         }
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
         if let img = image {
+            // Define the crop area (you can adjust these values to fit your needs)
             let cropArea = CGRect(x:0, y: 300, width: 10000, height: 2100)
             if let cgImage = img.cgImage?.cropping(to: cropArea){
                 let croppedImage = UIImage(cgImage: cgImage)
@@ -84,6 +84,7 @@ class MorePageViewModel: NSObject, ObservableObject {
             }
         }
     }
+}
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeMutableRawPointer) {
             DispatchQueue.main.async {
