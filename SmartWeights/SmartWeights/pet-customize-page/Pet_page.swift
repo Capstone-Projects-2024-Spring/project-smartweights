@@ -15,16 +15,17 @@ struct Pet_Page: View {
     var body: some View {
         NavigationView {
             VStack {
+                /*
                 Text("Pet Name")
                     .font(.system(size: 45))
                     .bold()
                     .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
-                
-                /*
+                 
                 Button("testing XP"){
                     viewModel.AddXP(value: 75)
                 }
                 */
+                
                 HStack {
                     HamburgerMenu(
                         navigateToShop: { viewModel.showShop = true },
@@ -78,7 +79,7 @@ struct Pet_Page: View {
                 Image(viewModel.activePet)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 500, height: 400, alignment: .center)
+                    .frame(width: 500, height: 450, alignment: .center)
                     .padding(.bottom, 0)
                 
                 VStack {
@@ -92,7 +93,8 @@ struct Pet_Page: View {
                         .font(.system(size: 20))
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 10)
+                        .padding(.top, 15)
+                        .padding(.bottom, -20)
                      
                     CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
                         .frame(height: 20)

@@ -95,7 +95,6 @@ struct OverallWorkoutData: View{
 struct WorkoutFeedback: View {
     @ObservedObject var viewModel: WorkoutViewModel
     @State private var sets: Int = 0
-    @Binding var showGraphPopover: Bool
     @Binding var feedbackDataForSets: [(String, String, String, String)]
     @Binding var workoutAnalysisForSets: [[String: Double]]
     @Binding var totalSets:Int
