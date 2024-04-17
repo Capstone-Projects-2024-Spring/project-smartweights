@@ -25,8 +25,9 @@ class WorkoutViewModel: ObservableObject {
     //TODO: IMPLEMENT THE DANGEROUS ASPECT
     var dangerousCalled = false
     var dangerous: Bool {
-        formCriteria.dangerousForm(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+        formCriteria.dangerousForm(dumbbellData: ble.MPU6050_1_Gyro, elbowData: ble.MPU6050_2_Gyro)
     }
+    var isWorkingOut = false
 
     @Published var progress: Double = 0
     
@@ -113,6 +114,9 @@ class WorkoutViewModel: ObservableObject {
             feedbackDataForSets.removeAll()
             workoutAnalysisForSets.removeAll()
             formCriteria.resetListofData()
+            totalSets = Int(sets) ?? 0
+            isWorkingOut = true
+            self.checkDangerousFormWhileWorkingOut()
         } else {
             alertMessage = "Please enter valid numbers for sets, reps, and weights."
             showingAlert = true
@@ -202,6 +206,7 @@ class WorkoutViewModel: ObservableObject {
                                 self.startWorkout()
                                 WorkoutState = .started
                                 print("Workout started")
+                                
                             }
                             
                         case "pause":
@@ -209,6 +214,7 @@ class WorkoutViewModel: ObservableObject {
                                 self.finishset()
                                 WorkoutState = .paused
                                 print("Workout paused")
+                                
                             }
                         case "next":
                             if WorkoutState == .paused {
@@ -219,6 +225,7 @@ class WorkoutViewModel: ObservableObject {
                                     self.nextset()
                                     WorkoutState = .started
                                 }
+                               
                             }
                         default:
                             break
@@ -255,6 +262,7 @@ class WorkoutViewModel: ObservableObject {
         isWorkoutPaused = true
         currentMotivationalPhrase = "Take a breather, then keep going!"
         currentSets += 1
+        isWorkingOut = false
     }
     
     func nextset(){
@@ -262,13 +270,17 @@ class WorkoutViewModel: ObservableObject {
         showGraphPopover = false
         isWorkoutPaused = false
         ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
+        ble.MPU6050_2Gyros.removeAll()
         ble.collectDataToggle = true //Stars collecting data again
         currentMotivationalPhrase = "You're doing great!"
+        isWorkingOut = true
+        self.checkDangerousFormWhileWorkingOut()
     }
     
     
     func startWorkout() {
         validateAndStartCountdown(sets: inputtedSets, reps: inputtedReps, weights: inputtedWeights)
+        
     }
     
     func finishworkout(){
@@ -296,6 +308,7 @@ class WorkoutViewModel: ObservableObject {
         ble.MPU6050_2_All_Gyros.removeAll()
         showGraphPopover = true
         currentMotivationalPhrase = "Let's get started with a New Workout!"
+        isWorkingOut = false
         
     }
     
@@ -307,11 +320,27 @@ class WorkoutViewModel: ObservableObject {
         ble.MPU6050_2Gyros.removeAll()
         ble.collectDataToggle = true
         currentMotivationalPhrase = "Last Set! Push through!"
+        isWorkingOut = true
+        self.checkDangerousFormWhileWorkingOut()
+        
+    }
+    
+    
+    func checkDangerousFormWhileWorkingOut() {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self = self else { return }
+            while self.isWorkingOut {
+                if self.formCriteria.dangerousForm(dumbbellData: self.ble.MPU6050_1_Gyro, elbowData: self.ble.MPU6050_2_Gyro){
+                    DispatchQueue.main.async {
+                        print("DANGEROUS")
+                    }
+                }
+            }
+        }
     }
     
     
     /// Function to start timer
-    
     func startTimer() {
         if let existingTimer = timer {
             existingTimer.invalidate()

@@ -368,98 +368,13 @@ class FormCriteria: ObservableObject{
     
     //Threshold if they are moving too fast and is dangerous
     //will be ran in a while loop to continuously check the user
-    func dangerousForm(dumbbellArray:[[Int]], elbowArray: [[Int]]) -> Bool{
-        
-        //count all the data that is being collected
-        var dumbbellSwingCount = 0
-        var wristTwistLRcount = 0
-        var wristTwistUDcount = 0
-        var elbowSwingCount = 0
-        var elbowFlareLRcount = 0
-        var elbowFlareUPcount = 0
-        
-        //count how many data is in the dangerous threshold
-        var dumbbellSwingDanger = 0
-        var wristTwistLRdanger = 0
-        var wristTwistUDdanger = 0
-        var elbowSwingDanger = 0
-        var elbowFlareLRdanger = 0
-        var elbowFlareUPdanger = 0
-        
-        
-        
-        dumbbellArray.forEach{ (data) in
-            //wristLR
-            if abs(data[0]) > 300{
-                wristTwistLRdanger += 1
-            }
-            
-            if abs(data[1]) > 300 {
-                wristTwistUDdanger += 1
-            }
-            
-            if abs(data[2]) > 300 {
-                dumbbellSwingDanger += 1
-            }
-            
-            if abs(data[0]) > 10 {
-                wristTwistLRcount  += 1
-            }
-            
-            if abs(data[1]) > 10 {
-                wristTwistUDcount += 1
-            }
-            
-            if abs(data[2]) > 10 {
-                dumbbellSwingCount += 1
-            }
-        }
-        
-        elbowArray.forEach { (data) in
-            if abs(data[0]) > 300{
-                elbowSwingDanger += 1
-            }
-            
-            if abs(data[1]) > 300 {
-                elbowFlareLRdanger += 1
-            }
-            
-            if abs(data[2]) > 300 {
-                elbowFlareUPdanger += 1
-            }
-            
-            if abs(data[0]) > 10 {
-                elbowSwingCount += 1
-            }
-            
-            if abs(data[1]) > 10 {
-                elbowFlareLRcount += 1
-            }
-            
-            if abs(data[2]) > 10 {
-                elbowFlareUPcount += 1
-            }
-            
-        }
-        
-        
-        let isDumbbellSwingDangerous = Double(dumbbellSwingDanger) / Double(dumbbellSwingCount) >= 0.1
-        let isWristTwistLRDangerous = Double(wristTwistLRdanger) / Double(wristTwistLRcount) >= 0.1
-        let isWristTwistUDDangerous = Double(wristTwistUDdanger) / Double(wristTwistUDcount) >= 0.1
-        let isElbowSwingDangerous = Double(elbowSwingDanger) / Double(elbowSwingCount) >= 0.1
-        let isElbowFlareLRDangerous = Double(elbowFlareLRdanger) / Double(elbowFlareLRcount) >= 0.1
-        let isElbowFlareUPDangerous = Double(elbowFlareUPdanger) / Double(elbowFlareUPcount) >= 0.1
-        
-        
-        let dangerous = isDumbbellSwingDangerous || isWristTwistLRDangerous || isWristTwistUDDangerous || isElbowSwingDangerous || isElbowFlareLRDangerous || isElbowFlareUPDangerous
-        
-        //TODO: show dangerous movements be returning a tuple of bool or just one bool
-        //should I specify which movement is dangerous or just give overall dangerous activity
-        
-        return dangerous //returns Dumbbell Swing, Wrist twist, Elbow Swing, Elbow Flare
+    func dangerousForm(dumbbellData:[Int], elbowData: [Int]) -> Bool{
+        //300 degrees per second is the dangerous threshold
+
+        //returns true if any of the data is greater than 300
+        return (dumbbellData[0] > 800 || dumbbellData[1] > 800 || dumbbellData[2] > 800 || elbowData[0] > 800 || elbowData[1] > 800 || elbowData[2] > 800)
+
     }
-    
-    
     
     //--------------FEEDBACK---------------------//
     
@@ -481,7 +396,6 @@ class FormCriteria: ObservableObject{
             
         }
         else{
-            //TODO: Make a array of phrases and randomize which one to be called
             dumbbellCustomTextFeedback = getRandomGoodFormPhrase()
         }
         
@@ -492,10 +406,6 @@ class FormCriteria: ObservableObject{
             elbowCustomTextFeedback = "Elbow is looking good!!!"
         }
         
-        
-        
-        
-        //need to add when form is dangerous
         
         return (overallAccel,overallElbowSwing,dumbbellCustomTextFeedback,elbowCustomTextFeedback)
         

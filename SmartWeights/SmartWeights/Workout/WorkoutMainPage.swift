@@ -28,10 +28,6 @@ struct WorkoutMainPage: View {
 //    @State var workoutAnalysisForSets:[[String:Double]] = []
 //    @State var totalSets:Int = 0
     //TODO: IMPLEMENT THE DANGEROUS ASPECT
-    var dangerousCalled = false
-    var dangerous: Bool {
-        formCriteria.dangerousForm(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
-    }
     
     @State private var currentMotivationalPhrase = "Let's get started!"
     

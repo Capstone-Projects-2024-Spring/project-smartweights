@@ -13,8 +13,9 @@ struct SmartWeightsApp: App {
     var body: some Scene {
         WindowGroup {
             LoginView()
+            //bleView(ble: BLEcentral())
                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-//            testview()
         }
+        
     }
 }
