@@ -86,7 +86,7 @@ struct MorePageView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Screenshot", systemImage: "camera") {
-                        
+                        viewModel.takeScreenshot()
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -94,6 +94,9 @@ struct MorePageView: View {
                         Image(systemName: "gearshape")
                     }
                 }
+            }
+            .alert("Screenshot Saved", isPresented: $viewModel.showingScreenshotSavedAlert) {
+                    Button("OK", role: .cancel) { }
             }
         }
     }
