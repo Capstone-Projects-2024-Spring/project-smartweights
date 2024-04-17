@@ -60,8 +60,7 @@ class WorkoutViewModel: ObservableObject {
     
     @Published var showGraphPopover = false {
         didSet {
-            print("showing that graph popup is working")
-            print(showGraphPopover,"state of the pop up")
+            print(showGraphPopover,"pop up is showing up")
             if showGraphPopover {
                 self.feedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
                 print(formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros))
@@ -70,6 +69,7 @@ class WorkoutViewModel: ObservableObject {
                 self.workoutAnalysis = formCriteria.UpdateWorkoutAnalysis(totalSets: totalSets, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
                 print(self.workoutAnalysis)
                 self.workoutAnalysisForSets.append(self.workoutAnalysis)
+                print(totalSets,"THIS IS THE TOTAL SETS")
                 print("hello i am showing that graph popup is working and that the functions are being called")
             }
         }
@@ -187,7 +187,7 @@ class WorkoutViewModel: ObservableObject {
                                 self.finishworkout()
                                 print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
                                 // Cancel the recognition task before stopping the audio engine
-                                //                        self.recognitionTask?.cancel()
+                                self.recognitionTask?.cancel()
                                 self.recognitionTask = nil
                                 
                                 // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -274,21 +274,6 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func finishworkout(){
-//        // Logic for completing the workout
-//        //generateRandomData(for: .overallWorkout) // Generate overall workout data
-//        storeModel.addFundtoUser(price: 50)
-//        workoutPageViewModel.AddXP(value: 25)
-//        resetWorkoutState()
-//        hasWorkoutStarted = false
-//        isWorkoutPaused = false
-//        ble.collectDataToggle = false //stops collecting data
-//        print("hello")
-//        //ble.MPU6050_1Gyros.removeAll()
-//        //need to add this data to another array to store for workout history
-//        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
-//        ble.MPU6050_2_All_Gyros.removeAll()
-//        showGraphPopover = true
-//        currentMotivationalPhrase = "Let's get started with a New Workout!"
         totalSets = Int(inputtedSets) ?? 0
         
         // Get feedback from formCriteria
@@ -326,19 +311,6 @@ class WorkoutViewModel: ObservableObject {
         currentMotivationalPhrase = "Last Set! Push through!"
     }
     
-    
-    /// Function to reset progress
-    func resetProgress() {
-        progress = 0
-    }
-    
-    /// Function to add progress
-    /// - Parameters:
-    ///   - data: double
-    
-    func addProgress(data: Double) {
-        progress = data
-    }
     
     /// Function to start timer
     

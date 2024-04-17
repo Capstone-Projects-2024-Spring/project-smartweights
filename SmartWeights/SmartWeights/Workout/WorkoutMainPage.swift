@@ -251,42 +251,16 @@ struct WorkoutMainPage: View {
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
                         viewModel.finishworkout()
-//                        viewModel.totalSets = Int(viewModel.inputtedSets) ?? 0
-//                        
-//                        // Get feedback from formCriteria
-//                        let currentFeedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
-//                        
-//                        // Check if feedback indicates poor form
-//                        if currentFeedback.2 == "Whoa slow down!!" {
-//                            // Call function to reduce HP
-//                            workoutPageViewModel.lowerHP()
-//                        }
-//                        
-//                        print("hello test, looking for bad form hehehe")
-//                        print(currentFeedback.2)
-//                        // Logic for completing the workout
-//                        storeModel.addFundtoUser(price: 50)
-//                        workoutPageViewModel.AddXP(value: 25)
-//                        viewModel.resetWorkoutState()
-//                        viewModel.hasWorkoutStarted = false
-//                        viewModel.isWorkoutPaused = false
-//                        ble.collectDataToggle = false //stops collecting data
-//                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
-//                        ble.MPU6050_2_All_Gyros.removeAll()
-//                        viewModel.showGraphPopover = true
-//                        currentMotivationalPhrase = "Let's get started with a New Workout!"
-                        
-                        
-                        
                     } else if buttonText == "Final Set" {
+                        viewModel.finalset()
                         // Logic for transitioning from the final set to finishing the workout
-                        viewModel.currentSets += 1 // This will push the state to "Finish Workout"
-                        viewModel.showGraphPopover = false
-                        viewModel.resumeTimer()
-                        ble.MPU6050_1Gyros.removeAll()
-                        ble.MPU6050_2Gyros.removeAll()
-                        ble.collectDataToggle = true
-                        viewModel.currentMotivationalPhrase = "Last Set! Push through!"
+//                        viewModel.currentSets += 1 // This will push the state to "Finish Workout"
+//                        viewModel.showGraphPopover = false
+//                        viewModel.resumeTimer()
+//                        ble.MPU6050_1Gyros.removeAll()
+//                        ble.MPU6050_2Gyros.removeAll()
+//                        ble.collectDataToggle = true
+//                        viewModel.currentMotivationalPhrase = "Last Set! Push through!"
                     } else if !viewModel.isWorkoutPaused {
                         ble.collectDataToggle = false
                         viewModel.pauseTimer()
@@ -339,7 +313,6 @@ struct WorkoutMainPage: View {
             .sheet(isPresented: $viewModel.showingWorkoutSheet) {
                 WorkoutDetailsInputView(viewModel: viewModel, ble: ble,form: formCriteria, hasWorkoutStarted: $viewModel.hasWorkoutStarted, showingWorkoutSheet: $viewModel.showingWorkoutSheet,feedbackDataForSets: $viewModel.feedbackDataForSets, workoutAnalysisForSets: $viewModel.workoutAnalysisForSets)
             }
-            
             
             Spacer()
         }
