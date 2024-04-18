@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct MorePageView: View {
     
@@ -38,13 +39,13 @@ struct MorePageView: View {
                     Text("Achievements")
                         .font(.title3)
                         .fontWeight(.medium)
-                    ScrollView(.horizontal) {
+                    ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             Spacer()
                             ForEach(viewModel.achievements) { achievement in
                                 ZStack {
-                                    RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                                        .fill(achievement.isClaimed ? Color.green : Color.gray)
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(achievement.isClaimed ? Color.green : Color.gray.opacity(0.5))
                                         .frame(width: 120, height: 140)
                                         .onTapGesture {
                                             if (!achievement.isClaimed) {
@@ -93,7 +94,6 @@ struct MorePageView: View {
                     
                 }
             }
-            .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -107,8 +107,13 @@ struct MorePageView: View {
                     }
                 }
             }
-            .alert("Screenshot Saved", isPresented: $viewModel.showingScreenshotSavedAlert) {
-                    Button("OK", role: .cancel) { }
+        }
+        .sheet(isPresented: $viewModel.showingShareSheet, onDismiss: {
+//            to reset the screenshot
+            viewModel.screenshot = nil
+        }) {
+            if let screenshot = viewModel.screenshot {
+                ShareSheetView(items: [screenshot])
             }
         }
     }
@@ -132,6 +137,17 @@ struct Achievement: Identifiable {
     mutating func claim() {
         isClaimed = true
     }
+}
+
+struct ShareSheetView: UIViewControllerRepresentable {
+    var items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 #Preview {
