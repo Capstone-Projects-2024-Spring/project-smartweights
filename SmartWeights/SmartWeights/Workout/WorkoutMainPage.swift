@@ -218,6 +218,7 @@ struct WorkoutMainPage: View {
                 }
                 .font(.system(size: 25))
                 .bold()
+                .foregroundStyle(.white)
             }
             .padding(.bottom, -15)
             
