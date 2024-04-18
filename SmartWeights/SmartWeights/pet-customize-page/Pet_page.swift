@@ -109,7 +109,7 @@ struct Pet_Page: View {
                     
                     // Display Current Level
                     Text("Level \(viewModel.currentLevel)")
-                        .font(.system(size: 20))
+                        .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 20)
