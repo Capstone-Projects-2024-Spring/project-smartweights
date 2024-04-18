@@ -42,29 +42,26 @@ struct WorkoutMainPage: View {
             
             VStack {
                 ZStack{
-                    workoutTitleView
-                    VStack{
-                        Image(systemName: "dumbbell.fill")
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(ble.MPU_1_Connected ? .green : .red)
-                        
-                        Text("Dumbbell")
-                            .font(.custom("small", size: 12))
-                        
+                    VStack {
+                        HStack{
+                            Spacer()
+                            Image(systemName: "dumbbell.fill")
+                                .frame(width: 30, height: 25)
+                                .foregroundColor(ble.MPU_1_Connected ? .green : .red)
+                            Spacer()
+                            Image(systemName: "figure.arms.open")
+                                .frame(width: 20, height: 25)
+                                .foregroundColor(ble.MPU_2_Connected ? .green : .red)
+                            Spacer()
+                            
+                        }
+                        Text("Connections")
+                            .font(.system(size: 12))
                     }
-                    .padding(.leading,200)
-                    VStack{
-                        Image(systemName: "figure.arms.open")
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(ble.MPU_2_Connected ? .green : .red)
-                        
-                        Text("Elbow")
-                            .font(.custom("small", size: 12))
-                    }
-                    .padding(.leading,300)
-                    
+                    .padding(.leading, 290)
                     
                 }
+                .padding(.bottom)
                 
                 
                 
