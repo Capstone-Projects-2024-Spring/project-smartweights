@@ -25,7 +25,7 @@ struct VideoCard: View, Identifiable {
                     .font(.headline)
                     .bold()
                 Text(description)
-                    .foregroundStyle(Color.darkGray)
+                    .foregroundStyle(Color.black)
                     .font(.subheadline)
             }
             .padding(.horizontal, 8)
