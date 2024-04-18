@@ -22,21 +22,23 @@ struct PetStore: View {
         NavigationView {
             VStack {
                 HStack {
-                    Text("Pet Store")
-                        .font(.system(size: 45))
-                        .fontWeight(.bold)
                     Spacer()
-                    HStack {
-                        Image("petcoin")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                        Text("\(viewModel.userCur)") // amount of money
-                            .fontWeight(.bold)
-                            .font(.system(size: 20))
-                            .foregroundColor(.green)
-                    }
+                    Text("Shop")
+                        .font(.headline)
+                    Spacer()
                 }
-                .padding() // Add padding to the HStack
+                .padding(.bottom, -50)
+                HStack {
+                    Spacer()
+                    Image("petcoin")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                    Text("\(viewModel.userCur)") // amount of money
+                        .fontWeight(.bold)
+                        .font(.system(size: 20))
+                        .foregroundColor(.green)
+                }
+                .padding(.trailing)
                 
                 HStack {
                     Button(action: {
@@ -44,7 +46,7 @@ struct PetStore: View {
                     }) {
                         Text(viewModel.sortByPrice ? "Sort by Price" : "Sort by Name")
                             .padding()
-                            .frame(height: 50)
+                            .frame(height: 40)
                             .background(Color.africanViolet)
                             .foregroundColor(.white)
                             .cornerRadius(12)
@@ -64,7 +66,7 @@ struct PetStore: View {
                                 Text(category)
                                     .padding()
                                     .background(viewModel.selectedCategory == category ? Color.africanViolet : Color.gray)
-                                    .frame(height: 45)
+                                    .frame(height: 35)
                                     .foregroundColor(.white)
                                     .cornerRadius(12)
                                     .font(.system(size: 15))
