@@ -62,7 +62,7 @@ struct ChallengeRow: View {
                 VStack(alignment: .trailing) {
                     Text("\(challenge.currentProgress)/\(challenge.progressGoal)")
                         .font(.subheadline)
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.africanViolet)
                     Text(challenge.reward)
                         .font(.subheadline)
                         .foregroundColor(.green)
@@ -85,6 +85,7 @@ struct ChallengesList: View {
                 Text("Completed").tag(1)
             }
             .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
             List(challenges) { challenge in
                 ChallengeRow(challenge: challenge)
             }

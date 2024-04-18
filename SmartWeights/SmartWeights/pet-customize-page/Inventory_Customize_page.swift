@@ -82,7 +82,7 @@ struct Customize_page: View {
                             .foregroundColor(.white)
                             .font(.system(size: 18).bold())
                             .frame(width: 200, height: 50)
-                            .background(Color.blue)
+                            .background(Color.africanViolet)
                             .cornerRadius(15)
                     }
                 }

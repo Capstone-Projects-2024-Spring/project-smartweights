@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct VideoCard: View {
+struct VideoCard: View, Identifiable {
     
     var videoId: String
     var title: String
     var description: String
+    var id: String { videoId }
     
     var body: some View {
         VStack {
@@ -21,16 +22,17 @@ struct VideoCard: View {
             VStack (alignment: .leading) {
                 Text(title)
                     .foregroundStyle(.white)
-                    .font(.title3)
+                    .font(.headline)
+                    .bold()
                 Text(description)
-                    .foregroundStyle(Color.lightGray)
+                    .foregroundStyle(Color.black)
                     .font(.subheadline)
             }
             .padding(.horizontal, 8)
             .padding(.bottom)
         }
         .frame(width: 200, height: 250)
-        .background(Color.darkGray)
+        .background(Color.africanViolet)
         .cornerRadius(12)
         .padding()
     }
