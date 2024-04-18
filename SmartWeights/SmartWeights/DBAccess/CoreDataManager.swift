@@ -21,41 +21,49 @@ class CoreDataManager {
         }
     }
     
-    func createWorkoutSession(dateTime: Date, workoutNum: Int) -> WorkoutSession? {
-        let context = persistentContainer.viewContext
-        let workoutSession = WorkoutSession(context: context)
-        workoutSession.dateTime = dateTime
-        workoutSession.workoutNum = Int64(workoutNum)
-        
-        do {
-            try context.save()
-            return workoutSession
-        } catch {
-            print("Failed to create workout session: \(error)")
-            return nil
+    func createWorkoutSession(dateTime: Date, workoutNum: Int, overallCurlAcceleration: Double, overallElbowFlareLR: Double, overallElbowFlareUD: Double, overallElbowSwing: Double, overallWristStabilityLR: Double, overallWristStabilityUD: Double) -> WorkoutSession? {
+            let context = persistentContainer.viewContext
+            let workoutSession = WorkoutSession(context: context)
+            
+            workoutSession.dateTime = dateTime
+            workoutSession.workoutNum = Int64(workoutNum)
+            workoutSession.overallCurlAcceleration = overallCurlAcceleration
+            workoutSession.overallElbowFlareLeftRight = overallElbowFlareLR
+            workoutSession.overallElbowFlareUpDown = overallElbowFlareUD
+            workoutSession.overallElbowSwing = overallElbowSwing
+            workoutSession.overallWristStabilityLeftRight = overallWristStabilityLR
+            workoutSession.overallWristStabilityUpDown = overallWristStabilityUD
+            
+            do {
+                try context.save()
+                return workoutSession
+            } catch {
+                print("Failed to create workout session: \(error)")
+                return nil
+            }
         }
-    }
 
-    func createSet(workoutSession: WorkoutSession, setNum: Int, feedback: String, elbowStability: Double, wristStability: Double, velocity: Double) -> Set? {
-        let context = persistentContainer.viewContext
-        let set = Set(context: context)
-        set.workoutSession = workoutSession
-        set.setNum = Int64(setNum)
-        set.feedback = feedback
-        set.elbowStabilityLeftRight = elbowStability
-        set.elbowStabilityUpDown = elbowStability
-        set.wristStabilityLeftRight = wristStability
-        set.wristStabilityUpDown = wristStability
-        set.velocity = velocity
-        
-        do {
-            try context.save()
-            return set
-        } catch {
-            print("Failed to create set: \(error)")
-            return nil
+    func createSet(workoutSession: WorkoutSession, setNum: Int, avgCurlAcceleration: Double, avgElbowFlareLR: Double, avgElbowFlareUD: Double, avgElbowSwing: Double, avgWristStabilityLR: Double, avgWristStabilityUD: Double) -> Set? {
+            let context = persistentContainer.viewContext
+            let set = Set(context: context)
+            
+            set.workoutSession = workoutSession
+            set.setNum = Int64(setNum)
+            set.avgCurlAcceleration = avgCurlAcceleration
+            set.avgElbowFlareLeftRight = avgElbowFlareLR
+            set.avgElbowFlareUpDown = avgElbowFlareUD
+            set.avgElbowSwing = avgElbowSwing
+            set.avgWristStabilityLeftRight = avgWristStabilityLR
+            set.avgWristStabilityUpDown = avgWristStabilityUD
+            
+            do {
+                try context.save()
+                return set
+            } catch {
+                print("Failed to create set: \(error)")
+                return nil
+            }
         }
-    }
 
     func fetchWorkoutSessions() -> [WorkoutSession] {
         let fetchRequest: NSFetchRequest<WorkoutSession> = WorkoutSession.fetchRequest()
