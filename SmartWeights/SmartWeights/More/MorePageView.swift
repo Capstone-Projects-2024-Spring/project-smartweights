@@ -33,13 +33,13 @@ struct MorePageView: View {
                     Text("Achievements")
                         .font(.title3)
                         .fontWeight(.medium)
-                    ScrollView(.horizontal) {
+                    ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             Spacer()
                             ForEach(viewModel.achievements) { achievement in
                                 ZStack {
                                     RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                                        .fill(achievement.isClaimed ? Color.green : Color.gray)
+                                        .fill(achievement.isClaimed ? Color.green : Color.gray.opacity(0.5))
                                         .frame(width: 120, height: 140)
                                         .onTapGesture {
                                             if (!achievement.isClaimed) {
