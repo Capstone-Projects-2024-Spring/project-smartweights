@@ -68,11 +68,10 @@ struct Pet_Page: View {
                                 Text("\(selectedFood.quantity)")
                                     .font(.system(size: 25))
                                     .bold()
-                                    .foregroundColor(.blue)
+                                    .foregroundStyle(.black)
                                     .minimumScaleFactor(0.50)
                                     .padding(.top, -15)
                                     .frame(width: 75,height: 25)
-                                    .foregroundStyle(.black)
                             }
                         }
                         .accessibilityIdentifier("UseFoodButton")
