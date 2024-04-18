@@ -21,14 +21,7 @@ struct WorkoutMainPage: View {
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
     @State private var isExpanded = false
-    @State private var graphData: [Double] = []
-//    @State private var feedback: (String, String, String, String) = ("", "", "", "")
-//    @State var feedbackDataForSets: [(String, String, String, String)] = []
-//    @State var workoutAnalysis: [String:Double] = [:]
-//    @State var workoutAnalysisForSets:[[String:Double]] = []
-//    @State var totalSets:Int = 0
-    //TODO: IMPLEMENT THE DANGEROUS ASPECT
-    
+    @State private var graphData: [Double] = [] 
     @State private var currentMotivationalPhrase = "Let's get started!"
     
     
@@ -37,18 +30,6 @@ struct WorkoutMainPage: View {
         ZStack {
             
             VStack {
-                Button(action: {
-                       viewModel.playSound()
-                   
-                   }, label: {
-                       Text("Play")
-                   })
-                Button(action: {
-                    viewModel.stopSound()
-                   }, label: {
-                       Text("stop")
-                   })
-              
                 ZStack{
                     workoutTitleView
                     VStack{

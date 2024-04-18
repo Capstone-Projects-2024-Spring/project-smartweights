@@ -327,20 +327,27 @@ class WorkoutViewModel: ObservableObject {
         
     }
     
-    
     func checkDangerousFormWhileWorkingOut() {
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let self = self else { return }
-            while self.isWorkingOut {
-                if self.formCriteria.dangerousForm(dumbbellData: self.ble.MPU6050_1_Gyro, elbowData: self.ble.MPU6050_2_Gyro){
-                    DispatchQueue.main.async {
-                        print("DANGEROUS")
+    var soundPlayed = false
+
+    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+        guard let self = self else { return }
+        while self.isWorkingOut {
+            if self.formCriteria.dangerousForm(dumbbellData: self.ble.MPU6050_1_Gyro, elbowData: self.ble.MPU6050_2_Gyro){
+                DispatchQueue.main.async {
+                    if !soundPlayed {
                         self.playSound()
+                        soundPlayed = true
                     }
                 }
             }
+            else{
+                self.stopSound()
+                soundPlayed = false
+            }
         }
     }
+}
     
     func playSound() {
         do {
