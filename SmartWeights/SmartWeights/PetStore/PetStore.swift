@@ -27,7 +27,7 @@ struct PetStore: View {
                         .fontWeight(.bold)
                     Spacer()
                     HStack {
-                        Image( "petcoin")
+                        Image("petcoin")
                             .resizable()
                             .frame(width: 40, height: 40)
                         Text("\(viewModel.userCur)") // amount of money
@@ -89,6 +89,7 @@ struct PetStore: View {
                                     
                                     Text(item.name)
                                         .fontWeight(.bold) // Makes the item name bold for better visibility
+                                        .foregroundStyle(.black)
                                     
                                     // Adding price below the name
                                     Text(item.price)
