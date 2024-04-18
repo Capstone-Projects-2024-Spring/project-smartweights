@@ -172,8 +172,8 @@ struct WorkoutMainPage: View {
         }
         .pickerStyle(SegmentedPickerStyle())
         .foregroundColor(.white)
-        .background(Color.gray)
         .accessibilityLabel("WorkoutSelectTab")
+        .padding(.horizontal)
     }
     
     // Compute the button text based on current and total sets
