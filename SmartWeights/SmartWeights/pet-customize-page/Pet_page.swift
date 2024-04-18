@@ -106,24 +106,6 @@ struct Pet_Page: View {
                     //     .padding(.bottom, 0)
                 }
                 VStack {
-                    // Health Bar
-                    CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
-                        .frame(height: 20)
-                        .padding(.bottom, 20)
-                        .padding(.horizontal)
-                        // Display Current Level
-                        Text("Level \(viewModel.currentLevel)")
-                            .font(.system(size: 20))
-                            .bold()
-                            .foregroundStyle(.black)
-                        
-                        
-                        // XP Progress Bar
-                        CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .africanViolet, backgroundColor: .gray)
-                            .frame(height: 20)
-                            .padding(.top, -5)
-                            .padding(.horizontal)
-                    
                     
                     // Display Current Level
                     Text("Level \(viewModel.currentLevel)")
@@ -131,13 +113,18 @@ struct Pet_Page: View {
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 20)
-                        .padding(.bottom, -20)
+                        .padding(.bottom, -15)
                         .foregroundStyle(.black)
                     
-                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .africanViolet, backgroundColor: .gray)
+                    // Health Bar
+                    CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
                         .frame(height: 20)
                         .padding()
                     
+                    // XP Bar
+                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .africanViolet, backgroundColor: .gray)
+                        .frame(height: 20)
+                        .padding()
                 }
 
                 .padding(.top, -20)
