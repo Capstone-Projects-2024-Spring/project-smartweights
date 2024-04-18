@@ -65,7 +65,7 @@ class MorePageViewModel: NSObject, ObservableObject {
         let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow })
         let scale = UIScreen.main.scale
         let bounds = window?.bounds ?? .zero
-
+        
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale)
         if let context = UIGraphicsGetCurrentContext() {
             window?.layer.render(in: context)
@@ -95,4 +95,5 @@ class MorePageViewModel: NSObject, ObservableObject {
                 }
             }
         }
-}
+
+
