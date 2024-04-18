@@ -72,6 +72,7 @@ struct Pet_Page: View {
                                     .minimumScaleFactor(0.50)
                                     .padding(.top, -15)
                                     .frame(width: 75,height: 25)
+                                    .foregroundStyle(.black)
                             }
                         }
                         .accessibilityIdentifier("UseFoodButton")
