@@ -22,21 +22,16 @@ struct PetStore: View {
         NavigationView {
             VStack {
                 HStack {
-                    Text("Pet Store")
-                        .font(.system(size: 45))
-                        .fontWeight(.bold)
                     Spacer()
-                    HStack {
-                        Image( "petcoin")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                        Text("\(viewModel.userCur)") // amount of money
-                            .fontWeight(.bold)
-                            .font(.system(size: 20))
-                            .foregroundColor(.green)
-                    }
+                    Image("petcoin")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                    Text("\(viewModel.userCur)") // amount of money
+                        .fontWeight(.bold)
+                        .font(.system(size: 20))
+                        .foregroundColor(.green)
                 }
-                .padding() // Add padding to the HStack
+                .padding(.trailing)
                 
                 HStack {
                     Button(action: {
@@ -44,9 +39,10 @@ struct PetStore: View {
                     }) {
                         Text(viewModel.sortByPrice ? "Sort by Price" : "Sort by Name")
                             .padding()
-                            .background(Color.blue)
+                            .frame(height: 40)
+                            .background(Color.africanViolet)
                             .foregroundColor(.white)
-                            .cornerRadius(25)
+                            .cornerRadius(12)
                     }
                     .padding(.bottom, -10)
                     .padding(.top, -15)
@@ -62,14 +58,16 @@ struct PetStore: View {
                             }) {
                                 Text(category)
                                     .padding()
-                                    .background(viewModel.selectedCategory == category ? Color.blue : Color.gray)
+                                    .background(viewModel.selectedCategory == category ? Color.africanViolet : Color.gray)
+                                    .frame(height: 35)
                                     .foregroundColor(.white)
-                                    .cornerRadius(25)
+                                    .cornerRadius(12)
                                     .font(.system(size: 15))
                             }
                         }
                     }
                     .padding()
+                    .padding(.bottom, -10)
                 }
                 
                 ScrollView {
@@ -86,6 +84,7 @@ struct PetStore: View {
                                     
                                     Text(item.name)
                                         .fontWeight(.bold) // Makes the item name bold for better visibility
+                                        .foregroundStyle(.black)
                                     
                                     // Adding price below the name
                                     Text(item.price)

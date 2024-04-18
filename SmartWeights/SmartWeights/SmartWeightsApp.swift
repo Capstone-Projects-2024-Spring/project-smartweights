@@ -15,6 +15,7 @@ struct SmartWeightsApp: App {
             //bleView(ble: BLEcentral())
             LoginView()
                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+               .preferredColorScheme(.light)
 //            testview()
         }
     }
