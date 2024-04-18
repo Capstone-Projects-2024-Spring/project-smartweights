@@ -59,9 +59,8 @@ struct WorkoutMainPage: View {
                             .font(.system(size: 12))
                     }
                     .padding(.leading, 290)
-                    
                 }
-                .padding(.bottom)
+                .padding(.bottom, 5)
                 
                 
                 
