@@ -210,17 +210,14 @@ struct WorkoutMainPage: View {
                 // Time rectangel box
                 RoundedRectangle(cornerRadius:  25)
                     .frame(width: 250, height: 50)
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color.africanViolet)
+                    .padding()
                 HStack{
                     Text("Time: ")
-                        .font(.system(size: 25))
-                        .bold()
-                        .foregroundStyle(.green)
                     Text("\(viewModel.hours):\(viewModel.minutes):\(viewModel.seconds)")
-                        .font(.system(size: 25))
-                        .bold()
-                        .foregroundStyle(.green)
                 }
+                .font(.system(size: 25))
+                .bold()
             }
             .padding(.bottom, -15)
             
