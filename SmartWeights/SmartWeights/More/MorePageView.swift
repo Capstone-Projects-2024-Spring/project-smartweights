@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct MorePageView: View {
+    
     @ObservedObject var viewModel = MorePageViewModel()
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
+    @ObservedObject var petItemDBManager = PetItemDBManager()
+    
     let profile = Profile(firstName: "First", lastName: "Last", level: 1)
     
     var body: some View {
@@ -72,14 +77,21 @@ struct MorePageView: View {
                     }
                 }
                 Divider()
-                Image("Dog")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(
-                        width: 250,
-                        height: 250
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                ZStack{
+                    ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
+                    
+                    Image(backgroundItemDBManager.activeBackground)
+                        .resizable()
+                        .frame(width: 250, height: 250)
+                    Image(petItemDBManager.activePet)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 250, height: 250)
+                    Image(clothingItemDBManager.activeClothing)
+                        .resizable()
+                        .scaledToFit()
+                    
+                }
             }
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
