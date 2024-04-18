@@ -24,23 +24,9 @@ struct GameCenterConstants { // constants for achievements and their achievement
     static let DynamicDuoAchievement = "SmartWeights.Achievement.DynamicDuo"
 }
 
-func authenticateLocalPlayer() {
-    GKLocalPlayer.local.authenticateHandler = { viewController, error in
-        if let error = error {
-            print("Game Center authentication failed: \(error.localizedDescription)")
-        } else if let viewController = viewController {
-            // Present the Game Center login view controller
-            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                if let window = scene.windows.first {
-                    window.rootViewController?.present(viewController, animated: true, completion: nil)
-                }
-            }
-        } else if GKLocalPlayer.local.isAuthenticated {
-            print("Game Center authenticated successfully!")
-        }
-    }
-}
+// Game Center
 
+/*
 func reportAchievement(identifier: String, percentComplete: Double) {
     guard GKLocalPlayer.local.isAuthenticated else {
         print("Player is not authenticated to Game Center.")
@@ -59,3 +45,4 @@ func reportAchievement(identifier: String, percentComplete: Double) {
         }
     }
 }
+*/
