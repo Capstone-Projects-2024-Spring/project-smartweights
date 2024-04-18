@@ -202,8 +202,6 @@ struct WorkoutMainPage: View {
     private var StartWorkoutView: some View {
         VStack {
             if !viewModel.hasWorkoutStarted {
-                Text("Prepare for your workout")
-                    .bold()
             }
             
             ZStack{
