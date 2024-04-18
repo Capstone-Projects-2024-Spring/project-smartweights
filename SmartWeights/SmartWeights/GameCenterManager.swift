@@ -37,6 +37,7 @@ class GameCenterManager: NSObject, ObservableObject { // Singleton instance
         static let DynamicDuoAchievement = "SmartWeights.Achievement.DynamicDuo"
     }
     
+    /// /// GameCenterManager class function to authenticate.
     func authenticateLocalPlayer() {
         GKLocalPlayer.local.authenticateHandler = { [weak self] viewController, error in
             guard let self = self else { return }
@@ -61,27 +62,50 @@ class GameCenterManager: NSObject, ObservableObject { // Singleton instance
         }
     }
     
-    func updateAchievement(identifier: String, progress: Double) {
-        if !isAuthenticated {
-            // Handle the case where the user is not authenticated
-            authenticateLocalPlayer()
-            //return
+    /// GameCenterManager class function to update achievement progress.
+    // FUNCTION USED TO UPDATE ACHIEVEMENTS ON GAME CENTER
+    func updateAchievement(identifier: String, progressToAdd: Double) {
+        guard GKLocalPlayer.local.isAuthenticated else {
+            print("User is not authenticated with Game Center.")
+            return
         }
-        let achievement = GKAchievement(identifier: identifier)
-        achievement.percentComplete = progress
         
-        GKAchievement.report([achievement]) { error in
+        // Load current achievements to check and update the status.
+        GKAchievement.loadAchievements { [weak self] achievements, error in
+            guard let self = self else { return }
+            
             if let error = error {
-                print("Failed to report achievement: \(error.localizedDescription)")
-                // Handle reporting error (e.g., show an error message)
+                print("Failed to load achievements: \(error.localizedDescription)")
+                return
+            }
+            
+            // Find the specific achievement and add to its current progress.
+            if let achievements = achievements, let achievement = achievements.first(where: { $0.identifier == identifier }) {
+                let currentProgress = achievement.percentComplete
+                let newProgress = min(currentProgress + progressToAdd, 100.0) // Ensure not to exceed 100%
+                self.setAchievementProgress(achievement: achievement, progress: newProgress)
             } else {
-                print("Achievement reported successfully!")
-                // Update UI or handle successful achievement reporting
+                // If the achievement is not found or no achievements exist, initialize it.
+                self.setAchievementProgress(achievement: GKAchievement(identifier: identifier), progress: min(progressToAdd, 100.0))
             }
         }
     }
     
-    // check if achievement is completed
+    /// Sets the achievement progress.
+    private func setAchievementProgress(achievement: GKAchievement, progress: Double) {
+            achievement.percentComplete = progress
+            achievement.showsCompletionBanner = true  // Optionally show a banner if the achievement is completed.
+
+            GKAchievement.report([achievement]) { error in
+                if let error = error {
+                    print("Failed to report achievement: \(error.localizedDescription)")
+                } else {
+                    print("Achievement progress updated successfully to \(progress)% for identifier \(achievement.identifier)")
+                }
+            }
+        }
+    
+    /// GameCenterManager class function to check if an achievement is completed.
     func checkAchievementCompletion(identifier: String) {
         guard GKLocalPlayer.local.isAuthenticated else {
             print("User is not authenticated with Game Center.")
@@ -103,6 +127,7 @@ class GameCenterManager: NSObject, ObservableObject { // Singleton instance
         }
     }
     
+    /// GameCenterManager class function to display Game Center.
     func showGameCenterAchievements() {
         if !GameCenterManager.shared.isAuthenticated {
             // Handle the case where the user is not authenticated
@@ -119,10 +144,52 @@ class GameCenterManager: NSObject, ObservableObject { // Singleton instance
         }
     }
     
+    /// GameCenterManager class function to report achievement.
+    // Currently not in use
+    func reportAchievement(challenge: Challenge) {
+       let achievement = GKAchievement(identifier: challenge.achievementIdentifier)
+       achievement.percentComplete = 100.0
+       
+       GKAchievement.report([achievement]) { error in
+           if let error = error {
+               print("Failed to report achievement: \(error.localizedDescription)")
+           } else {
+               print("Achievement reported successfully!")
+               // Update challenge completion status in UI
+               // Note: This should ideally be updated based on the Game Center callback
+           }
+       }
+   }
     
+    /// GameCenterDelegate class for loading Game Center UI into game
     class GameCenterDelegate: NSObject, GKGameCenterControllerDelegate {
         func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
             gameCenterViewController.dismiss(animated: true, completion: nil)
         }
     }
+    
+    /// GameCenterManager class function that fetches all achievements and their completion percentages.
+    func fetchAllAchievementsProgress(completion: @escaping ([String: Double]?, Error?) -> Void) {
+        guard isAuthenticated else {
+            print("User is not authenticated with Game Center.")
+            authenticateLocalPlayer()
+            completion(nil, NSError(domain: "GameCenterManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "User is not authenticated with Game Center."]))
+            return
+        }
+        
+        GKAchievement.loadAchievements { achievements, error in
+            if let error = error {
+                print("Failed to load achievements: \(error.localizedDescription)")
+                completion(nil, error)
+                return
+            }
+            
+            var achievementsProgress: [String: Double] = [:]
+            achievements?.forEach { achievement in
+                achievementsProgress[achievement.identifier] = achievement.percentComplete
+            }
+            completion(achievementsProgress, nil)
+        }
+    }
+
 }

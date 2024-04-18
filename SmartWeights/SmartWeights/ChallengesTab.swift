@@ -9,112 +9,77 @@ import SwiftUI
 import GameKit
 
 struct ChallengesTab: View {
-    let challenges = [
-        Challenge(title: "1st Sign In", description: "Log in to SmartWeights for the first time.", currentProgress: 0, progressGoal: 1, coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stLogin"), achievementIdentifier: "SmartWeights.Achievement.1stSignIn"),
-        Challenge(title: "1st Workout", description: "Complete your first workout.", currentProgress: 0, progressGoal: 1, coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stWorkout"), achievementIdentifier: "SmartWeights.Achievement.1stWorkout"),
-        Challenge(title: "New Shopper", description: "Purchase your first item in the pet store.", currentProgress: 0, progressGoal: 1, coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stItemBought"), achievementIdentifier: "SmartWeights.Achievement.NewShopper"),
-        Challenge(title: "Outfit Change", description: "Customize your pet for the first time.", currentProgress: 0, progressGoal: 1, coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stOutfitChange"), achievementIdentifier: "SmartWeights.Achievement.OutfitChange"),
-        Challenge(title: "Sharing Companion", description: "Interact with the share button on the profile tab.", currentProgress: 0, progressGoal: 1, coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("SharingCompanion"), achievementIdentifier: "SmartWeights.Achievement.SharingCompanion"),
-        Challenge(title: "New Best Friends", description: "Level up your pet to level 2.", currentProgress: 1, progressGoal: 2, coinReward: "+ 100 PC", xpReward: "+ 20 XP", image: Image("NewBestFriends"), achievementIdentifier: "SmartWeights.Achievement.NewBestFriends"),
-        Challenge(title: "Dinner Time", description: "Feed your pet 50 times.", currentProgress: 0, progressGoal: 50, coinReward: "+ 250 PC", xpReward: "+ 50 XP", image: Image("DinnerTime"), achievementIdentifier: "SmartWeights.Achievement.DinnerTime"),
-        Challenge(title: "Loyal Customer", description: "Spend 2000 pet coins in the pet store.", currentProgress: 0, progressGoal: 2000, coinReward: "+ 500 PC", xpReward: "+ 75 XP", image: Image("LoyalCustomer"), achievementIdentifier: "SmartWeights.Achievement.LoyalCustomer"),
-        Challenge(title: "Workout Machine", description: "Complete 50 workouts.", currentProgress: 0, progressGoal: 50, coinReward: "+ 500 PC", xpReward: "+ 50 XP", image: Image("WorkoutMachine"), achievementIdentifier: "SmartWeights.Achievement.WorkoutMachine"),
-        Challenge(title: "Perfect Form", description: "Complete 100 workouts.", currentProgress: 0, progressGoal: 100, coinReward: "+ 1000 PC", xpReward: "+ 100 XP", image: Image("PerfectForm"), achievementIdentifier: "SmartWeights.Achievement.PerfectForm"),
-        Challenge(title: "Dynamic Duo", description: "Level up your pet to level 10.", currentProgress: 1, progressGoal: 10, coinReward: "+ 1500 PC", xpReward: "+ 100 XP", image: Image("DynamicDuo"), achievementIdentifier: "SmartWeights.Achievement.DynamicDuo")
+    @State var challenges: [Challenge] = [
+        Challenge(title: "1st Sign In", description: "Log in to SmartWeights for the first time.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stLogin"), achievementIdentifier: "SmartWeights.Achievement.1stSignIn", currentProgress: 0, isCompleted: false),
+        Challenge(title: "1st Workout", description: "Complete your first workout.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stWorkout"), achievementIdentifier: "SmartWeights.Achievement.1stWorkout", currentProgress: 0, isCompleted: false),
+        Challenge(title: "New Shopper", description: "Purchase your first item in the pet store.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stItemBought"), achievementIdentifier: "SmartWeights.Achievement.NewShopper", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Outfit Change", description: "Customize your pet for the first time.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stOutfitChange"), achievementIdentifier: "SmartWeights.Achievement.OutfitChange", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Sharing Companion", description: "Interact with the share button on the profile tab.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("SharingCompanion"), achievementIdentifier: "SmartWeights.Achievement.SharingCompanion", currentProgress: 0, isCompleted: false),
+        Challenge(title: "New Best Friends", description: "Level up your pet to level 2.", coinReward: "+ 100 PC", xpReward: "+ 20 XP", image: Image("NewBestFriends"), achievementIdentifier: "SmartWeights.Achievement.NewBestFriends", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Dinner Time", description: "Feed your pet 50 times.", coinReward: "+ 250 PC", xpReward: "+ 50 XP", image: Image("DinnerTime"), achievementIdentifier: "SmartWeights.Achievement.DinnerTime", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Loyal Customer", description: "Purchase 50 items in the pet store.", coinReward: "+ 500 PC", xpReward: "+ 75 XP", image: Image("LoyalCustomer"), achievementIdentifier: "SmartWeights.Achievement.LoyalCustomer", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Workout Machine", description: "Complete 50 workouts.", coinReward: "+ 500 PC", xpReward: "+ 50 XP", image: Image("WorkoutMachine"), achievementIdentifier: "SmartWeights.Achievement.WorkoutMachine", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Perfect Form", description: "Complete 100 workouts.", coinReward: "+ 1000 PC", xpReward: "+ 100 XP", image: Image("PerfectForm"), achievementIdentifier: "SmartWeights.Achievement.PerfectForm", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Dynamic Duo", description: "Level up your pet to level 10.", coinReward: "+ 1500 PC", xpReward: "+ 100 XP", image: Image("DynamicDuo"), achievementIdentifier: "SmartWeights.Achievement.DynamicDuo", currentProgress: 0, isCompleted: false)
     ]
     
     var body: some View {
         NavigationView {
-            ChallengesList(challenges: challenges)
+            ChallengesList(challenges: challenges, fetchGameCenterProgress: fetchGameCenterProgress)
                 .navigationBarTitle("Achievements", displayMode: .inline)
                 .preferredColorScheme(.light) // force light mode
         }
     }
+    
+    func fetchGameCenterProgress() {
+        GameCenterManager.shared.fetchAllAchievementsProgress { progressDict, error in
+            if let error = error {
+                print("Error fetching achievements: \(error.localizedDescription)")
+            } else if let progressDict = progressDict {
+                DispatchQueue.main.async {
+                    for i in self.challenges.indices {
+                        if let percentComplete = progressDict[self.challenges[i].achievementIdentifier] {
+                            // Update the current progress with the fetched percent complete directly
+                            self.challenges[i].currentProgress = Int(percentComplete)
+                            // Determine if the challenge is completed based on whether the percent complete is 100
+                            self.challenges[i].isCompleted = percentComplete == 100.0
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
-struct Challenge: Identifiable {
+class Challenge: Identifiable, ObservableObject {
     var id = UUID()
     var title: String
     var description: String
-    var currentProgress: Int
-    var progressGoal: Int
     var coinReward: String
     var xpReward: String
     var image: Image // added for custom images
     var achievementIdentifier: String
+    @Published var currentProgress: Int
+    @Published var isCompleted: Bool
     
-    var isCompleted: Bool {
-        return currentProgress >= progressGoal
-    }
-    
-    var progressPercent: Double {
-        return Double(currentProgress) / Double(progressGoal)
-    }
-    // temp
-    var achievementProgress: Double {
-            return isCompleted ? 100.0 : 0.0
-    }
-}
-
-struct ChallengeRow: View {
-    var challenge: Challenge
-    
-    var body: some View {
-        VStack {
-            HStack {
-                challenge.image // display image for each challenge
-                    .resizable()
-                    .frame(width: 60, height: 60) // can change size if needed
-                //Image(systemName: "figure.strengthtraining.traditional")
-                    .foregroundColor(.yellow)
-                    .padding(.trailing, 8)
-                VStack(alignment: .leading) {
-                    Text(challenge.title)
-                        .font(.headline)
-                    Text(challenge.description)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-                Spacer()
-                VStack(alignment: .trailing) {
-                    Text("\(challenge.currentProgress)/\(challenge.progressGoal)")
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
-                    Text(challenge.coinReward)
-                        .font(.subheadline)
-                        .foregroundColor(.green)
-                    Text(challenge.xpReward)
-                        .font(.subheadline)
-                        .foregroundColor(.green)
-                }
-            }
-            ProgressView(value: challenge.progressPercent)
-                .progressViewStyle(LinearProgressViewStyle())
-        }
-        
-        /*
-        private func reportAchievement(challenge: Challenge) {
-            let achievement = GKAchievement(identifier: challenge.achievementIdentifier)
-            achievement.percentComplete = 100.0
-            
-            GKAchievement.report([achievement]) { error in
-                if let error = error {
-                    print("Failed to report achievement: \(error.localizedDescription)")
-                } else {
-                    print("Achievement reported successfully!")
-                    // Update challenge completion status in UI
-                    // Note: This should ideally be updated based on the Game Center callback
-                }
-            }
-         }
-        */
+    init(title: String, description: String, coinReward: String, xpReward: String, image: Image, achievementIdentifier: String, currentProgress: Int, isCompleted: Bool) {
+        self.title = title
+        self.description = description
+        self.coinReward = coinReward
+        self.xpReward = xpReward
+        self.image = image
+        self.achievementIdentifier = achievementIdentifier
+        self.currentProgress = currentProgress
+        self.isCompleted = isCompleted
     }
 }
 
 struct ChallengesList: View {
     @State private var selectedTab = 0
     var challenges: [Challenge]
-    
+    var fetchGameCenterProgress: () -> Void
+    @State private var updateListKey = false // Added state to force update
+
     var body: some View {
         VStack {
             HStack {
@@ -125,6 +90,15 @@ struct ChallengesList: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 Spacer()
+                
+                Button(action: refreshList) {
+                    Image(systemName: "arrow.clockwise")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(.blue)
+                }
+                .padding(.trailing, 5)  // Provide some spacing between buttons
                 
                 Button(action: {
                     GameCenterManager.shared.showGameCenterAchievements()
@@ -139,11 +113,46 @@ struct ChallengesList: View {
                 }
                 Spacer()
             }
-            // Display challenges based on selected tab
+            .padding(.horizontal)
+
             List(challenges.filter { selectedTab == 0 ? !$0.isCompleted : $0.isCompleted }) { challenge in
-                ChallengeRow(challenge: challenge)
+                VStack {
+                    HStack {
+                        challenge.image // display image for each challenge
+                            .resizable()
+                            .frame(width: 60, height: 60) // can change size if needed
+                            .foregroundColor(.yellow)
+                            .padding(.trailing, 8)
+                        VStack(alignment: .leading) {
+                            Text(challenge.title)
+                                .font(.headline)
+                            Text(challenge.description)
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                        VStack(alignment: .trailing) {
+                            Text(challenge.coinReward)
+                                .font(.subheadline)
+                                .foregroundColor(.green)
+                            Text(challenge.xpReward)
+                                .font(.subheadline)
+                                .foregroundColor(.green)
+                        }
+                    }
+                    ProgressView(value: Double(challenge.currentProgress), total: 100)
+                        .progressViewStyle(LinearProgressViewStyle())
+                        .accentColor(.blue) // Customizing the color of the progress bar
+                }
             }
+            .id(updateListKey) // Use the state key to force the list to re-render
         }
+        .onAppear(perform: refreshList)
+    }
+    
+    func refreshList() {
+        fetchGameCenterProgress()
+        updateListKey.toggle() // Toggle the key to force the list to update
     }
 }
 
@@ -151,24 +160,3 @@ struct ChallengesList: View {
     ChallengesTab()
 }
 
-
-
-/*
- private func authenticateLocalPlayer() {
-     
-     GKLocalPlayer.local.authenticateHandler = { viewController, error in
-         if let error = error {
-             print("Game Center authentication failed: \(error.localizedDescription)")
-         } else if let viewController = viewController {
-             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                 if let window = scene.windows.first {
-                     window.rootViewController?.present(viewController, animated: true, completion: nil)
-                 }
-             }
-         } else if GKLocalPlayer.local.isAuthenticated {
-             // Player authenticated, show achievements
-             showGameCenterAchievements()
-         }
-     }
- }
- */

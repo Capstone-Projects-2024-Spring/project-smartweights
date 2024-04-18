@@ -86,8 +86,9 @@ struct MorePageView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Screenshot", systemImage: "camera") {
+                        
                         // CODE TO UPDATE "Sharing Companion" ACHIEVEMENT
-                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.SharingCompanion", progress: 100.0)
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.SharingCompanion", progressToAdd: 100.0)
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {

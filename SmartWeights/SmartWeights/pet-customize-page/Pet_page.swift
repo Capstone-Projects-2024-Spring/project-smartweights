@@ -54,6 +54,10 @@ struct Pet_Page: View {
                         let selectedFood = viewModel.foodItems[viewModel.selectedFoodIndex]
                         Button(action: {
                             viewModel.handleFoodUse(selectedFoodIndex: viewModel.selectedFoodIndex)
+                            
+                            // CODE TO UPDATE Dinner Time ACHIEVEMENT
+                            GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.DinnerTime", progressToAdd: 2.0)
+                            
                         }) {
                             VStack {
                                 Image(selectedFood.imageName)

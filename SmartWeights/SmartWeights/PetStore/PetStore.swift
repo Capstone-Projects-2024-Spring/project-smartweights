@@ -207,6 +207,12 @@ struct ItemDetailView: View {
             Button(action: {
                 // Handle purchase action
                 viewModel.purchaseItem(item: item)
+                
+                // CODE TO UPDATE New Shopper ACHIEVEMENT
+                GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.NewShopper", progressToAdd: 100.0)
+                
+                // CODE TO UPDATE Loyal Customer ACHIEVEMENT
+                GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.LoyalCustomer", progressToAdd: 2.0)
             }) {
                 // Purchase Button UI
                 Text(viewModel.items.first(where: { $0.id == item.id })?.isBought ?? false ? "Purchased" : "Purchase")
