@@ -415,7 +415,7 @@ struct WorkoutMainPage: View {
                         }
                         .padding()
                         .foregroundColor(.white)
-                        .background(Color.blue)
+                        .background(Color.africanViolet)
                         .cornerRadius(10)
                         .alert(isPresented: $viewModel.showingAlert) {
                             Alert(title: Text("Invalid Input"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
