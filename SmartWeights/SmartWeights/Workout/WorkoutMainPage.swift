@@ -303,6 +303,7 @@ struct WorkoutMainPage: View {
                         Text(buttonText)
                             .bold()
                             .foregroundColor(.white)
+                            .font(.title2)
                     )
             }
             .accessibilityLabel(viewModel.hasWorkoutStarted ? (viewModel.isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
