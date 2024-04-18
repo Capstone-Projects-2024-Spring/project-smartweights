@@ -84,16 +84,16 @@ class MorePageViewModel: NSObject, ObservableObject {
             }
         }
     }
-}
+    
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeMutableRawPointer) {
-            DispatchQueue.main.async {
-                if error == nil {
-                    self.showingScreenshotSavedAlert = true
-                } else {
-                    // Handle any errors here, maybe set another published property to show an error message.
-                }
+        DispatchQueue.main.async {
+            if error == nil {
+                self.showingScreenshotSavedAlert = true
+            } else {
+                // Handle any errors here, maybe set another published property to show an error message.
             }
         }
-
-
+    }
+    
+}
