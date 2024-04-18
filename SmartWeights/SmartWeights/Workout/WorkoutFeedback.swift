@@ -108,11 +108,11 @@ struct WorkoutFeedback: View {
                 }
                 .frame(height: 500)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray, lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 0)
+                        .stroke(Color.gray, lineWidth: 0)
                 )
                 .foregroundColor(.black)
-                .background(Color.blue)
+                .background(Color.gray.opacity(0.1))
                 .scrollContentBackground(.hidden)
                 OverallWorkoutData(workoutAnalysisForSets: $workoutAnalysisForSets, viewModel: viewModel, totalSets: totalSets)
                 
