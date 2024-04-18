@@ -23,13 +23,6 @@ struct PetStore: View {
             VStack {
                 HStack {
                     Spacer()
-                    Text("Shop")
-                        .font(.headline)
-                    Spacer()
-                }
-                .padding(.bottom, -50)
-                HStack {
-                    Spacer()
                     Image("petcoin")
                         .resizable()
                         .frame(width: 40, height: 40)
