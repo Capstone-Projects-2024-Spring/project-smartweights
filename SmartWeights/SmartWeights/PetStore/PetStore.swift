@@ -44,9 +44,10 @@ struct PetStore: View {
                     }) {
                         Text(viewModel.sortByPrice ? "Sort by Price" : "Sort by Name")
                             .padding()
+                            .frame(width: .infinity, height: 40)
                             .background(Color.africanViolet)
                             .foregroundColor(.white)
-                            .cornerRadius(25)
+                            .cornerRadius(12)
                     }
                     .padding(.bottom, -10)
                     .padding(.top, -15)
@@ -63,13 +64,15 @@ struct PetStore: View {
                                 Text(category)
                                     .padding()
                                     .background(viewModel.selectedCategory == category ? Color.africanViolet : Color.gray)
+                                    .frame(width: .infinity, height: 35)
                                     .foregroundColor(.white)
-                                    .cornerRadius(25)
+                                    .cornerRadius(12)
                                     .font(.system(size: 15))
                             }
                         }
                     }
                     .padding()
+                    .padding(.bottom, -10)
                 }
                 
                 ScrollView {
