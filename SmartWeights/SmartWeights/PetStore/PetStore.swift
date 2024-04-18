@@ -44,7 +44,7 @@ struct PetStore: View {
                     }) {
                         Text(viewModel.sortByPrice ? "Sort by Price" : "Sort by Name")
                             .padding()
-                            .background(Color.blue)
+                            .background(Color.africanViolet)
                             .foregroundColor(.white)
                             .cornerRadius(25)
                     }
@@ -62,7 +62,7 @@ struct PetStore: View {
                             }) {
                                 Text(category)
                                     .padding()
-                                    .background(viewModel.selectedCategory == category ? Color.blue : Color.gray)
+                                    .background(viewModel.selectedCategory == category ? Color.africanViolet : Color.gray)
                                     .foregroundColor(.white)
                                     .cornerRadius(25)
                                     .font(.system(size: 15))
