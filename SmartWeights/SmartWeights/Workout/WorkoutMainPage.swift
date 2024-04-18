@@ -1,11 +1,13 @@
 import SwiftUI
 import Combine
+import CoreData
 
 /// Main structure to display the workout page with integrated UI components
 struct WorkoutMainPage: View {
     @StateObject var viewModel = WorkoutViewModel()
     @ObservedObject var ble = BLEcentral()
     @ObservedObject var formCriteria = FormCriteria()
+    @ObservedObject var coreDataManager = CoreDataManager()
     @StateObject var storeModel = storeViewModel()
     @ObservedObject var workoutPageViewModel = WorkoutPageViewModel()
     
@@ -41,7 +43,6 @@ struct WorkoutMainPage: View {
     }
     
     @State private var currentMotivationalPhrase = "Let's get started!"
-    let coreDataManager = CoreDataManager()
 
     var body: some View {
         ZStack {
@@ -257,11 +258,16 @@ struct WorkoutMainPage: View {
             // Start/Reset workout button
             Button(action: {
                 if hasWorkoutStarted {
-                    // If the workout has started, get the next workout number and create a new workout session
                     let workoutNum = coreDataManager.getNextWorkoutNumber()
-                    
+                    print(workoutNum)
+                    if let newWorkoutSession = coreDataManager.createWorkoutSession(dateTime: Date(), workoutNum: workoutNum, overallCurlAcceleration: 0.0, overallElbowFlareLR: 0.0, overallElbowFlareUD: 0.0, overallElbowSwing: 0.0, overallWristStabilityLR: 0.0, overallWristStabilityUD: 0.0){
+                        self.currentWorkoutSession = newWorkoutSession
+                        print(newWorkoutSession as Any)
+                    }
                     if buttonText == "Finish Workout" {
+                        print("hello im about to check 'if letworkoutSession = currentWorkoutSession'")
                         if let workoutSession = currentWorkoutSession{
+                            print("hello it worked the conditional")
                             totalSets = Int(viewModel.inputtedSets) ?? 0
 
                             // Get feedback from formCriteria
@@ -283,13 +289,17 @@ struct WorkoutMainPage: View {
                             hasWorkoutStarted = false
                             isWorkoutPaused = false
                             ble.collectDataToggle = false //stops collecting data
-                            createWorkoutSession(dateTime: Date(), workoutNum: workoutNum, overallCurlAcceleration: <#T##Double#>, overallElbowFlareLR: <#T##Double#>, overallElbowFlareUD: <#T##Double#>, overallElbowSwing: <#T##Double#>, overallWristStabilityLR: <#T##Double#>, overallWristStabilityUD: <#T##Double#>)
-                            print("hello")
+                            print("creating workoutAnalysis")
+//                            let workoutAnalysis = formCriteria.UpdateWorkoutAnalysis(totalSets: totalSets, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
                             //need to add this data to another array to store for workout history
                             //TODO: Need to move this
                             ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
                             ble.MPU6050_2_All_Gyros.removeAll()
                             showGraphPopover = true
+                            print("updating workout session")
+                            coreDataManager.updateWorkoutSession(workoutSession, dateTime: Date(), overallCurlAcceleration: workoutAnalysis["overallWorkoutUpDownAverage"] ?? 0.0, overallElbowFlareLR: workoutAnalysis["overallWorkoutElbowFlareForwardBackward"] ?? 0.0, overallElbowFlareUD: workoutAnalysis["overallWorkoutElbowFlareUpDown"] ?? 0.0, overallElbowSwing: workoutAnalysis["overallWorkoutElbowSwing"] ?? 0.0, overallWristStabilityLR: workoutAnalysis["overallDumbbellTwistingLeftRight"] ?? 0.0, overallWristStabilityUD: workoutAnalysis["overallDumbbellTwistingUpDown"] ?? 0.0)
+                            print(coreDataManager.fetchWorkoutSessions())
+                            print("hello i just printed out the fetchWorkoutSessions()")
                             currentMotivationalPhrase = "Let's get started with a New Workout!"
                         }
                     } else if buttonText == "Final Set" {
