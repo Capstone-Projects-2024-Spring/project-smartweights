@@ -23,11 +23,13 @@ struct NavigationCarousel: View {
     
     var body: some View {
         VStack (alignment: .leading) {
-            Text("App Features")
+            Text("Additional Pages")
                 .font(.title3)
                 .foregroundStyle(textColor)
                 .padding(.top)
                 .padding(.horizontal)
+                .padding(.bottom, -5)
+                .bold()
             ScrollView (.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach (buttons) { button in

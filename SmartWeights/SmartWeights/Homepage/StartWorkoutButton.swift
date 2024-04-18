@@ -22,16 +22,20 @@ struct StartWorkoutButton: View {
                                 .font(.title2)
                             Image(systemName: "arrow.right")
                         }
+                        .bold()
                         Text(currentWorkout)
                             .font(.subheadline)
                     }
                     .padding()
                     Spacer()
                     Image(systemName: "figure.strengthtraining.traditional")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
                         .padding()
                 }
             }
-            .foregroundStyle(.black)
+            .foregroundStyle(.white)
             .background(Color.africanViolet)
                 .cornerRadius(12)
             .padding()

@@ -29,12 +29,14 @@ struct Homepage: View {
                         .padding(.top)
                         .padding(.horizontal)
                         .foregroundStyle(.black)
+                        .bold()
                     Spacer()
                 }
                 
                 // Start Workout Button
                 StartWorkoutButton(tabBar: tabBar)
                 
+                Divider()
                 // Buttons for the additional pages carousel (NavigationCarousel)
                 let postWorkout = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(PostWorkout()))
                 
@@ -42,7 +44,9 @@ struct Homepage: View {
                 let buttons = [postWorkout]
                 
                 // Additional Pages Carousel
-                NavigationCarousel(buttons: buttons, iconColor: .black, bgColor: .africanViolet, textColor: .black)
+                NavigationCarousel(buttons: buttons, iconColor: .white, bgColor: .africanViolet, textColor: .black)
+                
+                Divider()
                 
                 // Videos for video carousel
                 let bicepCurlVideo = VideoCard(videoId: "ykJmrZ5v0Oo", title: "How to Do a Dumbbell Bicep Curl", description: "Howcast")

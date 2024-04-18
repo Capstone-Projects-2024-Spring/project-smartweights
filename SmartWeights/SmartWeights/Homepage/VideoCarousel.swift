@@ -17,8 +17,10 @@ struct VideoCarousel: View {
                 Text("Videos")
                     .font(.title3)
                     .padding(.top)
+                    .padding(.bottom, -10)
                     .padding(.horizontal)
                     .foregroundStyle(.black)
+                    .bold()
                 Spacer()
             }
             ScrollView (.horizontal, showsIndicators: false) {

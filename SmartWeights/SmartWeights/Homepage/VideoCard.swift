@@ -21,12 +21,13 @@ struct VideoCard: View, Identifiable {
             Spacer()
             VStack (alignment: .leading) {
                 Text(title)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.white)
                     .font(.title3)
                 Text(description)
                     .foregroundStyle(Color.darkGray)
                     .font(.subheadline)
             }
+            .bold()
             .padding(.horizontal, 8)
             .padding(.bottom)
         }
