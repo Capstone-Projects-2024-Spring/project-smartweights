@@ -71,6 +71,12 @@ struct LoginView: View {
                                 userFitnessDataDBManager.createUserFitnessData()
                                 foodItemDBManager.createInitialFoodItems()
                                 
+                                // CODE TO AUTHENTICATE GC
+                                GameCenterManager.shared.authenticateLocalPlayer()
+                                
+                                // CODE TO 
+                                GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.1stSignIn", progress: 100.0)
+                                
                             }
                         case .failure(let error):
                             print(error)

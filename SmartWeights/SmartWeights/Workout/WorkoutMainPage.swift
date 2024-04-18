@@ -232,6 +232,9 @@ struct WorkoutMainPage: View {
                         ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
                         showGraphPopover = true
                         currentMotivationalPhrase = "Let's get started with a New Workout!"
+                        
+                        // CODE TO UPDATE WORKOUTS ACHIEVEMENTS (1st Workout, Workout Machine, Perfect Form)
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.1stWorkout", progress: 100.0)
 
                         
                     } else if buttonText == "Final Set" {

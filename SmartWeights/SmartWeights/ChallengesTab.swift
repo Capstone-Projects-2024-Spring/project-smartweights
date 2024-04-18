@@ -108,7 +108,6 @@ struct ChallengeRow: View {
             }
          }
         */
-         
     }
 }
 
@@ -128,7 +127,7 @@ struct ChallengesList: View {
                 Spacer()
                 
                 Button(action: {
-                    showAchievements()
+                    GameCenterManager.shared.showGameCenterAchievements()
                 }) {
                     Image("GameCenterIcon")
                         .resizable()
@@ -148,51 +147,28 @@ struct ChallengesList: View {
     }
 }
 
-// Game Center
-private func showAchievements() {
-    authenticateLocalPlayer()
-}
-
-private func authenticateLocalPlayer() {
-    GKLocalPlayer.local.authenticateHandler = { viewController, error in
-        if let error = error {
-            print("Game Center authentication failed: \(error.localizedDescription)")
-        } else if let viewController = viewController {
-            // Present the Game Center login view controller
-            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                if let window = scene.windows.first {
-                    window.rootViewController?.present(viewController, animated: true, completion: nil)
-                }
-            }
-        } else if GKLocalPlayer.local.isAuthenticated {
-            // Player authenticated, show achievements
-            showGameCenterAchievements()
-        }
-    }
-}
-
-private func showGameCenterAchievements() {
-    let gameCenterDelegate = GameCenterDelegate()
-    let gameCenterVC = GKGameCenterViewController()
-    gameCenterVC.gameCenterDelegate = gameCenterDelegate
-    // gameCenterVC.leaderboardIdentifier = nil // Show default achievements view
-
-    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-        if let window = windowScene.windows.first {
-            window.rootViewController?.present(gameCenterVC, animated: true, completion: nil)
-        }
-    }
-}
-
-class GameCenterDelegate: NSObject, GKGameCenterControllerDelegate {
-    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
-        gameCenterViewController.dismiss(animated: true, completion: nil)
-    }
-}
-
-// End of Game Center
-
 #Preview {
     ChallengesTab()
 }
 
+
+
+/*
+ private func authenticateLocalPlayer() {
+     
+     GKLocalPlayer.local.authenticateHandler = { viewController, error in
+         if let error = error {
+             print("Game Center authentication failed: \(error.localizedDescription)")
+         } else if let viewController = viewController {
+             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                 if let window = scene.windows.first {
+                     window.rootViewController?.present(viewController, animated: true, completion: nil)
+                 }
+             }
+         } else if GKLocalPlayer.local.isAuthenticated {
+             // Player authenticated, show achievements
+             showGameCenterAchievements()
+         }
+     }
+ }
+ */
