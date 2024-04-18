@@ -81,7 +81,6 @@ struct MorePageView: View {
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
             }
-            .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
