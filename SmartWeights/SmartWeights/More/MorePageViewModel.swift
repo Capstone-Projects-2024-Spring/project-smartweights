@@ -8,6 +8,7 @@
 import Foundation
 import Photos
 import UIKit
+import SwiftUI
 
 class MorePageViewModel: NSObject, ObservableObject {
     var userDBManager = UserDBManager()
@@ -16,13 +17,11 @@ class MorePageViewModel: NSObject, ObservableObject {
     @Published var balance = 0
     @Published var screenshot: UIImage?
     @Published var achievements: [Achievement] = [
-        Achievement(title: "Achievement 1", description: "", img: "trophy.circle", reward: 50),
-        Achievement(title: "Achievement 2", description: "", img: "trophy.circle", reward: 100),
-        Achievement(title: "Achievement 3", description: "", img: "trophy.circle", reward: 200),
-        Achievement(title: "Achievement 4", description: "", img: "trophy.circle", reward: 400),
-        Achievement(title: "Achievement 5", description: "", img: "trophy.circle", reward: 800),
-        Achievement(title: "Achievement 6", description: "", img: "trophy.circle", reward: 1600),
-    ]
+            Achievement(title: "1st Sign In", description: "Sign in for the first time.", image: Image("C-1stLogin"), reward: 100, currentProgress: 1, progressGoal: 1),
+            Achievement(title: "1st Workout", description: "Complete your first workout.", image: Image("C-1stWorkout"), reward: 100, currentProgress: 1, progressGoal: 1),
+            Achievement(title: "New Shopper", description: "Purchase your first item.", image: Image("C-1stItemBought"), reward: 100, currentProgress: 1, progressGoal: 1),
+            Achievement(title: "Outfit Change", description: "Customize your pet's outfit and background for the first time.", image: Image("C-1stOutfitChange"), reward: 100, currentProgress: 0, progressGoal: 1)
+        ]
     
     override init() {
         super.init()
