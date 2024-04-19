@@ -109,20 +109,20 @@ class PetDBManager: ObservableObject {
             }
         }
     }
-//    func updateUserXP(newXP: Int64, completion: @escaping (Error?) -> Void) {
-//        CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
-//            guard let record = records?.first else {
-//                print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
-//                completion(error)
-//                return
-//            }
-//            
-//            let currentXP = NSNumber(value: newXP)
-//            record[PetRecordKeys.totalXP.rawValue] = currentXP as CKRecordValue
-//            self.CKManager.savePrivateItem(record: record)
-//            completion(nil)
-//        }
-//    }
+    func updateUserXP(newXP: Int64, completion: @escaping (Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
+            guard let record = records?.first else {
+                print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
+                completion(error)
+                return
+            }
+            
+            let currentXP = NSNumber(value: newXP)
+            record[PetRecordKeys.totalXP.rawValue] = currentXP as CKRecordValue
+            self.CKManager.savePrivateItem(record: record)
+            completion(nil)
+        }
+    }
     
     func updateUserXP(newXP: Int64, completion: @escaping (Error?) -> Void) {
         DispatchQueue.main.async {

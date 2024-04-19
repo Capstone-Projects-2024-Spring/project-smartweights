@@ -32,9 +32,6 @@ struct WorkoutMainPage: View {
             
             VStack {
                 
-                
-
-                
                 // Title and microphone button for workout voice control
                 workoutTitleView
                 
