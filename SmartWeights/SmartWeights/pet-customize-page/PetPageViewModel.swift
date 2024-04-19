@@ -53,7 +53,7 @@ class PetPageFunction: ObservableObject {
     
     @Published var pet: PetModel?
     @Published var activePet: String = ""
-
+    
     @Published var isLoading = false
     
     // Initializer
@@ -98,12 +98,12 @@ class PetPageFunction: ObservableObject {
     func refreshData() {
         isLoading = true
         let group = DispatchGroup()
-
+        
         group.enter()
         fetchPetHealth()
-            group.leave()
+        group.leave()
         
-
+        
         group.enter()
         petDBManager.getXP{ (totalXP, error) in
             if let error = error {
@@ -116,7 +116,7 @@ class PetPageFunction: ObservableObject {
             }
             group.leave()
         }
-
+        
         group.notify(queue: .main) {
             self.isLoading = false
         }
@@ -157,11 +157,11 @@ class PetPageFunction: ObservableObject {
             } else {
                 DispatchQueue.main.async {
                     // Perform the animation after confirming the health is updated in CloudKit
-                                    withAnimation {
-                                        self?.healthBar = Int(newHealth)
-                                    }
-                                    // Update the local pet model
-                                    self?.pet?.health = Int64(newHealth)
+                    withAnimation {
+                        self?.healthBar = Int(newHealth)
+                    }
+                    // Update the local pet model
+                    self?.pet?.health = Int64(newHealth)
                 }
             }
         }
@@ -175,31 +175,12 @@ class PetPageFunction: ObservableObject {
             } else if let totalXP = totalXP {
                 DispatchQueue.main.async {
                     self.userTotalXP = Int(totalXP)
-                
+                    
                 }
             }
             
         }
     }
-    func AddXP(value: Int) {
-        print("Adding \(value) to \(userTotalXP)")
-        print("UserXP: \(self.userTotalXP + value)")
-        petDBManager.updateUserXP(newXP: Int64(userTotalXP + value)){
-            error in
-            if let error = error {
-                print("Error updating currency: \(error.localizedDescription)")
-            } else{
-                DispatchQueue.main.async{
-                    self.userTotalXP += value
-                    self.updateXP()
-                }
-            }
-        }
-        
-//        return userTotalXP = userTotalXP + value
-                // return increaseXP(by: value)
-    }
-    
     
     
     func showAlert(title: String, message: String) {
@@ -221,51 +202,61 @@ class PetPageFunction: ObservableObject {
     }
     
     
-    func increaseXP(by value: Int) {
-        // Calculate new progress to see if it exceeds 100
+    func addXP(value: Int) {
+        print("Adding \(value) to \(userTotalXP)")
+        let newProgress = userTotalXP + value
+        print("UserXP: \(newProgress)")
+        
+        increaseXP(by: value) { newXpAfterLevelUp in
+            if newXpAfterLevelUp != nil {
+                self.petDBManager.updateUserXP(newXP: Int64(newXpAfterLevelUp!)) { error in
+                    if let error = error {
+                        print("Error updating XP: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+    }
+    
+    func increaseXP(by value: Int, completion: @escaping (Int?) -> Void) {
         let newProgress = userTotalXP + value
         
-        // Check if current level is less than 10
         if currentLevel < 10 {
-            // If adding XP will exceed 100, level up and adjust XP
             if newProgress >= 100 {
                 DispatchQueue.main.async {
-                    // Use DispatchQueue.main.async to ensure UI updates are performed on the main thread
                     withAnimation {
-                        // Increase level by 1
                         self.currentLevel += 1
-                        // Reset levelProgress to the remainder if exceeding 100
-                        // This carries over excess XP to the next level
-                        self.userTotalXP = newProgress % 100
+                        let newXpAfterLevelUp = newProgress % 100
+                        self.userTotalXP = newXpAfterLevelUp
+                        completion(newXpAfterLevelUp) // Database update triggered if level-up caused XP to roll over
                     }
                 }
             } else {
                 DispatchQueue.main.async {
                     withAnimation {
-                        // If not exceeding 100, just add the XP to the current progress
                         self.userTotalXP = newProgress
+                        completion(nil) // No database update if no rollover
                     }
                 }
             }
         } else {
-            // For level 10, allow XP gain up to 100 but prevent level increase
             DispatchQueue.main.async {
                 withAnimation {
-                    if newProgress <= 100 {
-                        self.userTotalXP = newProgress
-                    } else {
-                        // If XP would exceed 100, cap at 100 for level 10
+                    if newProgress > 100 {
                         self.userTotalXP = 100
+                        completion(100) // Update XP to max 100 at level 10 if exceeding
+                    } else {
+                        self.userTotalXP = newProgress
+                        completion(nil) // No update if not exceeding 100 at level 10
                     }
                 }
             }
         }
-        // Ensure current level doesn't exceed 10
         if currentLevel > 10 {
             currentLevel = 10 // Cap the level at 10
         }
-        
     }
+    
     func fetchPetHealth() {
         petDBManager.fetchPet { [weak self] pet, error in
             if let error = error {

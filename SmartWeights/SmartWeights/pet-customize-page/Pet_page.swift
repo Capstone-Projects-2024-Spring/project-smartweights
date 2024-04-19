@@ -92,13 +92,13 @@ struct Pet_Page: View {
                         .frame(height: 20)
                         .padding()
                     
-                    
                     // Display Current Level
                     Text("Level \(viewModel.currentLevel)")
                         .font(.system(size: 20))
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 10)
+                    
                     if viewModel.isLoading{
                         ProgressView()
                     } else{
@@ -111,9 +111,9 @@ struct Pet_Page: View {
                 .padding(.top, -20)
                 Spacer()
             }
-            .onAppear {
-                viewModel.refreshData()
-            }
+//            .onAppear {
+//                viewModel.refreshData()
+//            }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(
                     title: Text(viewModel.alertTitle),
@@ -198,4 +198,5 @@ struct PetPage_Previews: PreviewProvider {
         Pet_Page()
     }
 }
+
 

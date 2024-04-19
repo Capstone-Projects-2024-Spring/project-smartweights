@@ -8,6 +8,7 @@ struct WorkoutMainPage: View {
     @ObservedObject var formCriteria = FormCriteria()
     @StateObject var storeModel = storeViewModel()
     @ObservedObject var workoutPageViewModel = WorkoutPageViewModel()
+    @ObservedObject var petpageModel = PetPageFunction()
     
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
@@ -30,6 +31,10 @@ struct WorkoutMainPage: View {
         ZStack {
             
             VStack {
+                
+                
+
+                
                 // Title and microphone button for workout voice control
                 workoutTitleView
                 
@@ -86,6 +91,7 @@ struct WorkoutMainPage: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 200, height: 175)
+
                         }
                         Text("\(feedback.0)") //gives overall acceleration
                             .font(.subheadline)
@@ -209,10 +215,25 @@ struct WorkoutMainPage: View {
                 Image("Dog")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 400, height: 375)
+                    .frame(width: 300, height: 250)
             }
+            VStack{
+                CustomProgressView(value: petpageModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
+                    .frame(height: 20)
+                    .padding()
+                
+                // Display Current Level
+                Text("Level \(petpageModel.currentLevel)")
+                    .font(.system(size: 20))
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 10)
+                
+                CustomProgressView(value: petpageModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                    .frame(height: 20)
+                    .padding()
 
-            
+            }
             
             // Start/Reset workout button
             Button(action: {
@@ -233,7 +254,8 @@ struct WorkoutMainPage: View {
                         // Logic for completing the workout
                         generateRandomData(for: .overallWorkout) // Generate overall workout data
                         storeModel.addFundtoUser(price: 50)
-                        workoutPageViewModel.AddXP(value: 25)
+//                        workoutPageViewModel.AddXP(value: 25)
+                        petpageModel.addXP(value: 25)
                         viewModel.resetWorkoutState()
                         hasWorkoutStarted = false
                         isWorkoutPaused = false
