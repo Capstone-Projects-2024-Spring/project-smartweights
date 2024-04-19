@@ -28,11 +28,6 @@ class WorkoutViewModel: ObservableObject {
     var workoutAnalysis: [String:Double] = [:]
     var workoutAnalysisForSets:[[String:Double]] = []
     var totalSets:Int = 0
-    //TODO: IMPLEMENT THE DANGEROUS ASPECT
-    var dangerousCalled = false
-    var dangerous: Bool {
-        formCriteria.dangerousForm(dumbbellData: ble.MPU6050_1_Gyro, elbowData: ble.MPU6050_2_Gyro)
-    }
     var isWorkingOut = false
     
     
@@ -314,6 +309,7 @@ class WorkoutViewModel: ObservableObject {
         ble.collectDataToggle = true //Stars collecting data again
         currentMotivationalPhrase = "You're doing great!"
         isWorkingOut = true
+        print("hello im not getting called")
         self.checkDangerousFormWhileWorkingOut()
     }
     
@@ -365,7 +361,6 @@ class WorkoutViewModel: ObservableObject {
         }
         
         print("hello test, removing hp from bad form")
-        print(currentFeedback.2)
         // Logic for completing the workout
         storeModel.addFundtoUser(price: 50)
         workoutPageViewModel.AddXP(value: 25)
@@ -432,6 +427,7 @@ class WorkoutViewModel: ObservableObject {
     func playSound() {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+            try AVAudioSession.sharedInstance().setActive(true, options: [])
         } catch {
             print("Failed to set audio session category: \(error)")
         }
