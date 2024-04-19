@@ -9,6 +9,10 @@ struct WorkoutMainPage: View {
     @StateObject var workoutPageViewModel = WorkoutPageViewModel()
     @StateObject var viewModel: WorkoutViewModel
     
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
+    @ObservedObject var petItemDBManager = PetItemDBManager()
+    
     init() {
         let ble = BLEcentral()
         let formCriteria = FormCriteria()
@@ -31,29 +35,25 @@ struct WorkoutMainPage: View {
             
             VStack {
                 ZStack{
-                    workoutTitleView
-                    VStack{
-                        Image(systemName: "dumbbell.fill")
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(ble.MPU_1_Connected ? .green : .red)
-                        
-                        Text("Dumbbell")
-                            .font(.custom("small", size: 12))
-                        
+                    VStack {
+                        HStack{
+                            Spacer()
+                            Image(systemName: "dumbbell.fill")
+                                .frame(width: 30, height: 25)
+                                .foregroundColor(ble.MPU_1_Connected ? .green : .red)
+                            Spacer()
+                            Image(systemName: "figure.arms.open")
+                                .frame(width: 20, height: 25)
+                                .foregroundColor(ble.MPU_2_Connected ? .green : .red)
+                            Spacer()
+                            
+                        }
+                        Text("Connections")
+                            .font(.system(size: 12))
                     }
-                    .padding(.leading,200)
-                    VStack{
-                        Image(systemName: "figure.arms.open")
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(ble.MPU_2_Connected ? .green : .red)
-                        
-                        Text("Elbow")
-                            .font(.custom("small", size: 12))
-                    }
-                    .padding(.leading,300)
-                    
-                    
+                    .padding(.leading, 290)
                 }
+                .padding(.bottom, 5)
                 
                 
                 
@@ -191,8 +191,8 @@ struct WorkoutMainPage: View {
         }
         .pickerStyle(SegmentedPickerStyle())
         .foregroundColor(.white)
-        .background(Color.gray)
         .accessibilityLabel("WorkoutSelectTab")
+        .padding(.horizontal)
     }
     
     // Compute the button text based on current and total sets
@@ -221,25 +221,21 @@ struct WorkoutMainPage: View {
     private var StartWorkoutView: some View {
         VStack {
             if !viewModel.hasWorkoutStarted {
-                Text("Prepare for your workout")
-                    .bold()
             }
             
             ZStack{
                 // Time rectangel box
                 RoundedRectangle(cornerRadius:  25)
                     .frame(width: 250, height: 50)
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color.africanViolet)
+                    .padding()
                 HStack{
                     Text("Time: ")
-                        .font(.system(size: 25))
-                        .bold()
-                        .foregroundStyle(.green)
                     Text("\(viewModel.hours):\(viewModel.minutes):\(viewModel.seconds)")
-                        .font(.system(size: 25))
-                        .bold()
-                        .foregroundStyle(.green)
                 }
+                .font(.system(size: 25))
+                .bold()
+                .foregroundStyle(.white)
             }
             .padding(.bottom, -15)
             
@@ -255,12 +251,21 @@ struct WorkoutMainPage: View {
                 }
                 .padding(.bottom, -50)
             }
-            HStack{
+            
+            ZStack{
+                ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
                 
-                Image("Dog")
+                Image(backgroundItemDBManager.activeBackground)
+                    .resizable()
+                    .frame(width: 400, height: 375)
+                Image(petItemDBManager.activePet)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 400, height: 375)
+                Image(clothingItemDBManager.activeClothing)
+                    .resizable()
+                    .scaledToFit()
+                
             }
             
             
@@ -326,6 +331,7 @@ struct WorkoutMainPage: View {
                         Text(buttonText)
                             .bold()
                             .foregroundColor(.white)
+                            .font(.title2)
                     )
             }
             .accessibilityLabel(viewModel.hasWorkoutStarted ? (viewModel.isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
@@ -436,7 +442,7 @@ struct WorkoutMainPage: View {
                         }
                         .padding()
                         .foregroundColor(.white)
-                        .background(Color.blue)
+                        .background(Color.africanViolet)
                         .cornerRadius(10)
                         .alert(isPresented: $viewModel.showingAlert) {
                             Alert(title: Text("Invalid Input"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
