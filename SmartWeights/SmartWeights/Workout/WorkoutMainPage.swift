@@ -115,7 +115,7 @@ struct WorkoutMainPage: View {
                                         Text("\(viewModel.feedback.3)")
                                             .foregroundColor(.black)
                                             .bold()
-                                        if viewModel.feedback.2 == "Keep that elbow steady!"{
+                                        if viewModel.feedback.3 == "Keep that elbow steady!"{
                                             Image(systemName: "xmark")
                                                 .foregroundColor(.red)
                                                 .bold()
