@@ -42,8 +42,51 @@ struct VideoCard: View, Identifiable {
 struct EmbeddedVideo: View {
     @State var player = AVPlayer(url: Bundle.main.url(forResource: "SWTutorialv2", withExtension: "mp4")!)
     
+    @State var showFullscreen = false
+    
     var body: some View {
-        VideoPlayer(player: player)
+        VStack {
+            videoView
+                .frame(height: 140)
+        }.fullScreenCover(isPresented: $showFullscreen) {
+            videoView
+        }
+    }
+    
+    @ViewBuilder
+    private var videoView: some View {
+        VideoPlayer(player: player) {
+            if !showFullscreen {
+                VStack {
+                    HStack {
+                        Image(systemName: "arrow.up.left.and.arrow.down.right")
+                            .padding(16)
+                            .foregroundStyle(.white)
+                            .tint(.white)
+                            .onTapGesture {
+                                showFullscreen.toggle()
+                            }
+                        Spacer()
+                    }
+                    Spacer()
+                }
+            } else {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "arrow.up.left.and.arrow.down.right")
+                            .padding(16)
+                            .foregroundStyle(.white)
+                            .tint(.white)
+                            .onTapGesture {
+                                showFullscreen.toggle()
+                            }
+                        Spacer()
+                    }
+                    Spacer()
+                }
+            }
+        }
     }
 }
 
