@@ -328,26 +328,54 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func checkDangerousFormWhileWorkingOut() {
-    var soundPlayed = false
+        var soundPlayed = false
 
-    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-        guard let self = self else { return }
-        while self.isWorkingOut {
-            if self.formCriteria.dangerousForm(dumbbellData: self.ble.MPU6050_1_Gyro, elbowData: self.ble.MPU6050_2_Gyro){
-                DispatchQueue.main.async {
-                    if !soundPlayed {
-                        self.playSound()
-                        soundPlayed = true
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            while self.isWorkingOut {
+                if self.formCriteria.dangerousForm(dumbbellData: self.ble.MPU6050_1_Gyro, elbowData: self.ble.MPU6050_2_Gyro){
+                    DispatchQueue.main.async {
+                        if !soundPlayed {
+                            self.playSound()
+                            print("Sound Played")
+                            soundPlayed = true
+                        }
                     }
                 }
-            }
-            else{
-                self.stopSound()
-                soundPlayed = false
+                else{
+                    
+                    self.stopSound()
+                    print("Sound Stopped")
+                    soundPlayed = false
+                }
             }
         }
     }
-}
+        // func checkDangerousFormWhileWorkingOut() {
+        //     var soundPlayed = false
+
+        //     DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+        //         guard let self = self else { return }
+        //         while self.isWorkingOut {
+        //             if self.formCriteria.dangerousForm(dumbbellData: self.ble.MPU6050_1_Gyro, elbowData: self.ble.MPU6050_2_Gyro){
+        //                 DispatchQueue.main.async {
+        //                     if !soundPlayed {
+        //                         self.playSound()
+        //                         print("Sound Played")
+        //                         soundPlayed = true
+        //                     }
+        //                 }
+        //             }
+        //             else{
+        //                 self.stopSound()
+        //                 print("Sound Stopped")
+        //                 soundPlayed = false
+        //             }
+        //         }
+        //     }
+        // }
+    
+
     
     func playSound() {
         do {

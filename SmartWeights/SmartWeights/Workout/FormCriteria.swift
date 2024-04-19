@@ -93,8 +93,8 @@ class FormCriteria: ObservableObject{
     //read the Z axis rotation and gives an average of the up and down for that set
     func averageUpDownAcceleration(array: [[Int]],append: Bool) -> Double {
         /*
-         good acceleration for going up and down -180°/s, 180°/s
-         bad - less than -180 or greater than 180
+        good acceleration for going up and down -180°/s, 180°/s
+        bad - less than -180 or greater than 180
          */
         
         var count = 0 //total data collected
