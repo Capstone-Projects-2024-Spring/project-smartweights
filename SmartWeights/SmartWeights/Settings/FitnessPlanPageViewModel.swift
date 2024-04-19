@@ -52,6 +52,15 @@ class fitnessPlanViewModel: ObservableObject {
         self.repGoal = 0
         self.notes = ""
         self.selectedDate = Date()
+
+        fitnessPlanDBManager.createFitnessPlan(
+            daysPerWeekGoal: 0,
+            dumbbellWeightGoal: 0,
+            setGoal: 0,
+            repGoal: 0,
+            notes: "",
+            selectedDate: Date()
+        )
     }
     
     /// viewModel function to update the finess plan by saving the draft variables to the viewModel variables

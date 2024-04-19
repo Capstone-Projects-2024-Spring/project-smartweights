@@ -48,6 +48,7 @@ struct Pet_Page: View {
                         }
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
+                        .foregroundStyle(Color.africanViolet)
                     }
                     .accessibilityIdentifier("ChangeFoodButton")
                     .sheet(isPresented: $viewModel.showFoodSelection) {
@@ -67,7 +68,7 @@ struct Pet_Page: View {
                                 Text("\(selectedFood.quantity)")
                                     .font(.system(size: 25))
                                     .bold()
-                                    .foregroundColor(.blue)
+                                    .foregroundStyle(.black)
                                     .minimumScaleFactor(0.50)
                                     .padding(.top, -15)
                                     .frame(width: 75,height: 25)
@@ -105,39 +106,31 @@ struct Pet_Page: View {
                     //     .padding(.bottom, 0)
                 }
                 VStack {
-                    // Health Bar
-                    CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
-                        .frame(height: 20)
-                        .padding(.bottom, 25)
-                        // Display Current Level
-                        Text("Level \(viewModel.currentLevel)")
-                            .font(.system(size: 20))
-                            .bold()
-                        
-                        
-                        // XP Progress Bar
-                        CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
-                            .frame(height: 20)
-                            .padding(.top, -5)
-                    
                     
                     // Display Current Level
                     Text("Level \(viewModel.currentLevel)")
-                        .font(.system(size: 20))
+                        .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 15)
-                        .padding(.bottom, -20)
+                        .padding(.top, 20)
+                        .padding(.bottom, -15)
+                        .foregroundStyle(.black)
                     
-                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
+                    // Health Bar
+                    CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "HP:", displayMode: .rawValue, foregroundColor: .green, backgroundColor: .gray)
                         .frame(height: 20)
                         .padding()
                     
+                    // XP Bar
+                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .africanViolet, backgroundColor: .gray)
+                        .frame(height: 20)
+                        .padding()
                 }
 
                 .padding(.top, -20)
                 Spacer()
             }
+            .background(.white)
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(
                     title: Text(viewModel.alertTitle),
@@ -193,15 +186,12 @@ struct HamburgerMenu: View {
             Button("Customize", action: navigateToCustomize)
                 .accessibilityIdentifier("Customize")
         } label: {
-            Label {
-                Text("")
-            } icon: {
+            Label { }
+                icon: {
                 Image(systemName: "line.horizontal.3")
-                    .foregroundColor(.blue)
+                    .foregroundColor(.africanViolet)
                     .font(.title)
                     .padding()
-                    .background(Circle().fill(Color.gray))
-                    .shadow(radius: 5)
             }
             .accessibilityIdentifier("HamburgerMenuButton")
         }
