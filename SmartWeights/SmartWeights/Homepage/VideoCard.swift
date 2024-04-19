@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WebKit
 
 struct VideoCard: View, Identifiable {
     
@@ -35,6 +36,23 @@ struct VideoCard: View, Identifiable {
         .background(Color.africanViolet)
         .cornerRadius(12)
         .padding()
+    }
+}
+
+struct EmbeddedVideo: UIViewRepresentable {
+    
+    let videoId: String
+    
+    func makeUIView(context: Context) -> WKWebView {
+        WKWebView()
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        let path = "https://www.youtube.com/embed/\(videoId)"
+        guard let youtubeURL = URL(string: path) else { return }
+        
+        uiView.scrollView.isScrollEnabled = false
+        uiView.load(.init(url: youtubeURL))
     }
 }
 
