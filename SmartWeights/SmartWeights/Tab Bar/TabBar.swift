@@ -35,6 +35,7 @@ enum Tab: String, CaseIterable {
 /// Struct TabBar implements the Tab enumeration and TabView to create a navigable tab bar.
 struct TabBar: View {
     @State private var selectedTab: Tab = .home
+    @ObservedObject var petpageModel = PetPageFunction()
     
     func changeTab(to tab: Tab) {
         self.selectedTab = tab
@@ -51,6 +52,13 @@ struct TabBar: View {
             }
         }
         .tint(.africanViolet)
+        .onChange(of: selectedTab) { newTab in
+            if newTab == .pet {
+                // Execute the desired action when the Pet page is selected
+                print("Pet page selected") // Replace this with your actual action
+                petpageModel.refreshData()
+            }
+        }
     }
 }
 
