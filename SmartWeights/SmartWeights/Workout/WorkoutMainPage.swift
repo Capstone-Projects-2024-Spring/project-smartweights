@@ -238,7 +238,7 @@ struct WorkoutMainPage: View {
             Button(action: {
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
-                        viewModel.finishworkout()
+                        viewModel.finishWorkout()
                     } else if buttonText == "Final Set" {
                         viewModel.finalset()
                         // Logic for transitioning from the final set to finishing the workout
@@ -250,6 +250,7 @@ struct WorkoutMainPage: View {
 //                        ble.collectDataToggle = true
 //                        viewModel.currentMotivationalPhrase = "Last Set! Push through!"
                     } else if !viewModel.isWorkoutPaused {
+                        viewModel.finishSet()
                         ble.collectDataToggle = false
                         viewModel.pauseTimer()
                         viewModel.showGraphPopover = true

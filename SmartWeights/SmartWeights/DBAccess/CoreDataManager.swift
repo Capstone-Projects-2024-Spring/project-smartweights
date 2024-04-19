@@ -155,5 +155,38 @@ class CoreDataManager: ObservableObject {
             print("Failed to update workout session: \(error)")
         }
     }
+    
+    func updateExerciseSet(_ exerciseSet: ExerciseSet, setNum: Int? = nil, avgCurlAcceleration: Double? = nil, avgElbowFlareLR: Double? = nil, avgElbowFlareUD: Double? = nil, avgElbowSwing: Double? = nil, avgWristStabilityLR: Double? = nil, avgWristStabilityUD: Double? = nil) {
+        let context = persistentContainer.viewContext
 
+        // Update the properties of the exercise set if new values are provided
+        if let setNum = setNum {
+            exerciseSet.setNum = Int64(setNum)
+        }
+        if let acc = avgCurlAcceleration {
+            exerciseSet.avgCurlAcceleration = acc
+        }
+        if let flareLR = avgElbowFlareLR {
+            exerciseSet.avgElbowFlareLeftRight = flareLR
+        }
+        if let flareUD = avgElbowFlareUD {
+            exerciseSet.avgElbowFlareUpDown = flareUD
+        }
+        if let swing = avgElbowSwing {
+            exerciseSet.avgElbowSwing = swing
+        }
+        if let wristLR = avgWristStabilityLR {
+            exerciseSet.avgWristStabilityLeftRight = wristLR
+        }
+        if let wristUD = avgWristStabilityUD {
+            exerciseSet.avgWristStabilityUpDown = wristUD
+        }
+        
+        // Attempt to save the updated exercise set
+        do {
+            try context.save()
+        } catch {
+            print("Failed to update exercise set: \(error)")
+        }
+    }
 }
