@@ -155,6 +155,7 @@
 		E56BD7D72BAFA2C300863D4D /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		E5B86DB22B91033400A0AD04 /* navbarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = navbarUITests.swift; sourceTree = "<group>"; };
+		E5D6CBE02BD2C5E80014CD87 /* SWTutorialv2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SWTutorialv2.mp4; sourceTree = "<group>"; };
 		E5D7FE652BCD70330097A175 /* StartWorkoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutButton.swift; sourceTree = "<group>"; };
 		E5D7FE672BCD740F0097A175 /* NavigationCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCarousel.swift; sourceTree = "<group>"; };
 		E5D7FE692BCD8E110097A175 /* VideoCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCarousel.swift; sourceTree = "<group>"; };
@@ -399,6 +400,7 @@
 		E5D6CBDF2BD2C56E0014CD87 /* Videos */ = {
 			isa = PBXGroup;
 			children = (
+				E5D6CBE02BD2C5E80014CD87 /* SWTutorialv2.mp4 */,
 			);
 			path = Videos;
 			sourceTree = "<group>";
