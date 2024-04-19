@@ -9,6 +9,10 @@ struct WorkoutMainPage: View {
     @StateObject var workoutPageViewModel = WorkoutPageViewModel()
     @StateObject var viewModel: WorkoutViewModel
     
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
+    @ObservedObject var petItemDBManager = PetItemDBManager()
+    
     init() {
         let ble = BLEcentral()
         let formCriteria = FormCriteria()
@@ -228,12 +232,21 @@ struct WorkoutMainPage: View {
                 }
                 .padding(.bottom, -50)
             }
-            HStack{
+            
+            ZStack{
+                ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
                 
-                Image("Dog")
+                Image(backgroundItemDBManager.activeBackground)
+                    .resizable()
+                    .frame(width: 400, height: 375)
+                Image(petItemDBManager.activePet)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 400, height: 375)
+                Image(clothingItemDBManager.activeClothing)
+                    .resizable()
+                    .scaledToFit()
+                
             }
             
             

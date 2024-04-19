@@ -14,6 +14,9 @@ struct Customize_page: View {
     
     @ObservedObject var viewModel = CustomizeViewModel()
     
+    // State to keep track of selected tab
+    @State private var selectedTab = 0
+
     private let minSquares = 5
     private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
     
@@ -21,26 +24,18 @@ struct Customize_page: View {
         NavigationView {
             VStack {
                 ZStack {
-                    /*
-                    viewModel.backgroundColor
-                        .frame(width: 300, height: 320)
-                        .cornerRadius(15)
-                    */
-                    // Background image
                     if let bgImage = viewModel.equippedBackgroundImage {
                         Image(bgImage.imageName)
                             .resizable()
                             .frame(width: 350, height: 300)
                     }
                     
-                    // Conditionally render the Jet Pack behind the dog
                     if let accessory = viewModel.equippedAccessory, accessory.name == "Jet Pack" {
                         Image(accessory.imageName)
                             .resizable()
                             .scaledToFit()
                     }
                     
-                    // Pet image
                     if let pet = viewModel.equippedPet {
                         Image(pet.imageName)
                             .resizable()
@@ -48,25 +43,18 @@ struct Customize_page: View {
                             .frame(width: 350, height: 300)
                     }
                     
-                    // Accessory image
                     if let accessory = viewModel.equippedAccessory, accessory.name != "Jet Pack" {
                         Image(accessory.imageName)
                             .resizable()
                             .scaledToFit()
                     }
                 }
-                
-                // Background color picker
-                //                ColorPicker("Set the background color", selection: $viewModel.backgroundColor)
-                //                    .frame(width: 350, height: 50, alignment: .center)
-                //                    .font(.system(size: 18).bold())
-                //                    .background(Color.gray.opacity(0.1))
-                //                    .cornerRadius(15)
+
                 HStack(spacing: 20) {
                     Button(action:{
                         viewModel.equippedAccessory = nil
                         viewModel.equippedBackgroundImage = nil
-                        viewModel.equippedPet = nil
+                        // viewModel.equippedPet = nil
                     }){
                         Text("Unequip All")
                             .foregroundColor(.white)
@@ -81,18 +69,27 @@ struct Customize_page: View {
                         Text("Save")
                             .foregroundColor(.white)
                             .font(.system(size: 18).bold())
-                            .frame(width: 200, height: 50)
-                            .background(Color.africanViolet)
+                            .frame(width: 125, height: 50)
+                            .background(Color.blue)
                             .cornerRadius(15)
                     }
                 }
-                
-                
-                // Grid layout for accessory for the inventory
+
                 if viewModel.isDataLoaded {
-                    TabView {
-                        // Grid layout for accessories
+                    TabView(selection: $selectedTab) {
                         ScrollView {
+                            VStack {
+                                Button(action: {
+                                    viewModel.equippedAccessory = nil
+                                }) {
+                                    Text("Unequip Accessory")
+                                        .foregroundColor(.green)
+                                        .font(.system(size: 18).bold())
+                                        .frame(width: 125, height: 50)
+                                        .background(Color.blue)
+                                        .cornerRadius(15)
+                                }
+                            }
                             LazyVGrid(columns: gridLayout, spacing: 20) {
                                 ForEach(viewModel.accessories) { accessory in
                                     VStack {
@@ -106,28 +103,28 @@ struct Customize_page: View {
                                             .bold()
                                     }
                                     .background(Color.gray.opacity(0.5).cornerRadius(15))
-                                    
-                                }
-                                placeholders(for: viewModel.accessories.count)
-                                // Unequip option
-                                VStack {
-                                    Image(systemName: "xmark") 
-                                        .resizable()
-                                        .scaledToFit()
-                                        .onTapGesture {
-                                            viewModel.equippedAccessory = nil
-                                        }
-                                    Text("Unequip")
-                                        .bold()
                                 }
                             }
-                        }.id(UUID())
-                            .tabItem {
-                                Label("Accessories", systemImage: "bag.fill")
-                            }
-                        
-                        // Grid layout for background image
+                        }
+                        .id(UUID())
+                        .tabItem {
+                            Label("Accessories", systemImage: "bag.fill")
+                        }
+                        .tag(0)
+
                         ScrollView {
+                            VStack {
+                                Button(action: {
+                                    viewModel.equippedBackgroundImage = nil
+                                }) {
+                                    Text("Unequip Background")
+                                        .foregroundColor(.green)
+                                        .font(.system(size: 18).bold())
+                                        .frame(width: 125, height: 50)
+                                        .background(Color.blue)
+                                        .cornerRadius(15)
+                                }
+                            }
                             LazyVGrid(columns: gridLayout, spacing: 20) {
                                 ForEach(viewModel.backgroundImages) { bgImage in
                                     VStack {
@@ -142,26 +139,14 @@ struct Customize_page: View {
                                     }
                                     .background(Color.gray.opacity(0.5).cornerRadius(15))
                                 }
-                                placeholders(for: viewModel.backgroundImages.count)
-                                // Unequip option
-                                VStack {
-                                    Image(systemName: "xmark") 
-                                        .resizable()
-                                        .scaledToFit()
-                                        .onTapGesture {
-                                            viewModel.equippedBackgroundImage = nil
-                                        }
-                                    Text("Unequip")
-                                        .bold()
-                                }
-                                .background(Color.gray.opacity(0.5).cornerRadius(15))
                             }
-                        }.id(UUID())
-                            .tabItem {
-                                Label("Backgrounds", systemImage: "photo")
-                            }
-                        
-                        // Grid layout for the pet
+                        }
+                        .id(UUID())
+                        .tabItem {
+                            Label("Backgrounds", systemImage: "photo")
+                        }
+                        .tag(1)
+
                         ScrollView {
                             LazyVGrid(columns: gridLayout, spacing: 20) {
                                 ForEach(viewModel.pets) { pet in
@@ -177,36 +162,21 @@ struct Customize_page: View {
                                     }
                                     .background(Color.gray.opacity(0.5).cornerRadius(15))
                                 }
-                                placeholders(for: viewModel.pets.count)
                             }
-                            
-                        }.id(UUID())
-                            .tabItem {
-                                Label("Pets", systemImage: "hare")
-                            }
-                        
-                    }.frame(height: 400)
+                        }
+                        .id(UUID())
+                        .tabItem {
+                            Label("Pets", systemImage: "hare")
+                        }
+                        .tag(2)
+                    }
+                    .frame(height: 400)
                 } else {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .scaleEffect(2)
                 }
-                
             }
-        }
-    }
-    @ViewBuilder
-    private func placeholders(for count: Int) -> some View {
-        ForEach(0..<max(minSquares - count, 0), id: \.self) { _ in
-            VStack {
-                Image(systemName: "")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(20)
-                    .foregroundColor(.white)
-                    .frame(width: 120, height: 150)
-            }
-            .background(Color.gray.opacity(0.5).cornerRadius(15))
         }
     }
 }

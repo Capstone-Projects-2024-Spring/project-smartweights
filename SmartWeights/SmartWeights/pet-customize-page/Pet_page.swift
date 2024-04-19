@@ -84,17 +84,12 @@ struct Pet_Page: View {
                     
                     Image(backgroundItemDBManager.activeBackground)
                         .resizable()
-                        .frame(width: 475, height: 475)
-                    
-                    
-                    
-                    // .frame(width: 500, height: 400, alignment: .center)
-                    // .padding(.bottom, 0)
+                        .frame(width: 475, height: 450)
                     
                     Image(petItemDBManager.activePet)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 475, height: 475)
+                        .frame(width: 475, height: 450)
                     Image(clothingItemDBManager.activeClothing)
                         .resizable()
                         .scaledToFit()
@@ -106,6 +101,10 @@ struct Pet_Page: View {
                     //     .padding(.bottom, 0)
                 }
                 VStack {
+                    // Health Bar
+                    CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
+                        .frame(height: 20)
+                        .padding(.bottom, 25)
                     
                     // Display Current Level
                     Text("Level \(viewModel.currentLevel)")
