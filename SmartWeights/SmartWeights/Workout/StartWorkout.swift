@@ -239,7 +239,7 @@ class WorkoutViewModel: ObservableObject {
                             }
                         case "next":
                             if WorkoutState == .paused {
-                                if let sets = stringToInt(inputtedSets), self.currentSets == totalSets {
+                                if let sets = stringToInt(inputtedSets), self.currentSets == sets - 1 {
                                     self.finalset()
                                     WorkoutState = .final
                                 } else {
