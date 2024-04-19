@@ -241,24 +241,8 @@ struct WorkoutMainPage: View {
                         viewModel.finishWorkout()
                     } else if buttonText == "Final Set" {
                         viewModel.finalset()
-                        // Logic for transitioning from the final set to finishing the workout
-//                        viewModel.currentSets += 1 // This will push the state to "Finish Workout"
-//                        viewModel.showGraphPopover = false
-//                        viewModel.resumeTimer()
-//                        ble.MPU6050_1Gyros.removeAll()
-//                        ble.MPU6050_2Gyros.removeAll()
-//                        ble.collectDataToggle = true
-//                        viewModel.currentMotivationalPhrase = "Last Set! Push through!"
                     } else if !viewModel.isWorkoutPaused {
                         viewModel.finishSet()
-                        ble.collectDataToggle = false
-                        viewModel.pauseTimer()
-                        viewModel.showGraphPopover = true
-                        viewModel.isWorkoutPaused = true
-                        viewModel.currentMotivationalPhrase = "Take a breather, then keep going!"
-                        if let totalSets = Int(viewModel.inputtedSets), viewModel.currentSets < totalSets {
-                            viewModel.currentSets += 1
-                        }
                         // Get feedback from formCriteria
                         let currentFeedback = formCriteria.giveFeedback(dumbbellArray:ble.MPU6050_1Gyros , elbowArray:ble.MPU6050_2Gyros)
                         
@@ -267,7 +251,6 @@ struct WorkoutMainPage: View {
                             // Call function to reduce HP
                             workoutPageViewModel.lowerHP()
                         }
-                        
                         print("hello test")
                         print(currentFeedback.2)
                     } else {
@@ -283,7 +266,6 @@ struct WorkoutMainPage: View {
                 } else {
                     // Start the workout
                     viewModel.currentMotivationalPhrase = "First set, let's go!"
-                    viewModel.resumeTimer()
                     viewModel.showingWorkoutSheet = true
                     viewModel.showGraphPopover = false
                     

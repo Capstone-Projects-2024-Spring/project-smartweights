@@ -85,6 +85,25 @@ class CoreDataManager: ObservableObject {
         }
     }
     
+    func fetchWorkoutSessions(on date: Date) -> [WorkoutSession] {
+        let fetchRequest: NSFetchRequest<WorkoutSession> = WorkoutSession.fetchRequest()
+
+        // Set up the date formatter to ignore time
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+        let dateString = dateFormatter.string(from: date)
+
+        // Set the predicate to match dates
+        fetchRequest.predicate = NSPredicate(format: "dateTime >= %@ AND dateTime < %@", argumentArray: [dateFormatter.date(from: dateString)!, Calendar.current.date(byAdding: .day, value: 1, to: dateFormatter.date(from: dateString)!)!])
+
+        do {
+            return try persistentContainer.viewContext.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch workout sessions on date \(dateString): \(error)")
+            return []
+        }
+    }
+    
     func getNextWorkoutNumber() -> Int {
         let fetchRequest: NSFetchRequest<WorkoutSession> = WorkoutSession.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "workoutNum", ascending: false)]

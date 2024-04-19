@@ -104,12 +104,31 @@ class WorkoutViewModel: ObservableObject {
                 self.countdown -= 1
             } else {
                 self.countdownTimer?.cancel()
+                self.restartTimer()
                 self.startTimer()
                 self.hasWorkoutStarted = true
                 self.showingWorkoutSheet = false
                 ble.MPU6050_1Gyros.removeAll() //Clear the collected Data for previous set
                 ble.MPU6050_2Gyros.removeAll()
                 ble.collectDataToggle = true //Start collecting data for the current workout
+                print("reset data has been reset hello")
+                let workoutNum = coreDataManager.getNextWorkoutNumber()
+                print("workoutNum: \(workoutNum)")
+                print("currentSets: \(currentSets)")
+                
+                if let newWorkoutSession = coreDataManager.createWorkoutSession(dateTime: Date(), workoutNum: workoutNum, overallCurlAcceleration: 0.0, overallElbowFlareLR: 0.0, overallElbowFlareUD: 0.0, overallElbowSwing: 0.0, overallWristStabilityLR: 0.0, overallWristStabilityUD: 0.0){
+                    self.currentWorkoutSession = newWorkoutSession
+                    print(self.currentWorkoutSession as Any)
+                    print("THE CREATE WORKOUT WORK?")
+                }
+                
+                print("WE ARE ABOUT TO CREATE A SET WOOOOAHAHAHAH")
+                if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
+                    self.currentWorkoutSet = newExerciseSet
+                    print("newExerciseSet:")
+                    print(newExerciseSet as Any)
+                }
+                print("THE CREATE SET WORK?")
             }
         }
     }
@@ -121,22 +140,6 @@ class WorkoutViewModel: ObservableObject {
             feedbackDataForSets.removeAll()
             workoutAnalysisForSets.removeAll()
             formCriteria.resetListofData()
-            print("reset data has been reset hello")
-            let workoutNum = coreDataManager.getNextWorkoutNumber()
-            print(workoutNum)
-            
-            if let newWorkoutSession = coreDataManager.createWorkoutSession(dateTime: Date(), workoutNum: workoutNum, overallCurlAcceleration: 0.0, overallElbowFlareLR: 0.0, overallElbowFlareUD: 0.0, overallElbowSwing: 0.0, overallWristStabilityLR: 0.0, overallWristStabilityUD: 0.0){
-                self.currentWorkoutSession = newWorkoutSession
-                print(newWorkoutSession as Any)
-                print("THE CREATE WORKOUT WORK?")
-            }
-//            
-//            print("WE ARE ABOUT TO CREATE A SET WOOOOAHAHAHAH")
-//            if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
-//                self.currentWorkoutSet = newExerciseSet
-//                print("newExerciseSet:")
-//                print(newExerciseSet as Any)
-//            }
         } else {
             alertMessage = "Please enter valid numbers for sets, reps, and weights."
             showingAlert = true
@@ -272,6 +275,8 @@ class WorkoutViewModel: ObservableObject {
     
     
     func finishSet(){
+        currentSets += 1
+        print("currentSets: \(currentSets)")
         print("IM ABOUT TO CHECK THE CONDITIONAL AAAAAAAAAAAAAHHHHHHH FOR FINISH SET")
         if self.currentWorkoutSet != nil{
             print("THE CONDITIONAL FOR FINISH SET WORKED YEAAAAAAA")
@@ -288,7 +293,6 @@ class WorkoutViewModel: ObservableObject {
             print("hello i just printed out the coreDataManager.fetchExerciseSets()")
             currentMotivationalPhrase = "Take a breather, then keep going!"
         }
-        currentSets += 1
     }
     
     func nextset(){
@@ -306,8 +310,9 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func finishWorkout(){
-        print("IM ABOUT TO CHECK THE CONDITIONAL AAAAAAAAAAAAAHHHHHHH FOR FINISH WORKOUT")
-        if self.currentWorkoutSession != nil{
+        print("IM ABOUT TO CHECK THE CONDITIONAL AAAAAAAAAAAAAHHHHHHH FOR FINISH WORKOUT AND FINISH SET")
+        if self.currentWorkoutSession != nil && self.currentWorkoutSet != nil{
+            print("THE CONDITIONAL FOR FINISH WORKOUT AND SET WORKED YEAAAAAAA")
             totalSets = Int(inputtedSets) ?? 0
             
             // Get feedback from formCriteria
@@ -334,6 +339,11 @@ class WorkoutViewModel: ObservableObject {
             showGraphPopover = true
             print("updating workout session")
             coreDataManager.updateWorkoutSession(self.currentWorkoutSession!, dateTime: Date(), overallCurlAcceleration: workoutAnalysis["overallWorkoutUpDownAverage"] ?? 0.0, overallElbowFlareLR: workoutAnalysis["overallWorkoutElbowFlareForwardBackward"] ?? 0.0, overallElbowFlareUD: workoutAnalysis["overallWorkoutElbowFlareUpDown"] ?? 0.0, overallElbowSwing: workoutAnalysis["overallWorkoutElbowSwing"] ?? 0.0, overallWristStabilityLR: workoutAnalysis["overallDumbbellTwistingLeftRight"] ?? 0.0, overallWristStabilityUD: workoutAnalysis["overallDumbbellTwistingUpDown"] ?? 0.0)
+            print("updating final exercise set")
+            coreDataManager.updateExerciseSet(self.currentWorkoutSet!, setNum: totalSets, avgCurlAcceleration: workoutAnalysis["averageUpDownAcceleration"], avgElbowFlareLR: workoutAnalysis["averageElbowFlareForwardBackward"], avgElbowFlareUD: workoutAnalysis["averageElbowFlareUpDown"], avgElbowSwing: workoutAnalysis["averageElbowSwing"], avgWristStabilityLR: workoutAnalysis["averageWristLeftRightRotation"], avgWristStabilityUD: workoutAnalysis["averageWristUpDownRotation"])
+            print("fetchExerciseSets(for: currentWorkoutSession!):")
+            print(coreDataManager.fetchExerciseSets(for: currentWorkoutSession!))
+            print("hello i just printed out the coreDataManager.fetchExerciseSets()")
             print("coreDataManager.fetchWorkoutSessions():")
             print(coreDataManager.fetchWorkoutSessions())
             print("hello i just printed out the fetchWorkoutSessions()")
@@ -355,6 +365,7 @@ class WorkoutViewModel: ObservableObject {
     /// Function to start timer
     
     func startTimer() {
+        timerIsActive = true
         if let existingTimer = timer {
             existingTimer.invalidate()
         }
@@ -393,14 +404,13 @@ class WorkoutViewModel: ObservableObject {
     }
     func resumeTimer() {
         timerIsActive = true // Resume updating time
-        if self.currentWorkoutSession != nil{
-            print("WE ARE ABOUT TO CREATE A SET WOOOOAHAHAHAH")
-            if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
-                self.currentWorkoutSet = newExerciseSet
-                print("newExerciseSet:")
-                print(newExerciseSet as Any)
-            }
+        print("WE ARE ABOUT TO CREATE A SET WOOOOAHAHAHAH")
+        if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
+            self.currentWorkoutSet = newExerciseSet
+            print("newExerciseSet:")
+            print(newExerciseSet as Any)
         }
+        print("THE CREATE SET WORK?")
     }
     
     func resetWorkoutState() {
