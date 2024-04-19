@@ -124,28 +124,6 @@ class PetDBManager: ObservableObject {
         }
     }
     
-    func updateUserXP(newXP: Int64, completion: @escaping (Error?) -> Void) {
-        DispatchQueue.main.async {
-            self.pet?.totalXP = newXP  // Update local model first for immediate UI update
-        }
-        
-        guard let petRecordId = self.pet?.recordId else {
-            completion(NSError(domain: "PetErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Missing pet record ID"]))
-            return
-        }
-
-        CloudKitManager.shared.fetchPrivateRecord(recordID: petRecordId) { [weak self] record, error in
-            guard let record = record else {
-                completion(error ?? NSError(domain: "PetErrorDomain", code: -2, userInfo: [NSLocalizedDescriptionKey: "Could not fetch record"]))
-                return
-            }
-
-            record[PetRecordKeys.totalXP.rawValue] = newXP as CKRecordValue
-            CloudKitManager.shared.savePrivateItem(record: record) { saveError in
-                completion(saveError)  // Notify of any error during save
-            }
-        }
-    }
     
     func updatePetHealth(newHealth: Int64, completion: @escaping (Error?) -> Void) {
         guard let petRecordId = pet?.recordId else {
