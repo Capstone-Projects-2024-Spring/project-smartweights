@@ -10,6 +10,7 @@
 		0101C1722BBDF84F00DF087A /* MorePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0101C1712BBDF84E00DF087A /* MorePageViewModel.swift */; };
 		010A053C2BD20E2B00CD2FFC /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A053B2BD20E2B00CD2FFC /* Achievement.swift */; };
 		010A053E2BD20E8900CD2FFC /* AchievementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A053D2BD20E8900CD2FFC /* AchievementsViewModel.swift */; };
+		010A05402BD21FD500CD2FFC /* AchievementsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A053F2BD21FD500CD2FFC /* AchievementsPageView.swift */; };
 		0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0140238C2B91702300D6935D /* SettingsPageView.swift */; };
 		01A6B0BE2B88F16500D84920 /* MorePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A6B0BD2B88F16500D84920 /* MorePageView.swift */; };
 		01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */; };
@@ -92,6 +93,7 @@
 		0101C1712BBDF84E00DF087A /* MorePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorePageViewModel.swift; sourceTree = "<group>"; };
 		010A053B2BD20E2B00CD2FFC /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		010A053D2BD20E8900CD2FFC /* AchievementsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsViewModel.swift; sourceTree = "<group>"; };
+		010A053F2BD21FD500CD2FFC /* AchievementsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsPageView.swift; sourceTree = "<group>"; };
 		0140238C2B91702300D6935D /* SettingsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageView.swift; sourceTree = "<group>"; };
 		01A6B0BD2B88F16500D84920 /* MorePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorePageView.swift; sourceTree = "<group>"; };
 		01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesTab.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			children = (
 				010A053B2BD20E2B00CD2FFC /* Achievement.swift */,
 				010A053D2BD20E8900CD2FFC /* AchievementsViewModel.swift */,
+				010A053F2BD21FD500CD2FFC /* AchievementsPageView.swift */,
 			);
 			path = Achievements;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				E5297D282BB45D110078A9E6 /* VideoCard.swift in Sources */,
 				E5D7FE682BCD740F0097A175 /* NavigationCarousel.swift in Sources */,
+				010A05402BD21FD500CD2FFC /* AchievementsPageView.swift in Sources */,
 				E56BD7DB2BAFB0F400863D4D /* ColorExtension.swift in Sources */,
 				32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
