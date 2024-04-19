@@ -73,10 +73,7 @@ struct LoginView: View {
                                 
                                 // CODE TO AUTHENTICATE GC
                                 GameCenterManager.shared.authenticateLocalPlayer()
-                                
-                                // CODE TO UPDATE "1st Sign In" ACHIEVEMENT
-                                GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.1stSignIn", progressToAdd: 100.0)
-                                
+
                             }
                         case .failure(let error):
                             print(error)

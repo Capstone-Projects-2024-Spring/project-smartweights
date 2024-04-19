@@ -10,7 +10,6 @@ import GameKit
 
 struct ChallengesTab: View {
     @State var challenges: [Challenge] = [
-        Challenge(title: "1st Sign In", description: "Log in to SmartWeights for the first time.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stLogin"), achievementIdentifier: "SmartWeights.Achievement.1stSignIn", currentProgress: 0, isCompleted: false),
         Challenge(title: "1st Workout", description: "Complete your first workout.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stWorkout"), achievementIdentifier: "SmartWeights.Achievement.1stWorkout", currentProgress: 0, isCompleted: false),
         Challenge(title: "New Shopper", description: "Purchase your first item in the pet store.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stItemBought"), achievementIdentifier: "SmartWeights.Achievement.NewShopper", currentProgress: 0, isCompleted: false),
         Challenge(title: "Outfit Change", description: "Customize your pet for the first time.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stOutfitChange"), achievementIdentifier: "SmartWeights.Achievement.OutfitChange", currentProgress: 0, isCompleted: false),
