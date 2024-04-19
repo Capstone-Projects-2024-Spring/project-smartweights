@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import WebKit
+import AVKit
 
 struct VideoCard: View, Identifiable {
     
@@ -18,7 +18,7 @@ struct VideoCard: View, Identifiable {
     var body: some View {
         VStack {
             Spacer()
-            EmbeddedVideo(videoId: videoId)
+            EmbeddedVideo()
             Spacer()
             VStack (alignment: .leading) {
                 Text(title)
@@ -39,20 +39,11 @@ struct VideoCard: View, Identifiable {
     }
 }
 
-struct EmbeddedVideo: UIViewRepresentable {
+struct EmbeddedVideo: View {
+    @State var player = AVPlayer(url: Bundle.main.url(forResource: "SWTutorialv2", withExtension: "mp4")!)
     
-    let videoId: String
-    
-    func makeUIView(context: Context) -> WKWebView {
-        WKWebView()
-    }
-    
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        let path = "https://www.youtube.com/embed/\(videoId)"
-        guard let youtubeURL = URL(string: path) else { return }
-        
-        uiView.scrollView.isScrollEnabled = false
-        uiView.load(.init(url: youtubeURL))
+    var body: some View {
+        VideoPlayer(player: player)
     }
 }
 
