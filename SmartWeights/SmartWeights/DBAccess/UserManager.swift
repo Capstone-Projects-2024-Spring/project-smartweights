@@ -194,27 +194,27 @@ class UserDBManager: ObservableObject {
     }
     
     /// Checks if the user record exists in the "Users" record type.
-    func userRecordExistsInUsers(completion: @escaping (Bool, Error?) -> Void) {
-        guard let userRecord = userRecord else {
-            completion(false, nil) // userRecord not fetched yet
-            return
-        }
-        
-        let database = CKContainer.default().publicCloudDatabase
-        let predicate = NSPredicate(format: "Users == %@", userRecord)
-        let query = CKQuery(recordType: "User", predicate: predicate)
-        
-        database.perform(query, inZoneWith: nil) { (records, error) in
-            if let error = error {
-                completion(false, error)
-            } else if let records = records, !records.isEmpty {
-                completion(true, nil) // userRecord exists in Users record type
-                print("exists")
-                print("ExistsRecord: \(records)")
-            } else {
-                completion(false, nil) // userRecord does not exist in Users record type
-                print("does not exist")
-            }
-        }
-    }
+//    func userRecordExistsInUsers(completion: @escaping (Bool, Error?) -> Void) {
+//        guard let userRecord = userRecord else {
+//            completion(false, nil) // userRecord not fetched yet
+//            return
+//        }
+//        
+//        let database = CKContainer.default().publicCloudDatabase
+//        let predicate = NSPredicate(format: "Users == %@", userRecord)
+//        let query = CKQuery(recordType: "User", predicate: predicate)
+//        
+//        database.perform(query, inZoneWith: nil) { (records, error) in
+//            if let error = error {
+//                completion(false, error)
+//            } else if let records = records, !records.isEmpty {
+//                completion(true, nil) // userRecord exists in Users record type
+//                print("exists")
+//                print("ExistsRecord: \(records)")
+//            } else {
+//                completion(false, nil) // userRecord does not exist in Users record type
+//                print("does not exist")
+//            }
+//        }
+//    }
 }

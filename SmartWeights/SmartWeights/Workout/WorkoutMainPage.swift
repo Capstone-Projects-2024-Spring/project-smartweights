@@ -1,8 +1,10 @@
 import SwiftUI
 import Combine
+import CoreData
 
 /// Main structure to display the workout page with integrated UI components
 struct WorkoutMainPage: View {
+    @StateObject var coreDataManager:CoreDataManager
     @StateObject var ble:BLEcentral
     @StateObject var formCriteria:FormCriteria
     @StateObject var storeModel = storeViewModel()
@@ -14,25 +16,24 @@ struct WorkoutMainPage: View {
     @ObservedObject var petItemDBManager = PetItemDBManager()
     
     init() {
+        let coreDataManager = CoreDataManager()
         let ble = BLEcentral()
         let formCriteria = FormCriteria()
+        self._coreDataManager = StateObject(wrappedValue: coreDataManager)
         self._ble = StateObject(wrappedValue: ble)
         self._formCriteria = StateObject(wrappedValue: formCriteria)
-        self._viewModel = StateObject(wrappedValue: WorkoutViewModel(ble: ble, formCriteria: formCriteria))
+        self._viewModel = StateObject(wrappedValue: WorkoutViewModel(ble: ble, formCriteria: formCriteria, coreDataManager: coreDataManager))
     }
     
-    
+    @State private var currentWorkoutSession: WorkoutSession?
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
     @State private var isExpanded = false
     @State private var graphData: [Double] = [] 
     @State private var currentMotivationalPhrase = "Let's get started!"
-    
-    
-    
+
     var body: some View {
         ZStack {
-            
             VStack {
                 ZStack{
                     VStack {
@@ -134,8 +135,6 @@ struct WorkoutMainPage: View {
                             .padding(.bottom, -40)
                         }
                         HStack{
-                            
-                            
                             Image("Dog")
                                 .resizable()
                                 .scaledToFit()
@@ -156,9 +155,7 @@ struct WorkoutMainPage: View {
                 .cornerRadius(20)
                 .shadow(radius: 10)
             }
-            
         }
-        
     }
     
     enum SetType {
@@ -217,7 +214,7 @@ struct WorkoutMainPage: View {
             return "Start Workout"
         }
     }
-    
+
     private var StartWorkoutView: some View {
         VStack {
             if !viewModel.hasWorkoutStarted {
@@ -269,31 +266,15 @@ struct WorkoutMainPage: View {
             }
             
             
-            
             // Start/Reset workout button
             Button(action: {
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
-                        viewModel.finishworkout()
+                        viewModel.finishWorkout()
                     } else if buttonText == "Final Set" {
                         viewModel.finalset()
-                        // Logic for transitioning from the final set to finishing the workout
-//                        viewModel.currentSets += 1 // This will push the state to "Finish Workout"
-//                        viewModel.showGraphPopover = false
-//                        viewModel.resumeTimer()
-//                        ble.MPU6050_1Gyros.removeAll()
-//                        ble.MPU6050_2Gyros.removeAll()
-//                        ble.collectDataToggle = true
-//                        viewModel.currentMotivationalPhrase = "Last Set! Push through!"
                     } else if !viewModel.isWorkoutPaused {
-                        ble.collectDataToggle = false
-                        viewModel.pauseTimer()
-                        viewModel.showGraphPopover = true
-                        viewModel.isWorkoutPaused = true
-                        viewModel.currentMotivationalPhrase = "Take a breather, then keep going!"
-                        if let totalSets = Int(viewModel.inputtedSets), viewModel.currentSets < totalSets {
-                            viewModel.currentSets += 1 
-                        }
+                        viewModel.finishSet()
                         // Get feedback from formCriteria
                         let currentFeedback = formCriteria.giveFeedback(dumbbellArray:ble.MPU6050_1Gyros , elbowArray:ble.MPU6050_2Gyros)
                         
@@ -304,6 +285,7 @@ struct WorkoutMainPage: View {
                         }
                         
                         print("hello testing remove hp from bad form")
+                        print("hello test")
                         print(currentFeedback.2)
                     } else {
                         // Resume workout from a paused state
@@ -318,7 +300,6 @@ struct WorkoutMainPage: View {
                 } else {
                     // Start the workout
                     viewModel.currentMotivationalPhrase = "First set, let's go!"
-                    viewModel.resumeTimer()
                     viewModel.showingWorkoutSheet = true
                     viewModel.showGraphPopover = false
                     
