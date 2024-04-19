@@ -66,11 +66,8 @@ class WorkoutViewModel: ObservableObject {
     
     @Published var showGraphPopover = false {
         didSet {
-            print(showGraphPopover,"pop up is showing up")
             if showGraphPopover {
                 self.feedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros)
-                print(formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros,elbowArray: ble.MPU6050_2Gyros))
-                print(feedback,"this is the feedback")
                 self.feedbackDataForSets.append(feedback)
                 self.workoutAnalysis = formCriteria.UpdateWorkoutAnalysis(totalSets: totalSets, dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
                 print(self.workoutAnalysis)
@@ -116,7 +113,7 @@ class WorkoutViewModel: ObservableObject {
                 
                 if let newWorkoutSession = coreDataManager.createWorkoutSession(dateTime: Date(), workoutNum: workoutNum, overallCurlAcceleration: 0.0, overallElbowFlareLR: 0.0, overallElbowFlareUD: 0.0, overallElbowSwing: 0.0, overallWristStabilityLR: 0.0, overallWristStabilityUD: 0.0){
                     self.currentWorkoutSession = newWorkoutSession
-                    print(self.currentWorkoutSession as Any)
+                    //print(self.currentWorkoutSession as Any)
                     print("THE CREATE WORKOUT WORK?")
                 }
                 
@@ -124,7 +121,7 @@ class WorkoutViewModel: ObservableObject {
                 if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
                     self.currentWorkoutSet = newExerciseSet
                     print("newExerciseSet:")
-                    print(newExerciseSet as Any)
+                    //print(newExerciseSet as Any)
                 }
                 print("THE CREATE SET WORK?")
             }
@@ -158,7 +155,7 @@ class WorkoutViewModel: ObservableObject {
     }
     
     
-    enum WorkoutState {
+    enum WorkoutStateEnum {
         case idle
         case started
         case paused
@@ -166,10 +163,17 @@ class WorkoutViewModel: ObservableObject {
         case final
     }
     
+    //initialize the workout state
+    var WorkoutState: WorkoutStateEnum = .idle
+    
+    var inputNode: AVAudioInputNode!
+    var recordingFormat: AVAudioFormat!
     
     func startListening() {
+        self.WorkoutState = .idle
         guard !isListening else { return }
         isListening = true
+       
         
         let recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         
@@ -179,11 +183,11 @@ class WorkoutViewModel: ObservableObject {
             try AVAudioSession.sharedInstance().setMode(.measurement)
             try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
             
-            let inputNode = audioEngine.inputNode
+            self.inputNode = audioEngine.inputNode
             recognitionRequest.shouldReportPartialResults = true
             recognitionRequest.taskHint = .dictation
             
-            let recordingFormat = inputNode.outputFormat(forBus: 0)
+            self.recordingFormat = inputNode.outputFormat(forBus: 0)
             inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
                 recognitionRequest.append(buffer)
             }
@@ -193,7 +197,7 @@ class WorkoutViewModel: ObservableObject {
             print("Audio engine started")
             
             
-            var WorkoutState = WorkoutState.idle
+            
             
             let recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] (result, error) in
                 guard let self = self else { return }
@@ -209,45 +213,45 @@ class WorkoutViewModel: ObservableObject {
                     if let lastCommand = commands.last {
                         switch lastCommand {
                         case "finish":
-                            if WorkoutState == .final{
+                            if self.WorkoutState == .final{
                                 self.finishWorkout()
                                 print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
                                 // Cancel the recognition task before stopping the audio engine
-                                self.recognitionTask?.cancel()
-                                self.recognitionTask = nil
+                                // self.recognitionTask?.cancel()
+                                // self.recognitionTask = nil
                                 
-                                // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                self.audioEngine.stop()
-                                inputNode.removeTap(onBus: 0)
-                                recognitionRequest.endAudio()
-                                print("Stopped listening")
-                                self.isListening = false
+                                // // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                // self.audioEngine.stop()
+                                // inputNode.removeTap(onBus: 0)
+                                // recognitionRequest.endAudio()
+                                // print("Stopped listening")
+                                // self.isListening = false
                                 // }
                                 return
                             }
                         case "start":
-                            if WorkoutState == .idle{
+                            if self.WorkoutState == .idle{
                                 self.startWorkout()
-                                WorkoutState = .started
+                                self.WorkoutState = .started
                                 print("Workout started")
                                 
                             }
                             
                         case "pause":
-                            if WorkoutState == .started {
+                            if self.WorkoutState == .started {
                                 self.finishSet()
-                                WorkoutState = .paused
+                                self.WorkoutState = .paused
                                 print("Workout paused")
                                 
                             }
                         case "next":
-                            if WorkoutState == .paused {
+                            if self.WorkoutState == .paused {
                                 if let sets = stringToInt(inputtedSets), self.currentSets == sets - 1 {
                                     self.finalset()
-                                    WorkoutState = .final
+                                    self.WorkoutState = .final
                                 } else {
                                     self.nextset()
-                                    WorkoutState = .started
+                                    self.WorkoutState = .started
                                 }
                                 
                             }
@@ -279,6 +283,7 @@ class WorkoutViewModel: ObservableObject {
     
     
     func finishSet(){
+        WorkoutState = .paused
         currentSets += 1
         isWorkingOut = false
         print("currentSets: \(currentSets)")
@@ -301,6 +306,7 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func nextset(){
+        WorkoutState = .started
         resumeTimer()
         showGraphPopover = false
         isWorkoutPaused = false
@@ -309,17 +315,28 @@ class WorkoutViewModel: ObservableObject {
         ble.collectDataToggle = true //Stars collecting data again
         currentMotivationalPhrase = "You're doing great!"
         isWorkingOut = true
-        print("hello im not getting called")
         self.checkDangerousFormWhileWorkingOut()
     }
     
     
     func startWorkout() {
+        WorkoutState = .started
         validateAndStartCountdown(sets: inputtedSets, reps: inputtedReps, weights: inputtedWeights)
         
     }
     
     func finishWorkout(){
+        self.WorkoutState = .final
+        self.recognitionTask?.cancel()
+        self.recognitionTask = nil
+        
+        // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        self.audioEngine.stop()
+        inputNode.removeTap(onBus: 0)
+        recognitionRequest?.endAudio()
+        print("Stopped listening")
+        self.isListening = false
+        
         print("IM ABOUT TO CHECK THE CONDITIONAL AAAAAAAAAAAAAHHHHHHH FOR FINISH WORKOUT AND FINISH SET")
         if self.currentWorkoutSession != nil && self.currentWorkoutSet != nil{
             print("THE CONDITIONAL FOR FINISH WORKOUT AND SET WORKED YEAAAAAAA")
@@ -334,8 +351,6 @@ class WorkoutViewModel: ObservableObject {
                 workoutPageViewModel.lowerHP()
             }
             
-            print("hello test, looking for bad form hehehe")
-            print(currentFeedback.2)
             // Logic for completing the workout
             storeModel.addFundtoUser(price: 50)
             workoutPageViewModel.AddXP(value: 25)
@@ -358,25 +373,26 @@ class WorkoutViewModel: ObservableObject {
             print(coreDataManager.fetchWorkoutSessions())
             print("hello i just printed out the fetchWorkoutSessions()")
             currentMotivationalPhrase = "Let's get started with a New Workout!"
+            isWorkingOut = false
         }
         
-        print("hello test, removing hp from bad form")
         // Logic for completing the workout
-        storeModel.addFundtoUser(price: 50)
-        workoutPageViewModel.AddXP(value: 25)
-        resetWorkoutState()
-        hasWorkoutStarted = false
-        isWorkoutPaused = false
-        ble.collectDataToggle = false //stops collecting data
-        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
-        ble.MPU6050_2_All_Gyros.removeAll()
-        showGraphPopover = true
-        currentMotivationalPhrase = "Let's get started with a New Workout!"
-        isWorkingOut = false
+        // storeModel.addFundtoUser(price: 50)
+        // workoutPageViewModel.AddXP(value: 25)
+        // resetWorkoutState()
+        // hasWorkoutStarted = false
+        // isWorkoutPaused = false
+        // ble.collectDataToggle = false //stops collecting data
+        // ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
+        // ble.MPU6050_2_All_Gyros.removeAll()
+        // showGraphPopover = true
+        // currentMotivationalPhrase = "Let's get started with a New Workout!"
+        // isWorkingOut = false
         
     }
     
     func finalset(){
+        WorkoutState = .final
         currentSets += 1 // This will push the state to "Finish Workout"
         showGraphPopover = false
         resumeTimer()
