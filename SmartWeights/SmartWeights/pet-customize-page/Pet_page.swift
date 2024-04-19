@@ -115,11 +115,6 @@ struct Pet_Page: View {
                         .padding(.bottom, -15)
                         .foregroundStyle(.black)
                     
-                    // Health Bar
-                    CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "HP:", displayMode: .rawValue, foregroundColor: .green, backgroundColor: .gray)
-                        .frame(height: 20)
-                        .padding()
-                    
                     // XP Bar
                     CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .africanViolet, backgroundColor: .gray)
                         .frame(height: 20)
