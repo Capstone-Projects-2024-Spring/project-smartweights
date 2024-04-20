@@ -66,7 +66,6 @@
 		B9D41D862BBE131B007CDCC3 /* FitnessPlanPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D41D852BBE131B007CDCC3 /* FitnessPlanPage.swift */; };
 		E50E3D222BD449DB00846CD1 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E3D212BD449DB00846CD1 /* PlayerView.swift */; };
 		E50E3D262BD450BA00846CD1 /* DumbbellCurls.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E50E3D252BD450BA00846CD1 /* DumbbellCurls.mp4 */; };
-		E5297D262BB4596D0078A9E6 /* EmbeddedVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5297D252BB4596D0078A9E6 /* EmbeddedVideo.swift */; };
 		E5297D282BB45D110078A9E6 /* VideoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5297D272BB45D110078A9E6 /* VideoCard.swift */; };
 		E56BD7D82BAFA2C300863D4D /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7D72BAFA2C300863D4D /* TabBar.swift */; };
 		E56BD7DB2BAFB0F400863D4D /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */; };
@@ -75,6 +74,7 @@
 		E5D7FE662BCD70330097A175 /* StartWorkoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D7FE652BCD70330097A175 /* StartWorkoutButton.swift */; };
 		E5D7FE682BCD740F0097A175 /* NavigationCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D7FE672BCD740F0097A175 /* NavigationCarousel.swift */; };
 		E5D7FE6A2BCD8E110097A175 /* VideoCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D7FE692BCD8E110097A175 /* VideoCarousel.swift */; };
+		E5EF82092BD45CA000907B7F /* TutorialPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF82082BD45CA000907B7F /* TutorialPopup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,7 +159,6 @@
 		B9D41D852BBE131B007CDCC3 /* FitnessPlanPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessPlanPage.swift; sourceTree = "<group>"; };
 		E50E3D212BD449DB00846CD1 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		E50E3D252BD450BA00846CD1 /* DumbbellCurls.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = DumbbellCurls.mp4; sourceTree = "<group>"; };
-		E5297D252BB4596D0078A9E6 /* EmbeddedVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedVideo.swift; sourceTree = "<group>"; };
 		E5297D272BB45D110078A9E6 /* VideoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCard.swift; sourceTree = "<group>"; };
 		E56BD7D72BAFA2C300863D4D /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
@@ -168,6 +167,7 @@
 		E5D7FE652BCD70330097A175 /* StartWorkoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutButton.swift; sourceTree = "<group>"; };
 		E5D7FE672BCD740F0097A175 /* NavigationCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCarousel.swift; sourceTree = "<group>"; };
 		E5D7FE692BCD8E110097A175 /* VideoCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCarousel.swift; sourceTree = "<group>"; };
+		E5EF82082BD45CA000907B7F /* TutorialPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPopup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -404,6 +404,7 @@
 				E5D7FE672BCD740F0097A175 /* NavigationCarousel.swift */,
 				E5D7FE692BCD8E110097A175 /* VideoCarousel.swift */,
 				E50E3D212BD449DB00846CD1 /* PlayerView.swift */,
+				E5EF82082BD45CA000907B7F /* TutorialPopup.swift */,
 			);
 			path = Homepage;
 			sourceTree = "<group>";
@@ -580,6 +581,7 @@
 				01A6B0BE2B88F16500D84920 /* MorePageView.swift in Sources */,
 				91065F862B7A7E4900BC62E6 /* Persistence.swift in Sources */,
 				6BEA786D2BC0780E00239AB0 /* FoodItemManager.swift in Sources */,
+				E5EF82092BD45CA000907B7F /* TutorialPopup.swift in Sources */,
 				77C430C32BC080C8006E1FBE /* CoreDataManager.swift in Sources */,
 				32E2885E2B83CD6E00458FB1 /* OverallProgress.swift in Sources */,
 				3202761E2B892D2C001A86B8 /* CustomProgressView.swift in Sources */,
