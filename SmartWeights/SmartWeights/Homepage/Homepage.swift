@@ -13,9 +13,15 @@ var currentWorkout = "Dumbbell Press"
 struct Homepage: View {
     
     let tabBar: TabBar
+    @State private var showPopup = false
     
     init(tabBar: TabBar) {
         self.tabBar = tabBar
+        // Check if user is new and show popup accordingly
+        if UserDefaults.standard.bool(forKey: "isNewUser") {
+            _showPopup = State(initialValue: true)
+            UserDefaults.standard.set(false, forKey: "isNewUser")
+        }
     }
     
     var body: some View {
