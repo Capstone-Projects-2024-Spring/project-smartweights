@@ -67,7 +67,7 @@ struct Homepage: View {
                 VideoCarousel(videoCards: videos)
             }
             .background(.white)
-            .sheet(isPresented: $showTutorial, content: {
+            .fullScreenCover(isPresented: $showTutorial, content: {
                 TutorialPopup(show: $showTutorial)
             })
         }
