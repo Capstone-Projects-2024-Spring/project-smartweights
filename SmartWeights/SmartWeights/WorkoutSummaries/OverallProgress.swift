@@ -12,25 +12,33 @@ import CoreData
 
 
 
-class allFeedbackViewModel: ObservableObject{
-    
+class allFeedbackViewModel: ObservableObject {
+    var coreDataManager: CoreDataManager
     @Published var date = Date()
-    @Published var shortDate: String = "" // Store short date string
-    @Published var workoutSessions: [WorkoutSession] = []
+    //    @Published var shortDate: String = "" // Store short date string
+    @Published var workoutSessions: [[String:Any]] = [[:]]
+    @Published var WorkoutSets: [[String:Any]] = [[:]]
+    var workoutNum: Int64 = 0
     
-    func updateShortDate() {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        self.shortDate = formatter.string(from: date)
-        /*
-         let dateFormatter = DateFormatter()
-         dateFormatter.dateFormat = "MM-dd-yyyy"
-         let dateString = dateFormatter.string(from: dateTime)
-         */
+    //    func updateShortDate() {
+    //        let formatter = DateFormatter()
+    //        formatter.dateStyle = .short
+    //        self.shortDate = formatter.string(from: date)
+    //    }
+    
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
+        workoutSessions = coreDataManager.fetchWorkoutSessions(on: Date())
+        print(workoutSessions,"----------------------------------------INIT---------------")
+        updateData(date:Date())
     }
     
-    init(){
-        updateShortDate()
+    func updateData(date: Date){
+        self.workoutSessions = coreDataManager.fetchWorkoutSessions(on: date)
+    }
+    
+    func updateData(workoutNum: Int64){
+        self.WorkoutSets = coreDataManager.fetchExerciseSets(for: workoutNum)
     }
 }
 
@@ -45,7 +53,7 @@ struct moreFeedbackSheetView: View {
         Text("data data data data data data data")
     }
 }
-    
+
 
 struct SelectedDateData: View {
     @ObservedObject var viewModel: allFeedbackViewModel
@@ -61,54 +69,65 @@ struct SelectedDateData: View {
 
 struct allFeedback: View {
     @ObservedObject var coreDataManager: CoreDataManager
+    @ObservedObject var viewModel: allFeedbackViewModel
     
-    @ObservedObject var viewModel =  allFeedbackViewModel()
+    init(coreDataManager: CoreDataManager){
+        self.coreDataManager = coreDataManager
+        self.viewModel = allFeedbackViewModel(coreDataManager:coreDataManager)
+    }
     
     var body: some View {
-        
-        
         ScrollView {
             ZStack{
                 VStack{
                     //Title of the page
                     HStack(alignment: .firstTextBaseline){
-                        
                         Text("All Feedback")
-                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                            .font(.title)
                             .bold()
                             .fontDesign(.monospaced)
                             .multilineTextAlignment(.center)
-                        
-                        
                     }
                     
-                    
-                    CalendarView(viewModel: viewModel)
                     SelectedDateData(viewModel: viewModel)
+                    DatePicker("Select a date", selection: $viewModel.date, displayedComponents: .date)
+                        .padding()
+                        .labelsHidden() // Hide the DatePicker label
+                        .onChange(of: viewModel.date) { newValue in
+                            viewModel.updateData(date: newValue)
+                        }
                     
-                    Button(action: {
-                        print(coreDataManager.fetchWorkoutSessions(on: Date()))
-                    }, label: {
-                        Text("print")
-                    })
-                    Button(action: {
-                        print(coreDataManager.fetchWorkoutSessions())
-                    }, label: {
-                        Text("print")
-                    })
-
                     
+                  
+                        ForEach(0..<viewModel.workoutSessions.count, id: \.self) { index in
+                            let workoutSession = viewModel.workoutSessions[index]
+                            Text("Workout Session \(index+1):")
+                                .padding(.top, 30)
+                            Text("Overall Curl Acceleration - \(workoutSession["overallCurlAcceleration"] ?? 0)")
+                            Text("Overall Wrist Stability (Left Right) - \(workoutSession["overallWristStabilityLeftRight"] ?? 0)")
+                            Text("Overall Wrist Stability (Up Down) - \(workoutSession["overallWristStabilityUpDown"] ?? 0)")
+                            Text("Overall Elbow Swing - \(workoutSession["overallElbowSwing"] ?? 0)")
+                            Text("Overall Elbow Flare(Left Right) - \(workoutSession["overallElbowFlareLeftRight"] ?? 0)")
+                            Text("Overall Elbow Flare (Up Down) - \(workoutSession["overallElbowFlareUpDown"] ?? 0)")
+                            }
+                    
+                    
+                    
+                    
+                    
+                    //                    Text("\(viewModel.workoutSessions)")
+                    //                        .onReceive(viewModel.$workoutSessions) { workoutSessions in
+                    //                            print(workoutSessions, "...................................")
+                    //                        }
                 }
             }
         }
-
-        
-        }
-    
+    }
 }
 
 
+
 #Preview {
-    allFeedback(coreDataManager: CoreDataManager(), viewModel: allFeedbackViewModel())
+    allFeedback(coreDataManager: CoreDataManager())
 }
 

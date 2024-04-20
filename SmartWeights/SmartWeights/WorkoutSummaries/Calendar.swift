@@ -19,11 +19,10 @@ struct CalendarView: View {
                 .foregroundColor(.blue)
                 .labelsHidden() // Hide the DatePicker label
                 .onChange(of: viewModel.date) {
-                    viewModel.updateShortDate()
                 }
                 
             
-           
+        
         }
         
         
@@ -32,6 +31,6 @@ struct CalendarView: View {
 
 
 #Preview {
-    CalendarView(viewModel:allFeedbackViewModel())
+    CalendarView(viewModel:allFeedbackViewModel(coreDataManager: CoreDataManager()))
 }
 
