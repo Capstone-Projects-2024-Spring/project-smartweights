@@ -13,6 +13,7 @@ var currentWorkout = "Dumbbell Press"
 struct Homepage: View {
     
     let tabBar: TabBar
+    // TODO: Currently hardcoded for demo. Change back afterwards.
     @State private var showTutorial = true
     
     init(tabBar: TabBar) {
