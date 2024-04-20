@@ -39,9 +39,10 @@ struct Homepage: View {
                 Divider()
                 // Buttons for the additional pages carousel (NavigationCarousel)
                 let postWorkout = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(PostWorkout()))
+                let rechargeSensor = CarouselButton(name: "How to charge",icon:  "powerplug", link: AnyView(RechargeSensors()))
                 
                 // Array of defined buttons to be used by the NavigationCarousel view
-                let buttons = [postWorkout]
+                let buttons = [postWorkout,rechargeSensor]
                 
                 // Additional Pages Carousel
                 NavigationCarousel(buttons: buttons, iconColor: .white, bgColor: .africanViolet, textColor: .black)
