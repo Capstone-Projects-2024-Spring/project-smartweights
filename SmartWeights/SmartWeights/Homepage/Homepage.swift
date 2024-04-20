@@ -26,139 +26,39 @@ struct Homepage: View {
                 HStack {
                     Text("Welcome")
                         .font(.title)
-                        .foregroundStyle(.white)
                         .padding(.top)
                         .padding(.horizontal)
+                        .foregroundStyle(.black)
+                        .bold()
                     Spacer()
                 }
                 
                 // Start Workout Button
-                Button { tabBar.changeTab(to: .workout) }
-                label: {
-                    ZStack {
-                        HStack {
-                            VStack (alignment: .leading) {
-                                HStack {
-                                    Text("Start Workout")
-                                        .font(.title2)
-                                    Image(systemName: "arrow.right")
-                                        .foregroundStyle(Color.africanViolet)
-                                }
-                                Text(currentWorkout)
-                                    .foregroundStyle(Color.lightGray)
-                                    .font(.subheadline)
-                            }
-                            .padding()
-                            Spacer()
-                            Image(systemName: "photo")
-                                .foregroundStyle(Color.lightGray)
-                                .padding()
-                        }
-                        .foregroundStyle(.white)
-                    }
-                    .background(Color.darkGray)
-                    .cornerRadius(12)
-                    .padding()
-                }
+                StartWorkoutButton(tabBar: tabBar)
                 
-                // Navigation Carousel
-                VStack (alignment: .leading) {
-                    Text("App Features")
-                        .font(.title3)
-                        .padding(.top)
-                        .padding(.horizontal)
-                    ScrollView (.horizontal, showsIndicators: false) {
-                        HStack {
-                            let count = 1...6
-                            ForEach(count, id: \.self) { number in
-                                if number == 1 {
-                                    NavigationLink(destination: allFeedback()) {
-                                        VStack {
-                                            Image(systemName: "chart.line.uptrend.xyaxis")
-                                                .foregroundStyle(Color.africanViolet
-                                                )
-                                                .background(Circle()
-                                                    .frame(width: 60, height: 60)
-                                                    .foregroundStyle(Color.darkGray)
-                                                )
-                                                .padding()
-                                            Text("Progress")
-                                                .foregroundStyle(Color.lightGray)
-                                                .font(.subheadline)
-                                        }
-                                        .padding()
-                                    }
-                                } else {
-                                    VStack {
-                                        Image(systemName: "photo")
-                                            .foregroundStyle(Color.lightGray)
-                                            .background(Circle()
-                                                .frame(width: 60, height: 60)
-                                                .foregroundStyle(Color.darkGray)
-                                            )
-                                            .padding()
-                                        Text("Page \(number)")
-                                            .foregroundStyle(Color.lightGray)
-                                            .font(.subheadline)
-                                    }
-                                    .padding()
-                                }
-                            }
-                        }
-                    }
-                }
-                .foregroundStyle(.white)
+                Divider()
+                // Buttons for the additional pages carousel (NavigationCarousel)
+                let postWorkout = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(allFeedback()))
+                let rechargeSensor = CarouselButton(name: "How to charge",icon:  "powerplug", link: AnyView(RechargeSensors()))
+                
+                // Array of defined buttons to be used by the NavigationCarousel view
+                let buttons = [postWorkout,rechargeSensor]
+                
+                // Additional Pages Carousel
+                NavigationCarousel(buttons: buttons, iconColor: .white, bgColor: .africanViolet, textColor: .black)
+                
+                Divider()
+                
+                // Videos for video carousel
+                let bicepCurlVideo = VideoCard(videoId: "ykJmrZ5v0Oo", title: "How to Do a Dumbbell Bicep Curl", description: "Howcast")
+                
+                // Array of defined videos. Used by VideoCarousel view.
+                let videos = [bicepCurlVideo]
                 
                 // Video Carousel
-                VStack {
-                    HStack {
-                        Text("Videos")
-                            .font(.title3)
-                            .padding(.top)
-                            .padding(.horizontal)
-                        Spacer()
-                        HStack {
-                            Text("See more")
-                            Image(systemName: "arrow.right")
-                                .foregroundColor(Color.africanViolet)
-                        }
-                        .padding()
-                    }
-                    ScrollView (.horizontal, showsIndicators: false) {
-                        HStack {
-                            let count = 1...4
-                            ForEach(count, id: \.self) { number in
-                                if number == 1 {
-                                    VideoCard(videoId: "ykJmrZ5v0Oo", title: "How to Do a Dumbbell Bicep Curl", description: "Howcast")
-                                } else {
-                                    VStack {
-                                        Spacer()
-                                        Image(systemName: "photo")
-                                            .foregroundStyle(Color.lightGray)
-                                        Spacer()
-                                        VStack (alignment: .leading){
-                                            Text("Video \(number)")
-                                                .font(.title3)
-                                            Text("Video Description")
-                                                .foregroundStyle(Color.lightGray)
-                                                .font(.subheadline)
-                                        }
-                                        .padding(.bottom)
-                                    }
-                                    .frame(width: 200, height: 250)
-                                    .background(Color.darkGray)
-                                    .cornerRadius(12)
-                                    .padding()
-                                }
-                            }
-                            
-                        }
-                    }
-                }
-                .foregroundStyle(.white)
-                Spacer()
+                VideoCarousel(videoCards: videos)
             }
-            .background(Color.midnightBlack.edgesIgnoringSafeArea(.all))
+            .background(.white)
         }
        
     }

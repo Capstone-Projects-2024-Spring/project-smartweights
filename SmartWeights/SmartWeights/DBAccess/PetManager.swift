@@ -101,7 +101,7 @@ class PetDBManager: ObservableObject {
                     completion(nil, error)
                     return
                 }
-                guard let pet = pet else {
+                guard pet != nil else {
                     completion(nil, nil)
                     return
                 }

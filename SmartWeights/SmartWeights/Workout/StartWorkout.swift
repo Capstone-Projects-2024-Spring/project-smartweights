@@ -7,12 +7,16 @@ import AVFoundation
 // Define ViewModel
 class WorkoutViewModel: ObservableObject {
     //inherited view models from the parent view
+    @ObservedObject var coreDataManager: CoreDataManager
     @ObservedObject var ble: BLEcentral
     @ObservedObject var formCriteria: FormCriteria
-    init(ble: BLEcentral, formCriteria: FormCriteria) {
+    
+    init(ble: BLEcentral, formCriteria: FormCriteria, coreDataManager: CoreDataManager) {
         self.ble = ble
         self.formCriteria = formCriteria
+        self.coreDataManager = coreDataManager
     }
+    
     let storeModel = storeViewModel()
     let workoutPageViewModel = WorkoutPageViewModel()
     
@@ -27,7 +31,10 @@ class WorkoutViewModel: ObservableObject {
     var dangerous: Bool {
         formCriteria.dangerousForm(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
     }
-
+    
+    @Published private var currentWorkoutSession: WorkoutSession?
+    @Published private var currentWorkoutSet: ExerciseSet?
+    @Published var workoutNum: Int64 = 0
     @Published var progress: Double = 0
     
     //for user input
@@ -87,8 +94,8 @@ class WorkoutViewModel: ObservableObject {
     
     
     
-
-
+    
+    
     
     func startCountdown() {
         countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
@@ -97,12 +104,31 @@ class WorkoutViewModel: ObservableObject {
                 self.countdown -= 1
             } else {
                 self.countdownTimer?.cancel()
+                self.restartTimer()
                 self.startTimer()
                 self.hasWorkoutStarted = true
                 self.showingWorkoutSheet = false
                 ble.MPU6050_1Gyros.removeAll() //Clear the collected Data for previous set
                 ble.MPU6050_2Gyros.removeAll()
                 ble.collectDataToggle = true //Start collecting data for the current workout
+                print("reset data has been reset hello")
+                let workoutNum = coreDataManager.getNextWorkoutNumber()
+                print("workoutNum: \(workoutNum)")
+                print("currentSets: \(currentSets)")
+                
+                if let newWorkoutSession = coreDataManager.createWorkoutSession(dateTime: Date(), workoutNum: workoutNum, overallCurlAcceleration: 0.0, overallElbowFlareLR: 0.0, overallElbowFlareUD: 0.0, overallElbowSwing: 0.0, overallWristStabilityLR: 0.0, overallWristStabilityUD: 0.0){
+                    self.currentWorkoutSession = newWorkoutSession
+                    print(self.currentWorkoutSession as Any)
+                    print("THE CREATE WORKOUT WORK?")
+                }
+                
+                print("WE ARE ABOUT TO CREATE A SET WOOOOAHAHAHAH")
+                if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
+                    self.currentWorkoutSet = newExerciseSet
+                    print("newExerciseSet:")
+                    print(newExerciseSet as Any)
+                }
+                print("THE CREATE SET WORK?")
             }
         }
     }
@@ -114,7 +140,6 @@ class WorkoutViewModel: ObservableObject {
             feedbackDataForSets.removeAll()
             workoutAnalysisForSets.removeAll()
             formCriteria.resetListofData()
-            print("reset data has been reset hello")
         } else {
             alertMessage = "Please enter valid numbers for sets, reps, and weights."
             showingAlert = true
@@ -130,7 +155,7 @@ class WorkoutViewModel: ObservableObject {
     private func stringToInt(_ string: String) -> Int? {
         return Int(string)
     }
-
+    
     
     enum WorkoutState {
         case idle
@@ -184,7 +209,7 @@ class WorkoutViewModel: ObservableObject {
                         switch lastCommand {
                         case "finish":
                             if WorkoutState == .final{
-                                self.finishworkout()
+                                self.finishWorkout()
                                 print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
                                 // Cancel the recognition task before stopping the audio engine
                                 self.recognitionTask?.cancel()
@@ -202,13 +227,18 @@ class WorkoutViewModel: ObservableObject {
                         case "start":
                             if WorkoutState == .idle{
                                 self.startWorkout()
-                                WorkoutState = .started
-                                print("Workout started")
+                                // Check if the inputtedSets equals "1"
+                                if self.inputtedSets == "1" {
+                                    WorkoutState = .final
+                                } else {
+                                    WorkoutState = .started
+                                }
+                                print("Workout started with state: \(WorkoutState)")
                             }
                             
                         case "pause":
                             if WorkoutState == .started {
-                                self.finishset()
+                                self.finishSet()
                                 WorkoutState = .paused
                                 print("Workout paused")
                             }
@@ -249,14 +279,25 @@ class WorkoutViewModel: ObservableObject {
     
     
     
-    func finishset(){
-        ble.collectDataToggle = false// continue the data collection
-        pauseTimer()
-        //generateRandomData(for: .perSet) // Generate per-set data
-        showGraphPopover = true
-        isWorkoutPaused = true
-        currentMotivationalPhrase = "Take a breather, then keep going!"
+    func finishSet(){
         currentSets += 1
+        print("currentSets: \(currentSets)")
+        print("IM ABOUT TO CHECK THE CONDITIONAL AAAAAAAAAAAAAHHHHHHH FOR FINISH SET")
+        if self.currentWorkoutSet != nil{
+            print("THE CONDITIONAL FOR FINISH SET WORKED YEAAAAAAA")
+            ble.collectDataToggle = false// continue the data collection
+            pauseTimer()
+            //generateRandomData(for: .perSet) // Generate per-set data
+            print("creating workoutAnalysis")
+            showGraphPopover = true
+            isWorkoutPaused = true
+            print("WE ARE ABOUT TO UPDATE A SET WOOOOAHAHAHAH")
+            coreDataManager.updateExerciseSet(self.currentWorkoutSet!, setNum: currentSets, avgCurlAcceleration: workoutAnalysis["averageUpDownAcceleration"], avgElbowFlareLR: workoutAnalysis["averageElbowFlareForwardBackward"], avgElbowFlareUD: workoutAnalysis["averageElbowFlareUpDown"], avgElbowSwing: workoutAnalysis["averageElbowSwing"], avgWristStabilityLR: workoutAnalysis["averageWristLeftRightRotation"], avgWristStabilityUD: workoutAnalysis["averageWristUpDownRotation"])
+            print("fetchExerciseSets(for: currentWorkoutSession!):")
+            print(coreDataManager.fetchExerciseSets(for: currentWorkoutSession!))
+            print("hello i just printed out the coreDataManager.fetchExerciseSets()")
+            currentMotivationalPhrase = "Take a breather, then keep going!"
+        }
     }
     
     func nextset(){
@@ -273,32 +314,46 @@ class WorkoutViewModel: ObservableObject {
         validateAndStartCountdown(sets: inputtedSets, reps: inputtedReps, weights: inputtedWeights)
     }
     
-    func finishworkout(){
-        totalSets = Int(inputtedSets) ?? 0
-        
-        // Get feedback from formCriteria
-        let currentFeedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
-        
-        // Check if feedback indicates poor form
-        if currentFeedback.2 == "Whoa slow down!!" {
-            // Call function to reduce HP
-            workoutPageViewModel.lowerHP()
+    func finishWorkout(){
+        print("IM ABOUT TO CHECK THE CONDITIONAL AAAAAAAAAAAAAHHHHHHH FOR FINISH WORKOUT AND FINISH SET")
+        if self.currentWorkoutSession != nil && self.currentWorkoutSet != nil{
+            print("THE CONDITIONAL FOR FINISH WORKOUT AND SET WORKED YEAAAAAAA")
+            totalSets = Int(inputtedSets) ?? 0
+            
+            // Get feedback from formCriteria
+            let currentFeedback = formCriteria.giveFeedback(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
+            
+            // Check if feedback indicates poor form
+            if currentFeedback.2 == "Whoa slow down!!" {
+                // Call function to reduce HP
+                workoutPageViewModel.lowerHP()
+            }
+            
+            print("hello test, looking for bad form hehehe")
+            print(currentFeedback.2)
+            // Logic for completing the workout
+            storeModel.addFundtoUser(price: 50)
+            workoutPageViewModel.AddXP(value: 25)
+            resetWorkoutState()
+            hasWorkoutStarted = false
+            isWorkoutPaused = false
+            ble.collectDataToggle = false //stops collecting data
+            print("creating workoutAnalysis")
+            ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
+            ble.MPU6050_2_All_Gyros.removeAll()
+            showGraphPopover = true
+            print("updating workout session")
+            coreDataManager.updateWorkoutSession(self.currentWorkoutSession!, dateTime: Date(), overallCurlAcceleration: workoutAnalysis["overallWorkoutUpDownAverage"] ?? 0.0, overallElbowFlareLR: workoutAnalysis["overallWorkoutElbowFlareForwardBackward"] ?? 0.0, overallElbowFlareUD: workoutAnalysis["overallWorkoutElbowFlareUpDown"] ?? 0.0, overallElbowSwing: workoutAnalysis["overallWorkoutElbowSwing"] ?? 0.0, overallWristStabilityLR: workoutAnalysis["overallDumbbellTwistingLeftRight"] ?? 0.0, overallWristStabilityUD: workoutAnalysis["overallDumbbellTwistingUpDown"] ?? 0.0)
+            print("updating final exercise set")
+            coreDataManager.updateExerciseSet(self.currentWorkoutSet!, setNum: totalSets, avgCurlAcceleration: workoutAnalysis["averageUpDownAcceleration"], avgElbowFlareLR: workoutAnalysis["averageElbowFlareForwardBackward"], avgElbowFlareUD: workoutAnalysis["averageElbowFlareUpDown"], avgElbowSwing: workoutAnalysis["averageElbowSwing"], avgWristStabilityLR: workoutAnalysis["averageWristLeftRightRotation"], avgWristStabilityUD: workoutAnalysis["averageWristUpDownRotation"])
+            print("fetchExerciseSets(for: currentWorkoutSession!):")
+            print(coreDataManager.fetchExerciseSets(for: currentWorkoutSession!))
+            print("hello i just printed out the coreDataManager.fetchExerciseSets()")
+            print("coreDataManager.fetchWorkoutSessions():")
+            print(coreDataManager.fetchWorkoutSessions())
+            print("hello i just printed out the fetchWorkoutSessions()")
+            currentMotivationalPhrase = "Let's get started with a New Workout!"
         }
-        
-        print("hello test, looking for bad form hehehe")
-        print(currentFeedback.2)
-        // Logic for completing the workout
-        storeModel.addFundtoUser(price: 50)
-        workoutPageViewModel.AddXP(value: 25)
-        resetWorkoutState()
-        hasWorkoutStarted = false
-        isWorkoutPaused = false
-        ble.collectDataToggle = false //stops collecting data
-        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
-        ble.MPU6050_2_All_Gyros.removeAll()
-        showGraphPopover = true
-        currentMotivationalPhrase = "Let's get started with a New Workout!"
-        
     }
     
     func finalset(){
@@ -315,6 +370,7 @@ class WorkoutViewModel: ObservableObject {
     /// Function to start timer
     
     func startTimer() {
+        timerIsActive = true
         if let existingTimer = timer {
             existingTimer.invalidate()
         }
@@ -353,6 +409,13 @@ class WorkoutViewModel: ObservableObject {
     }
     func resumeTimer() {
         timerIsActive = true // Resume updating time
+        print("WE ARE ABOUT TO CREATE A SET WOOOOAHAHAHAH")
+        if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
+            self.currentWorkoutSet = newExerciseSet
+            print("newExerciseSet:")
+            print(newExerciseSet as Any)
+        }
+        print("THE CREATE SET WORK?")
     }
     
     func resetWorkoutState() {

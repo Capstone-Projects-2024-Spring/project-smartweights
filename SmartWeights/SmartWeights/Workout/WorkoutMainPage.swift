@@ -1,23 +1,31 @@
 import SwiftUI
 import Combine
+import CoreData
 
 /// Main structure to display the workout page with integrated UI components
 struct WorkoutMainPage: View {
+    @StateObject var coreDataManager:CoreDataManager
     @StateObject var ble:BLEcentral
     @StateObject var formCriteria:FormCriteria
     @StateObject var storeModel = storeViewModel()
     @StateObject var workoutPageViewModel = WorkoutPageViewModel()
     @StateObject var viewModel: WorkoutViewModel
     
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
+    @ObservedObject var petItemDBManager = PetItemDBManager()
+    
     init() {
+        let coreDataManager = CoreDataManager()
         let ble = BLEcentral()
         let formCriteria = FormCriteria()
+        self._coreDataManager = StateObject(wrappedValue: coreDataManager)
         self._ble = StateObject(wrappedValue: ble)
         self._formCriteria = StateObject(wrappedValue: formCriteria)
-        self._viewModel = StateObject(wrappedValue: WorkoutViewModel(ble: ble, formCriteria: formCriteria))
+        self._viewModel = StateObject(wrappedValue: WorkoutViewModel(ble: ble, formCriteria: formCriteria, coreDataManager: coreDataManager))
     }
     
-    
+    @State private var currentWorkoutSession: WorkoutSession?
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
     @State private var isExpanded = false
@@ -34,37 +42,30 @@ struct WorkoutMainPage: View {
     }
     
     @State private var currentMotivationalPhrase = "Let's get started!"
-    
-    
-    
+
     var body: some View {
         ZStack {
-            
             VStack {
                 ZStack{
-                    workoutTitleView
-                    VStack{
-                        Image(systemName: "dumbbell.fill")
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(ble.MPU_1_Connected ? .green : .red)
-                        
-                        Text("Dumbbell")
-                            .font(.custom("small", size: 12))
-                        
+                    VStack {
+                        HStack{
+                            Spacer()
+                            Image(systemName: "dumbbell.fill")
+                                .frame(width: 30, height: 25)
+                                .foregroundColor(ble.MPU_1_Connected ? .green : .red)
+                            Spacer()
+                            Image(systemName: "figure.arms.open")
+                                .frame(width: 20, height: 25)
+                                .foregroundColor(ble.MPU_2_Connected ? .green : .red)
+                            Spacer()
+                            
+                        }
+                        Text("Connections")
+                            .font(.system(size: 12))
                     }
-                    .padding(.leading,200)
-                    VStack{
-                        Image(systemName: "figure.arms.open")
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(ble.MPU_2_Connected ? .green : .red)
-                        
-                        Text("Elbow")
-                            .font(.custom("small", size: 12))
-                    }
-                    .padding(.leading,300)
-                    
-                    
+                    .padding(.leading, 290)
                 }
+                .padding(.bottom, 5)
                 
                 
                 
@@ -117,8 +118,6 @@ struct WorkoutMainPage: View {
                             .padding(.bottom, -40)
                         }
                         HStack{
-                            
-                            
                             Image("Dog")
                                 .resizable()
                                 .scaledToFit()
@@ -137,9 +136,7 @@ struct WorkoutMainPage: View {
                 .cornerRadius(20)
                 .shadow(radius: 10)
             }
-            
         }
-        
     }
     
     enum SetType {
@@ -172,8 +169,8 @@ struct WorkoutMainPage: View {
         }
         .pickerStyle(SegmentedPickerStyle())
         .foregroundColor(.white)
-        .background(Color.gray)
         .accessibilityLabel("WorkoutSelectTab")
+        .padding(.horizontal)
     }
     
     // Compute the button text based on current and total sets
@@ -198,29 +195,25 @@ struct WorkoutMainPage: View {
             return "Start Workout"
         }
     }
-    
+
     private var StartWorkoutView: some View {
         VStack {
             if !viewModel.hasWorkoutStarted {
-                Text("Prepare for your workout")
-                    .bold()
             }
             
             ZStack{
                 // Time rectangel box
                 RoundedRectangle(cornerRadius:  25)
                     .frame(width: 250, height: 50)
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color.africanViolet)
+                    .padding()
                 HStack{
                     Text("Time: ")
-                        .font(.system(size: 25))
-                        .bold()
-                        .foregroundStyle(.green)
                     Text("\(viewModel.hours):\(viewModel.minutes):\(viewModel.seconds)")
-                        .font(.system(size: 25))
-                        .bold()
-                        .foregroundStyle(.green)
                 }
+                .font(.system(size: 25))
+                .bold()
+                .foregroundStyle(.white)
             }
             .padding(.bottom, -15)
             
@@ -236,40 +229,33 @@ struct WorkoutMainPage: View {
                 }
                 .padding(.bottom, -50)
             }
-            HStack{
+            
+            ZStack{
+                ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
                 
-                Image("Dog")
+                Image(backgroundItemDBManager.activeBackground)
+                    .resizable()
+                    .frame(width: 400, height: 375)
+                Image(petItemDBManager.activePet)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 400, height: 375)
+                Image(clothingItemDBManager.activeClothing)
+                    .resizable()
+                    .scaledToFit()
+                
             }
-            
             
             
             // Start/Reset workout button
             Button(action: {
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
-                        viewModel.finishworkout()
+                        viewModel.finishWorkout()
                     } else if buttonText == "Final Set" {
                         viewModel.finalset()
-                        // Logic for transitioning from the final set to finishing the workout
-//                        viewModel.currentSets += 1 // This will push the state to "Finish Workout"
-//                        viewModel.showGraphPopover = false
-//                        viewModel.resumeTimer()
-//                        ble.MPU6050_1Gyros.removeAll()
-//                        ble.MPU6050_2Gyros.removeAll()
-//                        ble.collectDataToggle = true
-//                        viewModel.currentMotivationalPhrase = "Last Set! Push through!"
                     } else if !viewModel.isWorkoutPaused {
-                        ble.collectDataToggle = false
-                        viewModel.pauseTimer()
-                        viewModel.showGraphPopover = true
-                        viewModel.isWorkoutPaused = true
-                        viewModel.currentMotivationalPhrase = "Take a breather, then keep going!"
-                        if let totalSets = Int(viewModel.inputtedSets), viewModel.currentSets < totalSets {
-                            viewModel.currentSets += 1 
-                        }
+                        viewModel.finishSet()
                         // Get feedback from formCriteria
                         let currentFeedback = formCriteria.giveFeedback(dumbbellArray:ble.MPU6050_1Gyros , elbowArray:ble.MPU6050_2Gyros)
                         
@@ -278,7 +264,6 @@ struct WorkoutMainPage: View {
                             // Call function to reduce HP
                             workoutPageViewModel.lowerHP()
                         }
-                        
                         print("hello test")
                         print(currentFeedback.2)
                     } else {
@@ -294,7 +279,6 @@ struct WorkoutMainPage: View {
                 } else {
                     // Start the workout
                     viewModel.currentMotivationalPhrase = "First set, let's go!"
-                    viewModel.resumeTimer()
                     viewModel.showingWorkoutSheet = true
                     viewModel.showGraphPopover = false
                     
@@ -307,6 +291,7 @@ struct WorkoutMainPage: View {
                         Text(buttonText)
                             .bold()
                             .foregroundColor(.white)
+                            .font(.title2)
                     )
             }
             .accessibilityLabel(viewModel.hasWorkoutStarted ? (viewModel.isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
@@ -417,7 +402,7 @@ struct WorkoutMainPage: View {
                         }
                         .padding()
                         .foregroundColor(.white)
-                        .background(Color.blue)
+                        .background(Color.africanViolet)
                         .cornerRadius(10)
                         .alert(isPresented: $viewModel.showingAlert) {
                             Alert(title: Text("Invalid Input"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("OK")))
