@@ -227,6 +227,7 @@ class WorkoutViewModel: ObservableObject {
                                 // print("Stopped listening")
                                 // self.isListening = false
                                 // }
+                                inputNode.removeTap(onBus: 0)
                                 return
                             }
                         case "start":
@@ -336,7 +337,6 @@ class WorkoutViewModel: ObservableObject {
         
         // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
         self.audioEngine.stop()
-        inputNode.removeTap(onBus: 0)
         recognitionRequest?.endAudio()
         print("Stopped listening")
         self.isListening = false
