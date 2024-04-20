@@ -26,6 +26,7 @@ struct TutorialPopup: View {
                     .opacity(0.5)
                 
                 PlayerView(url: Bundle.main.url(forResource: "SWTutorialv2", withExtension: "mp4")!)
+                    .border(Color.africanViolet, width: 3)
                 
                 Button(action: {
                     show.toggle()
