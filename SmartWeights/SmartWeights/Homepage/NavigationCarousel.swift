@@ -56,7 +56,7 @@ struct NavigationCarousel: View {
 }
 
 #Preview {
-    let button = CarouselButton(name: "Test", icon: "photo", link: AnyView(PostWorkout()))
+    let button = CarouselButton(name: "Test", icon: "photo", link: AnyView(allFeedback()))
     let buttons: [CarouselButton] = [
         button
     ]
