@@ -173,7 +173,7 @@ class WorkoutViewModel: ObservableObject {
         self.WorkoutState = .idle
         guard !isListening else { return }
         isListening = true
-       
+    
         
         let recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         
@@ -232,9 +232,13 @@ class WorkoutViewModel: ObservableObject {
                         case "start":
                             if self.WorkoutState == .idle{
                                 self.startWorkout()
-                                self.WorkoutState = .started
-                                print("Workout started")
-                                
+                                // Check if the inputtedSets equals "1"
+                                if self.inputtedSets == "1" {
+                                    WorkoutState = .final
+                                } else {
+                                    WorkoutState = .started
+                                }
+                                print("Workout started with state: \(WorkoutState)")
                             }
                             
                         case "pause":
