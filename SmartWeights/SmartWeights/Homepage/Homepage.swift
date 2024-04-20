@@ -49,7 +49,7 @@ struct Homepage: View {
                 Divider()
                 
                 // Videos for video carousel
-                let bicepCurlVideo = VideoCard(videoId: "ykJmrZ5v0Oo", title: "How to Do a Dumbbell Bicep Curl", description: "Howcast")
+                let bicepCurlVideo = VideoCard(videoFile: "SWTutorialv2", videoFileExt: "mp4", title: "SmartWeights Tutorial", description: "SmartWeights")
                 
                 // Array of defined videos. Used by VideoCarousel view.
                 let videos = [bicepCurlVideo]
