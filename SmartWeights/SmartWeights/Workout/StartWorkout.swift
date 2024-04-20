@@ -10,6 +10,7 @@ class WorkoutViewModel: ObservableObject {
     @ObservedObject var coreDataManager: CoreDataManager
     @ObservedObject var ble: BLEcentral
     @ObservedObject var formCriteria: FormCriteria
+    let petpageModel = PetPageFunction()
     
     init(ble: BLEcentral, formCriteria: FormCriteria, coreDataManager: CoreDataManager) {
         self.ble = ble
@@ -333,7 +334,8 @@ class WorkoutViewModel: ObservableObject {
             print(currentFeedback.2)
             // Logic for completing the workout
             storeModel.addFundtoUser(price: 50)
-            workoutPageViewModel.AddXP(value: 25)
+//            workoutPageViewModel.AddXP(value: 25)
+            petpageModel.addXP(value: 25)
             resetWorkoutState()
             hasWorkoutStarted = false
             isWorkoutPaused = false
