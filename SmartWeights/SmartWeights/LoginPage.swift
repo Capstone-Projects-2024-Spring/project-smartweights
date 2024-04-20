@@ -72,7 +72,7 @@ struct LoginView: View {
                                 userFitnessDataDBManager.createUserFitnessData()
                                 foodItemDBManager.createInitialFoodItems()
                                 
-                                requestNotificationsPermission()
+                                NotificationManager.requestAuthorization()
                             }
                         case .failure(let error):
                             print(error)
@@ -96,19 +96,6 @@ struct LoginView: View {
                     
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-    }
-    
-    private func requestNotificationsPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if granted {
-                print("SUCCESS: Notification permissions granted")
-                DispatchQueue.main.async {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
-            } else {
-                print("ERROR: Notification permissions denied")
-            }
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct SettingsPageView: View {
     let heightFeetArray = Array(0...9)
@@ -22,9 +23,18 @@ struct SettingsPageView: View {
     @State private var selectedUpperArmLength = 0
     @State private var selectedForearmLength = 0
     
-    @State private var allNotificationsEnabled = false
-    @State private var workoutNotificationsEnabled = false
-    @State private var petNotificationsEnabled = false
+    @AppStorage("allNotificationsEnabled") var allNotificationsEnabled = false
+//    @AppStorage("workoutNotificationsEnabled") var workoutNotificationsEnabled = false {
+//        didSet {
+//            checkAllToggles()
+//        }
+//    }
+//    @AppStorage("petNotificationsEnabled") var petNotificationsEnabled = false {
+//        didSet {
+//            checkAllToggles()
+//        }
+//    }
+    
     @State private var healthKitEnabled = false
     
     @State private var showingLogoutConfirmation = false
@@ -175,8 +185,12 @@ struct SettingsPageView: View {
                         NavigationLink("Notifications") {
                             SwiftUI.Form(content: {
                                 Toggle("Enable All Notifications", isOn: $allNotificationsEnabled)
-                                Toggle("Enable Workout Notifications", isOn: $workoutNotificationsEnabled)
-                                Toggle("Enable Pet Notifications", isOn: $petNotificationsEnabled)
+                                    .onChange(of: allNotificationsEnabled) {
+                                        handleAllNotificationsEnabledChange(allNotificationsEnabled: allNotificationsEnabled)
+                                    }
+                                Button("Test Notification") {
+                                    NotificationManager.sendImmediateNotification()
+                                }
                             })
                             .navigationTitle("Notifications")
                             .navigationBarTitleDisplayMode(.inline)
@@ -190,6 +204,9 @@ struct SettingsPageView: View {
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear(perform: {
+                fetchCurrentNotificationSettings()
+            })
         }
         .alert("Confirm Logout", isPresented: $showingLogoutConfirmation) {
             Button("Yes", role: .destructive) {
@@ -203,6 +220,37 @@ struct SettingsPageView: View {
         }
         message: {
             Text("Are you sure you want to logout?")
+        }
+    }
+    
+    private func fetchCurrentNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                switch settings.authorizationStatus {
+                case .authorized, .provisional:
+                    allNotificationsEnabled = true
+                default:
+                    allNotificationsEnabled = false
+                }
+            }
+        }
+    }
+    
+//    private func checkAllToggles() {
+//        if workoutNotificationsEnabled && petNotificationsEnabled {
+//            allNotificationsEnabled =  true
+//        } else if !workoutNotificationsEnabled && !petNotificationsEnabled {
+//            allNotificationsEnabled = false
+//        }
+//    }
+}
+
+private extension SettingsPageView {
+    private func handleAllNotificationsEnabledChange(allNotificationsEnabled: Bool) {
+        if allNotificationsEnabled {
+            NotificationManager.requestAuthorization()
+        } else {
+            NotificationManager.cancelNotification()
         }
     }
 }
