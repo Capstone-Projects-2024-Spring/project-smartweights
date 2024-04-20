@@ -446,8 +446,11 @@ class WorkoutViewModel: ObservableObject {
     
     func playSound() {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
-            try AVAudioSession.sharedInstance().setActive(true, options: [])
+            // try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+            // try AVAudioSession.sharedInstance().setActive(true, options: [])
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [])
+            try AVAudioSession.sharedInstance().setMode(.measurement)
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
             print("Failed to set audio session category: \(error)")
         }
