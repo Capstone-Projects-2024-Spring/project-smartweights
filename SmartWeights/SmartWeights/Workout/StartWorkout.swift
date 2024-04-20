@@ -94,8 +94,8 @@ class WorkoutViewModel: ObservableObject {
     
     
     
-
-
+    
+    
     
     func startCountdown() {
         countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
@@ -155,7 +155,7 @@ class WorkoutViewModel: ObservableObject {
     private func stringToInt(_ string: String) -> Int? {
         return Int(string)
     }
-
+    
     
     enum WorkoutState {
         case idle
@@ -227,8 +227,13 @@ class WorkoutViewModel: ObservableObject {
                         case "start":
                             if WorkoutState == .idle{
                                 self.startWorkout()
-                                WorkoutState = .started
-                                print("Workout started")
+                                // Check if the inputtedSets equals "1"
+                                if self.inputtedSets == "1" {
+                                    WorkoutState = .final
+                                } else {
+                                    WorkoutState = .started
+                                }
+                                print("Workout started with state: \(WorkoutState)")
                             }
                             
                         case "pause":
