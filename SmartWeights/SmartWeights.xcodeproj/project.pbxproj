@@ -57,6 +57,7 @@
 		9118993E2B8CE1570071232A /* WorkoutMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9118993D2B8CE1570071232A /* WorkoutMainPage.swift */; };
 		912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912241702B90EA9F00D03638 /* WorkoutUITests.swift */; };
 		912BD2482BD2B40800029A32 /* RechargeSensors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912BD2472BD2B40800029A32 /* RechargeSensors.swift */; };
+		912BD24F2BD2C4FC00029A32 /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 912BD24E2BD2C4FC00029A32 /* alarm.mp3 */; };
 		918037962BA9026700802D01 /* central.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037952BA9026700802D01 /* central.swift */; };
 		918037982BB4647A00802D01 /* central_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037972BB4647A00802D01 /* central_v2.swift */; };
 		9180379A2BBF719B00802D01 /* FormCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037992BBF719B00802D01 /* FormCriteria.swift */; };
@@ -146,6 +147,7 @@
 		9118993D2B8CE1570071232A /* WorkoutMainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMainPage.swift; sourceTree = "<group>"; };
 		912241702B90EA9F00D03638 /* WorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutUITests.swift; sourceTree = "<group>"; };
 		912BD2472BD2B40800029A32 /* RechargeSensors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RechargeSensors.swift; sourceTree = "<group>"; };
+		912BD24E2BD2C4FC00029A32 /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
 		918037952BA9026700802D01 /* central.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = central.swift; sourceTree = "<group>"; };
 		918037972BB4647A00802D01 /* central_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = central_v2.swift; sourceTree = "<group>"; };
 		918037992BBF719B00802D01 /* FormCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCriteria.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				912BD24D2BD2C49C00029A32 /* audioFiles */,
 				E5297D242BB4588A0078A9E6 /* Homepage */,
 				E56BD7D92BAFB0D900863D4D /* Extensions */,
 				E56BD7D62BAFA29700863D4D /* Tab Bar */,
@@ -348,6 +351,14 @@
 				912BD2472BD2B40800029A32 /* RechargeSensors.swift */,
 			);
 			path = Help;
+			sourceTree = "<group>";
+		};
+		912BD24D2BD2C49C00029A32 /* audioFiles */ = {
+			isa = PBXGroup;
+			children = (
+				912BD24E2BD2C4FC00029A32 /* alarm.mp3 */,
+			);
+			path = audioFiles;
 			sourceTree = "<group>";
 		};
 		918037902BA09AD600802D01 /* bluetooth */ = {
@@ -516,6 +527,7 @@
 			files = (
 				91065F842B7A7E4900BC62E6 /* Preview Assets.xcassets in Resources */,
 				91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */,
+				912BD24F2BD2C4FC00029A32 /* alarm.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
