@@ -63,6 +63,7 @@
 		B9A4764C2B8F86DA0062CBB6 /* SelectFirstPet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */; };
 		B9D41D862BBE131B007CDCC3 /* FitnessPlanPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D41D852BBE131B007CDCC3 /* FitnessPlanPage.swift */; };
 		E50E3D222BD449DB00846CD1 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E3D212BD449DB00846CD1 /* PlayerView.swift */; };
+		E50E3D262BD450BA00846CD1 /* DumbbellCurls.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E50E3D252BD450BA00846CD1 /* DumbbellCurls.mp4 */; };
 		E5297D282BB45D110078A9E6 /* VideoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5297D272BB45D110078A9E6 /* VideoCard.swift */; };
 		E56BD7D82BAFA2C300863D4D /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7D72BAFA2C300863D4D /* TabBar.swift */; };
 		E56BD7DB2BAFB0F400863D4D /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */; };
@@ -152,6 +153,7 @@
 		B9A4764B2B8F86DA0062CBB6 /* SelectFirstPet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFirstPet.swift; sourceTree = "<group>"; };
 		B9D41D852BBE131B007CDCC3 /* FitnessPlanPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessPlanPage.swift; sourceTree = "<group>"; };
 		E50E3D212BD449DB00846CD1 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		E50E3D252BD450BA00846CD1 /* DumbbellCurls.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = DumbbellCurls.mp4; sourceTree = "<group>"; };
 		E5297D272BB45D110078A9E6 /* VideoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCard.swift; sourceTree = "<group>"; };
 		E56BD7D72BAFA2C300863D4D /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 		E5D6CBDF2BD2C56E0014CD87 /* Videos */ = {
 			isa = PBXGroup;
 			children = (
+				E50E3D252BD450BA00846CD1 /* DumbbellCurls.mp4 */,
 				E5D6CBE02BD2C5E80014CD87 /* SWTutorialv2.mp4 */,
 			);
 			path = Videos;
@@ -514,6 +517,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E50E3D262BD450BA00846CD1 /* DumbbellCurls.mp4 in Resources */,
 				91065F842B7A7E4900BC62E6 /* Preview Assets.xcassets in Resources */,
 				E591935E2BD2F7D10011A64C /* SWTutorialv2.mp4 in Resources */,
 				91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */,
