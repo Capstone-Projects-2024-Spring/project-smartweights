@@ -65,6 +65,7 @@
 		E5297D282BB45D110078A9E6 /* VideoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5297D272BB45D110078A9E6 /* VideoCard.swift */; };
 		E56BD7D82BAFA2C300863D4D /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7D72BAFA2C300863D4D /* TabBar.swift */; };
 		E56BD7DB2BAFB0F400863D4D /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */; };
+		E591935E2BD2F7D10011A64C /* SWTutorialv2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E5D6CBE02BD2C5E80014CD87 /* SWTutorialv2.mp4 */; };
 		E5B86DB32B91033400A0AD04 /* navbarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B86DB22B91033400A0AD04 /* navbarUITests.swift */; };
 		E5D7FE662BCD70330097A175 /* StartWorkoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D7FE652BCD70330097A175 /* StartWorkoutButton.swift */; };
 		E5D7FE682BCD740F0097A175 /* NavigationCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D7FE672BCD740F0097A175 /* NavigationCarousel.swift */; };
@@ -511,6 +512,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91065F842B7A7E4900BC62E6 /* Preview Assets.xcassets in Resources */,
+				E591935E2BD2F7D10011A64C /* SWTutorialv2.mp4 in Resources */,
 				91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
