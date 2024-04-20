@@ -39,12 +39,38 @@ struct PostWorkoutData: View {
                     self.isExpanded.toggle()
                 }
             }
-            Text("\(feedback.0)") //gives overall acceleration
-                .font(.subheadline)
-                .foregroundColor(workoutAnalysis["averageUpDownAcceleration"]! < 70.0 ? Color.red : Color.green)
-            Text("\(feedback.1)") //gives overall elbow stability
-                .font(.subheadline)
-                .foregroundColor(workoutAnalysis["averageElbowSwing"]! < 70.0 ? Color.red : Color.green)
+            HStack{
+                
+                
+                Text("\(feedback.0)") //gives overall acceleration
+                    .font(.subheadline)
+                    .bold()
+                if workoutAnalysis["averageUpDownAcceleration"]! < 70.0{
+                    Image(systemName: "xmark")
+                        .foregroundColor(.red)
+                        .bold()
+                }
+                else{
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.green)
+                        .bold()
+                }
+            }
+            HStack{
+                Text("\(feedback.1)") //gives overall elbow stability
+                    .font(.subheadline)
+                    .bold()
+                if workoutAnalysis["averageElbowSwing"]! < 70.0{
+                    Image(systemName: "xmark")
+                        .foregroundColor(.red)
+                        .bold()
+                }
+                else{
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.green)
+                        .bold()
+                }
+            }
         }
         
         if isExpanded {

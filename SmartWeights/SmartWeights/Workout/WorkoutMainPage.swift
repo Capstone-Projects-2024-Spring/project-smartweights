@@ -24,22 +24,11 @@ struct WorkoutMainPage: View {
         self._viewModel = StateObject(wrappedValue: WorkoutViewModel(ble: ble, formCriteria: formCriteria, coreDataManager: coreDataManager))
     }
     
-    @State private var currentWorkoutSession: WorkoutSession?
+    
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
     @State private var isExpanded = false
-    @State private var graphData: [Double] = []
-//    @State private var feedback: (String, String, String, String) = ("", "", "", "")
-//    @State var feedbackDataForSets: [(String, String, String, String)] = []
-//    @State var workoutAnalysis: [String:Double] = [:]
-//    @State var workoutAnalysisForSets:[[String:Double]] = []
-//    @State var totalSets:Int = 0
-    //TODO: IMPLEMENT THE DANGEROUS ASPECT
-    var dangerousCalled = false
-    var dangerous: Bool {
-        formCriteria.dangerousForm(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
-    }
-    
+    @State private var graphData: [Double] = [] 
     @State private var currentMotivationalPhrase = "Let's get started!"
 
     var body: some View {
@@ -105,12 +94,40 @@ struct WorkoutMainPage: View {
                             ZStack {
                                 Image("bubble2")
                                     .resizable()
-                                    .frame(width: 250, height: 150)
+                                    .frame(width: 270, height: 150)
                                 VStack{
-                                    Text("\(viewModel.feedback.2)")
-                                        .foregroundColor(viewModel.feedback.2 == "Whoa slow down!!" ? Color.red : Color.green)
-                                    Text("\(viewModel.feedback.3)")
-                                        .foregroundColor(viewModel.feedback.3 == "Keep that elbow steady!" ? Color.red : Color.green)
+                                    HStack{
+                                        Text("\(viewModel.feedback.2)")
+                                            .foregroundColor(.black)
+                                            .bold()
+                                        if viewModel.feedback.2 == "Whoa slow down!!"{
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        }
+                                        else{
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    HStack{
+                                        Text("\(viewModel.feedback.3)")
+                                            .foregroundColor(.black)
+                                            .bold()
+                                        if viewModel.feedback.3 == "Keep that elbow steady!"{
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        }
+                                        else{
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+
+                                        }
+                                    }
+                                    
                                 }
                                 
                             }
@@ -124,8 +141,10 @@ struct WorkoutMainPage: View {
                         }
                         Text("\(viewModel.feedback.0)") //gives overall acceleration
                             .font(.subheadline)
+                            .bold()
                         Text("\(viewModel.feedback.1)") //gives overall elbow stability
                             .font(.subheadline)
+                            .bold()
                     }
                     .padding(.bottom, 30)
                     
@@ -246,8 +265,9 @@ struct WorkoutMainPage: View {
             }
             
             
-            // Start/Reset workout button
+            //----------------------BUTTON ACTION---------------------// 
             Button(action: {
+                print(".............THIS IS BUTTON TEXT",buttonText)
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
                         viewModel.finishWorkout()
@@ -263,20 +283,19 @@ struct WorkoutMainPage: View {
                             // Call function to reduce HP
                             workoutPageViewModel.lowerHP()
                         }
+                        
+                        print("hello testing remove hp from bad form")
                         print("hello test")
                         print(currentFeedback.2)
                     } else {
-                        // Resume workout from a paused state
-                        viewModel.resumeTimer()
-                        viewModel.showGraphPopover = false
-                        viewModel.isWorkoutPaused = false
-                        ble.MPU6050_1Gyros.removeAll() //clears the data for the current set
-                        ble.MPU6050_2Gyros.removeAll()
-                        ble.collectDataToggle = true //Stars collecting data again
-                        viewModel.currentMotivationalPhrase = "You're doing great!"
+                        //Resume workout from a paused state
+                        //button == "next set"
+                        viewModel.nextset()
+                    
                     }
                 } else {
                     // Start the workout
+                    print("------startingWorkout-------------")
                     viewModel.currentMotivationalPhrase = "First set, let's go!"
                     viewModel.showingWorkoutSheet = true
                     viewModel.showGraphPopover = false

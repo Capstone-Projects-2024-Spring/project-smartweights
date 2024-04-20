@@ -17,5 +17,6 @@ struct SmartWeightsApp: App {
                .preferredColorScheme(.light)
 //            testview()
         }
+        
     }
 }
