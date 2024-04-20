@@ -15,49 +15,39 @@ struct TutorialPopup: View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
             
             VStack(spacing: 25) {
-                Image(systemName: "trophy")
+                
+                Text("Welcome to SmartWeights!")
+                    .font(.title2)
                     .foregroundStyle(.black)
                 
-                Text("Congratulations")
-                    .font(.title)
-                    .foregroundStyle(.pink)
+                Text("Watch this video to get started!")
+                    .font(.subheadline)
+                    .padding(.vertical, -20)
+                    .opacity(0.5)
                 
-                Text("You've Successfully Done the Work")
+                PlayerView(url: Bundle.main.url(forResource: "SWTutorialv2", withExtension: "mp4")!)
                 
                 Button(action: {
                     show.toggle()
                 }) {
-                    Text("Back To Home")
+                    Text("Get Started!")
                         .foregroundStyle(.white)
                         .bold()
                         .padding(.vertical, 10)
                         .padding(.horizontal, 25)
-                        .background(Color.purple)
+                        .background(Color.africanViolet)
                         .clipShape(Capsule())
                 }
             }
             .padding(.vertical, 25)
             .padding(.horizontal, 30)
-            .background(BlurView())
+            .background(.white)
             .cornerRadius(25)
             
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.primary.opacity(0.35))
-    }
-}
-
-struct BlurView: UIViewRepresentable {
-    
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        let view = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterial))
-        
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-            
     }
 }
 
