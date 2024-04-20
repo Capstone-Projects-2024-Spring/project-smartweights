@@ -13,7 +13,7 @@ struct PlayerView: View {
     
     var body: some View {
         PlayerViewControllerRepresentable(url: url)
-            .frame(width: UIScreen.main.bounds.width, height: 300) // Set the desired size of the video player
+            .frame(width: 250, height: 200)// Set the desired size of the video player
     }
 }
 

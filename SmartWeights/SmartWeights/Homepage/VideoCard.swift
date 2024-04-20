@@ -18,7 +18,10 @@ struct VideoCard: View, Identifiable {
     var body: some View {
         VStack {
             Spacer()
-            EmbeddedVideo()
+            GeometryReader { geometry in
+                PlayerView(url: Bundle.main.url(forResource: "SWTutorialv2", withExtension: "mp4")!)
+                    .frame(width: geometry.size.width, height: 200)
+            }
             Spacer()
             VStack (alignment: .leading) {
                 Text(title)
@@ -32,18 +35,10 @@ struct VideoCard: View, Identifiable {
             .padding(.horizontal, 8)
             .padding(.bottom)
         }
-        .frame(width: 200, height: 250)
+        .frame(width: 250, height: 300)
         .background(Color.africanViolet)
         .cornerRadius(12)
         .padding()
-    }
-}
-
-struct EmbeddedVideo: View {
-    @State var player = AVPlayer(url: Bundle.main.url(forResource: "SWTutorialv2", withExtension: "mp4")!)
-    
-    var body: some View {
-        VideoPlayer(player: player)
     }
 }
 
