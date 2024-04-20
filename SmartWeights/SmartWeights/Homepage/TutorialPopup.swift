@@ -20,7 +20,7 @@ struct TutorialPopup: View {
                     .font(.title2)
                     .foregroundStyle(.black)
                 
-                Text("Watch this video to get started!")
+                Text("Tap on the video to get started")
                     .font(.subheadline)
                     .padding(.vertical, -20)
                     .opacity(0.5)
