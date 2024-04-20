@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @StateObject var viewModel: OverallProgressViewModel
-    
-    
+    @StateObject var viewModel: allFeedbackViewModel
     
     var body: some View {
         HStack {
@@ -34,6 +32,6 @@ struct CalendarView: View {
 
 
 #Preview {
-    CalendarView(viewModel:OverallProgressViewModel())
+    CalendarView(viewModel:allFeedbackViewModel())
 }
 

@@ -11,11 +11,13 @@ var currentWorkout = "Dumbbell Press"
 
 /// The homepage view of the SmartWeights app.
 struct Homepage: View {
+    @ObservedObject var coreDataManager: CoreDataManager
     
     let tabBar: TabBar
     
-    init(tabBar: TabBar) {
+    init(tabBar: TabBar, coreDataManager: CoreDataManager) {
         self.tabBar = tabBar
+        self.coreDataManager = coreDataManager
     }
     
     var body: some View {
@@ -38,14 +40,14 @@ struct Homepage: View {
                 
                 Divider()
                 // Buttons for the additional pages carousel (NavigationCarousel)
-                let postWorkout = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(allFeedback()))
+                let postWorkout = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(allFeedback(coreDataManager: coreDataManager)))
                 let rechargeSensor = CarouselButton(name: "How to charge",icon:  "powerplug", link: AnyView(RechargeSensors()))
                 
                 // Array of defined buttons to be used by the NavigationCarousel view
                 let buttons = [postWorkout,rechargeSensor]
                 
                 // Additional Pages Carousel
-                NavigationCarousel(buttons: buttons, iconColor: .white, bgColor: .africanViolet, textColor: .black)
+                NavigationCarousel(coreDataManager: coreDataManager, buttons: buttons, iconColor: .white, bgColor: .africanViolet, textColor: .black)
                 
                 Divider()
                 
@@ -60,12 +62,12 @@ struct Homepage: View {
             }
             .background(.white)
         }
-       
+    
     }
 }
 
 struct Homepage_Previews: PreviewProvider {
     static var previews: some View {
-        Homepage(tabBar: TabBar())
+        Homepage(tabBar: TabBar(coreDataManager: CoreDataManager()), coreDataManager: CoreDataManager())
     }
 }

@@ -26,11 +26,6 @@ class WorkoutViewModel: ObservableObject {
     var workoutAnalysis: [String:Double] = [:]
     var workoutAnalysisForSets:[[String:Double]] = []
     var totalSets:Int = 0
-    //TODO: IMPLEMENT THE DANGEROUS ASPECT
-    var dangerousCalled = false
-    var dangerous: Bool {
-        formCriteria.dangerousForm(dumbbellArray: ble.MPU6050_1Gyros, elbowArray: ble.MPU6050_2Gyros)
-    }
     
     @Published private var currentWorkoutSession: WorkoutSession?
     @Published private var currentWorkoutSet: ExerciseSet?
@@ -455,5 +450,5 @@ class WorkoutViewModel: ObservableObject {
 
 
 #Preview{
-    WorkoutMainPage()
+    WorkoutMainPage(coreDataManager: CoreDataManager())
 }

@@ -155,7 +155,7 @@ final class SmartWeightsTests: XCTestCase {
     //test that the date can be turned into the short format
     func testUpdateShortDate(){
         //Given
-        let viewModel = OverallProgressViewModel()
+        let viewModel = allFeedbackViewModel()
         let date = Date()
         var shortDate = " "
         let formatter = DateFormatter()

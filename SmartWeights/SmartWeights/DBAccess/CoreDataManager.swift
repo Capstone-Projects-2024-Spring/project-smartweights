@@ -34,8 +34,12 @@ class CoreDataManager: ObservableObject {
     func createWorkoutSession(dateTime: Date, workoutNum: Int, overallCurlAcceleration: Double, overallElbowFlareLR: Double, overallElbowFlareUD: Double, overallElbowSwing: Double, overallWristStabilityLR: Double, overallWristStabilityUD: Double) -> WorkoutSession? {
             let context = persistentContainer.viewContext
             let workoutSession = WorkoutSession(context: context)
-            
-            workoutSession.dateTime = dateTime
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd-yyyy"
+            let dateString = dateFormatter.string(from: dateTime)
+            print(dateString)
+            workoutSession.dateTime = dateFormatter.date(from: dateString)
             workoutSession.workoutNum = Int64(workoutNum)
             workoutSession.overallCurlAcceleration = overallCurlAcceleration
             workoutSession.overallElbowFlareLeftRight = overallElbowFlareLR
@@ -46,8 +50,10 @@ class CoreDataManager: ObservableObject {
             
             do {
                 try context.save()
+                print("--------------------Im saving the workout session-------------------",workoutSession.dateTime!)
+                print(workoutSession)
                 return workoutSession
-            } catch {
+            } catch { 
                 print("Failed to create workout session: \(error)")
                 return nil
             }
@@ -76,6 +82,7 @@ class CoreDataManager: ObservableObject {
         }
 
     func fetchWorkoutSessions() -> [WorkoutSession] {
+        print("-----------DATA CORE MANAGER FETCH WORKOUT SESSIONS ------------WITHOUT DATE-----------")
         let fetchRequest: NSFetchRequest<WorkoutSession> = WorkoutSession.fetchRequest()
         do {
             return try persistentContainer.viewContext.fetch(fetchRequest)
@@ -87,11 +94,12 @@ class CoreDataManager: ObservableObject {
     
     func fetchWorkoutSessions(on date: Date) -> [WorkoutSession] {
         let fetchRequest: NSFetchRequest<WorkoutSession> = WorkoutSession.fetchRequest()
-
+        print(date)
         // Set up the date formatter to ignore time
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy"
         let dateString = dateFormatter.string(from: date)
+        print(dateString)
 
         // Set the predicate to match dates
         fetchRequest.predicate = NSPredicate(format: "dateTime >= %@ AND dateTime < %@", argumentArray: [dateFormatter.date(from: dateString)!, Calendar.current.date(byAdding: .day, value: 1, to: dateFormatter.date(from: dateString)!)!])
@@ -100,6 +108,7 @@ class CoreDataManager: ObservableObject {
             return try persistentContainer.viewContext.fetch(fetchRequest)
         } catch {
             print("Failed to fetch workout sessions on date \(dateString): \(error)")
+            print("error-----------error------------error----------error")
             return []
         }
     }
@@ -146,7 +155,12 @@ class CoreDataManager: ObservableObject {
         
         // Update the properties of the session if new values are provided
         if let dateTime = dateTime {
-            session.dateTime = dateTime
+            print("-----------DATA CORE MANAGER DATE TIME -----------------------",dateTime)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd-yyyy"
+            let dateString = dateFormatter.string(from: dateTime)
+            //session.dateTime = dateTime
+            session.dateTime = dateFormatter.date(from: dateString)
         }
         if let acc = overallCurlAcceleration {
             session.overallCurlAcceleration = acc
