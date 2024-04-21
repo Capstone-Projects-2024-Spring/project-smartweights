@@ -8,16 +8,6 @@
 import Foundation
 import SwiftUI
 
-/// SellingItem struct that contains essential item attributes.
-struct SellingItem: Identifiable {
-    var id = Int() // universal identifier for item number
-    var name: String
-    var category: String
-    var price: String
-    var image: Image //  property for the image itself
-    var description: String
-    var isBought = false
-}
 
 /// Grid for displaying items.
 private var gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
@@ -32,21 +22,16 @@ struct PetStore: View {
         NavigationView {
             VStack {
                 HStack {
-                    Text("Pet Store")
-                        .font(.system(size: 45))
-                        .fontWeight(.bold)
                     Spacer()
-                    HStack {
-                        Image( "petcoin")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                        Text("\(viewModel.userCur)") // amount of money
-                            .fontWeight(.bold)
-                            .font(.system(size: 20))
-                            .foregroundColor(.green)
-                    }
+                    Image("petcoin")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                    Text("\(viewModel.userCur)") // amount of money
+                        .fontWeight(.bold)
+                        .font(.system(size: 20))
+                        .foregroundColor(.green)
                 }
-                .padding() // Add padding to the HStack
+                .padding(.trailing)
                 
                 HStack {
                     Button(action: {
@@ -54,9 +39,10 @@ struct PetStore: View {
                     }) {
                         Text(viewModel.sortByPrice ? "Sort by Price" : "Sort by Name")
                             .padding()
-                            .background(Color.blue)
+                            .frame(height: 40)
+                            .background(Color.africanViolet)
                             .foregroundColor(.white)
-                            .cornerRadius(25)
+                            .cornerRadius(12)
                     }
                     .padding(.bottom, -10)
                     .padding(.top, -15)
@@ -72,14 +58,16 @@ struct PetStore: View {
                             }) {
                                 Text(category)
                                     .padding()
-                                    .background(viewModel.selectedCategory == category ? Color.blue : Color.gray)
+                                    .background(viewModel.selectedCategory == category ? Color.africanViolet : Color.gray)
+                                    .frame(height: 35)
                                     .foregroundColor(.white)
-                                    .cornerRadius(25)
+                                    .cornerRadius(12)
                                     .font(.system(size: 15))
                             }
                         }
                     }
                     .padding()
+                    .padding(.bottom, -10)
                 }
                 
                 ScrollView {
@@ -96,6 +84,7 @@ struct PetStore: View {
                                     
                                     Text(item.name)
                                         .fontWeight(.bold) // Makes the item name bold for better visibility
+                                        .foregroundStyle(.black)
                                     
                                     // Adding price below the name
                                     Text(item.price)
@@ -163,13 +152,13 @@ struct ItemDetailView: View {
                                     .padding(.bottom, 50)
                                 
                             }
-                            Image("dog") // Display pet image
+                            Image(viewModel.petItemDBManager.activePet) // Display pet image
                                 .resizable()
                                 .scaledToFit()
                                 .padding(.bottom, 50)
                             
                         } else { // outfit that goes in front of pet
-                            Image("dog") // Display pet image
+                            Image(viewModel.petItemDBManager.activePet) // Display pet image
                                 .resizable()
                                 .scaledToFit()
                                 .padding(.bottom, 50)

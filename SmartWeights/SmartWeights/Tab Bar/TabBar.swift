@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 /// An enumeration representing the tab categories in the tab bar.
 enum Tab: String, CaseIterable {
     case home = "house"
@@ -16,14 +17,14 @@ enum Tab: String, CaseIterable {
     case profile = "person" // alt: case more = "ellipsis"
     
     /// Function getView() returns the tab's associated view.
-    func getView(tabBar: TabBar) -> some View {
+    func getView(tabBar: TabBar, coreDataManager: CoreDataManager) -> some View {
         switch self {
         case .home:
-            return AnyView(Homepage(tabBar: tabBar))
+            return AnyView(Homepage(tabBar: tabBar, coreDataManager: coreDataManager))
         case .pet:
             return AnyView(Pet_Page())
         case .workout:
-            return AnyView(WorkoutMainPage())
+            return AnyView(WorkoutMainPage(coreDataManager: coreDataManager))
         case .achievements:
             return AnyView(ChallengesTab())
         case .profile:
@@ -34,6 +35,8 @@ enum Tab: String, CaseIterable {
 
 /// Struct TabBar implements the Tab enumeration and TabView to create a navigable tab bar.
 struct TabBar: View {
+    @ObservedObject var coreDataManager: CoreDataManager
+
     @State private var selectedTab: Tab = .home
     
     func changeTab(to tab: Tab) {
@@ -43,7 +46,7 @@ struct TabBar: View {
     var body: some View {
         TabView (selection: $selectedTab) {
             ForEach(Tab.allCases, id: \.self) { tab in
-                tab.getView(tabBar: self)
+                tab.getView(tabBar: self, coreDataManager: coreDataManager)
                     .tabItem {
                         Label(String(describing: tab).capitalized, systemImage: tab.rawValue)
                     }
@@ -55,5 +58,5 @@ struct TabBar: View {
 }
 
 #Preview {
-    TabBar()
+    TabBar(coreDataManager: CoreDataManager())
 }

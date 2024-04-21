@@ -38,11 +38,16 @@ struct PersistenceController {
 
     /// The persistent container for the application. This implementation creates and returns a container, having loaded the store for the application to it.
     let container: NSPersistentCloudKitContainer
+    
+    static let sharedManagedObjectModel: NSManagedObjectModel = {
+            let modelURL = Bundle.main.url(forResource: "SmartWeights", withExtension: "momd")!
+            return NSManagedObjectModel(contentsOf: modelURL)!
+        }()
 
     /// Initializes a new PersistenceController.
     /// The inMemory flag determines whether the persistent store is stored in memory or on disk.
     init(inMemory: Bool = false) {
-        container = NSPersistentCloudKitContainer(name: "SmartWeights")
+            container = NSPersistentCloudKitContainer(name: "SmartWeights", managedObjectModel: PersistenceController.sharedManagedObjectModel)
         
         // Configures the persistent store for in-memory use if specified. This is useful for unit tests or preview functionality.
         if inMemory {

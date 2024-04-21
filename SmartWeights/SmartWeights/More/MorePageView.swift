@@ -6,9 +6,15 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct MorePageView: View {
+    
     @ObservedObject var viewModel = MorePageViewModel()
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
+    @ObservedObject var petItemDBManager = PetItemDBManager()
+    
     let profile = Profile(firstName: "First", lastName: "Last", level: 1)
     
     var body: some View {
@@ -33,13 +39,13 @@ struct MorePageView: View {
                     Text("Achievements")
                         .font(.title3)
                         .fontWeight(.medium)
-                    ScrollView(.horizontal) {
+                    ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             Spacer()
                             ForEach(viewModel.achievements) { achievement in
                                 ZStack {
-                                    RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                                        .fill(achievement.isClaimed ? Color.green : Color.gray)
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(achievement.isClaimed ? Color.green : Color.gray.opacity(0.5))
                                         .frame(width: 120, height: 140)
                                         .onTapGesture {
                                             if (!achievement.isClaimed) {
@@ -72,16 +78,22 @@ struct MorePageView: View {
                     }
                 }
                 Divider()
-                Image("Dog")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(
-                        width: 250,
-                        height: 250
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                ZStack{
+                    ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
+                    
+                    Image(backgroundItemDBManager.activeBackground)
+                        .resizable()
+                        .frame(width: 250, height: 250)
+                    Image(petItemDBManager.activePet)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 250, height: 250)
+                    Image(clothingItemDBManager.activeClothing)
+                        .resizable()
+                        .scaledToFit()
+                    
+                }
             }
-            .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -89,6 +101,7 @@ struct MorePageView: View {
                         
                         // CODE TO UPDATE "Sharing Companion" ACHIEVEMENT
                         GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.SharingCompanion", progressToAdd: 100.0)
+                        viewModel.takeScreenshot()
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -96,6 +109,14 @@ struct MorePageView: View {
                         Image(systemName: "gearshape")
                     }
                 }
+            }
+        }
+        .sheet(isPresented: $viewModel.showingShareSheet, onDismiss: {
+//            to reset the screenshot
+            viewModel.screenshot = nil
+        }) {
+            if let screenshot = viewModel.screenshot {
+                ShareSheetView(items: [screenshot])
             }
         }
     }
@@ -119,6 +140,17 @@ struct Achievement: Identifiable {
     mutating func claim() {
         isClaimed = true
     }
+}
+
+struct ShareSheetView: UIViewControllerRepresentable {
+    var items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 #Preview {

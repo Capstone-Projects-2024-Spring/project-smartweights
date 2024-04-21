@@ -22,6 +22,7 @@ class PetPageFunction: ObservableObject {
     var inventoryDBManager = InventoryDBManager()
     var userDBManager = UserDBManager()
     var petDBManager = PetDBManager()
+    var petItemDBManager = PetItemDBManager()
     var foodItemDBManager = FoodItemDBManager()
     @Published var showShop = false
     @Published var showCustomize = false
@@ -38,15 +39,24 @@ class PetPageFunction: ObservableObject {
     
     @Published var foodItems: [FoodItemModel] = []
     
+    @Published var petItems: [PetItemModel] = []{
+        didSet{
+            getActivePet()
+        }
+    }
+    
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
     
     @Published var userTotalXP = 0
     
-    var pet: PetModel?
+    @Published var pet: PetModel?
+    @Published var activePet: String = ""
+    
     // Initializer
     init(){
+        fetchPetHealth()
         updateXP()
         foodItemDBManager.fetchFoodItems { fetchedItems, error in
             if let error = error {
@@ -56,6 +66,29 @@ class PetPageFunction: ObservableObject {
             if let fetchedItems = fetchedItems {
                 DispatchQueue.main.async {
                     self.foodItems = fetchedItems
+                }
+            }
+        }
+        petItemDBManager.fetchPetItems{ petItems, error in
+            if let error = error {
+                print("Error fetching pet items: \(error.localizedDescription)")
+                return
+            }
+            if let petItems = petItems {
+                DispatchQueue.main.async {
+                    self.petItems = petItems
+                }
+            }
+            
+        }
+        petItemDBManager.getActivePet{ activePet, error in
+            if let error = error {
+                print("Error fetching activePet: \(error.localizedDescription)")
+                return
+            } else {
+                DispatchQueue.main.async {
+                    self.activePet = activePet
+                    print("ACTIVE PET: \(self.activePet)")
                 }
             }
         }
@@ -86,8 +119,24 @@ class PetPageFunction: ObservableObject {
     }
     
     func increaseHealth(by amount: Int) {
-        withAnimation {
-            healthBar = min(healthBar + amount, 100) // Assuming max health is 100
+        guard let currentPet = pet else {
+            print("Pet not available")
+            return
+        }
+        let newHealth = min(Int(currentPet.health) + amount, 100)
+        petDBManager.updatePetHealth(newHealth: Int64(newHealth)) { [weak self] error in
+            if let error = error {
+                print("Error updating pet's health: \(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    // Perform the animation after confirming the health is updated in CloudKit
+                                    withAnimation {
+                                        self?.healthBar = Int(newHealth)
+                                    }
+                                    // Update the local pet model
+                                    self?.pet?.health = Int64(newHealth)
+                }
+            }
         }
     }
     
@@ -112,7 +161,9 @@ class PetPageFunction: ObservableObject {
                 print("Error updating currency: \(error.localizedDescription)")
             }
         }
-        return increaseXP(by: value)
+        
+//        return userTotalXP = userTotalXP + value
+                return increaseXP(by: value)
     }
     
     
@@ -123,10 +174,23 @@ class PetPageFunction: ObservableObject {
         showAlert = true
     }
     
+    func getActivePet(){
+        petItemDBManager.getActivePet { (activePet, error) in
+            if let error = error {
+                print("Error getting active pet: \(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    self.activePet = activePet
+                }
+            }
+        }
+    }
+    
+    
     func increaseXP(by value: Int) {
         // Calculate new progress to see if it exceeds 100
         let newProgress = userTotalXP + value
-
+        
         // Check if current level is less than 10
         if currentLevel < 10 {
             // If adding XP will exceed 100, level up and adjust XP
@@ -165,6 +229,19 @@ class PetPageFunction: ObservableObject {
         // Ensure current level doesn't exceed 10
         if currentLevel > 10 {
             currentLevel = 10 // Cap the level at 10
+        }
+        
+    }
+    func fetchPetHealth() {
+        petDBManager.fetchPet { [weak self] pet, error in
+            if let error = error {
+                print("Error fetching pet: \(error.localizedDescription)")
+            } else if let pet = pet {
+                DispatchQueue.main.async {
+                    self?.pet = pet
+                    self?.healthBar = Int(pet.health)
+                }
+            }
         }
     }
 }
