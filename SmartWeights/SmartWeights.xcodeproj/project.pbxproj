@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0101C1722BBDF84F00DF087A /* MorePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0101C1712BBDF84E00DF087A /* MorePageViewModel.swift */; };
+		010A05432BD35DD800CD2FFC /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A05422BD35DD800CD2FFC /* NotificationManager.swift */; };
 		0140238D2B91702300D6935D /* SettingsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0140238C2B91702300D6935D /* SettingsPageView.swift */; };
 		01A6B0BE2B88F16500D84920 /* MorePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A6B0BD2B88F16500D84920 /* MorePageView.swift */; };
 		01B8E3DA2B7FAE5C004375ED /* ChallengesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */; };
@@ -98,6 +99,7 @@
 
 /* Begin PBXFileReference section */
 		0101C1712BBDF84E00DF087A /* MorePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorePageViewModel.swift; sourceTree = "<group>"; };
+		010A05422BD35DD800CD2FFC /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		0140238C2B91702300D6935D /* SettingsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageView.swift; sourceTree = "<group>"; };
 		01A6B0BD2B88F16500D84920 /* MorePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorePageView.swift; sourceTree = "<group>"; };
 		01B8E3D92B7FAE5C004375ED /* ChallengesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesTab.swift; sourceTree = "<group>"; };
@@ -198,6 +200,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		010A05412BD35DB600CD2FFC /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				010A05422BD35DD800CD2FFC /* NotificationManager.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		0140238B2B91700300D6935D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +296,7 @@
 			children = (
 				E5D6CBDF2BD2C56E0014CD87 /* Videos */,
 				912BD24D2BD2C49C00029A32 /* audioFiles */,
+				010A05412BD35DB600CD2FFC /* Notifications */,
 				E5297D242BB4588A0078A9E6 /* Homepage */,
 				E56BD7D92BAFB0D900863D4D /* Extensions */,
 				E56BD7D62BAFA29700863D4D /* Tab Bar */,
@@ -597,6 +608,7 @@
 				91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */,
 				E5297D282BB45D110078A9E6 /* VideoCard.swift in Sources */,
 				E5D7FE682BCD740F0097A175 /* NavigationCarousel.swift in Sources */,
+				010A05432BD35DD800CD2FFC /* NotificationManager.swift in Sources */,
 				E56BD7DB2BAFB0F400863D4D /* ColorExtension.swift in Sources */,
 				32E2885C2B83CD4300458FB1 /* OverallProgressGraph.swift in Sources */,
 				91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */,
@@ -882,6 +894,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YD9LWSGPPP;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
@@ -901,6 +914,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YD9LWSGPPP;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
@@ -919,6 +933,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YD9LWSGPPP;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CIS4398.SmartWeightsUITests;
@@ -936,6 +951,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YD9LWSGPPP;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = CIS4398.SmartWeightsUITests;

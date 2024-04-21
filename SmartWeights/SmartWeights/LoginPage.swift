@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AuthenticationServices
+import UserNotifications
 
 struct LoginView: View {
     @ObservedObject var coreDataManager = CoreDataManager()
@@ -73,10 +74,9 @@ struct LoginView: View {
                                 petItemDBManager.createDefaultPet()
                                 userFitnessDataDBManager.createUserFitnessData()
                                 foodItemDBManager.createInitialFoodItems()
-                                
+                                NotificationManager.requestAuthorization()
                                 // CODE TO AUTHENTICATE GC
                                 GameCenterManager.shared.authenticateLocalPlayer()
-
                             }
                         case .failure(let error):
                             print(error)

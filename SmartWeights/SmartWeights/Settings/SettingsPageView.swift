@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct SettingsPageView: View {
     let heightFeetArray = Array(0...9)
@@ -22,9 +23,10 @@ struct SettingsPageView: View {
     @State private var selectedUpperArmLength = 0
     @State private var selectedForearmLength = 0
     
-    @State private var allNotificationsEnabled = false
-    @State private var workoutNotificationsEnabled = false
-    @State private var petNotificationsEnabled = false
+    @AppStorage("workoutNotificationsEnabled") var workoutNotificationsEnabled = false
+    @AppStorage("notificationFrequency") var notificationFrequency: String = "Daily"
+    let frequencyOptions = ["Daily", "Bidaily", "Weekly"]
+    
     @State private var healthKitEnabled = false
     
     @State private var showingLogoutConfirmation = false
@@ -173,13 +175,42 @@ struct SettingsPageView: View {
                     HStack {
                         Image(systemName: "bell")
                         NavigationLink("Notifications") {
+                            // View for the Notifications Settings page
                             SwiftUI.Form(content: {
-                                Toggle("Enable All Notifications", isOn: $allNotificationsEnabled)
-                                Toggle("Enable Workout Notifications", isOn: $workoutNotificationsEnabled)
-                                Toggle("Enable Pet Notifications", isOn: $petNotificationsEnabled)
+                                Toggle("Workout Notifications", isOn: $workoutNotificationsEnabled)
+                                    .onChange(of: workoutNotificationsEnabled, perform: { value in
+                                        if value {
+                                            NotificationManager.requestAuthorization()
+                                            print("SUCCESS: Workout notifications enabled")
+                                        }
+                                    })
+                                Picker("Reminder Frequency", selection: $notificationFrequency) {
+                                    ForEach(frequencyOptions, id: \.self) { option in
+                                        Text(option)
+                                    }
+                                }
+//                                Button("Test Push Notifications") {
+//                                    DispatchQueue.main.async {
+//                                        NotificationManager.updateLastWorkoutTime()
+//                                        NotificationManager.cancelNotification()
+//                                        NotificationManager.scheduleWorkoutReminder()
+//                                    }
+//                                }
+//                                Button("Test Cancel Notifications") {
+//                                    NotificationManager.cancelNotification()
+//                                }
                             })
                             .navigationTitle("Notifications")
                             .navigationBarTitleDisplayMode(.inline)
+                            .onAppear(perform: {
+                                UNUserNotificationCenter.current().getNotificationSettings { settings in
+                                    if settings.authorizationStatus == .authorized {
+                                        workoutNotificationsEnabled = true
+                                    } else {
+                                        workoutNotificationsEnabled = false
+                                    }
+                                }
+                            })
                         }
                     }
                 }
