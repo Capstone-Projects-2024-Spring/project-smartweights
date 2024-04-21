@@ -15,6 +15,7 @@ struct CarouselButton: Identifiable {
 }
 
 struct NavigationCarousel: View {
+    @ObservedObject var coreDataManager: CoreDataManager
     
     let buttons: [CarouselButton]
     let iconColor: Color
@@ -39,7 +40,7 @@ struct NavigationCarousel: View {
                                     .foregroundStyle(iconColor)
                                     .background(Circle()
                                         .frame(width: 60,
-                                               height: 60)
+                                            height: 60)
                                             .foregroundStyle(bgColor))
                                     .padding()
                                 Text("\(button.name)")
@@ -56,10 +57,10 @@ struct NavigationCarousel: View {
 }
 
 #Preview {
-    let button = CarouselButton(name: "Test", icon: "photo", link: AnyView(PostWorkout()))
+    let button = CarouselButton(name: "Test", icon: "photo", link: AnyView(allFeedback(coreDataManager: CoreDataManager())))
     let buttons: [CarouselButton] = [
         button
     ]
     
-    return NavigationCarousel(buttons: buttons, iconColor: Color.africanViolet, bgColor: Color.black, textColor: Color.black)
+    return NavigationCarousel(coreDataManager: CoreDataManager(), buttons: buttons, iconColor: Color.africanViolet, bgColor: Color.black, textColor: Color.black)
 }
