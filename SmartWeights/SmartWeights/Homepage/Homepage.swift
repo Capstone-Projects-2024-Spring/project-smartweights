@@ -13,9 +13,16 @@ var currentWorkout = "Dumbbell Press"
 struct Homepage: View {
     
     let tabBar: TabBar
+    // TODO: Currently hardcoded for demo. Change back afterwards.
+    @State private var showTutorial = true
     
     init(tabBar: TabBar) {
         self.tabBar = tabBar
+        // Check if user is new and show popup accordingly
+        if UserDefaults.standard.bool(forKey: "isNewUser") {
+            _showTutorial = State(initialValue: true)
+            UserDefaults.standard.set(false, forKey: "isNewUser")
+        }
     }
     
     var body: some View {
@@ -50,15 +57,20 @@ struct Homepage: View {
                 Divider()
                 
                 // Videos for video carousel
-                let bicepCurlVideo = VideoCard(videoId: "ykJmrZ5v0Oo", title: "How to Do a Dumbbell Bicep Curl", description: "Howcast")
+                let SWTutorial = VideoCard(videoFile: "SWTutorialv2", videoFileExt: "mp4", title: "SmartWeights Tutorial", description: "SmartWeights")
+                
+                let DumbbellTutorial = VideoCard(videoFile: "DumbbellCurls", videoFileExt: "mp4", title: "How to Dumbell Curl", description: "Livestrong")
                 
                 // Array of defined videos. Used by VideoCarousel view.
-                let videos = [bicepCurlVideo]
+                let videos = [SWTutorial, DumbbellTutorial]
                 
                 // Video Carousel
                 VideoCarousel(videoCards: videos)
             }
             .background(.white)
+            .fullScreenCover(isPresented: $showTutorial, content: {
+                TutorialPopup(show: $showTutorial)
+            })
         }
        
     }
