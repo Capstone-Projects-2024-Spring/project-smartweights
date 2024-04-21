@@ -11,6 +11,8 @@ class mpuData:
         self.id = id
         self.mpu = MPU6050.MPU6050(i2c)
         self.mpu.wake()
+        self.mpu.write_gyro_range(3) # ±2000°/s
+
         
     ''' accelerometer range is set to ±2g, it means that the accelerometer of your MPU6050 sensor can
     measure accelerations between -2 and +2 g's, where 1 g is approximately 9.81 m/s², the acceleration

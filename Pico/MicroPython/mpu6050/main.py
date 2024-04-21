@@ -144,6 +144,8 @@ def demo():
     ble = bluetooth.BLE()
     accel = BLEAcceleration(ble, id="MPU6050-1")
     #change ID depending on the device
+    #elbow sensor ID = MPU6050-2
+    #dumbbell sensor ID = MPU6050-1
     counter = 0
     led = Pin('LED', Pin.OUT)
     while True:

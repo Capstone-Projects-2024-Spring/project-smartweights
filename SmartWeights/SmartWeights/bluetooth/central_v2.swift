@@ -11,10 +11,6 @@ Bluetooth will only work if the app is being built.
                     The sensors will continuously send data. But only when collectedDataToggle == True will the app collect data.
                     This makes starting the workout easier, since sensors are always connected.
 
-
-TODO: Connect three more picos - in progress
-TODO: Refactor the code to handle three more picos - in progress
-TODO: Read gyroscope data - done
  */
 
 
@@ -62,7 +58,7 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     
     
     
-    //TODO: Clean up
+
     @Published var MPU6050_1_Accel: [Int] = [0, 0, 0] // Array to store current acceleration of MPU6050-1
     @Published var MPU6050_2_Accel: [Int] = [0, 0, 0] // Array to store current acceleration of MPU6050-2
     @Published var MPU6050_1_Gyro: [Int] = [0, 0, 0] // Array to store current gyro rotation of MPU6050-1
@@ -82,6 +78,9 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
     
     @Published var listOfPeripherals = []
     @Published var peripheralData = [:]
+    
+    var MPU_1_Connected = false
+    var MPU_2_Connected = false
     
     override init() {
         super.init()
@@ -132,6 +131,24 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
         print("\(peripherals)")
         centralManager.scanForPeripherals(withServices: [AccelServiceUUID,GyroServiceUUID], options: nil)
         self.isConnected = false
+        if peripheral.name == MPU_1_Name{
+            if peripheral.state == .connected{
+                MPU_1_Connected = true
+            }
+            else{
+                MPU_1_Connected = false
+            }
+            
+        }
+        
+        else if peripheral.name == MPU_2_Name{
+            if peripheral.state == .connected{
+                MPU_2_Connected = true
+            }
+            else{
+                MPU_2_Connected = false
+            }
+        }
         
         
     }
@@ -142,6 +159,24 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
         self.isConnected = true
         listOfPeripherals.append(peripheral)
         print(peripheral)
+        if peripheral.name == MPU_1_Name{
+            if peripheral.state == .connected{
+                MPU_1_Connected = true
+            }
+            else{
+                MPU_1_Connected = false
+            }
+            
+        }
+        else if peripheral.name == MPU_2_Name{
+            if peripheral.state == .connected{
+                MPU_2_Connected = true
+            }
+            else{
+                MPU_2_Connected = false
+            }
+        }
+        
     }
     
     //if a bluetooth device could not connect correctly
@@ -258,24 +293,36 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
             //updates the correct array based on the characteristic
             DispatchQueue.main.async {
                 switch peripheral.name{
+                    
                     case self.MPU_1_Name:
                         switch characteristic{
                             case self.axCharacteristic:
-                                self.MPU6050_1_Accel[0] = data
+                            if self.collectDataToggle{ //will only collect that if the user starts a workout
+                                self.MPU6050_1_Accel[0] = data //x axis
+                            }
                             case self.ayCharacteristic:
-                                self.MPU6050_1_Accel[1] = data
-                            case self.azCharacteristic:
-                                self.MPU6050_1_Accel[2] = data
                             if self.collectDataToggle{
+                                self.MPU6050_1_Accel[1] = data //y axis
+                            }
+                            case self.azCharacteristic:
+                            if self.collectDataToggle{
+                                self.MPU6050_1_Accel[2] = data // z axis
                                 self.MPU6050_1Accelerations.append(self.MPU6050_1_Accel)
                             }
+                            
                             case self.gxCharacteristic:
-                                self.MPU6050_1_Gyro[0] = data
-                            case self.gyCharacteristic:
-                                self.MPU6050_1_Gyro[1] = data
-                            case self.gzCharacteristic:
-                                self.MPU6050_1_Gyro[2] = data
                             if self.collectDataToggle{
+                                self.MPU6050_1_Gyro[0] = data //x axis
+                            }
+                                
+                            case self.gyCharacteristic:
+                            if self.collectDataToggle{
+                                self.MPU6050_1_Gyro[1] = data //y axis
+                            }
+                                
+                            case self.gzCharacteristic:
+                            if self.collectDataToggle{
+                                self.MPU6050_1_Gyro[2] = data // z axis
                                 self.MPU6050_1Gyros.append(self.MPU6050_1_Gyro)
                                 self.MPU6050_1_All_Gyros.append(self.MPU6050_1_Gyro)
                                 self.MPU6050_1_All_Accelerations.append(self.MPU6050_1_Accel)
@@ -289,22 +336,33 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                     case self.MPU_2_Name:
                         switch characteristic{
                             case self.axCharacteristic2:
-                                self.MPU6050_2_Accel[0] = data
-                            case self.ayCharacteristic2:
-                                self.MPU6050_2_Accel[1] = data
-                            case self.azCharacteristic2:
-                                self.MPU6050_2_Accel[2] = data
                             if self.collectDataToggle{
+                                self.MPU6050_2_Accel[0] = data
+                            }
+                                
+                            case self.ayCharacteristic2:
+                            if self.collectDataToggle{
+                                self.MPU6050_2_Accel[1] = data
+                            }
+                            case self.azCharacteristic2:
+                            if self.collectDataToggle{
+                                self.MPU6050_2_Accel[2] = data
                                 self.MPU6050_2Accelerations.append(self.MPU6050_2_Accel)
                                 self.MPU6050_2_All_Accelerations.append(self.MPU6050_2_Accel)
                             }
+                            
                             case self.gxCharacteristic2:
-                                self.MPU6050_2_Gyro[0] = data
-                            case self.gyCharacteristic2:
-                                self.MPU6050_2_Gyro[1] = data
-                            case self.gzCharacteristic2:
-                                self.MPU6050_2_Gyro[2] = data
                             if self.collectDataToggle{
+                                self.MPU6050_2_Gyro[0] = data
+                            }
+                            case self.gyCharacteristic2:
+                            if self.collectDataToggle{
+                                self.MPU6050_2_Gyro[1] = data
+                            }
+                               
+                            case self.gzCharacteristic2:
+                            if self.collectDataToggle{
+                                self.MPU6050_2_Gyro[2] = data
                                 self.MPU6050_2Gyros.append(self.MPU6050_2_Gyro)
                                 self.MPU6050_2_All_Gyros.append(self.MPU6050_2_Gyro)
                             }

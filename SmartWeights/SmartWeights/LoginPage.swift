@@ -9,6 +9,7 @@ import SwiftUI
 import AuthenticationServices
 
 struct LoginView: View {
+    @ObservedObject var coreDataManager = CoreDataManager()
     @Environment(\.colorScheme) var colorScheme
     @State private var showingAlert = false // For testing the sign in button
     @State private var alertMessage = ""
@@ -71,6 +72,9 @@ struct LoginView: View {
                                 userFitnessDataDBManager.createUserFitnessData()
                                 foodItemDBManager.createInitialFoodItems()
                                 
+                                // CODE TO AUTHENTICATE GC
+                                GameCenterManager.shared.authenticateLocalPlayer()
+
                             }
                         case .failure(let error):
                             print(error)
@@ -89,7 +93,7 @@ struct LoginView: View {
                 }
                 else{
                     //signed in successfully or already
-                    TabBar()
+                    TabBar(coreDataManager: coreDataManager)
                 }
                     
             }
