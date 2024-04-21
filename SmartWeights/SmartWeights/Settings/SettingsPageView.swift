@@ -202,6 +202,15 @@ struct SettingsPageView: View {
                             })
                             .navigationTitle("Notifications")
                             .navigationBarTitleDisplayMode(.inline)
+                            .onAppear(perform: {
+                                UNUserNotificationCenter.current().getNotificationSettings { settings in
+                                    if settings.authorizationStatus == .authorized {
+                                        workoutNotificationsEnabled = true
+                                    } else {
+                                        workoutNotificationsEnabled = false
+                                    }
+                                }
+                            })
                         }
                     }
                 }
