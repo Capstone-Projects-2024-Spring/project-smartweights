@@ -10,6 +10,7 @@ class WorkoutViewModel: ObservableObject {
     @ObservedObject var coreDataManager: CoreDataManager
     @ObservedObject var ble: BLEcentral
     @ObservedObject var formCriteria: FormCriteria
+    let petpageModel = PetPageFunction()
     
     init(ble: BLEcentral, formCriteria: FormCriteria, coreDataManager: CoreDataManager) {
         self.ble = ble
@@ -332,6 +333,7 @@ class WorkoutViewModel: ObservableObject {
         self.WorkoutState = .final
         self.recognitionTask?.cancel()
         self.recognitionTask = nil
+        // Safely unwrap inputNode
         
         // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
         self.audioEngine.stop()
@@ -360,7 +362,8 @@ class WorkoutViewModel: ObservableObject {
             
             // Logic for completing the workout
             storeModel.addFundtoUser(price: 50)
-            workoutPageViewModel.AddXP(value: 25)
+//            workoutPageViewModel.AddXP(value: 25)
+            petpageModel.addXP(value: 25)
             resetWorkoutState()
             hasWorkoutStarted = false
             isWorkoutPaused = false
@@ -567,5 +570,5 @@ class WorkoutViewModel: ObservableObject {
 
 
 #Preview{
-    WorkoutMainPage()
+    WorkoutMainPage(coreDataManager: CoreDataManager())
 }
