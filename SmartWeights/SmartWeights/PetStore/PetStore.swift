@@ -152,13 +152,13 @@ struct ItemDetailView: View {
                                     .padding(.bottom, 50)
                                 
                             }
-                            Image("Dog") // Display pet image
+                            Image(viewModel.petItemDBManager.activePet) // Display pet image
                                 .resizable()
                                 .scaledToFit()
                                 .padding(.bottom, 50)
                             
                         } else { // outfit that goes in front of pet
-                            Image("Dog") // Display pet image
+                            Image(viewModel.petItemDBManager.activePet) // Display pet image
                                 .resizable()
                                 .scaledToFit()
                                 .padding(.bottom, 50)

@@ -133,50 +133,50 @@ struct SettingsPageView: View {
                     }
                 }
                 
-                Section(header: Text("Body Measurements")) {
-                    Picker("Weight", selection: $selectedWeight) {
-                        ForEach(weightsArray, id: \.self) { weight in
-                            Text("\(weight) lb").tag(weight)
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    HStack {
-                        Text("Height")
-                        Spacer()
-                        Picker("Feet", selection: $selectedFeet) {
-                            ForEach(heightFeetArray, id: \.self) { feet in
-                                Text("\(feet) ft").tag(feet)
-                            }
-                        }
-                        .labelsHidden()
-                        .pickerStyle(.menu)
-                        Picker("Inches", selection: $selectedInches) {
-                            ForEach(heightInchesArray, id: \.self) { inches in
-                                Text("\(inches) in").tag(inches)
-                            }
-                        }
-                        .labelsHidden()
-                        .pickerStyle(.menu)
-                    }
-                    Picker("Chest Width", selection: $selectedChestWidth) {
-                        ForEach(chestWidthsArray, id: \.self) { chestWidth in
-                            Text("\(chestWidth) in").tag(chestWidth)
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    Picker("Upper Arm Length", selection: $selectedUpperArmLength) {
-                        ForEach(upperArmLengthsArray, id: \.self) { upperArmLength in
-                            Text("\(upperArmLength) in").tag(upperArmLength)
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    Picker("Forearm Length", selection: $selectedForearmLength) {
-                        ForEach(forearmLengthsArray, id: \.self) { forearmLength in
-                            Text("\(forearmLength) in").tag(forearmLength)
-                        }
-                    }
-                    .pickerStyle(.menu)
-                }
+//                Section(header: Text("Body Measurements")) {
+//                    Picker("Weight", selection: $selectedWeight) {
+//                        ForEach(weightsArray, id: \.self) { weight in
+//                            Text("\(weight) lb").tag(weight)
+//                        }
+//                    }
+//                    .pickerStyle(.menu)
+//                    HStack {
+//                        Text("Height")
+//                        Spacer()
+//                        Picker("Feet", selection: $selectedFeet) {
+//                            ForEach(heightFeetArray, id: \.self) { feet in
+//                                Text("\(feet) ft").tag(feet)
+//                            }
+//                        }
+//                        .labelsHidden()
+//                        .pickerStyle(.menu)
+//                        Picker("Inches", selection: $selectedInches) {
+//                            ForEach(heightInchesArray, id: \.self) { inches in
+//                                Text("\(inches) in").tag(inches)
+//                            }
+//                        }
+//                        .labelsHidden()
+//                        .pickerStyle(.menu)
+//                    }
+//                    Picker("Chest Width", selection: $selectedChestWidth) {
+//                        ForEach(chestWidthsArray, id: \.self) { chestWidth in
+//                            Text("\(chestWidth) in").tag(chestWidth)
+//                        }
+//                    }
+//                    .pickerStyle(.menu)
+//                    Picker("Upper Arm Length", selection: $selectedUpperArmLength) {
+//                        ForEach(upperArmLengthsArray, id: \.self) { upperArmLength in
+//                            Text("\(upperArmLength) in").tag(upperArmLength)
+//                        }
+//                    }
+//                    .pickerStyle(.menu)
+//                    Picker("Forearm Length", selection: $selectedForearmLength) {
+//                        ForEach(forearmLengthsArray, id: \.self) { forearmLength in
+//                            Text("\(forearmLength) in").tag(forearmLength)
+//                        }
+//                    }
+//                    .pickerStyle(.menu)
+//                }
                 Section(
                     header: Text("Preferences")
                 ) {

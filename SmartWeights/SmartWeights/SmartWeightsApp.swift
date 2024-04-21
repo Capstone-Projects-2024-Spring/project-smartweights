@@ -12,11 +12,11 @@ struct SmartWeightsApp: App {
     let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
-            //bleView(ble: BLEcentral())
-            LoginView()
+          LoginView()
                .environment(\.managedObjectContext, persistenceController.container.viewContext)
                .preferredColorScheme(.light)
 //            testview()
         }
+        
     }
 }

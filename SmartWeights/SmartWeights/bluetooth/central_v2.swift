@@ -297,22 +297,32 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                     case self.MPU_1_Name:
                         switch characteristic{
                             case self.axCharacteristic:
-                                self.MPU6050_1_Accel[0] = data
+                            if self.collectDataToggle{ //will only collect that if the user starts a workout
+                                self.MPU6050_1_Accel[0] = data //x axis
+                            }
                             case self.ayCharacteristic:
-                                self.MPU6050_1_Accel[1] = data
-                            case self.azCharacteristic:
-                                self.MPU6050_1_Accel[2] = data
                             if self.collectDataToggle{
+                                self.MPU6050_1_Accel[1] = data //y axis
+                            }
+                            case self.azCharacteristic:
+                            if self.collectDataToggle{
+                                self.MPU6050_1_Accel[2] = data // z axis
                                 self.MPU6050_1Accelerations.append(self.MPU6050_1_Accel)
                             }
                             
                             case self.gxCharacteristic:
-                                self.MPU6050_1_Gyro[0] = data
-                            case self.gyCharacteristic:
-                                self.MPU6050_1_Gyro[1] = data
-                            case self.gzCharacteristic:
-                                self.MPU6050_1_Gyro[2] = data
                             if self.collectDataToggle{
+                                self.MPU6050_1_Gyro[0] = data //x axis
+                            }
+                                
+                            case self.gyCharacteristic:
+                            if self.collectDataToggle{
+                                self.MPU6050_1_Gyro[1] = data //y axis
+                            }
+                                
+                            case self.gzCharacteristic:
+                            if self.collectDataToggle{
+                                self.MPU6050_1_Gyro[2] = data // z axis
                                 self.MPU6050_1Gyros.append(self.MPU6050_1_Gyro)
                                 self.MPU6050_1_All_Gyros.append(self.MPU6050_1_Gyro)
                                 self.MPU6050_1_All_Accelerations.append(self.MPU6050_1_Accel)
@@ -326,25 +336,36 @@ class BLEcentral: NSObject, CBCentralManagerDelegate,CBPeripheralDelegate, Obser
                     case self.MPU_2_Name:
                         switch characteristic{
                             case self.axCharacteristic2:
+                            if self.collectDataToggle{
                                 self.MPU6050_2_Accel[0] = data
+                            }
+                                
                             case self.ayCharacteristic2:
+                            if self.collectDataToggle{
                                 self.MPU6050_2_Accel[1] = data
+                            }
                             case self.azCharacteristic2:
+                            if self.collectDataToggle{
                                 self.MPU6050_2_Accel[2] = data
-                                if self.collectDataToggle{
-                                    self.MPU6050_2Accelerations.append(self.MPU6050_2_Accel)
-                                    self.MPU6050_2_All_Accelerations.append(self.MPU6050_2_Accel)
-                                }
+                                self.MPU6050_2Accelerations.append(self.MPU6050_2_Accel)
+                                self.MPU6050_2_All_Accelerations.append(self.MPU6050_2_Accel)
+                            }
+                            
                             case self.gxCharacteristic2:
+                            if self.collectDataToggle{
                                 self.MPU6050_2_Gyro[0] = data
+                            }
                             case self.gyCharacteristic2:
+                            if self.collectDataToggle{
                                 self.MPU6050_2_Gyro[1] = data
+                            }
+                               
                             case self.gzCharacteristic2:
+                            if self.collectDataToggle{
                                 self.MPU6050_2_Gyro[2] = data
-                                if self.collectDataToggle{
-                                    self.MPU6050_2Gyros.append(self.MPU6050_2_Gyro)
-                                    self.MPU6050_2_All_Gyros.append(self.MPU6050_2_Gyro)
-                                }
+                                self.MPU6050_2Gyros.append(self.MPU6050_2_Gyro)
+                                self.MPU6050_2_All_Gyros.append(self.MPU6050_2_Gyro)
+                            }
                                 //print("MPU6050_2 gyro")
                                 //print("\(self.MPU6050_2Gyros)")
                             default:
