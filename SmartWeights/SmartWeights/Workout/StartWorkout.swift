@@ -22,7 +22,6 @@ class WorkoutViewModel: ObservableObject {
     
     var player: AVAudioPlayer!
     
-    
     var feedback: (String, String, String, String) = ("", "", "", "")
     var feedbackDataForSets: [(String, String, String, String)] = []
     var workoutAnalysis: [String:Double] = [:]
@@ -560,7 +559,6 @@ class WorkoutViewModel: ObservableObject {
     func generateRandomNumber() -> Double {
         return Double.random(in: 0..<1)
     }
-    
     
 }
 

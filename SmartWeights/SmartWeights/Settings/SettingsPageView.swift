@@ -24,6 +24,8 @@ struct SettingsPageView: View {
     @State private var selectedForearmLength = 0
     
     @AppStorage("workoutNotificationsEnabled") var workoutNotificationsEnabled = false
+    @AppStorage("notificationFrequency") var notificationFrequency: String = "Daily"
+    let frequencyOptions = ["Daily", "Bidaily", "Weekly"]
     
     @State private var healthKitEnabled = false
     
@@ -182,16 +184,21 @@ struct SettingsPageView: View {
                                             print("SUCCESS: Workout notifications enabled")
                                         }
                                     })
-                                Button("Test Push Notifications") {
-                                    DispatchQueue.main.async {
-                                        NotificationManager.updateLastWorkoutTime()
-                                        NotificationManager.cancelNotification()
-                                        NotificationManager.scheduleWorkoutReminder()
+                                Picker("Reminder Frequency", selection: $notificationFrequency) {
+                                    ForEach(frequencyOptions, id: \.self) { option in
+                                        Text(option)
                                     }
                                 }
-                                Button("Test Cancel Notifications") {
-                                    NotificationManager.cancelNotification()
-                                }
+//                                Button("Test Push Notifications") {
+//                                    DispatchQueue.main.async {
+//                                        NotificationManager.updateLastWorkoutTime()
+//                                        NotificationManager.cancelNotification()
+//                                        NotificationManager.scheduleWorkoutReminder()
+//                                    }
+//                                }
+//                                Button("Test Cancel Notifications") {
+//                                    NotificationManager.cancelNotification()
+//                                }
                             })
                             .navigationTitle("Notifications")
                             .navigationBarTitleDisplayMode(.inline)
