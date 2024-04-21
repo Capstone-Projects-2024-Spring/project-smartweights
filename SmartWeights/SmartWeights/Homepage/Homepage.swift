@@ -74,6 +74,7 @@ struct Homepage: View {
             .fullScreenCover(isPresented: $showTutorial, content: {
                 TutorialPopup(show: $showTutorial)
             })
+            .statusBarHidden(false)
         }
     
     }
