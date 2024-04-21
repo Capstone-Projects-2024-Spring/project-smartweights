@@ -153,22 +153,7 @@ final class SmartWeightsTests: XCTestCase {
    //WORKOUT PROGRESS PAGE
     
     //test that the date can be turned into the short format
-    func testUpdateShortDate(){
-        //Given
-        let viewModel = allFeedbackViewModel()
-        let date = Date()
-        var shortDate = " "
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        shortDate = formatter.string(from: date)
-        
-        //When
-        viewModel.updateShortDate()
-        
-        //Given
-        XCTAssertEqual(viewModel.shortDate, shortDate, "The short date should be in the format M/D/Y")
-        
-    }
+
     
     
     

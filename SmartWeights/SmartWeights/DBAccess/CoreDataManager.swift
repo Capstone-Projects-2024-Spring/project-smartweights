@@ -92,26 +92,6 @@ class CoreDataManager: ObservableObject {
         }
     }
     
-    // func fetchWorkoutSessions(on date: Date) -> [WorkoutSession] {
-    //     let fetchRequest: NSFetchRequest<WorkoutSession> = WorkoutSession.fetchRequest()
-    //     print(date)
-    //     // Set up the date formatter to ignore time
-    //     let dateFormatter = DateFormatter()
-    //     dateFormatter.dateFormat = "MM-dd-yyyy"
-    //     let dateString = dateFormatter.string(from: date)
-    //     print(dateString)
-
-    //     // Set the predicate to match dates
-    //     fetchRequest.predicate = NSPredicate(format: "dateTime >= %@ AND dateTime < %@", argumentArray: [dateFormatter.date(from: dateString)!, Calendar.current.date(byAdding: .day, value: 1, to: dateFormatter.date(from: dateString)!)!])
-    //     fetchRequest.resultType = .dictionaryResultType
-    //     do {
-    //         return try persistentContainer.viewContext.fetch(fetchRequest)
-    //     } catch {
-    //         print("Failed to fetch workout sessions on date \(dateString): \(error)")
-    //         print("error-----------error------------error----------error")
-    //         return []
-    //     }
-    // }
     func fetchWorkoutSessions(on date: Date) -> [[String: Any]] {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = WorkoutSession.fetchRequest()
         
@@ -173,35 +153,22 @@ class CoreDataManager: ObservableObject {
         }
     }
 
-    // func fetchExerciseSets(for workoutNum: Int64) -> [ExerciseSet] {
-    //     let fetchRequest: NSFetchRequest<ExerciseSet> = ExerciseSet.fetchRequest()
-    //     let predicateWorkoutSession = NSPredicate(format: "workoutSession.workoutNum == %d", workoutNum)
-
-    //     fetchRequest.predicate = predicateWorkoutSession
-
-    //     do {
-    //         return try persistentContainer.viewContext.fetch(fetchRequest)
-    //     } catch {
-    //         print("Failed to fetch exercise sets for workout number \(workoutNum): \(error)")
-    //         return []
-    //     }
-    // }
-
     func fetchExerciseSets(for workoutNum: Int64) -> [[String: Any]] {
-        let fetchRequest: NSFetchRequest<ExerciseSet> = ExerciseSet.fetchRequest()
-        let predicateWorkoutSession = NSPredicate(format: "workoutSession.workoutNum == %d", workoutNum)
+    let fetchRequest: NSFetchRequest<NSFetchRequestResult> = ExerciseSet.fetchRequest()
+    let predicateWorkoutSession = NSPredicate(format: "workoutSession.workoutNum == %d", workoutNum)
 
-        fetchRequest.predicate = predicateWorkoutSession
-        fetchRequest.resultType = .dictionaryResultType
+    fetchRequest.predicate = predicateWorkoutSession
+    fetchRequest.resultType = .dictionaryResultType
 
-        fetchRequest.propertiesToFetch = ["setNum", "avgCurlAcceleration", "avgElbowFlareLeftRight", "avgElbowFlareUpDown", "avgElbowSwing", "avgWristStabilityLeftRight", "avgWristStabilityUpDown"]
-        do {
-            return try persistentContainer.viewContext.fetch(fetchRequest) as! [[String: Any]]
-        } catch {
-            print("Failed to fetch exercise sets for workout number \(workoutNum): \(error)")
-            return []
-        }
+    fetchRequest.propertiesToFetch = ["setNum", "avgCurlAcceleration", "avgElbowFlareLeftRight", "avgElbowFlareUpDown", "avgElbowSwing", "avgWristStabilityLeftRight", "avgWristStabilityUpDown"]
+    do {
+        let result = try persistentContainer.viewContext.fetch(fetchRequest)
+        return result as? [[String: Any]] ?? [[:]]
+    } catch {
+        print("Failed to fetch exercise sets for workout number \(workoutNum): \(error)")
+        return [[:]]
     }
+}
     
     func updateWorkoutSession(_ session: WorkoutSession, dateTime: Date? = nil, overallCurlAcceleration: Double? = nil, overallElbowFlareLR: Double? = nil, overallElbowFlareUD: Double? = nil, overallElbowSwing: Double? = nil, overallWristStabilityLR: Double? = nil, overallWristStabilityUD: Double? = nil) {
         let context = persistentContainer.viewContext
