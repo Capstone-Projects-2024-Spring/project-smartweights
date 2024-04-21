@@ -38,7 +38,7 @@ struct VideoCarousel: View {
 
 #Preview {
     
-    let bicepCurl = VideoCard(videoId: "ykJmrZ5v0Oo", title: "How to Do a Dumbbell Bicep Curl", description: "Howcast")
+    let bicepCurl = VideoCard(videoFile: "SWTutorialv2", videoFileExt: "mp4", title: "SmartWeights Tutorial", description: "SmartWeights")
     
     return VideoCarousel(videoCards: [bicepCurl])
 }
