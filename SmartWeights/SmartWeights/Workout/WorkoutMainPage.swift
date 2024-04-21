@@ -418,6 +418,7 @@ struct WorkoutMainPage: View {
                         
                         Button("Start Workout") {
                             viewModel.validateAndStartCountdown(sets: viewModel.inputtedSets, reps: viewModel.inputtedReps, weights: viewModel.inputtedWeights)
+                            
                         }
                         .padding()
                         .foregroundColor(.white)

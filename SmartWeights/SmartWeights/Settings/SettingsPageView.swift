@@ -23,17 +23,7 @@ struct SettingsPageView: View {
     @State private var selectedUpperArmLength = 0
     @State private var selectedForearmLength = 0
     
-    @AppStorage("allNotificationsEnabled") var allNotificationsEnabled = false
-//    @AppStorage("workoutNotificationsEnabled") var workoutNotificationsEnabled = false {
-//        didSet {
-//            checkAllToggles()
-//        }
-//    }
-//    @AppStorage("petNotificationsEnabled") var petNotificationsEnabled = false {
-//        didSet {
-//            checkAllToggles()
-//        }
-//    }
+    @AppStorage("workoutNotificationsEnabled") var workoutNotificationsEnabled = false
     
     @State private var healthKitEnabled = false
     
@@ -183,13 +173,24 @@ struct SettingsPageView: View {
                     HStack {
                         Image(systemName: "bell")
                         NavigationLink("Notifications") {
+                            // View for the Notifications Settings page
                             SwiftUI.Form(content: {
-                                Toggle("Enable All Notifications", isOn: $allNotificationsEnabled)
-                                    .onChange(of: allNotificationsEnabled) {
-                                        handleAllNotificationsEnabledChange(allNotificationsEnabled: allNotificationsEnabled)
+                                Toggle("Workout Notifications", isOn: $workoutNotificationsEnabled)
+                                    .onChange(of: workoutNotificationsEnabled, perform: { value in
+                                        if value {
+                                            NotificationManager.requestAuthorization()
+                                            print("SUCCESS: Workout notifications enabled")
+                                        }
+                                    })
+                                Button("Test Push Notifications") {
+                                    DispatchQueue.main.async {
+                                        NotificationManager.updateLastWorkoutTime()
+                                        NotificationManager.cancelNotification()
+                                        NotificationManager.scheduleWorkoutReminder()
                                     }
-                                Button("Test Notification") {
-                                    NotificationManager.sendImmediateNotification()
+                                }
+                                Button("Test Cancel Notifications") {
+                                    NotificationManager.cancelNotification()
                                 }
                             })
                             .navigationTitle("Notifications")
@@ -204,9 +205,6 @@ struct SettingsPageView: View {
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear(perform: {
-                fetchCurrentNotificationSettings()
-            })
         }
         .alert("Confirm Logout", isPresented: $showingLogoutConfirmation) {
             Button("Yes", role: .destructive) {
@@ -220,37 +218,6 @@ struct SettingsPageView: View {
         }
         message: {
             Text("Are you sure you want to logout?")
-        }
-    }
-    
-    private func fetchCurrentNotificationSettings() {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            DispatchQueue.main.async {
-                switch settings.authorizationStatus {
-                case .authorized, .provisional:
-                    allNotificationsEnabled = true
-                default:
-                    allNotificationsEnabled = false
-                }
-            }
-        }
-    }
-    
-//    private func checkAllToggles() {
-//        if workoutNotificationsEnabled && petNotificationsEnabled {
-//            allNotificationsEnabled =  true
-//        } else if !workoutNotificationsEnabled && !petNotificationsEnabled {
-//            allNotificationsEnabled = false
-//        }
-//    }
-}
-
-private extension SettingsPageView {
-    private func handleAllNotificationsEnabledChange(allNotificationsEnabled: Bool) {
-        if allNotificationsEnabled {
-            NotificationManager.requestAuthorization()
-        } else {
-            NotificationManager.cancelNotification()
         }
     }
 }

@@ -154,7 +154,6 @@ class WorkoutViewModel: ObservableObject {
         return Int(string)
     }
     
-    
     enum WorkoutStateEnum {
         case idle
         case started
@@ -354,6 +353,11 @@ class WorkoutViewModel: ObservableObject {
                 // Call function to reduce HP
                 workoutPageViewModel.lowerHP()
             }
+            
+            // Start timer for workout reminder notifications
+            NotificationManager.updateLastWorkoutTime()
+            NotificationManager.cancelNotification()
+            NotificationManager.scheduleWorkoutReminder()
             
             // Logic for completing the workout
             storeModel.addFundtoUser(price: 50)
