@@ -116,8 +116,18 @@ class PetItemDBManager: ObservableObject{
             }
         }
     }
-    func createDefaultPet(){
-        fetchSpecificPetItem(imageName: "Dog") { petItem, error in
+    func createDefaultPet() {
+        p_createDefaultPet { error in
+            if let error = error {
+                print("Error creating default pet: \(error.localizedDescription)")
+                return
+            }
+            print("Default pet created")
+        }
+    }
+    private func p_createDefaultPet(completion : @escaping (Error?) -> Void) {
+        let imageName = "Dog"
+        fetchSpecificPetItem(imageName: imageName) { petItem, error in
             // if let error = error {
             //     completion(error)
             //     return
@@ -133,6 +143,7 @@ class PetItemDBManager: ObservableObject{
                 let petItemRecord = petItem.record
                 self.petItems.append(petItem)
                 self.CKManager.savePrivateItem(record: petItemRecord)
+                print("defaultPet Created")
             }
         }
     }
