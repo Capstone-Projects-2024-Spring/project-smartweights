@@ -72,6 +72,9 @@ struct LoginView: View {
                                 userFitnessDataDBManager.createUserFitnessData()
                                 foodItemDBManager.createInitialFoodItems()
                                 
+                                // CODE TO AUTHENTICATE GC
+                                GameCenterManager.shared.authenticateLocalPlayer()
+
                             }
                         case .failure(let error):
                             print(error)

@@ -270,6 +270,32 @@ struct WorkoutMainPage: View {
                 print(".............THIS IS BUTTON TEXT",buttonText)
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
+                        // Logic for completing the workout
+                        generateRandomData(for: .overallWorkout) // Generate overall workout data
+                        storeModel.addFundtoUser(price: 50)
+                        workoutPageViewModel.AddXP(value: 25)
+                        viewModel.resetWorkoutState()
+                        hasWorkoutStarted = false
+                        isWorkoutPaused = false
+                        ble.collectDataToggle = false //stops collecting data
+                        print("hello")
+                        //ble.MPU6050_1Gyros.removeAll()
+                        //need to add this data to another array to store for workout history
+                        ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
+                        showGraphPopover = true
+                        currentMotivationalPhrase = "Let's get started with a New Workout!"
+                        
+                        // CODE TO UPDATE WORKOUTS ACHIEVEMENTS (1st Workout, Workout Machine, Perfect Form)
+                        
+                        // 1st Workout
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.1stWorkout", progressToAdd: 100.0)
+                        
+                        // Workout Machine (50 total)
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.WorkoutMachine", progressToAdd: 2.0)
+                        
+                        // Perfect Form (100 total)
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.PerfectForm", progressToAdd: 1.0)
+                        
                         viewModel.finishWorkout()
                     } else if buttonText == "Final Set" {
                         viewModel.finalset()
