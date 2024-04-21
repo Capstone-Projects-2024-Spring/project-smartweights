@@ -334,6 +334,7 @@ class WorkoutViewModel: ObservableObject {
         self.WorkoutState = .final
         self.recognitionTask?.cancel()
         self.recognitionTask = nil
+        // Safely unwrap inputNode
         
         // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
         self.audioEngine.stop()
@@ -565,5 +566,5 @@ class WorkoutViewModel: ObservableObject {
 
 
 #Preview{
-    WorkoutMainPage()
+    WorkoutMainPage(coreDataManager: CoreDataManager())
 }

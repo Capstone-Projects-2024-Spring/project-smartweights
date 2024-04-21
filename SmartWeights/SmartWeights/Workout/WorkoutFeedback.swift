@@ -103,7 +103,7 @@ struct OverallWorkoutData: View{
                     
                     Text("\(Int(last["overallWorkoutElbowSwing"] ?? 0.0 * 100))% elbow stability (swinging)")
                     Text("\(Int(last["overallWorkoutElbowFlareUpDown"] ?? 0.0 * 100))% elbow stability (up down)")
-                    Text("\(Int(last["overallWorkoutElbowFlareForwardBackward"] ?? 0.0 * 100))% elbow stability (foward backward)")
+                    Text("\(Int(last["overallWorkoutElbowFlareForwardBackward"] ?? 0.0 * 100))% elbow stability (forward backward)")
                 }
             }
             

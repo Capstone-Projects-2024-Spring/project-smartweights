@@ -4,7 +4,7 @@ import CoreData
 
 /// Main structure to display the workout page with integrated UI components
 struct WorkoutMainPage: View {
-    @StateObject var coreDataManager:CoreDataManager
+    @ObservedObject var coreDataManager:CoreDataManager
     @StateObject var ble:BLEcentral
     @StateObject var formCriteria:FormCriteria
     @StateObject var storeModel = storeViewModel()
@@ -15,11 +15,10 @@ struct WorkoutMainPage: View {
     @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
     @ObservedObject var petItemDBManager = PetItemDBManager()
     
-    init() {
-        let coreDataManager = CoreDataManager()
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
         let ble = BLEcentral()
         let formCriteria = FormCriteria()
-        self._coreDataManager = StateObject(wrappedValue: coreDataManager)
         self._ble = StateObject(wrappedValue: ble)
         self._formCriteria = StateObject(wrappedValue: formCriteria)
         self._viewModel = StateObject(wrappedValue: WorkoutViewModel(ble: ble, formCriteria: formCriteria, coreDataManager: coreDataManager))
@@ -438,5 +437,5 @@ struct WorkoutMainPage: View {
 }
 
 #Preview {
-    WorkoutMainPage()
+    WorkoutMainPage(coreDataManager: CoreDataManager())
 }
