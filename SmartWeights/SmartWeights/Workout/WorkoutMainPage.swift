@@ -261,10 +261,11 @@ struct WorkoutMainPage: View {
                 Image(clothingItemDBManager.activeClothing)
                     .resizable()
                     .scaledToFit()
-                
+                    .frame(width: 400, height: 375)
             }
             
             
+            // Start/Reset workout button
             //----------------------BUTTON ACTION---------------------// 
             Button(action: {
                 print(".............THIS IS BUTTON TEXT",buttonText)

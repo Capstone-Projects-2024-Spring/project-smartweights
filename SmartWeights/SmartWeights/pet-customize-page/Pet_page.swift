@@ -19,15 +19,15 @@ struct Pet_Page: View {
         NavigationView {
             VStack {
                 /*
-                Text("Pet Name")
-                    .font(.system(size: 45))
-                    .bold()
-                    .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
-                
-                Button("testing XP"){
-                    viewModel.AddXP(value: 75)
-                }
-                */
+                 Text("Pet Name")
+                 .font(.system(size: 45))
+                 .bold()
+                 .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
+                 
+                 Button("testing XP"){
+                 viewModel.AddXP(value: 75)
+                 }
+                 */
                 
                 HStack {
                     HamburgerMenu(
@@ -105,29 +105,31 @@ struct Pet_Page: View {
                     //     .padding(.bottom, 0)
                 }
                 VStack {
-                    // Health Bar
                     CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
                         .frame(height: 20)
-                        .padding(.bottom, 25)
-                        .padding(.horizontal)
-                    
-                    // Display Current Level
-                    Text("Level \(viewModel.currentLevel)")
-                        .font(.title)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 20)
-                        .padding(.bottom, -15)
-                        .foregroundStyle(.black)
-                    
-                    // XP Bar
-                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .africanViolet, backgroundColor: .gray)
-                        .frame(height: 20)
                         .padding()
+                    
+                    //                    // Display Current Level
+                    //                    Text("Level \(viewModel.currentLevel)")
+                    //                        .font(.system(size: 20))
+                    //                        .bold()
+                    //                        .frame(maxWidth: .infinity, alignment: .center)
+                    //                        .padding(.top, 10)
+                    
+                    if viewModel.isLoading{
+                        ProgressView()
+                    } else{
+                        CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray, level: viewModel.currentLevel)
+                            .frame(height: 20)
+                            .padding()
+                    }
                 }
-
+                
                 .padding(.top, -20)
                 Spacer()
+            }
+            .onAppear {
+                viewModel.refreshData()
             }
             .background(.white)
             .alert(isPresented: $viewModel.showAlert) {
@@ -186,13 +188,13 @@ struct HamburgerMenu: View {
                 .accessibilityIdentifier("Customize")
         } label: {
             Label { }
-                icon: {
-                Image(systemName: "line.horizontal.3")
-                    .foregroundColor(.africanViolet)
-                    .font(.title)
-                    .padding()
-            }
-            .accessibilityIdentifier("HamburgerMenuButton")
+        icon: {
+            Image(systemName: "line.horizontal.3")
+                .foregroundColor(.africanViolet)
+                .font(.title)
+                .padding()
+        }
+        .accessibilityIdentifier("HamburgerMenuButton")
         }
     }
 }

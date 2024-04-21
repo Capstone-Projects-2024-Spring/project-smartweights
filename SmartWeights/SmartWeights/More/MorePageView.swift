@@ -91,6 +91,7 @@ struct MorePageView: View {
                     Image(clothingItemDBManager.activeClothing)
                         .resizable()
                         .scaledToFit()
+                        .frame(width: 250, height: 250)
                     
                 }
             }
