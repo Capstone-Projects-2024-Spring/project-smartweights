@@ -134,10 +134,20 @@ struct WorkoutMainPage: View {
                             .padding(.bottom, -40)
                         }
                         HStack{
-                            Image("Dog")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 200, height: 175)
+                            ZStack{
+                                Image(backgroundItemDBManager.activeBackground)
+                                    .resizable()
+                                    .frame(width: 200, height: 175)
+                                Image(petItemDBManager.activePet)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 200, height: 175)
+                                Image(clothingItemDBManager.activeClothing)
+                                    .resizable()
+                                    .scaledToFit()
+                                    // .frame(width: 200, height: 175)
+                                
+                            }
                         }
                         Text("\(viewModel.feedback.0)") //gives overall acceleration
                             .font(.subheadline)
