@@ -75,10 +75,59 @@ struct PostWorkoutData: View {
         
         if isExpanded {
             VStack(alignment: .leading){
-                Text("\(Int(workoutAnalysis["averageWristLeftRightRotation"] ?? 0.0))% wrist stability (left right)")
+                HStack{
+                    Text("\(Int(workoutAnalysis["averageWristLeftRightRotation"] ?? 0.0))% wrist stability (left right)")
+                    if workoutAnalysis["averageWristLeftRightRotation"]! < 70.0{
+                        Image(systemName: "xmark")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    else{
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.green)
+                            .bold()
+                    }
+                }
+                HStack{
                 Text("\(Int(workoutAnalysis["averageWristUpDownRotation"] ?? 0.0))% wrist wrist stability (up down)")
+                    if workoutAnalysis["averageWristUpDownRotation"]! < 70.0{
+                        Image(systemName: "xmark")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    else{
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.green)
+                            .bold()
+                    }
+                }
+
+                HStack{
                 Text("\(Int(workoutAnalysis["averageElbowFlareUpDown"] ?? 0.0))% elbow stability(up down)")
+                    if workoutAnalysis["averageElbowFlareUpDown"]! < 70.0{
+                        Image(systemName: "xmark")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    else{
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.green)
+                            .bold()
+                    }
+                }
+                HStack{
                 Text("\(Int(workoutAnalysis["averageElbowFlareForwardBackward"] ?? 0.0))% elbow (forward backward)")
+                    if workoutAnalysis["averageElbowFlareForwardBackward"]! < 70.0{
+                        Image(systemName: "xmark")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    else{
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.green)
+                            .bold()
+                    }
+                }
             }
         }
     }
@@ -96,14 +145,86 @@ struct OverallWorkoutData: View{
         if workoutAnalysisForSets.count == totalSets{
             if let last = workoutAnalysisForSets.last {
                 VStack(alignment: .leading){
-                    
+                    HStack{
                     Text("\(Int(last["overallWorkoutUpDownAverage"] ?? 0.0 * 100))% good curl acceleration (left right)")
+                    if last["overallWorkoutUpDownAverage"]! < 70.0{
+                        Image(systemName: "xmark")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    else{
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.green)
+                            .bold()
+                    }
+                    }
+                    HStack{
                     Text("\(Int(last["overallDumbbellTwistingLeftRight"] ?? 0.0 * 100))% wrist stability (left right)")
+                    if last["overallDumbbellTwistingLeftRight"]! < 70.0{
+                        Image(systemName: "xmark")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    else{
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.green)
+                            .bold()
+                    }
+                    }
+                    HStack{
                     Text("\(Int(last["overallDumbbellTwistingUpDown"] ?? 0.0 * 100))% wrist stability (up down)")
+                    if last["overallDumbbellTwistingUpDown"]! < 70.0{
+                        Image(systemName: "xmark")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    else{
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.green)
+                            .bold()
+                    }
+                    }
+                    HStack{
                     
                     Text("\(Int(last["overallWorkoutElbowSwing"] ?? 0.0 * 100))% elbow stability (swinging)")
+                    if last["overallWorkoutElbowSwing"]! < 70.0{
+                        Image(systemName: "xmark")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    else{
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.green)
+                            .bold()
+                    }
+                    }
+                    HStack{
                     Text("\(Int(last["overallWorkoutElbowFlareUpDown"] ?? 0.0 * 100))% elbow stability (up down)")
+                    if last["overallWorkoutElbowFlareUpDown"]! < 70.0{
+                        Image(systemName: "xmark")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    else{
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.green)
+                            .bold()
+                    }
+                    }
+                    HStack{
                     Text("\(Int(last["overallWorkoutElbowFlareForwardBackward"] ?? 0.0 * 100))% elbow stability (forward backward)")
+                    if last["overallWorkoutElbowFlareForwardBackward"]! < 70.0{
+                        Image(systemName: "xmark")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    else{
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.green)
+                            .bold()
+                    
+                    }
+                    }
                 }
             }
             
