@@ -78,7 +78,7 @@ struct PostWorkoutData: View {
                 Text("\(Int(workoutAnalysis["averageWristLeftRightRotation"] ?? 0.0))% wrist stability (left right)")
                 Text("\(Int(workoutAnalysis["averageWristUpDownRotation"] ?? 0.0))% wrist wrist stability (up down)")
                 Text("\(Int(workoutAnalysis["averageElbowFlareUpDown"] ?? 0.0))% elbow stability(up down)")
-                Text("\(Int(workoutAnalysis["averageElbowFlareForwardBackward"] ?? 0.0))% elbow (foward backward)")
+                Text("\(Int(workoutAnalysis["averageElbowFlareForwardBackward"] ?? 0.0))% elbow (forward backward)")
             }
         }
     }
