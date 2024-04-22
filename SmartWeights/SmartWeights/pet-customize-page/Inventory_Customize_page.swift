@@ -75,7 +75,7 @@ struct Customize_page: View {
                     }
                 }
 
-                if viewModel.isDataLoaded {
+                // if viewModel.isDataLoaded {
                     TabView(selection: $selectedTab) {
                         ScrollView {
                             VStack {
@@ -171,11 +171,11 @@ struct Customize_page: View {
                         .tag(2)
                     }
                     .frame(height: 400)
-                } else {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(2)
-                }
+                // } else {
+                //     ProgressView()
+                //         .progressViewStyle(CircularProgressViewStyle())
+                //         .scaleEffect(2)
+                // }
             }
         }
     }

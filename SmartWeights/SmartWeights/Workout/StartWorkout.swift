@@ -23,7 +23,6 @@ class WorkoutViewModel: ObservableObject {
     
     var player: AVAudioPlayer!
     
-    
     var feedback: (String, String, String, String) = ("", "", "", "")
     var feedbackDataForSets: [(String, String, String, String)] = []
     var workoutAnalysis: [String:Double] = [:]
@@ -154,7 +153,6 @@ class WorkoutViewModel: ObservableObject {
     private func stringToInt(_ string: String) -> Int? {
         return Int(string)
     }
-    
     
     enum WorkoutStateEnum {
         case idle
@@ -356,6 +354,11 @@ class WorkoutViewModel: ObservableObject {
                 // Call function to reduce HP
                 workoutPageViewModel.lowerHP()
             }
+            
+            // Start timer for workout reminder notifications
+            NotificationManager.updateLastWorkoutTime()
+            NotificationManager.cancelNotification()
+            NotificationManager.scheduleWorkoutReminder()
             
             // Logic for completing the workout
             storeModel.addFundtoUser(price: 50)
@@ -559,7 +562,6 @@ class WorkoutViewModel: ObservableObject {
     func generateRandomNumber() -> Double {
         return Double.random(in: 0..<1)
     }
-    
     
 }
 

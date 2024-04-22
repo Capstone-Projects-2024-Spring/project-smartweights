@@ -60,9 +60,9 @@ struct Homepage: View {
                 Divider()
                 
                 // Videos for video carousel
-                let SWTutorial = VideoCard(videoFile: "SWTutorialv2", videoFileExt: "mp4", title: "SmartWeights Tutorial", description: "SmartWeights")
+                let SWTutorial = VideoCard(videoId: "K9E32Z8ZQDU", title: "SmartWeights Tutorial", description: "SmartWeights")
                 
-                let DumbbellTutorial = VideoCard(videoFile: "DumbbellCurls", videoFileExt: "mp4", title: "How to Dumbell Curl", description: "Livestrong")
+                let DumbbellTutorial = VideoCard(videoId: "av7-8igSXTs", title: "How to Dumbell Curl", description: "Livestrong")
                 
                 // Array of defined videos. Used by VideoCarousel view.
                 let videos = [SWTutorial, DumbbellTutorial]
