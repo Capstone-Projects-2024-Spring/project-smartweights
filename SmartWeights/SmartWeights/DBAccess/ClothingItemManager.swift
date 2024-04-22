@@ -31,6 +31,7 @@ extension ClothingItemModel {
 }
 
 class ClothingItemDBManager : ObservableObject{
+    static let shared = ClothingItemDBManager()
     @Published var clothingItems: [ClothingItemModel] = []
     let CKManager = CloudKitManager()
     var clothingItemExists: Bool = false
@@ -67,12 +68,17 @@ class ClothingItemDBManager : ObservableObject{
                 let clothingItem = ClothingItemModel(recordId: record.recordID, isActive: record[ClothingItemRecordKeys.isActive.rawValue] as! Int64, imageName: record[ClothingItemRecordKeys.imageName.rawValue] as! String)
                 clothingItems.append(clothingItem)
                 if clothingItem.isActive == 1 {
-                    self.activeClothing = clothingItem.imageName
+                    DispatchQueue.main.async {
+                        self.activeClothing = clothingItem.imageName
+                    }
                 }
             
             }
-            completion(clothingItems, nil)
-            self.clothingItemExists = true
+            DispatchQueue.main.async {
+                completion(clothingItems, nil)
+                self.clothingItemExists = true
+
+            }
         }
     }
     func fetchSpecificClothingItem(imageName: String, completion: @escaping (ClothingItemModel?, Error?) -> Void) {
@@ -97,9 +103,13 @@ class ClothingItemDBManager : ObservableObject{
             }else{
                 let newClothingItem = ClothingItemModel(recordId: nil, isActive: 0, imageName: imageName)
                 let newClothingItemRecord = newClothingItem.record
-                self.clothingItems.append(newClothingItem)
+                DispatchQueue.main.async {
+                    self.clothingItems.append(newClothingItem)
+                }
                 self.CKManager.savePrivateItem(record: newClothingItemRecord)
-                completion(nil)
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             }
         }
     }
@@ -121,7 +131,9 @@ class ClothingItemDBManager : ObservableObject{
                 dispatchGroup.enter()
                 if record["imageName"] as! String == imageName {
                     record["isActive"] = 1
-                    self.activeClothing = imageName
+                    DispatchQueue.main.async {
+                        self.activeClothing = imageName
+                    }
                 } else {
                     record["isActive"] = 0
                 }
@@ -130,7 +142,7 @@ class ClothingItemDBManager : ObservableObject{
                 
             }
             dispatchGroup.notify(queue: .main) {
-                    completion(self.activeClothing, nil)
+                completion(self.activeClothing, nil)
             }
         }
     }
@@ -154,6 +166,9 @@ class ClothingItemDBManager : ObservableObject{
                 record["isActive"] = 0
                 self.CKManager.savePrivateItem(record: record)
                 dispatchGroup.leave()
+            }
+            DispatchQueue.main.async {
+                self.activeClothing = ""
             }
             dispatchGroup.notify(queue: .main) {
                 completion(nil)

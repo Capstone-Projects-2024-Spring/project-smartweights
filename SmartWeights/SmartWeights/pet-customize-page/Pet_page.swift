@@ -113,12 +113,6 @@ struct Pet_Page: View {
                     //                        .bold()
                     //                        .frame(maxWidth: .infinity, alignment: .center)
                     //                        .padding(.top, 10)
-                    Button("Print viewModel.activePet") {
-                        print(viewModel.activePet)
-                    }
-                    Button("Print viewModel.g_getActivePet()") {
-                        print(viewModel.g_getActivePet())
-                    }
                     if viewModel.isLoading{
                         ProgressView()
                     } else{

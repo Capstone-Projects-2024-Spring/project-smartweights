@@ -38,7 +38,6 @@ struct TabBar: View {
     @ObservedObject var coreDataManager: CoreDataManager
 
     @State private var selectedTab: Tab = .home
-    @ObservedObject var petpageModel = PetPageFunction()
     
     func changeTab(to tab: Tab) {
         self.selectedTab = tab

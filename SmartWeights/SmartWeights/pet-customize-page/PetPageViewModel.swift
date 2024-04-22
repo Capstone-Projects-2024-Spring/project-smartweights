@@ -24,6 +24,7 @@ class PetPageFunction: ObservableObject {
     var userDBManager = UserDBManager()
     var petDBManager = PetDBManager()
     var petItemDBManager = PetItemDBManager.shared
+    
     var foodItemDBManager = FoodItemDBManager()
     @Published var showShop = false
     @Published var showCustomize = false
@@ -40,7 +41,7 @@ class PetPageFunction: ObservableObject {
     
     @Published var foodItems: [FoodItemModel] = []
     
-    @Published var petItems: [PetItemModel] = []
+    // @Published var petItems: [PetItemModel] = []
     
     @Published var isLoading = false
     
@@ -71,18 +72,18 @@ class PetPageFunction: ObservableObject {
                 }
             }
         }
-        petItemDBManager.fetchPetItems{ petItems, error in
-            if let error = error {
-                print("Error fetching pet items: \(error.localizedDescription)")
-                return
-            }
-            if let petItems = petItems {
-                DispatchQueue.main.async {
-                    self.petItems = petItems
-                }
-            }
+        // petItemDBManager.fetchPetItems{ petItems, error in
+        //     if let error = error {
+        //         print("Error fetching pet items: \(error.localizedDescription)")
+        //         return
+        //     }
+        //     if let petItems = petItems {
+        //         DispatchQueue.main.async {
+        //             self.petItems = petItems
+        //         }
+        //     }
             
-        }
+        // }
         activePet = petItemDBManager.g_getActivePet()
         //  petItemDBManager.getActivePet{ activePet, error in
         //      if let error = error {
