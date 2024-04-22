@@ -129,8 +129,8 @@ class PetDBManager: ObservableObject {
         }
     }
     func getXP() -> Int{
-        print("Total XP from getXP(): \(Int(pet?.totalXP ?? 0))")
-        return Int(pet?.totalXP ?? 0)
+        print("Total XP from getXP(): \(Int(self.totalXP))")
+        return Int(self.totalXP)
     }
     func getLevel(completion: @escaping (Int64?, Error?) -> Void){
         if let pet = pet {
@@ -206,8 +206,11 @@ class PetDBManager: ObservableObject {
                 if let saveError = saveError {
                     print("Failed to update pet HP: \(saveError.localizedDescription)")
                 } else {
-                    self?.pet?.health = newHealth // Update local pet model
-                    print("Pet HP updated to \(newHealth).")
+                    DispatchQueue.main.async {
+                        self?.pet?.health = newHealth // Update local pet model
+                        self?.health = newHealth
+                        print("Pet HP updated to \(newHealth).")
+                    }
                 }
                 completion(saveError)
             }
