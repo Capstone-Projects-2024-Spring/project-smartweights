@@ -28,7 +28,7 @@ struct WorkoutMainPage: View {
     @State private var workoutSubscription: AnyCancellable?
     @State private var selectedTab = 0
     @State private var isExpanded = false
-    @State private var graphData: [Double] = [] 
+    @State private var graphData: [Double] = []
     @State private var currentMotivationalPhrase = "Let's get started!"
 
     var body: some View {
@@ -266,15 +266,22 @@ struct WorkoutMainPage: View {
             
             
             // Start/Reset workout button
-            //----------------------BUTTON ACTION---------------------// 
+            //----------------------BUTTON ACTION---------------------//
             Button(action: {
                 print(".............THIS IS BUTTON TEXT",buttonText)
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
                         
+                        // CODE TO UPDATE WORKOUTS ACHIEVEMENTS (1st Workout, Workout Machine, Perfect Form)
                         
+                        // 1st Workout
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.1stWorkout", progressToAdd: 100.0)
                         
+                        // Workout Machine (50 total)
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.WorkoutMachine", progressToAdd: 2.0)
                         
+                        // Perfect Form (100 total)
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.PerfectForm", progressToAdd: 1.0)
                         
                         viewModel.finishWorkout()
                     } else if buttonText == "Final Set" {
@@ -420,6 +427,11 @@ struct WorkoutMainPage: View {
                             .keyboardType(.numberPad)
                             .padding()
                         
+                        TextField("Count down Timer (s)", text: $viewModel.inputtedCountdown)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .keyboardType(.numberPad)
+                            .padding()
+                        
                         
                         Button("Start Workout") {
                             viewModel.validateAndStartCountdown(sets: viewModel.inputtedSets, reps: viewModel.inputtedReps, weights: viewModel.inputtedWeights)
@@ -434,7 +446,7 @@ struct WorkoutMainPage: View {
                         }
                     }
                 }
-                .frame(width: 400, height: 350)
+                .frame(width: 400, height: 425)
                 .background(Color.white.opacity(0.9))
                 .cornerRadius(20)
                 .shadow(radius: 10)
