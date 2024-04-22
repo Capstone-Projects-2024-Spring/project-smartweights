@@ -40,6 +40,7 @@ class WorkoutViewModel: ObservableObject {
     @Published var inputtedSets = ""
     @Published var inputtedReps = ""
     @Published var inputtedWeights = ""
+    @Published var inputtedCountdown = ""
     @Published var currentSets: Int = 0
     
     //timer
@@ -93,6 +94,15 @@ class WorkoutViewModel: ObservableObject {
     
     
     func startCountdown() {
+        guard let countdownDuration = Int(inputtedCountdown) else {
+            alertMessage = "Please enter a valid number for the countdown."
+            showingAlert = true
+            return
+        }
+
+        countdown = countdownDuration
+        countdownActive = true
+
         countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
             guard let self = self else { return }
             if self.countdown > 0 {
@@ -127,6 +137,7 @@ class WorkoutViewModel: ObservableObject {
             }
         }
     }
+    
     
     func validateAndStartCountdown(sets: String, reps: String, weights: String) {
         if isValidInput(sets) && isValidInput(reps) && isValidInput(weights) {
@@ -329,7 +340,9 @@ class WorkoutViewModel: ObservableObject {
         recognitionRequest?.endAudio()
         print("Stopped listening")
         self.isListening = false
+        
         // CODE TO UPDATE WORKOUTS ACHIEVEMENTS (1st Workout, Workout Machine, Perfect Form)
+        
         // 1st Workout
         GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.1stWorkout", progressToAdd: 100.0)
         
@@ -384,7 +397,6 @@ class WorkoutViewModel: ObservableObject {
             isWorkingOut = false
         }
         
-        
     }
     
     func finalset(){
@@ -438,9 +450,10 @@ class WorkoutViewModel: ObservableObject {
     
     func playSound() {
         do {
-
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
-            try AVAudioSession.sharedInstance().setMode(.default)
+            // try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+            // try AVAudioSession.sharedInstance().setActive(true, options: [])
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [])
+            try AVAudioSession.sharedInstance().setMode(.measurement)
             try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
             print("Failed to set audio session category: \(error)")
@@ -516,13 +529,14 @@ class WorkoutViewModel: ObservableObject {
     
     func resetWorkoutState() {
         countdownActive = false
-        countdown = 5 // Reset to your initial countdown value
+        countdown = 0 // Reset to your initial countdown value
         
         // Reset progress
         progress = 0
         inputtedSets = ""
         inputtedReps = ""
         inputtedWeights = ""
+        inputtedCountdown = ""
         currentSets = 0
         
         // Reset timer
