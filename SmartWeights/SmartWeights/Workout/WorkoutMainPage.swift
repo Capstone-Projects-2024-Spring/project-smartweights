@@ -11,9 +11,9 @@ struct WorkoutMainPage: View {
     @StateObject var workoutPageViewModel = WorkoutPageViewModel()
     @StateObject var viewModel: WorkoutViewModel
     
-    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
-    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
-    @ObservedObject var petItemDBManager = PetItemDBManager()
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager.shared
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
+    @ObservedObject var petItemDBManager = PetItemDBManager.shared
     
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
