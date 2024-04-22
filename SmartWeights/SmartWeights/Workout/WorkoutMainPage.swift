@@ -272,16 +272,6 @@ struct WorkoutMainPage: View {
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
                         
-                        // CODE TO UPDATE WORKOUTS ACHIEVEMENTS (1st Workout, Workout Machine, Perfect Form)
-                        
-                        // 1st Workout
-                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.1stWorkout", progressToAdd: 100.0)
-                        
-                        // Workout Machine (50 total)
-                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.WorkoutMachine", progressToAdd: 2.0)
-                        
-                        // Perfect Form (100 total)
-                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.PerfectForm", progressToAdd: 1.0)
                         
                         viewModel.finishWorkout()
                     } else if buttonText == "Final Set" {
