@@ -14,10 +14,10 @@ struct Pet_Page: View {
 //    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
     //@ObservedObject var petItemDBManager = PetItemDBManager()
     @State var activePet: String = ""
-    
+    @State private var viewID = UUID()
     var body: some View {
         NavigationView {
-           
+            
             VStack {
                 /*
                  Text("Pet Name")
@@ -30,7 +30,7 @@ struct Pet_Page: View {
                  }
                  */
                 
-             
+                
                 HStack {
                     HamburgerMenu(
                         navigateToShop: { viewModel.showShop = true },
@@ -88,19 +88,19 @@ struct Pet_Page: View {
                 ZStack{
                     ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
                     
-//                    Image(backgroundItemDBManager.activeBackground)
-//                        .resizable()
-//                        .frame(width: 475, height: 450)
+                    //                    Image(backgroundItemDBManager.activeBackground)
+                    //                        .resizable()
+                    //                        .frame(width: 475, height: 450)
                     
                     Image(viewModel.activePet)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 475, height: 450)
-//                    Image(clothingItemDBManager.activeClothing)
-//                        .resizable()
-//                        .scaledToFit()
+                    //                    Image(clothingItemDBManager.activeClothing)
+                    //                        .resizable()
+                    //                        .scaledToFit()
                     
-                   
+                    
                 }
                 VStack {
                     CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
@@ -114,14 +114,11 @@ struct Pet_Page: View {
                     //                        .frame(maxWidth: .infinity, alignment: .center)
                     //                        .padding(.top, 10)
                     Button("Print viewModel.activePet") {
-                print(viewModel.activePet)
-                }
-                Button("Print viewModel.g_getActivePet()") {
-                    print(viewModel.g_getActivePet())
-                }
-                Button("Print viewModel.petItemDBManager.activePet") {
-                    print(viewModel.petItemDBManager.activePet)
-                }
+                        print(viewModel.activePet)
+                    }
+                    Button("Print viewModel.g_getActivePet()") {
+                        print(viewModel.g_getActivePet())
+                    }
                     if viewModel.isLoading{
                         ProgressView()
                     } else{
@@ -149,6 +146,11 @@ struct Pet_Page: View {
             .navigationBarTitleDisplayMode(.inline)
             .background(NavigationLink(destination: PetStore(), isActive: $viewModel.showShop) { EmptyView() })
             .background(NavigationLink(destination: Customize_page(), isActive: $viewModel.showCustomize) { EmptyView() })
+            .id(viewID) // add this line
+            .onAppear {
+                viewID = UUID() // change the viewID every time this view appears
+                viewModel.g_getActivePet()
+            }
         }
     }
 }
