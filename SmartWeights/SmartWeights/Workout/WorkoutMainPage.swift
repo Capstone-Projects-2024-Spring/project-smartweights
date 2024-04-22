@@ -30,7 +30,7 @@ struct WorkoutMainPage: View {
     @State private var isExpanded = false
     @State private var graphData: [Double] = []
     @State private var currentMotivationalPhrase = "Let's get started!"
-
+    
     var body: some View {
         ZStack {
             VStack {
@@ -124,7 +124,7 @@ struct WorkoutMainPage: View {
                                             Image(systemName: "checkmark")
                                                 .foregroundColor(.green)
                                                 .bold()
-
+                                            
                                         }
                                     }
                                     
@@ -213,7 +213,7 @@ struct WorkoutMainPage: View {
             return "Start Workout"
         }
     }
-
+    
     private var StartWorkoutView: some View {
         VStack {
             if !viewModel.hasWorkoutStarted {
@@ -294,7 +294,7 @@ struct WorkoutMainPage: View {
                         //Resume workout from a paused state
                         //button == "next set"
                         viewModel.nextset()
-                    
+                        
                     }
                 } else {
                     // Start the workout

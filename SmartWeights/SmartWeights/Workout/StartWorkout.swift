@@ -99,10 +99,10 @@ class WorkoutViewModel: ObservableObject {
             showingAlert = true
             return
         }
-
+        
         countdown = countdownDuration
         countdownActive = true
-
+        
         countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
             guard let self = self else { return }
             if self.countdown > 0 {
@@ -147,7 +147,7 @@ class WorkoutViewModel: ObservableObject {
         }
         return false
     }
-
+    
     
     func validateAndStartCountdown(sets: String, reps: String, weights: String) {
         if isInputZeroOrInvalid() {
@@ -168,7 +168,7 @@ class WorkoutViewModel: ObservableObject {
             showingAlert = true
         }
     }
-
+    
     
     private func isValidInput(_ input: String) -> Bool {
         guard !input.isEmpty, let _ = Int(input) else { return false }
@@ -198,7 +198,7 @@ class WorkoutViewModel: ObservableObject {
         self.WorkoutState = .idle
         guard !isListening else { return }
         isListening = true
-    
+        
         
         let recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         
@@ -388,7 +388,7 @@ class WorkoutViewModel: ObservableObject {
             
             // Logic for completing the workout
             storeModel.addFundtoUser(price: 50)
-//            workoutPageViewModel.AddXP(value: 25)
+            //            workoutPageViewModel.AddXP(value: 25)
             petpageModel.addXP(value: 25)
             resetWorkoutState()
             hasWorkoutStarted = false
@@ -427,41 +427,41 @@ class WorkoutViewModel: ObservableObject {
         self.checkDangerousFormWhileWorkingOut()
         
     }
-
+    
     func checkDangerousFormWhileWorkingOut() {
-    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-        guard let self = self else { return }
-        var soundPlayed = false
-        while self.isWorkingOut {
-            if self.formCriteria.dangerousForm(dumbbellData: self.ble.MPU6050_1_Gyro, elbowData: self.ble.MPU6050_2_Gyro) {
-                DispatchQueue.main.async {
-                    if !soundPlayed {
-                        self.playSound()
-                        print("Sound Played")
-                        soundPlayed = true
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            var soundPlayed = false
+            while self.isWorkingOut {
+                if self.formCriteria.dangerousForm(dumbbellData: self.ble.MPU6050_1_Gyro, elbowData: self.ble.MPU6050_2_Gyro) {
+                    DispatchQueue.main.async {
+                        if !soundPlayed {
+                            self.playSound()
+                            print("Sound Played")
+                            soundPlayed = true
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        if soundPlayed {
+                            self.stopSound()
+                            print("Sound Stopped")
+                            soundPlayed = false
+                        }
                     }
                 }
-            } else {
-                DispatchQueue.main.async {
-                    if soundPlayed {
-                        self.stopSound()
-                        print("Sound Stopped")
-                        soundPlayed = false
-                    }
-                }
+                Thread.sleep(forTimeInterval: 0.1) //to allow main thread to run
             }
-            Thread.sleep(forTimeInterval: 0.1) //to allow main thread to run
-        }
-        DispatchQueue.main.async {
-            if soundPlayed {
-                self.stopSound()
-                print("Sound Stopped on exit")
+            DispatchQueue.main.async {
+                if soundPlayed {
+                    self.stopSound()
+                    print("Sound Stopped on exit")
+                }
             }
         }
     }
-}
-
-
+    
+    
     
     func playSound() {
         do {
