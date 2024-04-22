@@ -89,7 +89,7 @@ struct PostWorkoutData: View {
                     }
                 }
                 HStack{
-                Text("\(Int(workoutAnalysis["averageWristUpDownRotation"] ?? 0.0))% wrist wrist stability (up down)")
+                    Text("\(Int(workoutAnalysis["averageWristUpDownRotation"] ?? 0.0))% wrist wrist stability (up down)")
                     if workoutAnalysis["averageWristUpDownRotation"]! < 70.0{
                         Image(systemName: "xmark")
                             .foregroundColor(.red)
@@ -101,9 +101,9 @@ struct PostWorkoutData: View {
                             .bold()
                     }
                 }
-
+                
                 HStack{
-                Text("\(Int(workoutAnalysis["averageElbowFlareUpDown"] ?? 0.0))% elbow stability(up down)")
+                    Text("\(Int(workoutAnalysis["averageElbowFlareUpDown"] ?? 0.0))% elbow stability(up down)")
                     if workoutAnalysis["averageElbowFlareUpDown"]! < 70.0{
                         Image(systemName: "xmark")
                             .foregroundColor(.red)
@@ -116,7 +116,7 @@ struct PostWorkoutData: View {
                     }
                 }
                 HStack{
-                Text("\(Int(workoutAnalysis["averageElbowFlareForwardBackward"] ?? 0.0))% elbow (forward backward)")
+                    Text("\(Int(workoutAnalysis["averageElbowFlareForwardBackward"] ?? 0.0))% elbow (forward backward)")
                     if workoutAnalysis["averageElbowFlareForwardBackward"]! < 70.0{
                         Image(systemName: "xmark")
                             .foregroundColor(.red)
@@ -146,84 +146,84 @@ struct OverallWorkoutData: View{
             if let last = workoutAnalysisForSets.last {
                 VStack(alignment: .leading){
                     HStack{
-                    Text("\(Int(last["overallWorkoutUpDownAverage"] ?? 0.0 * 100))% good curl acceleration (left right)")
-                    if last["overallWorkoutUpDownAverage"]! < 70.0{
-                        Image(systemName: "xmark")
-                            .foregroundColor(.red)
-                            .bold()
-                    }
-                    else{
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.green)
-                            .bold()
-                    }
-                    }
-                    HStack{
-                    Text("\(Int(last["overallDumbbellTwistingLeftRight"] ?? 0.0 * 100))% wrist stability (left right)")
-                    if last["overallDumbbellTwistingLeftRight"]! < 70.0{
-                        Image(systemName: "xmark")
-                            .foregroundColor(.red)
-                            .bold()
-                    }
-                    else{
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.green)
-                            .bold()
-                    }
+                        Text("\(Int(last["overallWorkoutUpDownAverage"] ?? 0.0 * 100))% good curl acceleration (left right)")
+                        if last["overallWorkoutUpDownAverage"]! < 70.0{
+                            Image(systemName: "xmark")
+                                .foregroundColor(.red)
+                                .bold()
+                        }
+                        else{
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.green)
+                                .bold()
+                        }
                     }
                     HStack{
-                    Text("\(Int(last["overallDumbbellTwistingUpDown"] ?? 0.0 * 100))% wrist stability (up down)")
-                    if last["overallDumbbellTwistingUpDown"]! < 70.0{
-                        Image(systemName: "xmark")
-                            .foregroundColor(.red)
-                            .bold()
-                    }
-                    else{
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.green)
-                            .bold()
-                    }
-                    }
-                    HStack{
-                    
-                    Text("\(Int(last["overallWorkoutElbowSwing"] ?? 0.0 * 100))% elbow stability (swinging)")
-                    if last["overallWorkoutElbowSwing"]! < 70.0{
-                        Image(systemName: "xmark")
-                            .foregroundColor(.red)
-                            .bold()
-                    }
-                    else{
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.green)
-                            .bold()
-                    }
+                        Text("\(Int(last["overallDumbbellTwistingLeftRight"] ?? 0.0 * 100))% wrist stability (left right)")
+                        if last["overallDumbbellTwistingLeftRight"]! < 70.0{
+                            Image(systemName: "xmark")
+                                .foregroundColor(.red)
+                                .bold()
+                        }
+                        else{
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.green)
+                                .bold()
+                        }
                     }
                     HStack{
-                    Text("\(Int(last["overallWorkoutElbowFlareUpDown"] ?? 0.0 * 100))% elbow stability (up down)")
-                    if last["overallWorkoutElbowFlareUpDown"]! < 70.0{
-                        Image(systemName: "xmark")
-                            .foregroundColor(.red)
-                            .bold()
-                    }
-                    else{
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.green)
-                            .bold()
-                    }
+                        Text("\(Int(last["overallDumbbellTwistingUpDown"] ?? 0.0 * 100))% wrist stability (up down)")
+                        if last["overallDumbbellTwistingUpDown"]! < 70.0{
+                            Image(systemName: "xmark")
+                                .foregroundColor(.red)
+                                .bold()
+                        }
+                        else{
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.green)
+                                .bold()
+                        }
                     }
                     HStack{
-                    Text("\(Int(last["overallWorkoutElbowFlareForwardBackward"] ?? 0.0 * 100))% elbow stability (forward backward)")
-                    if last["overallWorkoutElbowFlareForwardBackward"]! < 70.0{
-                        Image(systemName: "xmark")
-                            .foregroundColor(.red)
-                            .bold()
+                        
+                        Text("\(Int(last["overallWorkoutElbowSwing"] ?? 0.0 * 100))% elbow stability (swinging)")
+                        if last["overallWorkoutElbowSwing"]! < 70.0{
+                            Image(systemName: "xmark")
+                                .foregroundColor(.red)
+                                .bold()
+                        }
+                        else{
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.green)
+                                .bold()
+                        }
                     }
-                    else{
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.green)
-                            .bold()
-                    
+                    HStack{
+                        Text("\(Int(last["overallWorkoutElbowFlareUpDown"] ?? 0.0 * 100))% elbow stability (up down)")
+                        if last["overallWorkoutElbowFlareUpDown"]! < 70.0{
+                            Image(systemName: "xmark")
+                                .foregroundColor(.red)
+                                .bold()
+                        }
+                        else{
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.green)
+                                .bold()
+                        }
                     }
+                    HStack{
+                        Text("\(Int(last["overallWorkoutElbowFlareForwardBackward"] ?? 0.0 * 100))% elbow stability (forward backward)")
+                        if last["overallWorkoutElbowFlareForwardBackward"]! < 70.0{
+                            Image(systemName: "xmark")
+                                .foregroundColor(.red)
+                                .bold()
+                        }
+                        else{
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.green)
+                                .bold()
+                            
+                        }
                     }
                 }
             }

@@ -74,32 +74,32 @@ struct allFeedback: View {
                             .underline()
                         VStack(alignment: .leading, spacing: 10) {
                             HStack{
-                            Text("Curl Acceleration - \(Int(workoutSession["overallCurlAcceleration"] as? Double ?? 0.0))%")
-                            if workoutSession["overallCurlAcceleration"] as? Double ?? 0.0 < 70 {
-                                Image(systemName: "xmark")
-                                    .foregroundColor(.red)
-                                    .bold()
-                            } else {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.green)
-                                    .bold()
+                                Text("Curl Acceleration - \(Int(workoutSession["overallCurlAcceleration"] as? Double ?? 0.0))%")
+                                if workoutSession["overallCurlAcceleration"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
                             }
-                            }
-
+                            
                             HStack{
-                            Text("Wrist Stability (Left Right) - \(Int(workoutSession["overallWristStabilityLeftRight"] as? Double ?? 0.0))%")
-                            if workoutSession["overallWristStabilityLeftRight"] as? Double ?? 0.0 < 70 {
-                                Image(systemName: "xmark")
-                                    .foregroundColor(.red)
-                                    .bold()
-                            } else {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.green)
-                                    .bold()
+                                Text("Wrist Stability (Left Right) - \(Int(workoutSession["overallWristStabilityLeftRight"] as? Double ?? 0.0))%")
+                                if workoutSession["overallWristStabilityLeftRight"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
+                                
                             }
-
-                            }
-
+                            
                             HStack {
                                 Text("Wrist Stability (Up Down) - \(Int(workoutSession["overallWristStabilityUpDown"] as? Double ?? 0.0))%")
                                 if workoutSession["overallWristStabilityUpDown"] as? Double ?? 0.0 < 70 {
@@ -112,8 +112,8 @@ struct allFeedback: View {
                                         .bold()
                                 }
                             }
-
-
+                            
+                            
                             HStack {
                                 Text("Elbow Swing - \(Int(workoutSession["overallElbowSwing"] as? Double ?? 0.0))%")
                                 if workoutSession["overallElbowSwing"] as? Double ?? 0.0 < 70 {
@@ -126,8 +126,8 @@ struct allFeedback: View {
                                         .bold()
                                 }
                             }
-
-
+                            
+                            
                             HStack {
                                 Text("Elbow Flare (Left Right) - \(Int(workoutSession["overallElbowFlareLeftRight"] as? Double ?? 0.0))%")
                                 if workoutSession["overallElbowFlareLeftRight"] as? Double ?? 0.0 < 70 {
@@ -140,8 +140,8 @@ struct allFeedback: View {
                                         .bold()
                                 }
                             }
-
-
+                            
+                            
                             HStack {
                                 Text("Elbow Flare (Up Down) - \(Int(workoutSession["overallElbowFlareUpDown"] as? Double ?? 0.0))%")
                                 if workoutSession["overallElbowFlareUpDown"] as? Double ?? 0.0 < 70 {
@@ -154,9 +154,9 @@ struct allFeedback: View {
                                         .bold()
                                 }
                             }
-
-
-
+                            
+                            
+                            
                         }
                         .foregroundColor(.white)
                         //get data for each set in the workout
@@ -177,8 +177,8 @@ struct allFeedback: View {
                                                 .bold()
                                         }
                                     }
-
-
+                                    
+                                    
                                     HStack {
                                         Text("Wrist Stability (Left Right) - \(Int(exerciseSet["avgWristStabilityLeftRight"] as? Double ?? 0))%")
                                         if exerciseSet["avgWristStabilityLeftRight"] as? Double ?? 0 < 70 {
@@ -191,8 +191,8 @@ struct allFeedback: View {
                                                 .bold()
                                         }
                                     }
-
-
+                                    
+                                    
                                     HStack {
                                         Text("Wrist Stability (Up Down) - \(Int(exerciseSet["avgWristStabilityUpDown"] as? Double ?? 0))%")
                                         if exerciseSet["avgWristStabilityUpDown"] as? Double ?? 0 < 70 {
@@ -205,8 +205,8 @@ struct allFeedback: View {
                                                 .bold()
                                         }
                                     }
-
-
+                                    
+                                    
                                     HStack {
                                         Text("Elbow Swing - \(Int(exerciseSet["avgElbowSwing"] as? Double ?? 0))%")
                                         if exerciseSet["avgElbowSwing"] as? Double ?? 0 < 70 {
@@ -219,8 +219,8 @@ struct allFeedback: View {
                                                 .bold()
                                         }
                                     }
-
-
+                                    
+                                    
                                     HStack {
                                         Text("Elbow Flare (Left Right) - \(Int(exerciseSet["avgElbowFlareLeftRight"] as? Double ?? 0))%")
                                         if exerciseSet["avgElbowFlareLeftRight"] as? Double ?? 0 < 70 {
@@ -233,8 +233,8 @@ struct allFeedback: View {
                                                 .bold()
                                         }
                                     }
-
-
+                                    
+                                    
                                     HStack {
                                         Text("Elbow Flare (Up Down) - \(Int(exerciseSet["avgElbowFlareUpDown"] as? Double ?? 0))%")
                                         if exerciseSet["avgElbowFlareUpDown"] as? Double ?? 0 < 70 {
@@ -247,8 +247,8 @@ struct allFeedback: View {
                                                 .bold()
                                         }
                                     }
-
-
+                                    
+                                    
                                 }
                                 .padding(.horizontal)
                                 .foregroundColor(.white)
