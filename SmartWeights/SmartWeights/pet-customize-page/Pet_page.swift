@@ -141,6 +141,7 @@ struct Pet_Page: View {
             .onAppear {
                 viewID = UUID() // change the viewID every time this view appears
                 viewModel.getActiveAll()
+                viewModel.getPetStats()
             }
         }
     }

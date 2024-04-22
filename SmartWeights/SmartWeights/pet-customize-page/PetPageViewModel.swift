@@ -20,9 +20,8 @@ struct FoodItem: Identifiable {
 
 class PetPageFunction: ObservableObject {
 //    static let shared = PetPageFunction()
-    var inventoryDBManager = InventoryDBManager()
-    var userDBManager = UserDBManager()
-    var petDBManager = PetDBManager()
+   
+    var petDBManager = PetDBManager.shared
     var petItemDBManager = PetItemDBManager.shared
     var clothingItemDBManager = ClothingItemDBManager.shared
     var backgroundItemDBManager = BackgroundItemDBManager.shared
@@ -88,8 +87,8 @@ class PetPageFunction: ObservableObject {
         //     }
             
         // }
-        activePet = petItemDBManager.g_getActivePet()
-        activeClothing = clothingItemDBManager.g_getActiveClothing()
+        // activePet = petItemDBManager.g_getActivePet()
+        // activeClothing = clothingItemDBManager.g_getActiveClothing()
         //  petItemDBManager.getActivePet{ activePet, error in
         //      if let error = error {
         //          print("Error fetching activePet: \(error.localizedDescription)")
@@ -315,6 +314,10 @@ class PetPageFunction: ObservableObject {
         activeClothing = clothingItemDBManager.g_getActiveClothing()
         activePet = petItemDBManager.g_getActivePet()
         activeBackground = backgroundItemDBManager.g_getActiveBackground()
+    }
+    func getPetStats(){
+        userTotalXP = petDBManager.getXP() 
+        healthBar = petDBManager.getHealth()
     }
     
 }
