@@ -215,17 +215,6 @@ class WorkoutViewModel: ObservableObject {
                             if self.WorkoutState == .final{
                                 self.finishWorkout()
                                 print("Workout stopped. workoutInProgress: \(self.workoutInProgress)")
-                                // Cancel the recognition task before stopping the audio engine
-                                // self.recognitionTask?.cancel()
-                                // self.recognitionTask = nil
-                                
-                                // // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                // self.audioEngine.stop()
-                                // inputNode.removeTap(onBus: 0)
-                                // recognitionRequest.endAudio()
-                                // print("Stopped listening")
-                                // self.isListening = false
-                                // }
                                 inputNode.removeTap(onBus: 0)
                                 return
                             }
@@ -386,18 +375,6 @@ class WorkoutViewModel: ObservableObject {
             isWorkingOut = false
         }
         
-        // Logic for completing the workout
-        // storeModel.addFundtoUser(price: 50)
-        // workoutPageViewModel.AddXP(value: 25)
-        // resetWorkoutState()
-        // hasWorkoutStarted = false
-        // isWorkoutPaused = false
-        // ble.collectDataToggle = false //stops collecting data
-        // ble.MPU6050_1_All_Gyros.removeAll()//remove all data from current workout (after storing the data)
-        // ble.MPU6050_2_All_Gyros.removeAll()
-        // showGraphPopover = true
-        // currentMotivationalPhrase = "Let's get started with a New Workout!"
-        // isWorkingOut = false
         
     }
     
@@ -452,10 +429,9 @@ class WorkoutViewModel: ObservableObject {
     
     func playSound() {
         do {
-            // try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
-            // try AVAudioSession.sharedInstance().setActive(true, options: [])
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [])
-            try AVAudioSession.sharedInstance().setMode(.measurement)
+
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try AVAudioSession.sharedInstance().setMode(.default)
             try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
             print("Failed to set audio session category: \(error)")
