@@ -35,8 +35,9 @@ class CustomizeViewModel: ObservableObject {
     
     var backgroundItemDBManager = BackgroundItemDBManager()
     var clothingItemDBManager = ClothingItemDBManager()
-    var petItemDBManager = PetItemDBManager()
+    var petItemDBManager = PetItemDBManager.shared
     
+//    private var petPageViewModel = PetPageFunction.shared
     // @Published var isDataLoaded = false
     @Published var isPetDataLoaded = false
     @Published var isBackgroundDataLoaded = false
@@ -169,6 +170,7 @@ class CustomizeViewModel: ObservableObject {
                 print("Error setting active pet: \(error.localizedDescription)")
                 return
             }
+//            self.petPageViewModel.g_getActivePet()
         }
     }
     

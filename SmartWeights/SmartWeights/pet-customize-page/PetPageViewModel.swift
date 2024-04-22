@@ -8,6 +8,7 @@
 import Foundation
 import CloudKit
 import SwiftUI
+import Combine
 
 
 struct FoodItem: Identifiable {
@@ -18,11 +19,11 @@ struct FoodItem: Identifiable {
 }
 
 class PetPageFunction: ObservableObject {
-    
+//    static let shared = PetPageFunction()
     var inventoryDBManager = InventoryDBManager()
     var userDBManager = UserDBManager()
     var petDBManager = PetDBManager()
-    var petItemDBManager = PetItemDBManager()
+    var petItemDBManager = PetItemDBManager.shared
     var foodItemDBManager = FoodItemDBManager()
     @Published var showShop = false
     @Published var showCustomize = false
@@ -39,11 +40,7 @@ class PetPageFunction: ObservableObject {
     
     @Published var foodItems: [FoodItemModel] = []
     
-    @Published var petItems: [PetItemModel] = []{
-        didSet{
-            getActivePet()
-        }
-    }
+    @Published var petItems: [PetItemModel] = []
     
     @Published var isLoading = false
     
@@ -56,11 +53,13 @@ class PetPageFunction: ObservableObject {
     @Published var pet: PetModel?
     @Published var activePet: String = ""
     
+    private var cancellables = Set<AnyCancellable>()
     // Initializer
     init(){
-        fetchPetHealth()
-        updateXP()
-        updateLevel()
+        // fetchPetHealth()
+        // updateXP()
+        // updateLevel()
+        
         foodItemDBManager.fetchFoodItems { fetchedItems, error in
             if let error = error {
                 print("Error fetching food items: \(error)")
@@ -84,17 +83,24 @@ class PetPageFunction: ObservableObject {
             }
             
         }
-        petItemDBManager.getActivePet{ activePet, error in
-            if let error = error {
-                print("Error fetching activePet: \(error.localizedDescription)")
-                return
-            } else {
-                DispatchQueue.main.async {
-                    self.activePet = activePet
-                    print("ACTIVE PET: \(self.activePet)")
-                }
-            }
-        }
+        activePet = petItemDBManager.g_getActivePet()
+        //  petItemDBManager.getActivePet{ activePet, error in
+        //      if let error = error {
+        //          print("Error fetching activePet: \(error.localizedDescription)")
+        //          return
+        //      } else {
+        //          DispatchQueue.main.async {
+        //              self.activePet = activePet
+        //              print("ACTIVE PET: \(self.activePet)")
+        //          }
+        //      }
+        //  }
+        //  petItemDBManager.$activePet
+        // .sink { [weak self] newActivePet in
+        //     self?.activePet = newActivePet
+        // }
+        // .store(in: &cancellables)
+//        activePet = petItemDBManager.activePet
     }
     
     func handleFoodUse(selectedFoodIndex: Int) {
@@ -185,6 +191,9 @@ class PetPageFunction: ObservableObject {
                 }
             }
         }
+    }
+    func g_getActivePet(){
+        activePet = petItemDBManager.g_getActivePet()
     }
     
     func refreshData() {
