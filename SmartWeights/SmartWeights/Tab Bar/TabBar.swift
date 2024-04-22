@@ -55,12 +55,7 @@ struct TabBar: View {
             }
         }
         .tint(.africanViolet)
-        .onChange(of: selectedTab) { newTab in
-            if newTab == .pet {
-                petpageModel.updateXP()
-                petpageModel.updateLevel()
-            }
-        }
+       
     }
 }
 
