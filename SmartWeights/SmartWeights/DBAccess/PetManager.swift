@@ -101,11 +101,28 @@ class PetDBManager: ObservableObject {
                     completion(nil, error)
                     return
                 }
-                guard let pet = pet else {
+                guard pet != nil else {
                     completion(nil, nil)
                     return
                 }
                 completion(self.pet?.totalXP, nil)
+            }
+        }
+    }
+    func getLevel(completion: @escaping (Int64?, Error?) -> Void){
+        if let pet = pet {
+            completion(pet.level, nil)
+        } else {
+            fetchPet { pet, error in
+                if let error = error {
+                    completion(nil, error)
+                    return
+                }
+                guard pet != nil else {
+                    completion(nil, nil)
+                    return
+                }
+                completion(self.pet?.level, nil)
             }
         }
     }
@@ -124,5 +141,50 @@ class PetDBManager: ObservableObject {
         }
     }
     
+    func updateUserLevel(newLevel: Int64, completion: @escaping (Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
+            guard let record = records?.first else {
+                print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
+                completion(error)
+                return
+            }
+            
+            let currentLevel = NSNumber(value: newLevel)
+            record[PetRecordKeys.level.rawValue] = currentLevel as CKRecordValue
+            self.CKManager.savePrivateItem(record: record)
+            completion(nil)
+        }
+    }
+    
+    func updatePetHealth(newHealth: Int64, completion: @escaping (Error?) -> Void) {
+        guard let petRecordId = pet?.recordId else {
+            let error = NSError(domain: "PetErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Missing pet record ID"])
+            print(error.localizedDescription)
+            completion(error)
+            return
+        }
+
+        CloudKitManager.shared.fetchPrivateRecord(recordID: petRecordId) { [weak self] record, error in
+            guard let record = record else {
+                let fetchError = error ?? NSError(domain: "PetErrorDomain", code: -2, userInfo: [NSLocalizedDescriptionKey: "Could not fetch record"])
+                print(fetchError.localizedDescription)
+                completion(fetchError)
+                return
+            }
+
+            record[PetRecordKeys.health.rawValue] = newHealth as CKRecordValue
+            CloudKitManager.shared.savePrivateItem(record: record) { saveError in
+                if let saveError = saveError {
+                    print("Failed to update pet HP: \(saveError.localizedDescription)")
+                } else {
+                    self?.pet?.health = newHealth // Update local pet model
+                    print("Pet HP updated to \(newHealth).")
+                }
+                completion(saveError)
+            }
+        }
+    }
+
+
     
 }
