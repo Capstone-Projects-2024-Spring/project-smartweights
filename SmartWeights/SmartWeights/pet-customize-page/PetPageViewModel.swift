@@ -24,7 +24,8 @@ class PetPageFunction: ObservableObject {
     var userDBManager = UserDBManager()
     var petDBManager = PetDBManager()
     var petItemDBManager = PetItemDBManager.shared
-    
+    var clothingItemDBManager = ClothingItemDBManager.shared
+    var backgroundItemDBManager = BackgroundItemDBManager.shared
     var foodItemDBManager = FoodItemDBManager()
     @Published var showShop = false
     @Published var showCustomize = false
@@ -52,9 +53,12 @@ class PetPageFunction: ObservableObject {
     @Published var userTotalXP = 0
     
     @Published var pet: PetModel?
+
     @Published var activePet: String = ""
+    @Published var activeBackground: String = ""
+    @Published var activeClothing: String = ""
     
-    private var cancellables = Set<AnyCancellable>()
+    // private var cancellables = Set<AnyCancellable>()
     // Initializer
     init(){
         // fetchPetHealth()
@@ -85,6 +89,7 @@ class PetPageFunction: ObservableObject {
             
         // }
         activePet = petItemDBManager.g_getActivePet()
+        activeClothing = clothingItemDBManager.g_getActiveClothing()
         //  petItemDBManager.getActivePet{ activePet, error in
         //      if let error = error {
         //          print("Error fetching activePet: \(error.localizedDescription)")
@@ -193,9 +198,7 @@ class PetPageFunction: ObservableObject {
             }
         }
     }
-    func g_getActivePet(){
-        activePet = petItemDBManager.g_getActivePet()
-    }
+    
     
     func refreshData() {
         isLoading = true
@@ -305,4 +308,13 @@ class PetPageFunction: ObservableObject {
             }
         }
     }
+
+
+
+    func getActiveAll(){
+        activeClothing = clothingItemDBManager.g_getActiveClothing()
+        activePet = petItemDBManager.g_getActivePet()
+        activeBackground = backgroundItemDBManager.g_getActiveBackground()
+    }
+    
 }

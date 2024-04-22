@@ -58,9 +58,11 @@ class ClothingItemDBManager : ObservableObject{
                 return
             }
             guard let records = records else {
-                self.clothingItemExists = false
-                print("No clothing items found.")
-                completion(nil, nil)
+                DispatchQueue.main.async{
+                    self.clothingItemExists = false
+                    print("No clothing items found.")
+                    completion(nil, nil)
+                }
                 return
             }
             var clothingItems: [ClothingItemModel] = []
@@ -76,6 +78,7 @@ class ClothingItemDBManager : ObservableObject{
             }
             DispatchQueue.main.async {
                 completion(clothingItems, nil)
+                self.clothingItems = clothingItems
                 self.clothingItemExists = true
 
             }
@@ -175,15 +178,20 @@ class ClothingItemDBManager : ObservableObject{
             }
         }
     }
-
+    func g_getActiveClothing() -> String{
+        // print("GETTING ACTIVE CLOTHING: \(self.activeClothing)")
+        return self.activeClothing
+    }
     func getActiveClothing(completion : @escaping (String, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "ClothingItem", fieldName: "isActive", fieldValue: 1) { records, error in
             guard let record = records?.first else {
                 completion("", error)
                 return
             }
-            let imageName = record["imageName"] as! String
-            completion(imageName, nil)
+            DispatchQueue.main.async {
+                let imageName = record["imageName"] as! String
+                completion(imageName, nil)
+            }
         }
     }
 

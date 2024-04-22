@@ -33,8 +33,8 @@ class CustomizeViewModel: ObservableObject {
     @Published var equippedPet: Pet_selection?// Default pet
     @Published var backgroundColor: Color = .white // Default background color
     
-    var backgroundItemDBManager = BackgroundItemDBManager()
-    var clothingItemDBManager = ClothingItemDBManager()
+    var backgroundItemDBManager = BackgroundItemDBManager.shared
+    var clothingItemDBManager = ClothingItemDBManager.shared
     var petItemDBManager = PetItemDBManager.shared
     
 //    private var petPageViewModel = PetPageFunction.shared

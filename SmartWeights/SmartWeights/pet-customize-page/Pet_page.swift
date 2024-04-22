@@ -10,8 +10,8 @@ import SwiftUI
 
 struct Pet_Page: View {
     @ObservedObject var viewModel = PetPageFunction()
-//    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
-//    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
+    //    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
+    //    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
     //@ObservedObject var petItemDBManager = PetItemDBManager()
     @State var activePet: String = ""
     @State private var viewID = UUID()
@@ -86,20 +86,17 @@ struct Pet_Page: View {
                 }
                 .padding(.horizontal, 25)
                 ZStack{
-                    ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
-                    
-                    //                    Image(backgroundItemDBManager.activeBackground)
-                    //                        .resizable()
-                    //                        .frame(width: 475, height: 450)
+                    Image(viewModel.activeBackground)
+                        .resizable()
+                        .frame(width: 475, height: 450)
                     
                     Image(viewModel.activePet)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 475, height: 450)
-                    //                    Image(clothingItemDBManager.activeClothing)
-                    //                        .resizable()
-                    //                        .scaledToFit()
-                    
+                    Image(viewModel.activeClothing)
+                        .resizable()
+                        .scaledToFit()
                     
                 }
                 VStack {
@@ -143,7 +140,7 @@ struct Pet_Page: View {
             .id(viewID) // add this line
             .onAppear {
                 viewID = UUID() // change the viewID every time this view appears
-                viewModel.g_getActivePet()
+                viewModel.getActiveAll()
             }
         }
     }

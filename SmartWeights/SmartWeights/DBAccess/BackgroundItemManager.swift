@@ -59,8 +59,11 @@ class BackgroundItemDBManager : ObservableObject{
                 return
             }
             guard let records = records else {
-                self.backgroundItemExists = false
-                completion(nil, nil)
+                DispatchQueue.main.async{
+                    
+                    self.backgroundItemExists = false
+                    completion(nil, nil)
+                }
                 return
             }
             var backgroundItems: [BackgroundItemModel] = []
@@ -75,6 +78,7 @@ class BackgroundItemDBManager : ObservableObject{
             }
             DispatchQueue.main.async {
                 self.backgroundItems = backgroundItems
+                self.backgroundItemExists = true
                 completion(self.backgroundItems, nil)
             }
             // self.backgroundItems = records.map { record in
@@ -177,6 +181,8 @@ class BackgroundItemDBManager : ObservableObject{
             }
         }
     }
-
+    func g_getActiveBackground() -> String{
+        return self.activeBackground
+    }
     
 }
