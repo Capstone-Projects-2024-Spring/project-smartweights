@@ -138,9 +138,23 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
+    func isInputZeroOrInvalid() -> Bool {
+        let inputs = [inputtedSets, inputtedReps, inputtedWeights, inputtedCountdown]
+        for input in inputs {
+            if input.trimmingCharacters(in: .whitespaces).isEmpty || Int(input) == 0 {
+                return true
+            }
+        }
+        return false
+    }
+
     
     func validateAndStartCountdown(sets: String, reps: String, weights: String) {
-        if isValidInput(sets) && isValidInput(reps) && isValidInput(weights) {
+        if isInputZeroOrInvalid() {
+            // Show alert if any input is zero or invalid
+            alertMessage = "Inputs for sets, reps, weights, or countdown cannot be zero."
+            showingAlert = true
+        } else if isValidInput(sets) && isValidInput(reps) && isValidInput(weights) {
             countdownActive = true
             startCountdown()
             feedbackDataForSets.removeAll()
@@ -154,6 +168,7 @@ class WorkoutViewModel: ObservableObject {
             showingAlert = true
         }
     }
+
     
     private func isValidInput(_ input: String) -> Bool {
         guard !input.isEmpty, let _ = Int(input) else { return false }
