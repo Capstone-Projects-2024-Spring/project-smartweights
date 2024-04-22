@@ -9,13 +9,10 @@ import Foundation
 import CoreData
 
 class CoreDataManager: ObservableObject {
-    
-    let persistentContainer: NSPersistentCloudKitContainer
+    // Use the shared managed object model defined in PersistenceController
+    let persistentContainer: NSPersistentCloudKitContainer = PersistenceController.shared.container
     
     init() {
-        // Use the shared managed object model defined in PersistenceController
-        persistentContainer = NSPersistentCloudKitContainer(name: "SmartWeights", managedObjectModel: PersistenceController.sharedManagedObjectModel)
-            
             let description = NSPersistentStoreDescription()
             description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
             description.setOption(true as NSNumber, forKey: NSMigratePersistentStoresAutomaticallyOption)
