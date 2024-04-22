@@ -329,6 +329,15 @@ class WorkoutViewModel: ObservableObject {
         recognitionRequest?.endAudio()
         print("Stopped listening")
         self.isListening = false
+        // CODE TO UPDATE WORKOUTS ACHIEVEMENTS (1st Workout, Workout Machine, Perfect Form)
+        // 1st Workout
+        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.1stWorkout", progressToAdd: 100.0)
+        
+        // Workout Machine (50 total)
+        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.WorkoutMachine", progressToAdd: 2.0)
+        
+        // Perfect Form (100 total)
+        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.PerfectForm", progressToAdd: 1.0)
         
         print("IM ABOUT TO CHECK THE CONDITIONAL AAAAAAAAAAAAAHHHHHHH FOR FINISH WORKOUT AND FINISH SET")
         if self.currentWorkoutSession != nil && self.currentWorkoutSet != nil{
