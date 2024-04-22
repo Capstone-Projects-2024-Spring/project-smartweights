@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AuthenticationServices
+import UserNotifications
 
 struct LoginView: View {
     @ObservedObject var coreDataManager = CoreDataManager()
@@ -25,6 +26,7 @@ struct LoginView: View {
     var userFitnessDataDBManager = UserFitnessDataDBManager()
     var userFitnessPlanDBManager = UserFitnessPlanDBManager()
     var foodItemDBManager = FoodItemDBManager()
+    var petItemDBManager = PetItemDBManager()
     var body: some View {
         ZStack {
             // Background gradient
@@ -69,12 +71,12 @@ struct LoginView: View {
                                 userDBManager.createUser(firstName: firstName, lastName: lastName, email: email)
                                 inventoryDBManager.createInventory()
                                 petDBManager.createPet()
+                                petItemDBManager.createDefaultPet()
                                 userFitnessDataDBManager.createUserFitnessData()
                                 foodItemDBManager.createInitialFoodItems()
-                                
+                                NotificationManager.requestAuthorization()
                                 // CODE TO AUTHENTICATE GC
                                 GameCenterManager.shared.authenticateLocalPlayer()
-
                             }
                         case .failure(let error):
                             print(error)

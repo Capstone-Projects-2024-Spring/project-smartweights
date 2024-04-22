@@ -116,6 +116,37 @@ class PetItemDBManager: ObservableObject{
             }
         }
     }
+    func createDefaultPet() {
+        p_createDefaultPet { error in
+            if let error = error {
+                print("Error creating default pet: \(error.localizedDescription)")
+                return
+            }
+            print("Default pet created")
+        }
+    }
+    private func p_createDefaultPet(completion : @escaping (Error?) -> Void) {
+        let imageName = "Dog"
+        fetchSpecificPetItem(imageName: imageName) { petItem, error in
+            // if let error = error {
+            //     completion(error)
+            //     return
+            // }
+            if petItem != nil {
+                // If the pet item exists, do not create a new one
+                print("Pet item already exists")
+                completion(nil)
+                return
+            }else{
+                // If the pet item does not exist, create a new one
+                let petItem = PetItemModel(recordId: nil, isActive: 1, petName: imageName, imageName: imageName)
+                let petItemRecord = petItem.record
+                self.petItems.append(petItem)
+                self.CKManager.savePrivateItem(record: petItemRecord)
+                print("defaultPet Created")
+            }
+        }
+    }
     // goes through all pet items and sets the active pet item to 1 and the rest to 0 
     func setActivePetItem(imageName: String, completion: @escaping (String, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "PetItem") { records, error in
