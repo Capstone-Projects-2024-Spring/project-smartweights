@@ -34,6 +34,7 @@ extension PetItemModel {
 
 
 class PetItemDBManager: ObservableObject{
+    static let shared = PetItemDBManager()
     @Published var petItems: [PetItemModel] = []
     let CKManager = CloudKitManager()
     var petItemExists: Bool = false
@@ -51,6 +52,10 @@ class PetItemDBManager: ObservableObject{
             // self.petItems = petItems
         }
     }
+    func g_getActivePet() -> String {
+        print("GETTING ACTIVE PET: \(self.activePet)")
+        return self.activePet
+    }
     //gets all
     func fetchPetItems(completion: @escaping ([PetItemModel]?, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: PetItemRecordKeys.type.rawValue) { records, error in
@@ -59,11 +64,14 @@ class PetItemDBManager: ObservableObject{
                 return
             }
             guard let records = records else {
-                self.petItemExists = false
-                print("No pet items found.")
-                completion(nil, nil)
+                DispatchQueue.main.async {
+                    self.petItemExists = false
+                    print("No pet items found.")
+                    completion(nil, nil)
+                }
                 return
             }
+
             var petItems: [PetItemModel] = []
             for record in records {
                 let isActive = record[PetItemRecordKeys.isActive.rawValue] as! Int64
@@ -74,11 +82,16 @@ class PetItemDBManager: ObservableObject{
                 petItems.append(petItem)
                 
                 if isActive == 1 {
-                    self.activePet = imageName
+                    DispatchQueue.main.async {
+                        self.activePet = imageName
+                    }
                 }
             }
-            completion(petItems, nil)
-            self.petItemExists = true
+            DispatchQueue.main.async {
+                self.petItems = petItems
+                self.petItemExists = true
+                completion(petItems, nil)
+            }
         }
     }
     func fetchSpecificPetItem(imageName: String, completion: @escaping (PetItemModel?, Error?) -> Void) {
@@ -111,8 +124,13 @@ class PetItemDBManager: ObservableObject{
                 // If the pet item does not exist, create a new one
                 let petItem = PetItemModel(recordId: nil, isActive: 0, petName: imageName, imageName: imageName)
                 let petItemRecord = petItem.record
-                self.petItems.append(petItem)
+                DispatchQueue.main.async {
+                    self.petItems.append(petItem)
+                }
                 self.CKManager.savePrivateItem(record: petItemRecord)
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             }
         }
     }
@@ -165,7 +183,11 @@ class PetItemDBManager: ObservableObject{
                 dispatchGroup.enter()
                 if record["imageName"] as? String == imageName {
                     record["isActive"] = 1 as CKRecordValue
-                    self.activePet = imageName
+                    print("Setting active pet to: \(imageName)")
+                    DispatchQueue.main.async {
+                        self.activePet = imageName
+                        print("Active pet is now: \(self.activePet)")
+                    }
                 } else {
                     record["isActive"] = 0 as CKRecordValue
                 }
@@ -183,8 +205,10 @@ class PetItemDBManager: ObservableObject{
                 completion("", error)
                 return
             }
-            let imageName = record["imageName"] as! String
-            completion(imageName, nil)
+            DispatchQueue.main.async {
+                let imageName = record["imageName"] as! String
+                completion(imageName, nil)
+            }
         }
     }
 }

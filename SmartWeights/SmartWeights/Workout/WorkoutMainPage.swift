@@ -11,9 +11,9 @@ struct WorkoutMainPage: View {
     @StateObject var workoutPageViewModel = WorkoutPageViewModel()
     @StateObject var viewModel: WorkoutViewModel
     
-    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
-    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
-    @ObservedObject var petItemDBManager = PetItemDBManager()
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager.shared
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
+    @ObservedObject var petItemDBManager = PetItemDBManager.shared
     
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
@@ -134,10 +134,20 @@ struct WorkoutMainPage: View {
                             .padding(.bottom, -40)
                         }
                         HStack{
-                            Image("Dog")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 200, height: 175)
+                            ZStack{
+                                Image(backgroundItemDBManager.activeBackground)
+                                    .resizable()
+                                    .frame(width: 200, height: 175)
+                                Image(petItemDBManager.activePet)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 200, height: 175)
+                                Image(clothingItemDBManager.activeClothing)
+                                    .resizable()
+                                    .scaledToFit()
+                                    // .frame(width: 200, height: 175)
+                                
+                            }
                         }
                         Text("\(viewModel.feedback.0)") //gives overall acceleration
                             .font(.subheadline)
