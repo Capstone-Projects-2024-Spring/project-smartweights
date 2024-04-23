@@ -10,16 +10,16 @@ import GameKit
 
 struct ChallengesTab: View {
     @State var challenges: [Challenge] = [
-        Challenge(title: "1st Workout", description: "Complete your first workout.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stWorkout"), achievementIdentifier: "SmartWeights.Achievement.1stWorkout", currentProgress: 0, isCompleted: false),
-        Challenge(title: "New Shopper", description: "Purchase your first item in the pet store.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stItemBought"), achievementIdentifier: "SmartWeights.Achievement.NewShopper", currentProgress: 0, isCompleted: false),
-        Challenge(title: "Outfit Change", description: "Customize your pet for the first time.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("C-1stOutfitChange"), achievementIdentifier: "SmartWeights.Achievement.OutfitChange", currentProgress: 0, isCompleted: false),
-        Challenge(title: "Sharing Companion", description: "Interact with the share button on the profile tab.", coinReward: "+ 50 PC", xpReward: "+ 10 XP", image: Image("SharingCompanion"), achievementIdentifier: "SmartWeights.Achievement.SharingCompanion", currentProgress: 0, isCompleted: false),
-        Challenge(title: "New Best Friends", description: "Level up your pet to level 2.", coinReward: "+ 100 PC", xpReward: "+ 20 XP", image: Image("NewBestFriends"), achievementIdentifier: "SmartWeights.Achievement.NewBestFriends", currentProgress: 0, isCompleted: false),
-        Challenge(title: "Dinner Time", description: "Feed your pet 50 times.", coinReward: "+ 250 PC", xpReward: "+ 50 XP", image: Image("DinnerTime"), achievementIdentifier: "SmartWeights.Achievement.DinnerTime", currentProgress: 0, isCompleted: false),
-        Challenge(title: "Loyal Customer", description: "Purchase 50 items in the pet store.", coinReward: "+ 500 PC", xpReward: "+ 75 XP", image: Image("LoyalCustomer"), achievementIdentifier: "SmartWeights.Achievement.LoyalCustomer", currentProgress: 0, isCompleted: false),
-        Challenge(title: "Workout Machine", description: "Complete 50 workouts.", coinReward: "+ 500 PC", xpReward: "+ 50 XP", image: Image("WorkoutMachine"), achievementIdentifier: "SmartWeights.Achievement.WorkoutMachine", currentProgress: 0, isCompleted: false),
-        Challenge(title: "Perfect Form", description: "Complete 100 workouts.", coinReward: "+ 1000 PC", xpReward: "+ 100 XP", image: Image("PerfectForm"), achievementIdentifier: "SmartWeights.Achievement.PerfectForm", currentProgress: 0, isCompleted: false),
-        Challenge(title: "Dynamic Duo", description: "Level up your pet to level 10.", coinReward: "+ 1500 PC", xpReward: "+ 100 XP", image: Image("DynamicDuo"), achievementIdentifier: "SmartWeights.Achievement.DynamicDuo", currentProgress: 0, isCompleted: false)
+        Challenge(title: "1st Workout", description: "Complete your first workout.", image: Image("C-1stWorkout"), achievementIdentifier: "SmartWeights.Achievement.1stWorkout", currentProgress: 0, isCompleted: false),
+        Challenge(title: "New Shopper", description: "Purchase your first item in the pet store.", image: Image("C-1stItemBought"), achievementIdentifier: "SmartWeights.Achievement.NewShopper", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Outfit Change", description: "Customize your pet for the first time.", image: Image("C-1stOutfitChange"), achievementIdentifier: "SmartWeights.Achievement.OutfitChange", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Sharing Companion", description: "Interact with the share button on the profile tab.", image: Image("SharingCompanion"), achievementIdentifier: "SmartWeights.Achievement.SharingCompanion", currentProgress: 0, isCompleted: false),
+        Challenge(title: "New Best Friends", description: "Level up your pet to level 2.", image: Image("NewBestFriends"), achievementIdentifier: "SmartWeights.Achievement.NewBestFriends", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Dinner Time", description: "Feed your pet 50 times.", image: Image("DinnerTime"), achievementIdentifier: "SmartWeights.Achievement.DinnerTime", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Loyal Customer", description: "Purchase 50 items in the pet store.", image: Image("LoyalCustomer"), achievementIdentifier: "SmartWeights.Achievement.LoyalCustomer", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Workout Machine", description: "Complete 50 workouts.", image: Image("WorkoutMachine"), achievementIdentifier: "SmartWeights.Achievement.WorkoutMachine", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Perfect Form", description: "Complete 100 workouts.", image: Image("PerfectForm"), achievementIdentifier: "SmartWeights.Achievement.PerfectForm", currentProgress: 0, isCompleted: false),
+        Challenge(title: "Dynamic Duo", description: "Level up your pet to level 10.", image: Image("DynamicDuo"), achievementIdentifier: "SmartWeights.Achievement.DynamicDuo", currentProgress: 0, isCompleted: false)
     ]
     
     var body: some View {
@@ -54,18 +54,14 @@ class Challenge: Identifiable, ObservableObject {
     var id = UUID()
     var title: String
     var description: String
-    var coinReward: String
-    var xpReward: String
     var image: Image // added for custom images
     var achievementIdentifier: String
     @Published var currentProgress: Int
     @Published var isCompleted: Bool
     
-    init(title: String, description: String, coinReward: String, xpReward: String, image: Image, achievementIdentifier: String, currentProgress: Int, isCompleted: Bool) {
+    init(title: String, description: String, image: Image, achievementIdentifier: String, currentProgress: Int, isCompleted: Bool) {
         self.title = title
         self.description = description
-        self.coinReward = coinReward
-        self.xpReward = xpReward
         self.image = image
         self.achievementIdentifier = achievementIdentifier
         self.currentProgress = currentProgress
@@ -130,14 +126,6 @@ struct ChallengesList: View {
                                 .foregroundColor(.gray)
                         }
                         Spacer()
-                        VStack(alignment: .trailing) {
-                            Text(challenge.coinReward)
-                                .font(.subheadline)
-                                .foregroundColor(.green)
-                            Text(challenge.xpReward)
-                                .font(.subheadline)
-                                .foregroundColor(.green)
-                        }
                     }
                     ProgressView(value: Double(challenge.currentProgress), total: 100)
                         .progressViewStyle(LinearProgressViewStyle())
