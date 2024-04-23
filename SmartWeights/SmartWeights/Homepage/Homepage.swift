@@ -50,9 +50,10 @@ struct Homepage: View {
                 // Buttons for the additional pages carousel (NavigationCarousel)
                 let postWorkout = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(allFeedback(coreDataManager: coreDataManager)))
                 let rechargeSensor = CarouselButton(name: "How to charge",icon:  "powerplug", link: AnyView(RechargeSensors()))
+                let attachSensor = CarouselButton(name: "How to attach", icon: "sensor", link: AnyView(AttachSensors()))
                 
                 // Array of defined buttons to be used by the NavigationCarousel view
-                let buttons = [postWorkout,rechargeSensor]
+                let buttons = [postWorkout,rechargeSensor, attachSensor]
                 
                 // Additional Pages Carousel
                 NavigationCarousel(coreDataManager: coreDataManager, buttons: buttons, iconColor: .white, bgColor: .africanViolet, textColor: .black)
