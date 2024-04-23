@@ -23,6 +23,7 @@
 		6B32AA152BC9D30000AE988A /* CustomizeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B32AA142BC9D30000AE988A /* CustomizeViewModel.swift */; };
 		6B50EDF12BC6EB810094C715 /* ClothingItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50EDF02BC6EB810094C715 /* ClothingItemManager.swift */; };
 		6B50EDF32BC700E60094C715 /* BackgroundItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50EDF22BC700E60094C715 /* BackgroundItemManager.swift */; };
+		6B59DFE22BD8159600A1668F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6B59DFE12BD8159600A1668F /* PrivacyInfo.xcprivacy */; };
 		6B8762AB2BA26891005627CE /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762A92BA26891005627CE /* CloudKitManager.swift */; };
 		6BA2DC482B90FCF500A998FC /* CloudKitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */; };
 		6BC8E5722BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */; };
@@ -110,6 +111,7 @@
 		6B32AA142BC9D30000AE988A /* CustomizeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeViewModel.swift; sourceTree = "<group>"; };
 		6B50EDF02BC6EB810094C715 /* ClothingItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItemManager.swift; sourceTree = "<group>"; };
 		6B50EDF22BC700E60094C715 /* BackgroundItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundItemManager.swift; sourceTree = "<group>"; };
+		6B59DFE12BD8159600A1668F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6B8762A92BA26891005627CE /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitTest.swift; sourceTree = "<group>"; };
 		6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecognitionViewModel.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 		91065F7B2B7A7E4700BC62E6 /* SmartWeights */ = {
 			isa = PBXGroup;
 			children = (
+				6B59DFE12BD8159600A1668F /* PrivacyInfo.xcprivacy */,
 				912BD24D2BD2C49C00029A32 /* audioFiles */,
 				010A05412BD35DB600CD2FFC /* Notifications */,
 				E5297D242BB4588A0078A9E6 /* Homepage */,
@@ -541,6 +544,7 @@
 			files = (
 				91065F842B7A7E4900BC62E6 /* Preview Assets.xcassets in Resources */,
 				91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */,
+				6B59DFE22BD8159600A1668F /* PrivacyInfo.xcprivacy in Resources */,
 				912BD24F2BD2C4FC00029A32 /* alarm.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
