@@ -58,6 +58,7 @@
 		912BD2482BD2B40800029A32 /* RechargeSensors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912BD2472BD2B40800029A32 /* RechargeSensors.swift */; };
 		912BD24F2BD2C4FC00029A32 /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 912BD24E2BD2C4FC00029A32 /* alarm.mp3 */; };
 		9149A1A32BD7F8E00061BA26 /* AttachSensors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9149A1A22BD7F8E00061BA26 /* AttachSensors.swift */; };
+		9149A1A52BD822700061BA26 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9149A1A42BD822700061BA26 /* beep.mp3 */; };
 		918037962BA9026700802D01 /* central.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037952BA9026700802D01 /* central.swift */; };
 		918037982BB4647A00802D01 /* central_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037972BB4647A00802D01 /* central_v2.swift */; };
 		9180379A2BBF719B00802D01 /* FormCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918037992BBF719B00802D01 /* FormCriteria.swift */; };
@@ -151,6 +152,7 @@
 		912BD2472BD2B40800029A32 /* RechargeSensors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RechargeSensors.swift; sourceTree = "<group>"; };
 		912BD24E2BD2C4FC00029A32 /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
 		9149A1A22BD7F8E00061BA26 /* AttachSensors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachSensors.swift; sourceTree = "<group>"; };
+		9149A1A42BD822700061BA26 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
 		918037952BA9026700802D01 /* central.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = central.swift; sourceTree = "<group>"; };
 		918037972BB4647A00802D01 /* central_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = central_v2.swift; sourceTree = "<group>"; };
 		918037992BBF719B00802D01 /* FormCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCriteria.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 		912BD24D2BD2C49C00029A32 /* audioFiles */ = {
 			isa = PBXGroup;
 			children = (
+				9149A1A42BD822700061BA26 /* beep.mp3 */,
 				912BD24E2BD2C4FC00029A32 /* alarm.mp3 */,
 			);
 			path = audioFiles;
@@ -544,6 +547,7 @@
 			files = (
 				91065F842B7A7E4900BC62E6 /* Preview Assets.xcassets in Resources */,
 				91065F812B7A7E4900BC62E6 /* Assets.xcassets in Resources */,
+				9149A1A52BD822700061BA26 /* beep.mp3 in Resources */,
 				912BD24F2BD2C4FC00029A32 /* alarm.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
