@@ -31,7 +31,7 @@ extension BackgroundItemModel {
 }
 
 class BackgroundItemDBManager : ObservableObject{
-
+    static let shared = BackgroundItemDBManager()
     @Published var backgroundItems: [BackgroundItemModel] = []
     let CKManager = CloudKitManager()
     var backgroundItemExists: Bool = false
@@ -59,8 +59,11 @@ class BackgroundItemDBManager : ObservableObject{
                 return
             }
             guard let records = records else {
-                self.backgroundItemExists = false
-                completion(nil, nil)
+                DispatchQueue.main.async{
+                    
+                    self.backgroundItemExists = false
+                    completion(nil, nil)
+                }
                 return
             }
             var backgroundItems: [BackgroundItemModel] = []
@@ -68,11 +71,16 @@ class BackgroundItemDBManager : ObservableObject{
                 let backgroundItem = BackgroundItemModel(recordId: record.recordID,  isActive: record[ClothingItemRecordKeys.isActive.rawValue] as! Int64, imageName: record[ClothingItemRecordKeys.imageName.rawValue] as! String)
                 backgroundItems.append(backgroundItem)
                 if backgroundItem.isActive == 1 {
-                    self.activeBackground = backgroundItem.imageName
+                    DispatchQueue.main.async {
+                        self.activeBackground = backgroundItem.imageName
+                    }
                 }
             }
-            completion(backgroundItems, nil)
-            self.backgroundItemExists = true
+            DispatchQueue.main.async {
+                self.backgroundItems = backgroundItems
+                self.backgroundItemExists = true
+                completion(self.backgroundItems, nil)
+            }
             // self.backgroundItems = records.map { record in
             //     BackgroundItemModel(recordId: record.recordID, isActive: record[BackgroundItemRecordKeys.isActive.rawValue] as? Int64 ?? 0, imageName: record[BackgroundItemRecordKeys.imageName.rawValue] as? String ?? "")
             // }
@@ -104,9 +112,13 @@ class BackgroundItemDBManager : ObservableObject{
             }else{
                 let newBackgroundItem = BackgroundItemModel(recordId: nil, isActive: 0, imageName: imageName)
                 let newRecord = newBackgroundItem.record
-                self.backgroundItems.append(newBackgroundItem)
+                DispatchQueue.main.async {
+                    self.backgroundItems.append(newBackgroundItem)
+                }
                 self.CKManager.savePrivateItem(record: newRecord)
-                completion(nil)
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             }
         
         }
@@ -128,7 +140,9 @@ class BackgroundItemDBManager : ObservableObject{
                 dispatchGroup.enter()
                 if record["imageName"] as! String == imageName {
                     record["isActive"] = 1
-                    self.activeBackground = imageName
+                    DispatchQueue.main.async {
+                        self.activeBackground = imageName
+                    }
                 }else{
                     record["isActive"] = 0
                 }
@@ -159,11 +173,16 @@ class BackgroundItemDBManager : ObservableObject{
                 self.CKManager.savePrivateItem(record: record)
                 dispatchGroup.leave()
             }
+            DispatchQueue.main.async {
+                self.activeBackground = ""
+            }
             dispatchGroup.notify(queue: .main) {
                 completion(nil)
             }
         }
     }
-
+    func g_getActiveBackground() -> String{
+        return self.activeBackground
+    }
     
 }

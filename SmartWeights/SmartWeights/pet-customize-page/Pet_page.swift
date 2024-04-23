@@ -10,13 +10,14 @@ import SwiftUI
 
 struct Pet_Page: View {
     @ObservedObject var viewModel = PetPageFunction()
-    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
-    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
-    @ObservedObject var petItemDBManager = PetItemDBManager()
+    //    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
+    //    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
+    //@ObservedObject var petItemDBManager = PetItemDBManager()
     @State var activePet: String = ""
-    
+    @State private var viewID = UUID()
     var body: some View {
         NavigationView {
+            
             VStack {
                 /*
                  Text("Pet Name")
@@ -28,6 +29,7 @@ struct Pet_Page: View {
                  viewModel.AddXP(value: 75)
                  }
                  */
+                
                 
                 HStack {
                     HamburgerMenu(
@@ -84,25 +86,18 @@ struct Pet_Page: View {
                 }
                 .padding(.horizontal, 25)
                 ZStack{
-                    ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
-                    
-                    Image(backgroundItemDBManager.activeBackground)
+                    Image(viewModel.activeBackground)
                         .resizable()
                         .frame(width: 475, height: 450)
                     
-                    Image(petItemDBManager.activePet)
+                    Image(viewModel.activePet)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 475, height: 450)
-                    Image(clothingItemDBManager.activeClothing)
+                    Image(viewModel.activeClothing)
                         .resizable()
                         .scaledToFit()
                     
-                    // Image(viewModel.activePet)
-                    //     .resizable()
-                    //     .scaledToFit()
-                    //     .frame(width: 500, height: 400, alignment: .center)
-                    //     .padding(.bottom, 0)
                 }
                 VStack {
                     CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
@@ -115,7 +110,6 @@ struct Pet_Page: View {
                     //                        .bold()
                     //                        .frame(maxWidth: .infinity, alignment: .center)
                     //                        .padding(.top, 10)
-                    
                     if viewModel.isLoading{
                         ProgressView()
                     } else{
@@ -124,13 +118,13 @@ struct Pet_Page: View {
                             .padding()
                     }
                 }
-                
                 .padding(.top, -20)
                 Spacer()
             }
-            .onAppear {
-                viewModel.refreshData()
-            }
+            
+            // .onAppear {
+            //     viewModel.refreshData()
+            // }
             .background(.white)
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(
@@ -143,6 +137,12 @@ struct Pet_Page: View {
             .navigationBarTitleDisplayMode(.inline)
             .background(NavigationLink(destination: PetStore(), isActive: $viewModel.showShop) { EmptyView() })
             .background(NavigationLink(destination: Customize_page(), isActive: $viewModel.showCustomize) { EmptyView() })
+            .id(viewID) // add this line
+            .onAppear {
+                viewID = UUID() // change the viewID every time this view appears
+                viewModel.getActiveAll()
+                viewModel.getPetStats()
+            }
         }
     }
 }

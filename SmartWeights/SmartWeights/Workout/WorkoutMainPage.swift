@@ -11,9 +11,9 @@ struct WorkoutMainPage: View {
     @StateObject var workoutPageViewModel = WorkoutPageViewModel()
     @StateObject var viewModel: WorkoutViewModel
     
-    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
-    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
-    @ObservedObject var petItemDBManager = PetItemDBManager()
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager.shared
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
+    @ObservedObject var petItemDBManager = PetItemDBManager.shared
     
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
@@ -134,10 +134,20 @@ struct WorkoutMainPage: View {
                             .padding(.bottom, -40)
                         }
                         HStack{
-                            Image("Dog")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 200, height: 175)
+                            ZStack{
+                                Image(backgroundItemDBManager.activeBackground)
+                                    .resizable()
+                                    .frame(width: 200, height: 175)
+                                Image(petItemDBManager.activePet)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 200, height: 175)
+                                Image(clothingItemDBManager.activeClothing)
+                                    .resizable()
+                                    .scaledToFit()
+                                    // .frame(width: 200, height: 175)
+                                
+                            }
                         }
                         Text("\(viewModel.feedback.0)") //gives overall acceleration
                             .font(.subheadline)
@@ -271,8 +281,6 @@ struct WorkoutMainPage: View {
                 print(".............THIS IS BUTTON TEXT",buttonText)
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
-                        
-                        
                         viewModel.finishWorkout()
                     } else if buttonText == "Final Set" {
                         viewModel.finalset()
@@ -317,7 +325,14 @@ struct WorkoutMainPage: View {
             }
             .accessibilityLabel(viewModel.hasWorkoutStarted ? (viewModel.isWorkoutPaused ? "NextSetButton" : "FinishSetButton") : "StartWorkoutButton")
             .sheet(isPresented: $viewModel.showingWorkoutSheet) {
-                WorkoutDetailsInputView(viewModel: viewModel, ble: ble,form: formCriteria, hasWorkoutStarted: $viewModel.hasWorkoutStarted, showingWorkoutSheet: $viewModel.showingWorkoutSheet,feedbackDataForSets: $viewModel.feedbackDataForSets, workoutAnalysisForSets: $viewModel.workoutAnalysisForSets)
+                if viewModel.countdownActive{
+                    // Show countdown view
+                    CountdownView(viewModel: viewModel)
+                }
+                else{
+                    // Show workout details input form
+                    WorkoutDetailsInputView(viewModel: viewModel, ble: ble,form: formCriteria, hasWorkoutStarted: $viewModel.hasWorkoutStarted, showingWorkoutSheet: $viewModel.showingWorkoutSheet,feedbackDataForSets: $viewModel.feedbackDataForSets, workoutAnalysisForSets: $viewModel.workoutAnalysisForSets)
+                }
             }
             
             Spacer()
@@ -356,6 +371,17 @@ struct WorkoutMainPage: View {
             return path
         }
     }
+
+    // CountdownView for simpleCountdown
+    struct CountdownView: View {
+    @ObservedObject var viewModel: WorkoutViewModel
+
+    var body: some View {
+        Text("Starting in \(viewModel.countdown)")
+            .font(.largeTitle)
+            .padding()
+    }
+}
     
     // Define a new view for the workout details input form
     struct WorkoutDetailsInputView: View {

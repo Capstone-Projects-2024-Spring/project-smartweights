@@ -9,13 +9,10 @@ import Foundation
 import CoreData
 
 class CoreDataManager: ObservableObject {
-    
-    let persistentContainer: NSPersistentCloudKitContainer
+    // Use the shared managed object model defined in PersistenceController
+    let persistentContainer: NSPersistentCloudKitContainer = PersistenceController.shared.container
     
     init() {
-        // Use the shared managed object model defined in PersistenceController
-        persistentContainer = NSPersistentCloudKitContainer(name: "SmartWeights", managedObjectModel: PersistenceController.sharedManagedObjectModel)
-            
             let description = NSPersistentStoreDescription()
             description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
             description.setOption(true as NSNumber, forKey: NSMigratePersistentStoresAutomaticallyOption)
@@ -31,7 +28,7 @@ class CoreDataManager: ObservableObject {
             }
     }
     
-    func createWorkoutSession(dateTime: Date, workoutNum: Int, overallCurlAcceleration: Double, overallElbowFlareLR: Double, overallElbowFlareUD: Double, overallElbowSwing: Double, overallWristStabilityLR: Double, overallWristStabilityUD: Double) -> WorkoutSession? {
+    func createWorkoutSession(dateTime: Date, workoutNum: Int, reps: Int, weight: Double, overallCurlAcceleration: Double, overallElbowFlareLR: Double, overallElbowFlareUD: Double, overallElbowSwing: Double, overallWristStabilityLR: Double, overallWristStabilityUD: Double) -> WorkoutSession? {
             let context = persistentContainer.viewContext
             let workoutSession = WorkoutSession(context: context)
 
@@ -39,6 +36,8 @@ class CoreDataManager: ObservableObject {
             dateFormatter.dateFormat = "MM-dd-yyyy"
             let dateString = dateFormatter.string(from: dateTime)
             print(dateString)
+            workoutSession.reps = Int64(reps)
+            workoutSession.weight = weight
             workoutSession.dateTime = dateFormatter.date(from: dateString)
             workoutSession.workoutNum = Int64(workoutNum)
             workoutSession.overallCurlAcceleration = overallCurlAcceleration

@@ -49,11 +49,6 @@ struct PersistenceController {
     init(inMemory: Bool = false) {
             container = NSPersistentCloudKitContainer(name: "SmartWeights", managedObjectModel: PersistenceController.sharedManagedObjectModel)
         
-        // Configures the persistent store for in-memory use if specified. This is useful for unit tests or preview functionality.
-        if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
-        }
-        
         // Loads the persistent stores and handles any errors.
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -74,5 +69,19 @@ struct PersistenceController {
         
         // Ensures that the viewContext automatically merges changes saved in any context that is a child of the main context.
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+}
+
+extension PersistenceController {
+    func saveContext() {
+        let context = container.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
     }
 }
