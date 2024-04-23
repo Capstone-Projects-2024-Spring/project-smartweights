@@ -107,6 +107,11 @@ class WorkoutViewModel: ObservableObject {
             if self.countdown > 0 {
                 self.countdown -= 1
             } else {
+                self.countdownSound()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.stopCountdownSound()
+                }
+                
                 self.countdownTimer?.cancel()
                 self.restartTimer()
                 self.startTimer()
@@ -124,7 +129,7 @@ class WorkoutViewModel: ObservableObject {
                 
                 if let newWorkoutSession = coreDataManager.createWorkoutSession(dateTime: Date(), workoutNum: workoutNum, reps: repNum!, weight: weightNum!, overallCurlAcceleration: 0.0, overallElbowFlareLR: 0.0, overallElbowFlareUD: 0.0, overallElbowSwing: 0.0, overallWristStabilityLR: 0.0, overallWristStabilityUD: 0.0){
                     self.currentWorkoutSession = newWorkoutSession
-                    //print(self.currentWorkoutSession as Any)
+                    print(self.currentWorkoutSession as Any)
                     print("THE CREATE WORKOUT WORK?")
                 }
                 
@@ -155,6 +160,10 @@ class WorkoutViewModel: ObservableObject {
                 if self.countdown > 0 {
                     self.countdown -= 1
                 } else {
+                    self.countdownSound()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.stopCountdownSound()
+                    }
                     self.countdownTimer?.cancel()
                     self.countdownActive = false
                     DispatchQueue.main.async{
@@ -513,13 +522,42 @@ class WorkoutViewModel: ObservableObject {
             print("Failed to initialize audio player: \(error)")
         }
     }
-    
-    
     func stopSound() {
         player?.stop()
     }
     
-    /// Function to start timer
+    var countdownPlayer: AVAudioPlayer!
+    
+    
+    func countdownSound() {
+        guard let url = Bundle.main.url(forResource: "beep", withExtension: "mp3") else { return }
+
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try AVAudioSession.sharedInstance().setMode(.default)
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+
+           
+            countdownPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+
+            guard let player = countdownPlayer else { return }
+
+            player.play()
+
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func stopCountdownSound(){
+        countdownPlayer?.stop()
+    }
+    
+    
+    
+    
+    
+    /// Function to start the workout timer
     func startTimer() {
         timerIsActive = true
         if let existingTimer = timer {
@@ -542,22 +580,23 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
-    /// Function to restart timer
+    /// Function to restart the workout  timer
     func restartTimer(){
         hours = 0
         minutes = 0
         seconds = 0
     }
     
-    /// Function to stop timer
+    /// Function to stop the workout  timer
     func stopTimer(){
         timer?.invalidate()
         timer = nil
     }
-    
+    /// Function to pause the workout timer
     func pauseTimer() {
-        timerIsActive = false // Stop updating time without invalidating the timer
+        timerIsActive = false
     }
+    
     func resumeTimer() {
         if !countdownActive{
             timerIsActive = true // Resume updating time
@@ -595,17 +634,7 @@ class WorkoutViewModel: ObservableObject {
         timerIsActive = false // Ensure timer is not active
     }
     
-    
-    
-    /// Function to generate random number for the progress bar
-    /// - Returns: random number between 0 and 1
-    ///
-    //generate a random number for the progress bar
-    //will be removed once we get data
-    func generateRandomNumber() -> Double {
-        return Double.random(in: 0..<1)
-    }
-    
+        
 }
 
 
