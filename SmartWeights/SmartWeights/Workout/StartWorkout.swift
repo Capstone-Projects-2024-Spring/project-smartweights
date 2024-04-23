@@ -139,6 +139,33 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
+    func simpleCountdown() {
+            guard let countdownDuration = Int(inputtedCountdown) else {
+                print("Invalid countdown duration.")
+                return
+            }
+
+            countdown = countdownDuration
+            countdownActive = true
+            showingWorkoutSheet = true
+
+            countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
+                guard let self = self else { return }
+
+                if self.countdown > 0 {
+                    self.countdown -= 1
+                } else {
+                    self.countdownTimer?.cancel()
+                    self.countdownActive = false
+                    DispatchQueue.main.async{
+                        self.showingWorkoutSheet = false
+                        self.resumeTimer()
+                    }
+                    print("Countdown finished.")
+                }
+            }
+        }
+    
     func isInputZeroOrInvalid() -> Bool {
         let inputs = [inputtedSets, inputtedReps, inputtedWeights, inputtedCountdown]
         for input in inputs {
@@ -326,6 +353,7 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func nextset(){
+        simpleCountdown()
         WorkoutState = .started
         resumeTimer()
         showGraphPopover = false
@@ -415,6 +443,7 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func finalset(){
+        simpleCountdown()
         WorkoutState = .final
         currentSets += 1 // This will push the state to "Finish Workout"
         showGraphPopover = false
@@ -530,14 +559,16 @@ class WorkoutViewModel: ObservableObject {
         timerIsActive = false // Stop updating time without invalidating the timer
     }
     func resumeTimer() {
-        timerIsActive = true // Resume updating time
-        print("WE ARE ABOUT TO CREATE A SET WOOOOAHAHAHAH")
-        if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
-            self.currentWorkoutSet = newExerciseSet
-            print("newExerciseSet:")
-            print(newExerciseSet as Any)
+        if !countdownActive{
+            timerIsActive = true // Resume updating time
+            print("WE ARE ABOUT TO CREATE A SET WOOOOAHAHAHAH")
+            if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
+                self.currentWorkoutSet = newExerciseSet
+                print("newExerciseSet:")
+                print(newExerciseSet as Any)
+            }
+            print("THE CREATE SET WORK?")
         }
-        print("THE CREATE SET WORK?")
     }
     
     func resetWorkoutState() {
