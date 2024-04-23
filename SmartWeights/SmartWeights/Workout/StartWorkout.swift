@@ -10,7 +10,6 @@ class WorkoutViewModel: ObservableObject {
     @ObservedObject var coreDataManager: CoreDataManager
     @ObservedObject var ble: BLEcentral
     @ObservedObject var formCriteria: FormCriteria
-    let petpageModel = PetPageFunction()
     
     init(ble: BLEcentral, formCriteria: FormCriteria, coreDataManager: CoreDataManager) {
         self.ble = ble
@@ -22,7 +21,6 @@ class WorkoutViewModel: ObservableObject {
     let workoutPageViewModel = WorkoutPageViewModel()
     
     var player: AVAudioPlayer!
-    
     
     var feedback: (String, String, String, String) = ("", "", "", "")
     var feedbackDataForSets: [(String, String, String, String)] = []
@@ -154,7 +152,6 @@ class WorkoutViewModel: ObservableObject {
     private func stringToInt(_ string: String) -> Int? {
         return Int(string)
     }
-    
     
     enum WorkoutStateEnum {
         case idle
@@ -335,6 +332,7 @@ class WorkoutViewModel: ObservableObject {
         self.WorkoutState = .final
         self.recognitionTask?.cancel()
         self.recognitionTask = nil
+        // Safely unwrap inputNode
         
         // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
         self.audioEngine.stop()
@@ -356,10 +354,15 @@ class WorkoutViewModel: ObservableObject {
                 workoutPageViewModel.lowerHP()
             }
             
+            // Start timer for workout reminder notifications
+            NotificationManager.updateLastWorkoutTime()
+            NotificationManager.cancelNotification()
+            NotificationManager.scheduleWorkoutReminder()
+            
             // Logic for completing the workout
             storeModel.addFundtoUser(price: 50)
-//            workoutPageViewModel.AddXP(value: 25)
-            petpageModel.addXP(value: 25)
+            workoutPageViewModel.AddXP(value: 25)
+        
             resetWorkoutState()
             hasWorkoutStarted = false
             isWorkoutPaused = false
@@ -559,7 +562,6 @@ class WorkoutViewModel: ObservableObject {
         return Double.random(in: 0..<1)
     }
     
-    
 }
 
 
@@ -567,5 +569,5 @@ class WorkoutViewModel: ObservableObject {
 
 
 #Preview{
-    WorkoutMainPage()
+    WorkoutMainPage(coreDataManager: CoreDataManager())
 }

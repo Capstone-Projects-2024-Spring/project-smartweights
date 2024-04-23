@@ -44,5 +44,5 @@ struct StartWorkoutButton: View {
 }
 
 #Preview {
-    StartWorkoutButton(tabBar: TabBar())
+    StartWorkoutButton(tabBar: TabBar(coreDataManager: CoreDataManager()))
 }

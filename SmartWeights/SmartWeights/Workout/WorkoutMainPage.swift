@@ -4,22 +4,21 @@ import CoreData
 
 /// Main structure to display the workout page with integrated UI components
 struct WorkoutMainPage: View {
-    @StateObject var coreDataManager:CoreDataManager
+    @ObservedObject var coreDataManager:CoreDataManager
     @StateObject var ble:BLEcentral
     @StateObject var formCriteria:FormCriteria
     @StateObject var storeModel = storeViewModel()
     @StateObject var workoutPageViewModel = WorkoutPageViewModel()
     @StateObject var viewModel: WorkoutViewModel
     
-    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
-    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
-    @ObservedObject var petItemDBManager = PetItemDBManager()
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager.shared
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
+    @ObservedObject var petItemDBManager = PetItemDBManager.shared
     
-    init() {
-        let coreDataManager = CoreDataManager()
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
         let ble = BLEcentral()
         let formCriteria = FormCriteria()
-        self._coreDataManager = StateObject(wrappedValue: coreDataManager)
         self._ble = StateObject(wrappedValue: ble)
         self._formCriteria = StateObject(wrappedValue: formCriteria)
         self._viewModel = StateObject(wrappedValue: WorkoutViewModel(ble: ble, formCriteria: formCriteria, coreDataManager: coreDataManager))
@@ -135,10 +134,20 @@ struct WorkoutMainPage: View {
                             .padding(.bottom, -40)
                         }
                         HStack{
-                            Image("Dog")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 200, height: 175)
+                            ZStack{
+                                Image(backgroundItemDBManager.activeBackground)
+                                    .resizable()
+                                    .frame(width: 200, height: 175)
+                                Image(petItemDBManager.activePet)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 200, height: 175)
+                                Image(clothingItemDBManager.activeClothing)
+                                    .resizable()
+                                    .scaledToFit()
+                                    // .frame(width: 200, height: 175)
+                                
+                            }
                         }
                         Text("\(viewModel.feedback.0)") //gives overall acceleration
                             .font(.subheadline)
@@ -272,6 +281,18 @@ struct WorkoutMainPage: View {
                 print(".............THIS IS BUTTON TEXT",buttonText)
                 if viewModel.hasWorkoutStarted {
                     if buttonText == "Finish Workout" {
+                        
+                        // CODE TO UPDATE WORKOUTS ACHIEVEMENTS (1st Workout, Workout Machine, Perfect Form)
+                        
+                        // 1st Workout
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.1stWorkout", progressToAdd: 100.0)
+                        
+                        // Workout Machine (50 total)
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.WorkoutMachine", progressToAdd: 2.0)
+                        
+                        // Perfect Form (100 total)
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.PerfectForm", progressToAdd: 1.0)
+                        
                         viewModel.finishWorkout()
                     } else if buttonText == "Final Set" {
                         viewModel.finalset()
@@ -419,6 +440,7 @@ struct WorkoutMainPage: View {
                         
                         Button("Start Workout") {
                             viewModel.validateAndStartCountdown(sets: viewModel.inputtedSets, reps: viewModel.inputtedReps, weights: viewModel.inputtedWeights)
+                            
                         }
                         .padding()
                         .foregroundColor(.white)
@@ -439,5 +461,5 @@ struct WorkoutMainPage: View {
 }
 
 #Preview {
-    WorkoutMainPage()
+    WorkoutMainPage(coreDataManager: CoreDataManager())
 }

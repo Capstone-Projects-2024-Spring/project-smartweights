@@ -10,18 +10,17 @@ import AVKit
 
 struct VideoCard: View, Identifiable {
     
-    var videoFile: String
-    var videoFileExt: String
+    var videoId: String
     var title: String
     var description: String
-    var id: String { videoFile }
+    var id: String { videoId }
     
     var body: some View {
         VStack {
             Spacer()
             VStack {
                 GeometryReader { geometry in
-                    PlayerView(url: Bundle.main.url(forResource: videoFile, withExtension: videoFileExt)!)
+                    VideoView(videoId: videoId)
                         .frame(width: geometry.size.width, height: 200)
                 }
             }
@@ -47,5 +46,5 @@ struct VideoCard: View, Identifiable {
 }
 
 #Preview {
-    VideoCard(videoFile: "SWTutorialv2", videoFileExt: "mp4", title: "SmartWeights Tutorial", description: "SmartWeights")
+    VideoCard(videoId: "K9E32Z8ZQDU", title: "SmartWeights Tutorial", description: "SmartWeights")
 }

@@ -11,9 +11,9 @@ import UIKit
 struct MorePageView: View {
     
     @ObservedObject var viewModel = MorePageViewModel()
-    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
-    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
-    @ObservedObject var petItemDBManager = PetItemDBManager()
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager.shared
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
+    @ObservedObject var petItemDBManager = PetItemDBManager.shared
     
     let profile = Profile(firstName: "First", lastName: "Last", level: 1)
     
@@ -61,9 +61,9 @@ struct MorePageView: View {
                                             )
                                         VStack {
                                             ForEach(achievement.title.split(separator: " "), id: \.self) { word in
-                                                            Text(String(word))
-                                                                .font(.caption)
-                                                        }
+                                                Text(String(word))
+                                                    .font(.caption)
+                                            }
                                             if (!achievement.isClaimed) {
                                                 Text("Reward: \(achievement.reward)")
                                                     .bold()
@@ -99,6 +99,9 @@ struct MorePageView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Screenshot", systemImage: "camera") {
+                        
+                        // CODE TO UPDATE "Sharing Companion" ACHIEVEMENT
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.SharingCompanion", progressToAdd: 100.0)
                         viewModel.takeScreenshot()
                     }
                 }

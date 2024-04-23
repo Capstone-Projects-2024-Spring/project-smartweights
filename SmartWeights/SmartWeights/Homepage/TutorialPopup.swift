@@ -25,8 +25,8 @@ struct TutorialPopup: View {
                     .padding(.vertical, -20)
                     .opacity(0.5)
                 
-                PlayerView(url: Bundle.main.url(forResource: "SWTutorialv2", withExtension: "mp4")!)
-                    .border(Color.africanViolet, width: 3)
+                VideoView(videoId: "K9E32Z8ZQDU")
+                    .frame(width: 200, height: 200)
                 
                 Button(action: {
                     show.toggle()
@@ -44,7 +44,6 @@ struct TutorialPopup: View {
             .padding(.horizontal, 30)
             .background(.white)
             .cornerRadius(25)
-            
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
