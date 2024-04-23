@@ -19,8 +19,8 @@ struct FoodItem: Identifiable {
 }
 
 class PetPageFunction: ObservableObject {
-//    static let shared = PetPageFunction()
-   
+    //    static let shared = PetPageFunction()
+    
     var petDBManager = PetDBManager.shared
     var petItemDBManager = PetItemDBManager.shared
     var clothingItemDBManager = ClothingItemDBManager.shared
@@ -52,7 +52,7 @@ class PetPageFunction: ObservableObject {
     @Published var userTotalXP = 0
     
     @Published var pet: PetModel?
-
+    
     @Published var activePet: String = ""
     @Published var activeBackground: String = ""
     @Published var activeClothing: String = ""
@@ -61,8 +61,8 @@ class PetPageFunction: ObservableObject {
     // Initializer
     init(){
         // fetchPetHealth()
-        // updateXP()
-        // updateLevel()
+        //updateXP()
+        updateLevel()
         
         foodItemDBManager.fetchFoodItems { fetchedItems, error in
             if let error = error {
@@ -85,7 +85,7 @@ class PetPageFunction: ObservableObject {
         //             self.petItems = petItems
         //         }
         //     }
-            
+        
         // }
         // activePet = petItemDBManager.g_getActivePet()
         // activeClothing = clothingItemDBManager.g_getActiveClothing()
@@ -105,7 +105,7 @@ class PetPageFunction: ObservableObject {
         //     self?.activePet = newActivePet
         // }
         // .store(in: &cancellables)
-//        activePet = petItemDBManager.activePet
+        //        activePet = petItemDBManager.activePet
     }
     
     func handleFoodUse(selectedFoodIndex: Int) {
@@ -227,72 +227,77 @@ class PetPageFunction: ObservableObject {
     }
     
     func addXP(value: Int) {
-        print("Adding \(value) to \(userTotalXP)")
         let newProgress = userTotalXP + value
-        print("UserXP: \(newProgress)")
-        
-        increaseXP(by: value) { newXpAfterLevelUp in
-            if newXpAfterLevelUp != nil {
-                self.petDBManager.updateUserXP(newXP: Int64(newXpAfterLevelUp!)) { error in
-                    if let error = error {
-                        print("Error updating XP: \(error.localizedDescription)")
-                    }
-                }
-            }
-        }
+        updateXPAndLevelIfNeeded(newXP: newProgress)
     }
-    func increaseXP(by value: Int, completion: @escaping (Int?) -> Void) {
-        let newProgress = userTotalXP + value
-        
-        // Decide if we need to level up and calculate the new XP
-        if currentLevel < 10 && newProgress >= 100 {
-            DispatchQueue.main.async {
-                withAnimation {
-                    self.currentLevel += 1  // Increment the level
-                    let newXpAfterLevelUp = newProgress % 100
-                    self.userTotalXP = newXpAfterLevelUp
-                    
-                    // Notify level up and new XP once
-                    //completion(self.currentLevel)
-                    completion(newXpAfterLevelUp) // Notify level up with new XP
-                    self.updateUserXPInDatabase(newXP: newXpAfterLevelUp)
-                    //self.updateUserLevelInDatabase(newLevel: self.currentLevel)
+    
+    private func updateXPAndLevelIfNeeded(newXP: Int) {
+        let neededXPForNextLevel = 100
+        var newXpAfterLevelUp = newXP
+        var newLevel = currentLevel
+        var levelChanged = false
+
+        // Loop to handle multiple level-ups in one go
+        while newLevel < 10 && newXpAfterLevelUp >= neededXPForNextLevel {
+            newXpAfterLevelUp -= neededXPForNextLevel
+            newLevel += 1
+            levelChanged = true
+            print("Level up: \(newLevel), Remaining XP after level up: \(newXpAfterLevelUp)")
+        }
+
+        // If maximum level is reached, cap XP and level
+        if newLevel >= 10 {
+            newLevel = 10
+            newXpAfterLevelUp = min(newXpAfterLevelUp, neededXPForNextLevel)
+            print("Max level reached: \(newLevel), XP capped at: \(newXpAfterLevelUp)")
+        }
+
+        // Update the database and local state
+        if levelChanged || newXpAfterLevelUp != userTotalXP {
+            updateUserXPInDatabase(newXP: newXpAfterLevelUp) { success in
+                if success {
+                    DispatchQueue.main.async {
+                        withAnimation {
+                            self.userTotalXP = newXpAfterLevelUp
+                            if levelChanged {
+                                self.currentLevel = newLevel
+                                self.updateUserLevelInDatabase(newLevel: newLevel)
+                            }
+                        }
+                    }
+                } else {
+                    print("Failed to update XP in the database.")
                 }
             }
         } else {
-            // Update XP without leveling up
-            self.userTotalXP = newProgress >= 100 && currentLevel == 10 ? 100 : newProgress
-            completion(self.userTotalXP) // Notify with current XP, even if no level up
-            self.updateUserXPInDatabase(newXP: self.userTotalXP)
-        }
-        
-        // Ensure the level doesn't exceed the max level cap
-        if currentLevel > 10 {
-            currentLevel = 10
-            completion(currentLevel) // Optionally notify if the level was adjusted
+            print("No XP or level change needed. Current XP: \(userTotalXP), Current Level: \(currentLevel)")
         }
     }
 
-    
-    func updateUserXPInDatabase(newXP: Int) {
-        petDBManager.updateUserXP(newXP: Int64(newXP)) { error in
-            if let error = error {
-                print("Error updating XP: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func updateUserLevelInDatabase(newLevel: Int) {
+    private func updateUserLevelInDatabase(newLevel: Int) {
         petDBManager.updateUserLevel(newLevel: Int64(newLevel)) { error in
-            if let error = error {
-                print("Error updating XP: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("Error updating Level in database: \(error.localizedDescription)")
+                } else {
+                    print("Level successfully updated in database to Level: \(newLevel)")
+                }
             }
         }
     }
-    
-    
-    
-    
+
+    private func updateUserXPInDatabase(newXP: Int, completion: @escaping (Bool) -> Void) {
+        petDBManager.updateUserXP(newXP: Int64(newXP)) { error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("Error updating XP: \(error.localizedDescription)")
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+            }
+        }
+    }
     
     
     func fetchPetHealth() {
@@ -307,16 +312,16 @@ class PetPageFunction: ObservableObject {
             }
         }
     }
-
-
-
+    
+    
+    
     func getActiveAll(){
         activeClothing = clothingItemDBManager.g_getActiveClothing()
         activePet = petItemDBManager.g_getActivePet()
         activeBackground = backgroundItemDBManager.g_getActiveBackground()
     }
     func getPetStats(){
-        userTotalXP = petDBManager.getXP() 
+        userTotalXP = petDBManager.getXP()
         healthBar = petDBManager.getHealth()
     }
     

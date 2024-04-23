@@ -10,6 +10,7 @@ struct WorkoutMainPage: View {
     @StateObject var storeModel = storeViewModel()
     @StateObject var workoutPageViewModel = WorkoutPageViewModel()
     @StateObject var viewModel: WorkoutViewModel
+    @ObservedObject var petpageModel = PetPageFunction()
     
     @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager.shared
     @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
@@ -59,6 +60,10 @@ struct WorkoutMainPage: View {
                 
                 // Tab selection for workout or feedback
                 workoutTabSelection
+                
+//                Button("testing XP"){
+//                petpageModel.addXP(value: 75)
+//                }
                 
                 // Content based on selected tab
                 if selectedTab == 0 {

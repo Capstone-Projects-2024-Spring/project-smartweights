@@ -104,12 +104,6 @@ struct Pet_Page: View {
                         .frame(height: 20)
                         .padding()
                     
-                    //                    // Display Current Level
-                    //                    Text("Level \(viewModel.currentLevel)")
-                    //                        .font(.system(size: 20))
-                    //                        .bold()
-                    //                        .frame(maxWidth: .infinity, alignment: .center)
-                    //                        .padding(.top, 10)
                     if viewModel.isLoading{
                         ProgressView()
                     } else{

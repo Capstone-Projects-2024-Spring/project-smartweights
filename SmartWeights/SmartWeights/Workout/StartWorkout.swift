@@ -19,6 +19,7 @@ class WorkoutViewModel: ObservableObject {
     
     let storeModel = storeViewModel()
     let workoutPageViewModel = WorkoutPageViewModel()
+    let petpageModel = PetPageFunction()
     
     var player: AVAudioPlayer!
     
@@ -361,7 +362,8 @@ class WorkoutViewModel: ObservableObject {
             
             // Logic for completing the workout
             storeModel.addFundtoUser(price: 50)
-            workoutPageViewModel.AddXP(value: 25)
+//            workoutPageViewModel.AddXP(value: 25)
+            petpageModel.addXP(value: 25)
         
             resetWorkoutState()
             hasWorkoutStarted = false
