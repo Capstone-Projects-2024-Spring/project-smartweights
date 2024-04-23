@@ -129,7 +129,7 @@ class WorkoutViewModel: ObservableObject {
                 
                 if let newWorkoutSession = coreDataManager.createWorkoutSession(dateTime: Date(), workoutNum: workoutNum, reps: repNum!, weight: weightNum!, overallCurlAcceleration: 0.0, overallElbowFlareLR: 0.0, overallElbowFlareUD: 0.0, overallElbowSwing: 0.0, overallWristStabilityLR: 0.0, overallWristStabilityUD: 0.0){
                     self.currentWorkoutSession = newWorkoutSession
-                    //print(self.currentWorkoutSession as Any)
+                    print(self.currentWorkoutSession as Any)
                     print("THE CREATE WORKOUT WORK?")
                 }
                 

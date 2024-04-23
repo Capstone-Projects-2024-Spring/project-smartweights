@@ -73,6 +73,10 @@ struct allFeedback: View {
                             .foregroundColor(.white)
                             .underline()
                         VStack(alignment: .leading, spacing: 10) {
+                            Text("Weights Used - \(String(format: "%.2f", workoutSession["weight"] as? Double ?? 1.0)) lbs")
+                            .bold()
+                            Text("Repetitions per set - \(workoutSession["reps"] as? Int64 ?? 0)")
+                            .bold()
                             HStack{
                                 Text("Curl Acceleration - \(Int(workoutSession["overallCurlAcceleration"] as? Double ?? 0.0))%")
                                 if workoutSession["overallCurlAcceleration"] as? Double ?? 0.0 < 70 {
