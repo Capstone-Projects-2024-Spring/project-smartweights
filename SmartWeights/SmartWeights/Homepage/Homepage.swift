@@ -14,18 +14,14 @@ struct Homepage: View {
     @ObservedObject var coreDataManager: CoreDataManager
     
     let tabBar: TabBar
-    // TODO: Currently hardcoded for demo. Change back afterwards.
-    @State private var showTutorial = true
+   
+    @AppStorage("ShowTutorial") var showTutorial = true
     
     init(tabBar: TabBar, coreDataManager: CoreDataManager) {
         self.tabBar = tabBar
         self.coreDataManager = coreDataManager
 
-        // Check if user is new and show popup accordingly
-        if UserDefaults.standard.bool(forKey: "isNewUser") {
-            _showTutorial = State(initialValue: true)
-            UserDefaults.standard.set(false, forKey: "isNewUser")
-        }
+    
     }
     
     var body: some View {
