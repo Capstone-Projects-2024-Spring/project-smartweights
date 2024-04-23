@@ -117,10 +117,12 @@ class WorkoutViewModel: ObservableObject {
                 ble.collectDataToggle = true //Start collecting data for the current workout
                 print("reset data has been reset hello")
                 let workoutNum = coreDataManager.getNextWorkoutNumber()
+                let repNum: Int? = Int(inputtedReps)
+                let weightNum: Double? = Double(inputtedWeights)
                 print("workoutNum: \(workoutNum)")
                 print("currentSets: \(currentSets)")
                 
-                if let newWorkoutSession = coreDataManager.createWorkoutSession(dateTime: Date(), workoutNum: workoutNum, overallCurlAcceleration: 0.0, overallElbowFlareLR: 0.0, overallElbowFlareUD: 0.0, overallElbowSwing: 0.0, overallWristStabilityLR: 0.0, overallWristStabilityUD: 0.0){
+                if let newWorkoutSession = coreDataManager.createWorkoutSession(dateTime: Date(), workoutNum: workoutNum, reps: repNum!, weight: weightNum!, overallCurlAcceleration: 0.0, overallElbowFlareLR: 0.0, overallElbowFlareUD: 0.0, overallElbowSwing: 0.0, overallWristStabilityLR: 0.0, overallWristStabilityUD: 0.0){
                     self.currentWorkoutSession = newWorkoutSession
                     //print(self.currentWorkoutSession as Any)
                     print("THE CREATE WORKOUT WORK?")
