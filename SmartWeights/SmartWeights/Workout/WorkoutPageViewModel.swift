@@ -12,7 +12,7 @@ import SwiftUI
 
 class WorkoutPageViewModel: ObservableObject{
 
-    var petDBManager = PetDBManager()
+    var petDBManager = PetDBManager.shared
 
 
     @Published var userTotalXP = 0
@@ -26,11 +26,11 @@ class WorkoutPageViewModel: ObservableObject{
     func updateXP(){
         petDBManager.getXP{ (totalXP, error) in
             if let error = error {
-                print("Error getting currency: \(error.localizedDescription)")
+                print("Error getting XP: \(error.localizedDescription)")
             } else if let totalXP = totalXP {
                 DispatchQueue.main.async {
                     self.userTotalXP = Int(totalXP)
-                    print(" UserXP: \(self.userTotalXP)")
+                    print(" UserXP from WorkoutVM: \(self.userTotalXP)")
                 }
             }
         
