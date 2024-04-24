@@ -41,13 +41,15 @@ struct NavigationCarousel: View {
                                         .frame(width: 60,
                                             height: 60)
                                             .foregroundStyle(bgColor))
-                                    .padding()
+                                    .padding(.vertical)
                                 Text("\(button.name)")
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .font(.subheadline)
                                     .foregroundStyle(textColor)
+                                    .frame(width: 70, height: 30)
                                 Spacer()
                             }
-                            .frame(width: 70, height: 70)
+                            .frame(width: 70, height: 90)
                             .padding()
                         }
                     }
