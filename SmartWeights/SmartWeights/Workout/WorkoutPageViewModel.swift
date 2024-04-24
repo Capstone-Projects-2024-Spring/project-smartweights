@@ -37,9 +37,20 @@ class WorkoutPageViewModel: ObservableObject{
         }
     }
     func AddXP(value: Int) {
+        
         print("Adding \(value) to \(userTotalXP)")
-        print("UserXP: \(self.userTotalXP + value)")
-        petDBManager.updateUserXP(newXP: Int64(userTotalXP + value)){
+       
+        let newXP = Int64(userTotalXP + value)
+        // level is XP / 100
+        let newLevel = Int64(newXP / 100) + 1
+        print("new Level: \(newLevel) new XP: \(newXP)`")
+        petDBManager.updateUserXP(newXP: newXP){
+            error in
+            if let error = error {
+                print("Error updating currency: \(error.localizedDescription)")
+            }
+        }
+        petDBManager.updateUserLevel(newLevel: newLevel){
             error in
             if let error = error {
                 print("Error updating currency: \(error.localizedDescription)")
