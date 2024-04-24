@@ -22,21 +22,37 @@ struct MorePageView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("\(viewModel.userDBManager.user?.firstName ?? "First") \(viewModel.userDBManager.user?.lastName ?? "Last")")
-                Image(systemName: "person.circle")
-                    .resizable()
-                    .frame(
-                        width: 100,
-                        height: 100
-                    )
-                Text("Lv. \(profile.level)")
-                ProgressView(value: 0.5)
-                    .progressViewStyle(LinearProgressViewStyle())
-                    .frame(
-                        width: 100
-                    )
-                Text("\(viewModel.balance) Points")
-                Divider()
+//                Text("\(viewModel.userDBManager.user?.firstName ?? "First") \(viewModel.userDBManager.user?.lastName ?? "Last")")
+//                Image(systemName: "person.circle")
+//                    .resizable()
+//                    .frame(
+//                        width: 100,
+//                        height: 100
+//                    )
+//                Text("Lv. \(profile.level)")
+//                ProgressView(value: 0.5)
+//                    .progressViewStyle(LinearProgressViewStyle())
+//                    .frame(
+//                        width: 100
+//                    )
+//                Text("\(viewModel.balance) Points")
+                
+                ZStack{
+                                    ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
+                                    
+                                    Image(backgroundItemDBManager.activeBackground)
+                                        .resizable()
+                                        .frame(width: 450, height: 450)
+                                    Image(petItemDBManager.activePet)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 450, height: 450)
+                                    Image(clothingItemDBManager.activeClothing)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 450, height: 450)
+                                }
+                                Divider()
                 VStack {
                     Text("Achievements")
                         .font(.title3)
@@ -67,23 +83,6 @@ struct MorePageView: View {
                             Spacer()
                         }
                     }
-                }
-                Divider()
-                ZStack{
-                    ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
-                    
-                    Image(backgroundItemDBManager.activeBackground)
-                        .resizable()
-                        .frame(width: 250, height: 250)
-                    Image(petItemDBManager.activePet)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 250, height: 250)
-                    Image(clothingItemDBManager.activeClothing)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 250, height: 250)
-                    
                 }
             }
             .onAppear(perform: {
