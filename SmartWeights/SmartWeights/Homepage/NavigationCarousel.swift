@@ -29,7 +29,6 @@ struct NavigationCarousel: View {
                 .foregroundStyle(textColor)
                 .padding(.top)
                 .padding(.horizontal)
-                .padding(.bottom, -5)
                 .bold()
             ScrollView (.horizontal, showsIndicators: false) {
                 HStack {
@@ -46,7 +45,9 @@ struct NavigationCarousel: View {
                                 Text("\(button.name)")
                                     .font(.subheadline)
                                     .foregroundStyle(textColor)
+                                Spacer()
                             }
+                            .frame(width: 70, height: 70)
                             .padding()
                         }
                     }

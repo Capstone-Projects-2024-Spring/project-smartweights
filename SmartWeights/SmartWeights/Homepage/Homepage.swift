@@ -49,7 +49,7 @@ struct Homepage: View {
                 Divider()
                 // Buttons for the additional pages carousel (NavigationCarousel)
                 let progress = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(allFeedback(coreDataManager: coreDataManager)))
-                let rechargeSensor = CarouselButton(name: "How to charge",icon:  "powerplug", link: AnyView(RechargeSensors()))
+                let rechargeSensor = CarouselButton(name: "Charge",icon:  "powerplug", link: AnyView(RechargeSensors()))
                 let help = CarouselButton(name: "Help", icon: "questionmark", link: AnyView(HelpPage()))
                 
                 // Array of defined buttons to be used by the NavigationCarousel view
