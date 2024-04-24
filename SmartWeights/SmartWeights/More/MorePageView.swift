@@ -56,6 +56,9 @@ struct MorePageView: View {
                                                 .frame(width: 50, height: 50)
                                             Text(challenge.title)
                                                 .font(.headline)
+                                                .multilineTextAlignment(.center)
+                                                .lineLimit(2)
+                                                .frame(width: 100)
                                         }
                                     }
                                 }
