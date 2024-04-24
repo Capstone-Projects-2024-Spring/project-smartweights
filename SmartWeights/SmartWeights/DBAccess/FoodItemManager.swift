@@ -164,7 +164,17 @@ class FoodItemDBManager: ObservableObject{
             let existingQuantity = record["quantity"] as? Int64 ?? 0
             let newQuantity = existingQuantity + quantity
             record["quantity"] = NSNumber(value: newQuantity) as CKRecordValue
-            
+            DispatchQueue.main.async{
+                // Update the quantity of the food item in the local array
+                self.foodItems = self.foodItems.map { foodItem in
+                    if foodItem.name == name {
+                        var newFoodItem = foodItem
+                        newFoodItem.quantity = newQuantity
+                        return newFoodItem
+                    }
+                    return foodItem
+                }
+            }
             self.CKManager.savePrivateItem(record: record)
             completion(nil)
         }
@@ -186,6 +196,16 @@ class FoodItemDBManager: ObservableObject{
                 record["imageName"] = name as CKRecordValue
             }
             record[FoodItemRecordKeys.quantity.rawValue] = NSNumber(value: newQuantity)
+            DispatchQueue.main.async{
+                self.foodItems = self.foodItems.map { foodItem in
+                    if foodItem.name == name {
+                        var newFoodItem = foodItem
+                        newFoodItem.quantity = newQuantity
+                        return newFoodItem
+                    }
+                    return foodItem
+                }
+            }
             self.CKManager.savePrivateItem(record: record)
             completion(nil)
         }
