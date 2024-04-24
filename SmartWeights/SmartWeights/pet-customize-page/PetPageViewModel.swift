@@ -320,6 +320,7 @@ class PetPageFunction: ObservableObject {
     func getPetStats(){
         userTotalXP = petDBManager.getXP() 
         healthBar = petDBManager.getHealth()
+        currentLevel = petDBManager.getLevel()
     }
     
 }
