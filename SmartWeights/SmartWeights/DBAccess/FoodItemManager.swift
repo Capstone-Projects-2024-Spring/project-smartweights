@@ -36,7 +36,7 @@ class FoodItemDBManager: ObservableObject{
     @Published var foodItems: [FoodItemModel] = []
     let CKManager = CloudKitManager()
     var foodItemExists: Bool = false
-    
+    static let shared = FoodItemDBManager()
     
     init() {
         fetchFoodItems { foodItems, error in

@@ -25,7 +25,7 @@ class PetPageFunction: ObservableObject {
     var petItemDBManager = PetItemDBManager.shared
     var clothingItemDBManager = ClothingItemDBManager.shared
     var backgroundItemDBManager = BackgroundItemDBManager.shared
-    var foodItemDBManager = FoodItemDBManager()
+    var foodItemDBManager = FoodItemDBManager.shared
     @Published var showShop = false
     @Published var showCustomize = false
     @Published var healthBar: Int = 50
@@ -314,6 +314,7 @@ class PetPageFunction: ObservableObject {
         activeClothing = clothingItemDBManager.g_getActiveClothing()
         activePet = petItemDBManager.g_getActivePet()
         activeBackground = backgroundItemDBManager.g_getActiveBackground()
+        pet = petDBManager.getPet()
     }
     func getPetStats(){
         userTotalXP = petDBManager.getXP() 
