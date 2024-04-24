@@ -17,16 +17,16 @@ sidebar_position: 4
     - The tutorial will be demonstrated by SmartWeights' generic pet.
     - The user will select and name their first pet.
     - The user will be able to revisit the tutorial prompt.
-8. The user must be able to go to a user information page and set their body measurements.
-9. The user must be able to create a workout plan that can be tracked from a fitness plan page.
-10. During the process of the user workout, it will provide feedback after each set on the user's action such as correcting their form.
-11. The app will award the users with digital currency based on their workouts and achievements.
+
+8. The user must be able to create a workout plan that can be tracked from a fitness plan page.
+9. During the process of the user workout, it will provide feedback after each set on the user's action such as correcting their form.
+10. The app will award the users with digital currency based on their workouts and achievements.
     - There will be a pet store tab dedicated to buying items for your virtual pet with digital currency.
-12. The pet will have a level-up system and a health system.
+11. The pet will have a level-up system and a health system.
     - Users can use digital currency to buy food for their pet in the pet store tab to keep the pet healthy.
-13. There will be an achievement tab for users to look through their completed achievements as well as achievements they can strive for.
-14. Users can click on a share button that displays their virtual pet along with other accolades they would like to share with friends.
-15. The user must be able to customize their in-app settings, including setting preferences for notifications.
+12. There will be an achievement tab for users to look through their completed achievements as well as achievements they can strive for.
+13. Users can click on a share button that displays their virtual pet along with other accolades they would like to share with friends.
+14. The user must be able to customize their in-app settings, including setting preferences for notifications.
 
 
 

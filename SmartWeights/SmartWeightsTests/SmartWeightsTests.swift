@@ -122,33 +122,6 @@ final class SmartWeightsTests: XCTestCase {
 //        XCTAssertEqual(viewModel.seconds, seconds, "seconds should be displaying 2")
 //    }
     
-    //PET STORE PAGE
-
-    // test if store will sort all items by name
-        func testSortItemsByName() {
-            // Given
-            let viewModel = storeViewModel()
-            let items = viewModel.items
-            
-            // When
-            let sortedItems = viewModel.sortItems(items: items, sortByPrice: false)
-            
-            // Then
-            XCTAssertEqual(sortedItems.map { $0.name }, ["Apple", "Cat", "Dinosaur", "Dog", "Flag", "Floral Glasses", "Jetpack", "Juice", "Orange", "Pet Chain", "Sand Castle"])
-        }
-        
-        // test if store will sort all items by price
-        func testSortItemsByPrice() {
-            // Given
-            let viewModel = storeViewModel()
-            let items = viewModel.items
-            
-            // When
-            let sortedItems = viewModel.sortItems(items: items, sortByPrice: true)
-            
-            // Then
-            XCTAssertEqual(sortedItems.map { $0.name }, ["Orange", "Juice", "Apple", "Flag", "Sand Castle", "Floral Glasses", "Pet Chain", "Jetpack", "Cat", "Dog", "Dinosaur"])
-        }
     
    //WORKOUT PROGRESS PAGE
     

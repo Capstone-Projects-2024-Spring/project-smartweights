@@ -16,8 +16,9 @@ struct FitnessPlanPage: View {
     let sets = Array(0...10)
     let reps = Array(0...20)
     @State private var showClearConfirmation = false
+    @State private var showSaveConfirmation = false
     
-    // temp variables to make less database interaction
+    // draft/temp vars to prevent extra database calls
     @State private var draftDaysPerWeekGoal: Int = 0
     @State private var draftWeightGoal: Int = 0
     @State private var draftSetGoal: Int = 0
@@ -25,10 +26,11 @@ struct FitnessPlanPage: View {
     @State private var draftNotes: String = ""
     @State private var draftSelectedDate = Date()
     
-    let characterLimit = 200
+    let characterLimit = 200 // for notes field
+    
     var body: some View {
         NavigationStack {
-            SwiftUI.Form {
+            Form {
                 Section(header: Text("Fitness Plan Input")) {
                     Picker("Workouts Per Week", selection: $draftDaysPerWeekGoal) {
                         ForEach(daysPerWeek, id: \.self) { daysPerWeek in
@@ -41,27 +43,29 @@ struct FitnessPlanPage: View {
                         .datePickerStyle(.compact)
                     
                     Picker("Dumbbell Weight Goal", selection: $draftWeightGoal) {
-                                            ForEach(weight.filter { $0 % 5 == 0 }, id: \.self) { weight in
-                                                Text("\(weight)").tag(weight)
-                                            }
-                                        }
-                                        .pickerStyle(.menu)
+                        ForEach(weight.filter { $0 % 5 == 0 }, id: \.self) { weight in
+                            Text("\(weight)").tag(weight)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    
                     Picker("Set Goal", selection: $draftSetGoal) {
                         ForEach(sets, id: \.self) { sets in
                             Text("\(sets)").tag(sets)
                         }
                     }
                     .pickerStyle(.menu)
+                    
                     Picker("Rep Goal", selection: $draftRepGoal) {
                         ForEach(reps, id: \.self) { reps in
                             Text("\(reps)").tag(reps)
                         }
                     }
                     .pickerStyle(.menu)
-                    // Text field for entering notes
+                    
                     ZStack(alignment: .topTrailing) {
                         TextEditor(text: $draftNotes)
-                            .frame(minHeight: 100) // Set a minimum height to allow scrolling
+                            .frame(minHeight: 100)
                             .padding(2)
                             .background(Color.white)
                             .cornerRadius(5)
@@ -78,11 +82,11 @@ struct FitnessPlanPage: View {
                             .padding(.top, 5)
                             .offset(y: -5)
                     }
-                    .frame(maxHeight: .infinity) // Allow the ZStack to expand vertically
+                    .frame(maxHeight: .infinity)
                     .padding()
                     
-                    // save temp variables to viewModel variables, will update previous page
                     Button("Save") {
+                        showSaveConfirmation = true
                         viewModel.updateFitnessPlan(
                             daysPerWeekGoal: draftDaysPerWeekGoal,
                             weightGoal: draftWeightGoal,
@@ -98,9 +102,7 @@ struct FitnessPlanPage: View {
                     .background(Color.blue)
                     .cornerRadius(10)
                     
-                    // clear temp variables
                     Button("Clear Saved Entries") {
-                        // Show confirmation dialog
                         showClearConfirmation = true
                     }
                     .foregroundColor(.white)
@@ -108,21 +110,20 @@ struct FitnessPlanPage: View {
                     .frame(maxWidth: .infinity)
                     .background(Color.red)
                     .cornerRadius(10)
-                    .alert(isPresented: $showClearConfirmation) {
-                        Alert(
-                            title: Text("Are you sure you want to clear all entries? This will delete all inputs saved on the previous page!"),
-                            primaryButton: .destructive(Text("Yes")) {
-                                // Call clearAllInputs() method upon confirmation
-                                viewModel.clearAllInputs()
-                                clearTemp()
-                            },
-                            secondaryButton: .cancel(Text("No"))
-                        )
-                    }
                 }
                 .navigationTitle("Fitness Plan")
-            } .onAppear {
-                // Set draft variables to viewModel variables when view appears
+            }
+            .alert("Fitness plan successfully saved.", isPresented: $showSaveConfirmation) {
+                Button("OK", role: .cancel) { }
+            }
+            .alert("Are you sure you want to clear all entries? This will delete all inputs saved on the previous page!", isPresented: $showClearConfirmation) {
+                Button("No", role: .cancel) { }
+                Button("Yes", role: .destructive) {
+                    viewModel.clearAllInputs()
+                    clearTemp()
+                }
+            }
+            .onAppear { // show current viewModel vars when page loads
                 draftDaysPerWeekGoal = viewModel.daysPerWeekGoal
                 draftWeightGoal = viewModel.weightGoal
                 draftSetGoal = viewModel.setGoal
@@ -133,7 +134,7 @@ struct FitnessPlanPage: View {
         }
     }
     
-    /// struct function to clear the draft variables, is called when clearing saved entries
+    /// FitessPlanPage struct function to reset temporary variables
     func clearTemp() {
         draftDaysPerWeekGoal = 0
         draftWeightGoal = 0
@@ -142,9 +143,8 @@ struct FitnessPlanPage: View {
         draftNotes = ""
         draftSelectedDate = Date() // reset selectedDate to current date
     }
+    
 }
-
-
 /// Preview screen
 #Preview {
     FitnessPlanPage()

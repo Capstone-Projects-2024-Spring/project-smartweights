@@ -73,12 +73,94 @@ struct allFeedback: View {
                             .foregroundColor(.white)
                             .underline()
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("Curl Acceleration - \(Int(workoutSession["overallCurlAcceleration"] as? Double ?? 0.0))%")
-                            Text("Wrist Stability (Left Right) - \(Int(workoutSession["overallWristStabilityLeftRight"] as? Double ?? 0.0))%")
-                            Text("Wrist Stability (Up Down) - \(Int(workoutSession["overallWristStabilityUpDown"] as? Double ?? 0.0))%")
-                            Text("Elbow Swing - \(Int(workoutSession["overallElbowSwing"] as? Double ?? 0.0))%")
-                            Text("Elbow Flare (Left Right) - \(Int(workoutSession["overallElbowFlareLeftRight"] as? Double ?? 0.0))%")
-                            Text("Elbow Flare (Up Down) - \(Int(workoutSession["overallElbowFlareUpDown"] as? Double ?? 0.0))%")
+                            Text("Weights Used - \(String(format: "%.2f", workoutSession["weight"] as? Double ?? 1.0)) lbs")
+                            .bold()
+                            Text("Repetitions per set - \(workoutSession["reps"] as? Int64 ?? 0)")
+                            .bold()
+                            HStack{
+                                Text("Curl Acceleration - \(Int(workoutSession["overallCurlAcceleration"] as? Double ?? 0.0))%")
+                                if workoutSession["overallCurlAcceleration"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
+                            }
+                            
+                            HStack{
+                                Text("Wrist Stability (Left Right) - \(Int(workoutSession["overallWristStabilityLeftRight"] as? Double ?? 0.0))%")
+                                if workoutSession["overallWristStabilityLeftRight"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
+                                
+                            }
+                            
+                            HStack {
+                                Text("Wrist Stability (Up Down) - \(Int(workoutSession["overallWristStabilityUpDown"] as? Double ?? 0.0))%")
+                                if workoutSession["overallWristStabilityUpDown"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
+                            }
+                            
+                            
+                            HStack {
+                                Text("Elbow Swing - \(Int(workoutSession["overallElbowSwing"] as? Double ?? 0.0))%")
+                                if workoutSession["overallElbowSwing"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
+                            }
+                            
+                            
+                            HStack {
+                                Text("Elbow Flare (Left Right) - \(Int(workoutSession["overallElbowFlareLeftRight"] as? Double ?? 0.0))%")
+                                if workoutSession["overallElbowFlareLeftRight"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
+                            }
+                            
+                            
+                            HStack {
+                                Text("Elbow Flare (Up Down) - \(Int(workoutSession["overallElbowFlareUpDown"] as? Double ?? 0.0))%")
+                                if workoutSession["overallElbowFlareUpDown"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
+                            }
+                            
+                            
+                            
                         }
                         .foregroundColor(.white)
                         //get data for each set in the workout
@@ -87,12 +169,90 @@ struct allFeedback: View {
                             let exerciseSet = exerciseSets[index]
                             DisclosureGroup(content: {
                                 VStack(alignment: .leading, spacing: 10) {
-                                    Text("Curl Acceleration - \(Int(exerciseSet["avgCurlAcceleration"] as? Double ?? 0))%")
-                                    Text("Wrist Stability (Left Right) - \(Int(exerciseSet["avgWristStabilityLeftRight"] as? Double ?? 0))%")
-                                    Text("Wrist Stability (Up Down) - \(Int(exerciseSet["avgWristStabilityUpDown"] as? Double ?? 0))%")
-                                    Text("Elbow Swing - \(Int(exerciseSet["avgElbowSwing"] as? Double ?? 0))%")
-                                    Text("Elbow Flare (Left Right) - \(Int(exerciseSet["avgElbowFlareLeftRight"] as? Double ?? 0))%")
-                                    Text("Elbow Flare (Up Down) - \(Int(exerciseSet["avgElbowFlareUpDown"] as? Double ?? 0))%")
+                                    HStack {
+                                        Text("Curl Acceleration - \(Int(exerciseSet["avgCurlAcceleration"] as? Double ?? 0))%")
+                                        if exerciseSet["avgCurlAcceleration"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        Text("Wrist Stability (Left Right) - \(Int(exerciseSet["avgWristStabilityLeftRight"] as? Double ?? 0))%")
+                                        if exerciseSet["avgWristStabilityLeftRight"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        Text("Wrist Stability (Up Down) - \(Int(exerciseSet["avgWristStabilityUpDown"] as? Double ?? 0))%")
+                                        if exerciseSet["avgWristStabilityUpDown"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        Text("Elbow Swing - \(Int(exerciseSet["avgElbowSwing"] as? Double ?? 0))%")
+                                        if exerciseSet["avgElbowSwing"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        Text("Elbow Flare (Left Right) - \(Int(exerciseSet["avgElbowFlareLeftRight"] as? Double ?? 0))%")
+                                        if exerciseSet["avgElbowFlareLeftRight"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        Text("Elbow Flare (Up Down) - \(Int(exerciseSet["avgElbowFlareUpDown"] as? Double ?? 0))%")
+                                        if exerciseSet["avgElbowFlareUpDown"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
                                 }
                                 .padding(.horizontal)
                                 .foregroundColor(.white)

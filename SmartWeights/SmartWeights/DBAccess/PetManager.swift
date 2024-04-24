@@ -35,10 +35,13 @@ extension PetModel {
 
 /// Class responsible for managing the Pet database operations.
 class PetDBManager: ObservableObject {
+    static let shared = PetDBManager()
     @Published var pet: PetModel?
     let CKManager = CloudKitManager()
     var petExists: Bool = false
-    
+    @Published var totalXP: Int64 = 0
+    @Published var level: Int64 = 1
+    @Published var health: Int64 = 100
     /// Initializes the PetDBManager and fetches the pet from the database.
     init() {
         fetchPet { pet, error in
@@ -61,7 +64,7 @@ class PetDBManager: ObservableObject {
             return
         }
 
-        let pet = PetModel(health: 100, level: 1, petImage: nil, totalXP: 0)
+        let pet = PetModel(health: 50, level: 1, petImage: nil, totalXP: 0)
         let petRecord = pet.record
         CKManager.savePrivateItem(record: petRecord)
         petExists = true
@@ -77,9 +80,11 @@ class PetDBManager: ObservableObject {
                 return
             }
             guard let record = records?.first else {
-                self.petExists = false
-                print("No pet record found")
-                completion(nil, nil)
+                DispatchQueue.main.async{
+                    self.petExists = false
+                    print("No pet record found")
+                    completion(nil, nil)
+                }
                 return
             }
             let health = record[PetRecordKeys.health.rawValue] as? Int64 ?? 0
@@ -87,10 +92,21 @@ class PetDBManager: ObservableObject {
             let petImage = record[PetRecordKeys.petImage.rawValue] as? CKAsset
             let totalXP = record[PetRecordKeys.totalXP.rawValue] as? Int64 ?? 0
 
-            self.pet = PetModel(recordId: record.recordID, health: health, level: level, petImage: petImage, totalXP: totalXP)
+            DispatchQueue.main.async{
+                self.pet = PetModel(recordId: record.recordID, health: health, level: level, petImage: petImage, totalXP: totalXP)
+                self.health = health
+                self.level = level
+                self.totalXP = totalXP
+            }
+           
             completion(self.pet, nil)
             self.petExists = true
         }
+    } 
+    //Maximize so doesn't have to call fetch pet three times
+    func getHealth() -> Int{
+        print("Health from getHealth(): \(Int(pet?.health ?? 0))")
+        return Int(pet?.health ?? 0)
     }
     func getXP(completion: @escaping (Int64?, Error?) -> Void){
         if let pet = pet {
@@ -105,9 +121,20 @@ class PetDBManager: ObservableObject {
                     completion(nil, nil)
                     return
                 }
+                DispatchQueue.main.async{
+                    self.totalXP = self.pet?.totalXP ?? 0
+                }
                 completion(self.pet?.totalXP, nil)
             }
         }
+    }
+    func getXP() -> Int{
+        print("Total XP from getXP(): \(Int(self.totalXP))")
+        return Int(self.totalXP)
+    }
+    func getLevel() -> Int{
+        print("Level from getLevel(): \(Int(self.level))")
+        return Int(self.level)
     }
     func getLevel(completion: @escaping (Int64?, Error?) -> Void){
         if let pet = pet {
@@ -121,6 +148,9 @@ class PetDBManager: ObservableObject {
                 guard pet != nil else {
                     completion(nil, nil)
                     return
+                }
+                DispatchQueue.main.async{
+                    self.level = self.pet?.level ?? 0
                 }
                 completion(self.pet?.level, nil)
             }
@@ -137,6 +167,9 @@ class PetDBManager: ObservableObject {
             let currentXP = NSNumber(value: newXP)
             record[PetRecordKeys.totalXP.rawValue] = currentXP as CKRecordValue
             self.CKManager.savePrivateItem(record: record)
+            DispatchQueue.main.async{
+                self.totalXP = newXP
+            }
             completion(nil)
         }
     }
@@ -152,6 +185,9 @@ class PetDBManager: ObservableObject {
             let currentLevel = NSNumber(value: newLevel)
             record[PetRecordKeys.level.rawValue] = currentLevel as CKRecordValue
             self.CKManager.savePrivateItem(record: record)
+            DispatchQueue.main.async{
+                self.level = newLevel
+            }
             completion(nil)
         }
     }
@@ -177,14 +213,29 @@ class PetDBManager: ObservableObject {
                 if let saveError = saveError {
                     print("Failed to update pet HP: \(saveError.localizedDescription)")
                 } else {
-                    self?.pet?.health = newHealth // Update local pet model
-                    print("Pet HP updated to \(newHealth).")
+                    DispatchQueue.main.async {
+                        self?.pet?.health = newHealth // Update local pet model
+                        self?.health = newHealth
+                        print("Pet HP updated to \(newHealth).")
+                    }
                 }
                 completion(saveError)
             }
         }
     }
 
-
+    // func getXP(completion: @escaping (Int64?, Error?) -> Void){
+    //     CKManager.fetchPrivateRecord(recordType: "Pet", fieldName: "totalXP", fieldValue: nil) { records, error in
+    //         guard let record = records?.first else {
+    //             print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
+    //             completion(nil, error)
+    //             return
+    //         }
+    //         DispatchQueue.main.async{
+    //             let xp = record[PetRecordKeys.totalXP.rawValue] as? Int64
+    //             completion(xp, nil)
+    //         }
+    //     }
+    // }
     
 }

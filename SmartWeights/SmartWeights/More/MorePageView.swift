@@ -11,9 +11,9 @@ import UIKit
 struct MorePageView: View {
     
     @ObservedObject var viewModel = MorePageViewModel()
-    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
-    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
-    @ObservedObject var petItemDBManager = PetItemDBManager()
+    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager.shared
+    @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
+    @ObservedObject var petItemDBManager = PetItemDBManager.shared
     
     let profile = Profile(firstName: "First", lastName: "Last", level: 1)
     
