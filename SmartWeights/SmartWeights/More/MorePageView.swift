@@ -15,6 +15,7 @@ struct MorePageView: View {
     @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager.shared
     @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
     @ObservedObject var petItemDBManager = PetItemDBManager.shared
+    @State private var updateKey = false
     
     let profile = Profile(firstName: "First", lastName: "Last", level: 1)
     
@@ -59,6 +60,7 @@ struct MorePageView: View {
                                     }
                                 }
                             }
+                            .id(updateKey)
                             Spacer()
                         }
                     }
@@ -81,6 +83,9 @@ struct MorePageView: View {
                     
                 }
             }
+            .onAppear(perform: {
+                refreshList()
+            })
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -104,6 +109,30 @@ struct MorePageView: View {
         }) {
             if let screenshot = viewModel.screenshot {
                 ShareSheetView(items: [screenshot])
+            }
+        }
+    }
+    
+    func refreshList() {
+        fetchGameCenterProgress()
+        updateKey.toggle()
+    }
+    
+    func fetchGameCenterProgress() {
+        GameCenterManager.shared.fetchAllAchievementsProgress { progressDict, error in
+            if let error = error {
+                print("Error fetching achievements: \(error.localizedDescription)")
+            } else if let progressDict = progressDict {
+                DispatchQueue.main.async {
+                    for i in self.challengesViewModel.challenges.indices {
+                        if let percentComplete = progressDict[self.challengesViewModel.challenges[i].achievementIdentifier] {
+                            // Update the current progress with the fetched percent complete directly
+                            self.challengesViewModel.challenges[i].currentProgress = Int(percentComplete)
+                            // Determine if the challenge is completed based on whether the percent complete is 100
+                            self.challengesViewModel.challenges[i].isCompleted = percentComplete == 100.0
+                        }
+                    }
+                }
             }
         }
     }
