@@ -64,17 +64,17 @@ class PetPageFunction: ObservableObject {
         // updateXP()
         // updateLevel()
         
-        foodItemDBManager.fetchFoodItems { fetchedItems, error in
-            if let error = error {
-                print("Error fetching food items: \(error)")
-                return
-            }
-            if let fetchedItems = fetchedItems {
-                DispatchQueue.main.async {
-                    self.foodItems = fetchedItems
-                }
-            }
-        }
+        // foodItemDBManager.fetchFoodItems { fetchedItems, error in
+        //     if let error = error {
+        //         print("Error fetching food items: \(error)")
+        //         return
+        //     }
+        //     if let fetchedItems = fetchedItems {
+        //         DispatchQueue.main.async {
+        //             self.foodItems = fetchedItems
+        //         }
+        //     }
+        // }
         // petItemDBManager.fetchPetItems{ petItems, error in
         //     if let error = error {
         //         print("Error fetching pet items: \(error.localizedDescription)")
@@ -315,6 +315,7 @@ class PetPageFunction: ObservableObject {
         activePet = petItemDBManager.g_getActivePet()
         activeBackground = backgroundItemDBManager.g_getActiveBackground()
         pet = petDBManager.getPet()
+        foodItems = foodItemDBManager.getFoodItems()
     }
     func getPetStats(){
         userTotalXP = petDBManager.getXP() 
