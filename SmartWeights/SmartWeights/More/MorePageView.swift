@@ -48,7 +48,7 @@ struct MorePageView: View {
                                 if (challenge.isCompleted) {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 25.0)
-                                            .fill(Color.green)
+                                            .fill(Color.africanViolet)
                                             .frame(width: 120, height: 120)
                                         VStack {
                                             challenge.image
