@@ -4,10 +4,8 @@
 //  Created by Tu Ha on 2/20/24.
 
 import SwiftUI
-///View to display data from each of the set in the workout
 //to create each of the boxes for each set
-
-
+/// PostWorkoutData is a view that displays the feedback for each set in the workout
 struct PostWorkoutData: View {
     @ObservedObject var viewModel: WorkoutViewModel
     
@@ -84,6 +82,7 @@ struct PostWorkoutData: View {
     }
 }
 
+/// OverallWorkoutData is a view that displays the overall feedback for the workout
 struct OverallWorkoutData: View{
     @Binding var workoutAnalysisForSets: [[String: Double]]
     @ObservedObject var viewModel: WorkoutViewModel
