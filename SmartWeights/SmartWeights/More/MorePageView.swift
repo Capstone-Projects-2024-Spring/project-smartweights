@@ -11,6 +11,7 @@ import UIKit
 struct MorePageView: View {
     
     @ObservedObject var viewModel = MorePageViewModel()
+    @ObservedObject var challengesViewModel = ChallengesViewModel()
     @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager.shared
     @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
     @ObservedObject var petItemDBManager = PetItemDBManager.shared
@@ -42,33 +43,18 @@ struct MorePageView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             Spacer()
-                            ForEach(viewModel.achievements) { achievement in
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(achievement.isClaimed ? Color.green : Color.gray.opacity(0.5))
-                                        .frame(width: 120, height: 140)
-                                        .onTapGesture {
-                                            if (!achievement.isClaimed) {
-                                                viewModel.claimAchievement(id: achievement.id)
-                                            }
-                                        }
-                                    VStack(spacing: 20) {
-                                        Image(systemName: achievement.img)
-                                            .resizable()
-                                            .frame(
-                                                width: 50,
-                                                height: 50
-                                            )
+                            ForEach(challengesViewModel.challenges) { challenge in
+                                if (challenge.isCompleted) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 25.0)
+                                            .fill(Color.green)
+                                            .frame(width: 120, height: 120)
                                         VStack {
-                                            ForEach(achievement.title.split(separator: " "), id: \.self) { word in
-                                                Text(String(word))
-                                                    .font(.caption)
-                                            }
-                                            if (!achievement.isClaimed) {
-                                                Text("Reward: \(achievement.reward)")
-                                                    .bold()
-                                                    .font(.caption)
-                                            }
+                                            challenge.image
+                                                .resizable()
+                                                .frame(width: 50, height: 50)
+                                            Text(challenge.title)
+                                                .font(.headline)
                                         }
                                     }
                                 }
