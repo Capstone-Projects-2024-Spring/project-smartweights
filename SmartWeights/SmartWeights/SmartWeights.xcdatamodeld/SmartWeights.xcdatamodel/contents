@@ -21,6 +21,8 @@
         <attribute name="overallElbowSwing" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="overallWristStabilityLeftRight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="overallWristStabilityUpDown" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="reps" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="workoutNum" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="sets" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="ExerciseSet" inverseName="workoutSession" inverseEntity="ExerciseSet"/>
     </entity>

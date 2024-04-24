@@ -13,6 +13,8 @@ struct RechargeSensors: View {
             VStack(alignment: .leading, spacing: 20) {
                 Text("How to Recharge Sensors")
                     .font(.title)
+                    .bold()
+                    .foregroundColor(.africanViolet)
                 
                 Text("Required:")
                     .font(.headline)
