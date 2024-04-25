@@ -8,6 +8,7 @@
 import Foundation
 import CloudKit
 import SwiftUI
+import Combine
 
 
 struct FoodItem: Identifiable {
@@ -18,12 +19,13 @@ struct FoodItem: Identifiable {
 }
 
 class PetPageFunction: ObservableObject {
-    
-    var inventoryDBManager = InventoryDBManager()
-    var userDBManager = UserDBManager()
-    var petDBManager = PetDBManager()
-    var petItemDBManager = PetItemDBManager()
-    var foodItemDBManager = FoodItemDBManager()
+//    static let shared = PetPageFunction()
+   
+    var petDBManager = PetDBManager.shared
+    var petItemDBManager = PetItemDBManager.shared
+    var clothingItemDBManager = ClothingItemDBManager.shared
+    var backgroundItemDBManager = BackgroundItemDBManager.shared
+    var foodItemDBManager = FoodItemDBManager.shared
     @Published var showShop = false
     @Published var showCustomize = false
     @Published var healthBar: Int = 50
@@ -39,11 +41,7 @@ class PetPageFunction: ObservableObject {
     
     @Published var foodItems: [FoodItemModel] = []
     
-    @Published var petItems: [PetItemModel] = []{
-        didSet{
-            getActivePet()
-        }
-    }
+    // @Published var petItems: [PetItemModel] = []
     
     @Published var isLoading = false
     
@@ -54,47 +52,60 @@ class PetPageFunction: ObservableObject {
     @Published var userTotalXP = 0
     
     @Published var pet: PetModel?
+
     @Published var activePet: String = ""
+    @Published var activeBackground: String = ""
+    @Published var activeClothing: String = ""
     
+    // private var cancellables = Set<AnyCancellable>()
     // Initializer
     init(){
-        fetchPetHealth()
-        updateXP()
-        updateLevel()
-        foodItemDBManager.fetchFoodItems { fetchedItems, error in
-            if let error = error {
-                print("Error fetching food items: \(error)")
-                return
-            }
-            if let fetchedItems = fetchedItems {
-                DispatchQueue.main.async {
-                    self.foodItems = fetchedItems
-                }
-            }
-        }
-        petItemDBManager.fetchPetItems{ petItems, error in
-            if let error = error {
-                print("Error fetching pet items: \(error.localizedDescription)")
-                return
-            }
-            if let petItems = petItems {
-                DispatchQueue.main.async {
-                    self.petItems = petItems
-                }
-            }
+        // fetchPetHealth()
+        // updateXP()
+        // updateLevel()
+        
+        // foodItemDBManager.fetchFoodItems { fetchedItems, error in
+        //     if let error = error {
+        //         print("Error fetching food items: \(error)")
+        //         return
+        //     }
+        //     if let fetchedItems = fetchedItems {
+        //         DispatchQueue.main.async {
+        //             self.foodItems = fetchedItems
+        //         }
+        //     }
+        // }
+        // petItemDBManager.fetchPetItems{ petItems, error in
+        //     if let error = error {
+        //         print("Error fetching pet items: \(error.localizedDescription)")
+        //         return
+        //     }
+        //     if let petItems = petItems {
+        //         DispatchQueue.main.async {
+        //             self.petItems = petItems
+        //         }
+        //     }
             
-        }
-        petItemDBManager.getActivePet{ activePet, error in
-            if let error = error {
-                print("Error fetching activePet: \(error.localizedDescription)")
-                return
-            } else {
-                DispatchQueue.main.async {
-                    self.activePet = activePet
-                    print("ACTIVE PET: \(self.activePet)")
-                }
-            }
-        }
+        // }
+        // activePet = petItemDBManager.g_getActivePet()
+        // activeClothing = clothingItemDBManager.g_getActiveClothing()
+        //  petItemDBManager.getActivePet{ activePet, error in
+        //      if let error = error {
+        //          print("Error fetching activePet: \(error.localizedDescription)")
+        //          return
+        //      } else {
+        //          DispatchQueue.main.async {
+        //              self.activePet = activePet
+        //              print("ACTIVE PET: \(self.activePet)")
+        //          }
+        //      }
+        //  }
+        //  petItemDBManager.$activePet
+        // .sink { [weak self] newActivePet in
+        //     self?.activePet = newActivePet
+        // }
+        // .store(in: &cancellables)
+//        activePet = petItemDBManager.activePet
     }
     
     func handleFoodUse(selectedFoodIndex: Int) {
@@ -186,6 +197,7 @@ class PetPageFunction: ObservableObject {
             }
         }
     }
+    
     
     func refreshData() {
         isLoading = true
@@ -295,4 +307,20 @@ class PetPageFunction: ObservableObject {
             }
         }
     }
+
+
+
+    func getActiveAll(){
+        activeClothing = clothingItemDBManager.g_getActiveClothing()
+        activePet = petItemDBManager.g_getActivePet()
+        activeBackground = backgroundItemDBManager.g_getActiveBackground()
+        pet = petDBManager.getPet()
+        foodItems = foodItemDBManager.getFoodItems()
+    }
+    func getPetStats(){
+        userTotalXP = petDBManager.getXP() 
+        healthBar = petDBManager.getHealth()
+        currentLevel = petDBManager.getLevel()
+    }
+    
 }
