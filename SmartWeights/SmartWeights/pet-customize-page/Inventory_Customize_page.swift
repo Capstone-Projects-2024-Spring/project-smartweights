@@ -64,7 +64,12 @@ struct Customize_page: View {
                             .cornerRadius(15)
                     }
                     Button(action: {
+                        
+                        // CODE TO UPDATE Outfit Change ACHIEVEMENT
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.OutfitChange", progressToAdd: 100.0)
+                        
                         viewModel.saveCustomizations()
+                        
                     }) {
                         Text("Save")
                             .foregroundColor(.white)

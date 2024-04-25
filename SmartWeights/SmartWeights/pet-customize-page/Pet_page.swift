@@ -117,6 +117,13 @@ struct Pet_Page: View {
                             .frame(height: 20)
                             .padding()
                     }
+                } .onAppear {
+                    // This will only call once when the view appears
+                    if viewModel.currentLevel == 2 {
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.NewBestFriends", progressToAdd: 100.0)
+                    } else if viewModel.currentLevel == 10 {
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.DynamicDuo", progressToAdd: 100.0)
+                    }
                 }
                 .padding(.top, -20)
                 Spacer()

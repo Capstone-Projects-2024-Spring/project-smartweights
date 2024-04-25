@@ -68,6 +68,9 @@ struct Homepage: View {
                 VideoCarousel(videoCards: videos)
             }
             .background(.white)
+            .onAppear {
+                GameCenterManager.shared.authenticateLocalPlayer()
+            }
             .fullScreenCover(isPresented: $showTutorial, content: {
                 TutorialPopup(show: $showTutorial)
             })
