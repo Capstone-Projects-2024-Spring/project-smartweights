@@ -14,18 +14,14 @@ struct Homepage: View {
     @ObservedObject var coreDataManager: CoreDataManager
     
     let tabBar: TabBar
-    // TODO: Currently hardcoded for demo. Change back afterwards.
-    @State private var showTutorial = true
+   
+    @AppStorage("ShowTutorial") var showTutorial = true
     
     init(tabBar: TabBar, coreDataManager: CoreDataManager) {
         self.tabBar = tabBar
         self.coreDataManager = coreDataManager
 
-        // Check if user is new and show popup accordingly
-        if UserDefaults.standard.bool(forKey: "isNewUser") {
-            _showTutorial = State(initialValue: true)
-            UserDefaults.standard.set(false, forKey: "isNewUser")
-        }
+    
     }
     
     var body: some View {
@@ -48,11 +44,13 @@ struct Homepage: View {
                 
                 Divider()
                 // Buttons for the additional pages carousel (NavigationCarousel)
-                let postWorkout = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(allFeedback(coreDataManager: coreDataManager)))
-                let rechargeSensor = CarouselButton(name: "How to charge",icon:  "powerplug", link: AnyView(RechargeSensors()))
+                let progress = CarouselButton(name: "Progress", icon: "chart.line.uptrend.xyaxis", link: AnyView(allFeedback(coreDataManager: coreDataManager)))
+                let rechargeSensor = CarouselButton(name: "Charging",icon:  "powerplug", link: AnyView(RechargeSensors()))
+                let attachSensor = CarouselButton(name: "Attaching Sensors", icon: "sensor", link: AnyView(AttachSensors()))
+                let help = CarouselButton(name: "Help", icon: "questionmark", link: AnyView(HelpPage()))
                 
                 // Array of defined buttons to be used by the NavigationCarousel view
-                let buttons = [postWorkout,rechargeSensor]
+                let buttons = [progress, rechargeSensor, attachSensor, help]
                 
                 // Additional Pages Carousel
                 NavigationCarousel(coreDataManager: coreDataManager, buttons: buttons, iconColor: .white, bgColor: .africanViolet, textColor: .black)
@@ -71,6 +69,9 @@ struct Homepage: View {
                 VideoCarousel(videoCards: videos)
             }
             .background(.white)
+            .onAppear {
+                GameCenterManager.shared.authenticateLocalPlayer()
+            }
             .fullScreenCover(isPresented: $showTutorial, content: {
                 TutorialPopup(show: $showTutorial)
             })

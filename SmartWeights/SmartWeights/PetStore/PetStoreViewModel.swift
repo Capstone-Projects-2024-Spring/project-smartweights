@@ -15,10 +15,10 @@ struct SellingItem: Identifiable {
 }
 class storeViewModel: ObservableObject {
     
-    var inventoryDBManager = InventoryDBManager()
+    // var inventoryDBManager = InventoryDBManager()
     var userDBManager = UserDBManager()
     var petItemDBManager = PetItemDBManager()
-    var foodItemDBManager = FoodItemDBManager()
+    var foodItemDBManager = FoodItemDBManager.shared
     var backgroundItemDBManager = BackgroundItemDBManager()
     var clothingItemDBManager = ClothingItemDBManager()
 
