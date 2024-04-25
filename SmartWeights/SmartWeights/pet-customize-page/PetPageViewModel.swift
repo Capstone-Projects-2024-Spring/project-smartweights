@@ -25,7 +25,7 @@ class PetPageFunction: ObservableObject {
     var petItemDBManager = PetItemDBManager.shared
     var clothingItemDBManager = ClothingItemDBManager.shared
     var backgroundItemDBManager = BackgroundItemDBManager.shared
-    var foodItemDBManager = FoodItemDBManager()
+    var foodItemDBManager = FoodItemDBManager.shared
     @Published var showShop = false
     @Published var showCustomize = false
     @Published var healthBar: Int = 50
@@ -64,17 +64,17 @@ class PetPageFunction: ObservableObject {
         // updateXP()
         // updateLevel()
         
-        foodItemDBManager.fetchFoodItems { fetchedItems, error in
-            if let error = error {
-                print("Error fetching food items: \(error)")
-                return
-            }
-            if let fetchedItems = fetchedItems {
-                DispatchQueue.main.async {
-                    self.foodItems = fetchedItems
-                }
-            }
-        }
+        // foodItemDBManager.fetchFoodItems { fetchedItems, error in
+        //     if let error = error {
+        //         print("Error fetching food items: \(error)")
+        //         return
+        //     }
+        //     if let fetchedItems = fetchedItems {
+        //         DispatchQueue.main.async {
+        //             self.foodItems = fetchedItems
+        //         }
+        //     }
+        // }
         // petItemDBManager.fetchPetItems{ petItems, error in
         //     if let error = error {
         //         print("Error fetching pet items: \(error.localizedDescription)")
@@ -314,10 +314,13 @@ class PetPageFunction: ObservableObject {
         activeClothing = clothingItemDBManager.g_getActiveClothing()
         activePet = petItemDBManager.g_getActivePet()
         activeBackground = backgroundItemDBManager.g_getActiveBackground()
+        pet = petDBManager.getPet()
+        foodItems = foodItemDBManager.getFoodItems()
     }
     func getPetStats(){
         userTotalXP = petDBManager.getXP() 
         healthBar = petDBManager.getHealth()
+        currentLevel = petDBManager.getLevel()
     }
     
 }

@@ -64,7 +64,12 @@ struct Customize_page: View {
                             .cornerRadius(15)
                     }
                     Button(action: {
+                        
+                        // CODE TO UPDATE Outfit Change ACHIEVEMENT
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.OutfitChange", progressToAdd: 100.0)
+                        
                         viewModel.saveCustomizations()
+                        
                     }) {
                         Text("Save")
                             .foregroundColor(.white)
@@ -82,10 +87,10 @@ struct Customize_page: View {
                                 Button(action: {
                                     viewModel.equippedAccessory = nil
                                 }) {
-                                    Text("Unequip Accessory")
+                                    Text("Unequip Outfit")
                                         .foregroundColor(.green)
                                         .font(.system(size: 18).bold())
-                                        .frame(width: 125, height: 50)
+                                        .frame(width: 135, height: 50)
                                         .background(Color.blue)
                                         .cornerRadius(15)
                                 }
@@ -108,7 +113,7 @@ struct Customize_page: View {
                         }
                         .id(UUID())
                         .tabItem {
-                            Label("Accessories", systemImage: "bag.fill")
+                            Label("Outfits", systemImage: "bag.fill")
                         }
                         .tag(0)
 

@@ -132,6 +132,10 @@ class PetDBManager: ObservableObject {
         print("Total XP from getXP(): \(Int(self.totalXP))")
         return Int(self.totalXP)
     }
+    func getLevel() -> Int{
+        print("Level from getLevel(): \(Int(self.level))")
+        return Int(self.level)
+    }
     func getLevel(completion: @escaping (Int64?, Error?) -> Void){
         if let pet = pet {
             completion(pet.level, nil)
@@ -151,6 +155,9 @@ class PetDBManager: ObservableObject {
                 completion(self.pet?.level, nil)
             }
         }
+    }
+    func getPet() -> PetModel? {
+        return self.pet
     }
     func updateUserXP(newXP: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
@@ -181,6 +188,9 @@ class PetDBManager: ObservableObject {
             let currentLevel = NSNumber(value: newLevel)
             record[PetRecordKeys.level.rawValue] = currentLevel as CKRecordValue
             self.CKManager.savePrivateItem(record: record)
+            DispatchQueue.main.async{
+                self.level = newLevel
+            }
             completion(nil)
         }
     }

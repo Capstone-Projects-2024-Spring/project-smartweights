@@ -113,9 +113,16 @@ struct Pet_Page: View {
                     if viewModel.isLoading{
                         ProgressView()
                     } else{
-                        CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray, level: viewModel.currentLevel)
+                        CustomProgressView(value: viewModel.userTotalXP % 100, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray, level: viewModel.currentLevel)
                             .frame(height: 20)
                             .padding()
+                    }
+                } .onAppear {
+                    // This will only call once when the view appears
+                    if viewModel.currentLevel == 2 {
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.NewBestFriends", progressToAdd: 100.0)
+                    } else if viewModel.currentLevel == 10 {
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.DynamicDuo", progressToAdd: 100.0)
                     }
                 }
                 .padding(.top, -20)

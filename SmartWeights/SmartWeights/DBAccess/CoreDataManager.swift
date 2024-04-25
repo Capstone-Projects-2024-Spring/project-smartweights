@@ -106,9 +106,11 @@ class CoreDataManager: ObservableObject {
         fetchRequest.resultType = .dictionaryResultType
 
         // Specify the properties to fetch
-        fetchRequest.propertiesToFetch = ["workoutNum", "overallCurlAcceleration", "overallElbowFlareLeftRight", "overallElbowFlareUpDown", "overallElbowSwing", "overallWristStabilityLeftRight", "overallWristStabilityUpDown"]
+        fetchRequest.propertiesToFetch = ["weight","reps","workoutNum", "overallCurlAcceleration", "overallElbowFlareLeftRight", "overallElbowFlareUpDown", "overallElbowSwing", "overallWristStabilityLeftRight", "overallWristStabilityUpDown"]
         do {
-            return try persistentContainer.viewContext.fetch(fetchRequest) as! [[String: Any]]
+            let results = try persistentContainer.viewContext.fetch(fetchRequest) as! [[String: Any]]
+            print("*****************************************Fetched workout sessions on date \(dateString): \(results)")
+            return results
         } catch {
             print("Failed to fetch workout sessions on date \(dateString): \(error)")
             return []
