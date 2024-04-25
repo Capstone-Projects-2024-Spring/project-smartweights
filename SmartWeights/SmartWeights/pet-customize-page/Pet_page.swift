@@ -113,7 +113,7 @@ struct Pet_Page: View {
                     if viewModel.isLoading{
                         ProgressView()
                     } else{
-                        CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray, level: viewModel.currentLevel)
+                        CustomProgressView(value: viewModel.userTotalXP % 100, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray, level: viewModel.currentLevel)
                             .frame(height: 20)
                             .padding()
                     }

@@ -10,6 +10,7 @@ import SwiftUI
 struct TutorialPopup: View {
     
     @Binding var show: Bool
+    @AppStorage("ShowTutorial") var showTutorial = true
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
@@ -30,6 +31,7 @@ struct TutorialPopup: View {
                 
                 Button(action: {
                     show.toggle()
+                    showTutorial = false
                 }) {
                     Text("Get Started!")
                         .foregroundStyle(.white)
