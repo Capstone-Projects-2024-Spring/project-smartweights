@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-
+/// View model for the all feedback page
 class allFeedbackViewModel: ObservableObject {
     var coreDataManager: CoreDataManager
     @Published var date = Date()
@@ -22,13 +22,14 @@ class allFeedbackViewModel: ObservableObject {
         workoutSessions = coreDataManager.fetchWorkoutSessions(on: Date())
         updateData(date:Date())
     }
-    
+    /// Update the data for the page
+    /// - Parameter date: the date to get the data for
     func updateData(date: Date){
         self.workoutSessions = coreDataManager.fetchWorkoutSessions(on: date)
     }
 }
 
-
+/// View for the all feedback page
 struct allFeedback: View {
     @ObservedObject var coreDataManager: CoreDataManager
     @ObservedObject var viewModel: allFeedbackViewModel
