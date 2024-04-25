@@ -156,6 +156,9 @@ class PetDBManager: ObservableObject {
             }
         }
     }
+    func getPet() -> PetModel? {
+        return self.pet
+    }
     func updateUserXP(newXP: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
             guard let record = records?.first else {
