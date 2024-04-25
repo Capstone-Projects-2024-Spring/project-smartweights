@@ -11,30 +11,48 @@ import UIKit
 struct MorePageView: View {
     
     @ObservedObject var viewModel = MorePageViewModel()
+    @ObservedObject var challengesViewModel = ChallengesViewModel()
     @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager.shared
     @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
     @ObservedObject var petItemDBManager = PetItemDBManager.shared
+    @State private var updateKey = false
     
     let profile = Profile(firstName: "First", lastName: "Last", level: 1)
     
     var body: some View {
         NavigationStack {
             VStack {
-                Text("\(viewModel.userDBManager.user?.firstName ?? "First") \(viewModel.userDBManager.user?.lastName ?? "Last")")
-                Image(systemName: "person.circle")
-                    .resizable()
-                    .frame(
-                        width: 100,
-                        height: 100
-                    )
-                Text("Lv. \(profile.level)")
-                ProgressView(value: 0.5)
-                    .progressViewStyle(LinearProgressViewStyle())
-                    .frame(
-                        width: 100
-                    )
-                Text("\(viewModel.balance) Points")
-                Divider()
+//                Text("\(viewModel.userDBManager.user?.firstName ?? "First") \(viewModel.userDBManager.user?.lastName ?? "Last")")
+//                Image(systemName: "person.circle")
+//                    .resizable()
+//                    .frame(
+//                        width: 100,
+//                        height: 100
+//                    )
+//                Text("Lv. \(profile.level)")
+//                ProgressView(value: 0.5)
+//                    .progressViewStyle(LinearProgressViewStyle())
+//                    .frame(
+//                        width: 100
+//                    )
+//                Text("\(viewModel.balance) Points")
+                
+                ZStack{
+                                    ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
+                                    
+                                    Image(backgroundItemDBManager.activeBackground)
+                                        .resizable()
+                                        .frame(width: 450, height: 450)
+                                    Image(petItemDBManager.activePet)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 450, height: 450)
+                                    Image(clothingItemDBManager.activeClothing)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 450, height: 450)
+                                }
+                                Divider()
                 VStack {
                     Text("Achievements")
                         .font(.title3)
@@ -42,59 +60,34 @@ struct MorePageView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             Spacer()
-                            ForEach(viewModel.achievements) { achievement in
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(achievement.isClaimed ? Color.green : Color.gray.opacity(0.5))
-                                        .frame(width: 120, height: 140)
-                                        .onTapGesture {
-                                            if (!achievement.isClaimed) {
-                                                viewModel.claimAchievement(id: achievement.id)
-                                            }
-                                        }
-                                    VStack(spacing: 20) {
-                                        Image(systemName: achievement.img)
-                                            .resizable()
-                                            .frame(
-                                                width: 50,
-                                                height: 50
-                                            )
+                            ForEach(challengesViewModel.challenges) { challenge in
+                                if (challenge.isCompleted) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 25.0)
+                                            .fill(Color.africanViolet)
+                                            .frame(width: 120, height: 120)
                                         VStack {
-                                            ForEach(achievement.title.split(separator: " "), id: \.self) { word in
-                                                Text(String(word))
-                                                    .font(.caption)
-                                            }
-                                            if (!achievement.isClaimed) {
-                                                Text("Reward: \(achievement.reward)")
-                                                    .bold()
-                                                    .font(.caption)
-                                            }
+                                            challenge.image
+                                                .resizable()
+                                                .frame(width: 50, height: 50)
+                                            Text(challenge.title)
+                                                .font(.headline)
+                                                .multilineTextAlignment(.center)
+                                                .lineLimit(2)
+                                                .frame(width: 100)
                                         }
                                     }
                                 }
                             }
+                            .id(updateKey)
                             Spacer()
                         }
                     }
                 }
-                Divider()
-                ZStack{
-                    ///Consider instead of calling the individual managers to get their actives, put inside PetPageViewModel. Depending on the solution to getting the refresh correctly
-                    
-                    Image(backgroundItemDBManager.activeBackground)
-                        .resizable()
-                        .frame(width: 250, height: 250)
-                    Image(petItemDBManager.activePet)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 250, height: 250)
-                    Image(clothingItemDBManager.activeClothing)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 250, height: 250)
-                    
-                }
             }
+            .onAppear(perform: {
+                refreshList()
+            })
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -118,6 +111,30 @@ struct MorePageView: View {
         }) {
             if let screenshot = viewModel.screenshot {
                 ShareSheetView(items: [screenshot])
+            }
+        }
+    }
+    
+    func refreshList() {
+        fetchGameCenterProgress()
+        updateKey.toggle()
+    }
+    
+    func fetchGameCenterProgress() {
+        GameCenterManager.shared.fetchAllAchievementsProgress { progressDict, error in
+            if let error = error {
+                print("Error fetching achievements: \(error.localizedDescription)")
+            } else if let progressDict = progressDict {
+                DispatchQueue.main.async {
+                    for i in self.challengesViewModel.challenges.indices {
+                        if let percentComplete = progressDict[self.challengesViewModel.challenges[i].achievementIdentifier] {
+                            // Update the current progress with the fetched percent complete directly
+                            self.challengesViewModel.challenges[i].currentProgress = Int(percentComplete)
+                            // Determine if the challenge is completed based on whether the percent complete is 100
+                            self.challengesViewModel.challenges[i].isCompleted = percentComplete == 100.0
+                        }
+                    }
+                }
             }
         }
     }
