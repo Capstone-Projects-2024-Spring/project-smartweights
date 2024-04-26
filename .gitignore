@@ -110,4 +110,5 @@ iOSInjectionProject/
 #pico
 .vscode
 .micropico
-.pyc
+*.pyc
+docs/
