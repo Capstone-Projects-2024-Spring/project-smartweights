@@ -11,24 +11,25 @@ import SwiftUI
 class FormCriteria: ObservableObject{
     
     //dumbbell averages
-    private var listOfDumbbellAverage:[Double] = []
-    private var listOfWristLeftRightAverage:[Double] = []
-    private var listOfWristUpDownAverage:[Double] = []
+    var listOfDumbbellAverage:[Double] = []
+    var listOfWristLeftRightAverage:[Double] = []
+    var listOfWristUpDownAverage:[Double] = []
     
     
     //elbow averages
-    private var listOfElbowSwingAverage:[Double] = []
-    private var listOfElbowFlareUpDownAverage:[Double] = []
-    private var listOfElbowFlareForwardBackAverage: [Double] = []
+    var listOfElbowSwingAverage:[Double] = []
+    var listOfElbowFlareUpDownAverage:[Double] = []
+    var listOfElbowFlareForwardBackAverage: [Double] = []
     
     
-    private var dumbbellDangerousCheck:[[Int]] = []
-    private var elbowDangerousCheck: [[Int]] = []
+    var dumbbellDangerousCheck:[[Int]] = []
+    var elbowDangerousCheck: [[Int]] = []
     
     
     //phrases
-    private var goodFormPhrases: [String] = ["Keep up the good work!!","Beautiful curls!","Phew, good job","Those curls were nice!","I'm proud of you"]
-    
+    var goodFormPhrases: [String] = ["Keep up the good work!!","Beautiful curls!","Phew, good job","Those curls were nice!","I'm proud of you"]
+    /// 
+    /// - Returns: A random phrase from the list of good form phrases.
     func getRandomGoodFormPhrase() -> String {
         let randomIndex = Int.random(in: 0..<goodFormPhrases.count)
         return goodFormPhrases[randomIndex]
@@ -83,7 +84,7 @@ class FormCriteria: ObservableObject{
     ///   - totalSets:Int
     ///   - dumbbellArray: 
     ///   - elbowArray: 
-    /// - Returns: 
+    /// - Returns: A dictionary containing the workout analysis.
     func UpdateWorkoutAnalysis(totalSets:Int,dumbbellArray: [[Int]],elbowArray: [[Int]]) -> [String:Double]{
         var workoutAnalysis: [String:Double] = [:]
         workoutAnalysis["averageUpDownAcceleration"] = averageUpDownAcceleration(array: dumbbellArray, append: true) * 100
