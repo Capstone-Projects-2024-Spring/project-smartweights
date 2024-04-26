@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-//instructions on how to attach the sensors on the dumbbell and the elbow sleeve
+///Instructions on how to attach the sensors on the dumbbell and the elbow sleeve
+
 struct AttachSensors: View {
     var body: some View {
         ScrollView {

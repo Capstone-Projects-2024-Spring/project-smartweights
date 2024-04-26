@@ -16,7 +16,9 @@ class allFeedbackViewModel: ObservableObject {
     @Published var WorkoutSets: [[String:Any]] = [[:]]
     var workoutNum: Int64 = 0
     
-    
+    /// Initialize the view model
+    /// - Parameter coreDataManager: 
+    /// - Returns: None
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
         workoutSessions = coreDataManager.fetchWorkoutSessions(on: Date())
@@ -24,6 +26,7 @@ class allFeedbackViewModel: ObservableObject {
     }
     /// Update the data for the page
     /// - Parameter date: the date to get the data for
+    /// - Returns: None
     func updateData(date: Date){
         self.workoutSessions = coreDataManager.fetchWorkoutSessions(on: date)
     }
