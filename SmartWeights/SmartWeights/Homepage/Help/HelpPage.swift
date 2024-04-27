@@ -89,7 +89,7 @@ struct HelpPage: View {
                         Text("Workout page")
                             .font(.title)
                             .padding(.bottom)
-                        Text("The workout page allows you to start a workout and receive feedback from your virtual pet between sets and after the workout. Clicking on the start workout button will allow you to enter the amount of sets, reps, and the weight of the dumbbell for your workout. Clicking the voice command icon will allow you to start and finish the workout hands-free. Voice commands including start workout, finish set, next set, and finish workout can be used to work through your workout. The ‘start workout’ command will start your workout, finish set will finish your current set, next set will start your next set, and then finish workout will allow you to conclude your final set. More on voice commands can be found on the workout page.")
+                        Text("The workout page allows you to start a workout and receive feedback from your virtual pet between sets and after the workout. Clicking on the start workout button will allow you to enter the amount of sets, reps, and the weight of the dumbbell for your workout. Clicking the voice command icon will allow you to start and finish the workout hands-free. Voice commands including start workout, finish set, next set, and finish workout can be used to work through your workout. The ‘start’ command will start your workout, 'pause' will finish your current set, 'next' will start your next set, and then 'finish' will allow you to conclude your final set. More on voice commands can be found on the workout page.")
                         Spacer()
                     }
                     .padding(.horizontal)
