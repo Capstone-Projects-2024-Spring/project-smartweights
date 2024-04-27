@@ -26,7 +26,7 @@ class CoreDataManager: ObservableObject {
 
         persistentContainer.loadPersistentStores { (storeDescription, error) in
             if let error = error {
-                fatalError("Core Data Store failed \(error.localizedDescription)")
+//                fatalError("Core Data Store failed \(error.localizedDescription)")
             }
         }
     }
