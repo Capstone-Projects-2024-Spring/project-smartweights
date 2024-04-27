@@ -49,11 +49,12 @@ class PetDBManager: ObservableObject {
                 print("Error fetching pet: \(error.localizedDescription)")
                 return
             }
-            // guard let pet = pet else {
-            //     print("No pet found")
-            //     return
-            // }
-            // self.pet = pet
+            guard let pet = pet else {
+                print("No pet found")
+                self.createPet()
+                return
+            }
+            self.pet = pet
         }
     }
     
@@ -66,6 +67,12 @@ class PetDBManager: ObservableObject {
 
         let pet = PetModel(health: 50, level: 1, petImage: nil, totalXP: 0)
         let petRecord = pet.record
+        DispatchQueue.main.async{
+            self.pet = pet
+            self.health = pet.health
+            self.level = pet.level
+            self.totalXP = pet.totalXP
+        }
         CKManager.savePrivateItem(record: petRecord)
         petExists = true
     }
