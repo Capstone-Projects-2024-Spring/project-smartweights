@@ -601,11 +601,11 @@ class WorkoutViewModel: ObservableObject {
         if !countdownActive{
             timerIsActive = true // Resume updating time
             print("WE ARE ABOUT TO CREATE A SET WOOOOAHAHAHAH")
-//            if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
-//                self.currentWorkoutSet = newExerciseSet
-//                print("newExerciseSet:")
-//                print(newExerciseSet as Any)
-//            }
+            if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
+                self.currentWorkoutSet = newExerciseSet
+                print("newExerciseSet:")
+                print(newExerciseSet as Any)
+            }
             print("THE CREATE SET WORK?")
         }
     }
