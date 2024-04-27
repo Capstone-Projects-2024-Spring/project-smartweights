@@ -3,6 +3,7 @@ import Combine
 import CoreData
 
 /// Main structure to display the workout page with integrated UI components
+/// - Note: This structure is responsible for displaying the workout page, including the workout tab selection, workout details input form, and the workout feedback view.
 struct WorkoutMainPage: View {
     @ObservedObject var coreDataManager:CoreDataManager
     @StateObject var ble:BLEcentral
@@ -15,6 +16,8 @@ struct WorkoutMainPage: View {
     @ObservedObject var clothingItemDBManager = ClothingItemDBManager.shared
     @ObservedObject var petItemDBManager = PetItemDBManager.shared
     
+    /// Initialize the workout page with the BLE central manager and form criteria
+    /// - Parameter coreDataManager: The core data manager to handle the workout data
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
         let ble = BLEcentral()
@@ -373,6 +376,7 @@ struct WorkoutMainPage: View {
     }
 
     // CountdownView for simpleCountdown
+    /// - Note: This view is responsible for displaying the countdown timer before the workout starts
     struct CountdownView: View {
     @ObservedObject var viewModel: WorkoutViewModel
 
@@ -383,7 +387,8 @@ struct WorkoutMainPage: View {
     }
 }
     
-    // Define a new view for the workout details input form
+    /// Define a new view for the workout details input form
+    /// - Note: This view is responsible for displaying the workout details input form, including the sets, reps, weights, and countdown timer
     struct WorkoutDetailsInputView: View {
         @ObservedObject var viewModel: WorkoutViewModel
         @ObservedObject var ble: BLEcentral

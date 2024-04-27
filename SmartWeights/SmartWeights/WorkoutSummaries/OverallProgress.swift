@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 
 /// View model for the all feedback page
+/// -Note: This view model is used to get the data for the all feedback page
 class allFeedbackViewModel: ObservableObject {
     var coreDataManager: CoreDataManager
     @Published var date = Date()
@@ -33,6 +34,7 @@ class allFeedbackViewModel: ObservableObject {
 }
 
 /// View for the all feedback page
+/// -Note: This view is used to display all the feedback for the user
 struct allFeedback: View {
     @ObservedObject var coreDataManager: CoreDataManager
     @ObservedObject var viewModel: allFeedbackViewModel
