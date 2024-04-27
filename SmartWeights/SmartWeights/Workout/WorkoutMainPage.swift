@@ -472,5 +472,5 @@ struct WorkoutMainPage: View {
 }
 
 #Preview {
-    WorkoutMainPage(coreDataManager: CoreDataManager())
+    WorkoutMainPage(coreDataManager: CoreDataManager(container: PersistenceController.preview.container))
 }

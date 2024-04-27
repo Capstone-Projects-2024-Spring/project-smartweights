@@ -286,6 +286,6 @@ struct allFeedback: View {
 
 
 #Preview {
-    allFeedback(coreDataManager: CoreDataManager())
+    allFeedback(coreDataManager: CoreDataManager(container: PersistenceController.preview.container))
 }
 

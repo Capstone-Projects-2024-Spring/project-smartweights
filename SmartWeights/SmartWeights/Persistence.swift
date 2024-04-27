@@ -48,6 +48,12 @@ struct PersistenceController {
     /// The inMemory flag determines whether the persistent store is stored in memory or on disk.
     init(inMemory: Bool = false) {
             container = NSPersistentCloudKitContainer(name: "SmartWeights", managedObjectModel: PersistenceController.sharedManagedObjectModel)
+            
+            if inMemory {
+                let description = NSPersistentStoreDescription()
+                description.type = NSInMemoryStoreType
+                container.persistentStoreDescriptions = [description]
+            }
         
         // Loads the persistent stores and handles any errors.
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -66,6 +72,13 @@ struct PersistenceController {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        
+        if inMemory {
+//            If in-memory store, disable cloudkit integration
+            container.viewContext.automaticallyMergesChangesFromParent = false
+            container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            container.persistentStoreDescriptions.forEach({ $0.setOption(false as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)})
+        }
         
         // Ensures that the viewContext automatically merges changes saved in any context that is a child of the main context.
         container.viewContext.automaticallyMergesChangesFromParent = true
