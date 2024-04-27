@@ -32,6 +32,9 @@ final class FormCriteriaTests: XCTestCase {
         // Check that the result is one of the good form phrases
         XCTAssertTrue(formCriteria.goodFormPhrases.contains(result), "The result should be one of the good form phrases.")
     }
+    
+    
+    
     func testUpdateWorkoutAnalysis() {
         
         // Given

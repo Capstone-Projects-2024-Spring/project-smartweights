@@ -207,13 +207,13 @@ class WorkoutViewModel: ObservableObject {
     }
     
     
-    private func isValidInput(_ input: String) -> Bool {
+    func isValidInput(_ input: String) -> Bool {
         guard !input.isEmpty, let _ = Int(input) else { return false }
         return true
     }
     
     
-    private func stringToInt(_ string: String) -> Int? {
+    func stringToInt(_ string: String) -> Int? {
         return Int(string)
     }
     
@@ -537,7 +537,7 @@ class WorkoutViewModel: ObservableObject {
             try AVAudioSession.sharedInstance().setMode(.default)
             try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
 
-           
+        
             countdownPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
 
             guard let player = countdownPlayer else { return }
@@ -601,11 +601,11 @@ class WorkoutViewModel: ObservableObject {
         if !countdownActive{
             timerIsActive = true // Resume updating time
             print("WE ARE ABOUT TO CREATE A SET WOOOOAHAHAHAH")
-            if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
-                self.currentWorkoutSet = newExerciseSet
-                print("newExerciseSet:")
-                print(newExerciseSet as Any)
-            }
+//            if let newExerciseSet = coreDataManager.createExerciseSet(workoutSession: self.currentWorkoutSession!, setNum: currentSets, avgCurlAcceleration: 0.0, avgElbowFlareLR: 0.0, avgElbowFlareUD: 0.0, avgElbowSwing: 0.0, avgWristStabilityLR: 0.0, avgWristStabilityUD: 0.0){
+//                self.currentWorkoutSet = newExerciseSet
+//                print("newExerciseSet:")
+//                print(newExerciseSet as Any)
+//            }
             print("THE CREATE SET WORK?")
         }
     }
