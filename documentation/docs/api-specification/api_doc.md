@@ -559,7 +559,7 @@ Initialize the workout page with the BLE central manager and form criteria.
 
 </details>
 
-## Structure: PetStore
+# Structure: PetStore
 
 <details open>
 Display view for the Pet Store depending on available items and prices.
@@ -584,7 +584,34 @@ Display view for the Pet Store depending on available items and prices.
 SwiftUI.View
 </details>
 
-## Structure: ChallengesList
+# Structure: SellingItem
+<details open>
+  
+SellingItem struct that contains essential item attributes.
+
+### Topics
+
+#### Initializers
+- `init(id: Int, name: String, category: String, price: String, image: Image, description: String, isBought: Bool)`
+
+#### Instance Properties
+- `var category: String`
+- `var description: String`
+- `var id: Int`
+- `var image: Image`
+- `var isBought: Bool`
+- `var name: String`
+- `var price: String`
+
+### Relationships
+
+#### Conforms To
+- `Swift.Identifiable`
+- `Swift.Sendable`
+</details>
+
+
+# Structure: ChallengesList
 <details open>
 
 Struct containing all achievements in the application.
@@ -612,7 +639,7 @@ Struct containing all achievements in the application.
 SwiftUI.View
 </details>
 
-## Structure: ChallengesTab
+# Structure: ChallengesTab
 <details open>
 
 Struct containing the sorting and fetching of Game Center achievements.
