@@ -203,6 +203,62 @@ ViewModel for the pet store and user transactions.
 - `Combine.ObservableObject`
 </details>
 
+## Class: Challenge
+
+<details open>
+
+Challenge class containing information regarding achievements.
+
+### Topics
+
+#### Initializers
+- `init(title: String, description: String, image: Image, achievementIdentifier: String, currentProgress: Int, isCompleted: Bool)`
+
+#### Instance Properties
+- `var achievementIdentifier: String`
+- `var currentProgress: Int`
+- `var description: String`
+- `var id: UUID`
+- `var image: Image`
+- `var isCompleted: Bool`
+- `var title: String`
+
+### Default Implementations
+
+#### ObservableObject Implementations
+
+### Relationships
+
+#### Conforms To
+- `Combine.ObservableObject`
+- `Swift.Identifiable`
+
+</details>
+
+## Class: ChallengesViewModel
+
+<details open>
+
+ViewModel for achievements.
+
+### Topics
+
+#### Initializers
+- `init()`
+
+#### Instance Properties
+- `var challenges: [Challenge]`
+
+### Default Implementations
+
+#### ObservableObject Implementations
+
+### Relationships
+
+#### Conforms To
+- `Combine.ObservableObject`
+</details>
+
 ## Class: GameCenterManager
 
 <details open>
