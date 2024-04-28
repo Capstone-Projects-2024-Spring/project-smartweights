@@ -158,6 +158,121 @@ Initialize the view model.
 
 </details>
 
+## Class: storeViewModel
+
+<details open>
+
+ViewModel for the pet store and user transactions.
+
+### Topics
+
+#### Initializers
+- `init()`
+
+#### Instance Properties
+- `var backgroundItemDBManager: BackgroundItemDBManager`
+- `let categories: [String]`
+- `var clothingItemDBManager: ClothingItemDBManager`
+- `var foodItemDBManager: FoodItemDBManager`
+- `var inventory: InventoryModel?`
+- `var inventoryDBManager: InventoryDBManager`
+- `var items: [SellingItem]` — Items available in store.
+- `var petItemDBManager: PetItemDBManager`
+- `var selectedCategory: String`
+- `var showAlert: Bool`
+- `var sortByPrice: Bool`
+- `var userCur: Int`
+- `var userDBManager: UserDBManager`
+
+#### Instance Methods
+- `func addFundtoUser(price: Int)`
+- `func purchaseItem(item: SellingItem)` — Function to handle item purchase.
+- `func sortItems(items: [SellingItem], sortByPrice: Bool) -> [SellingItem]` — Display items based on selected sorting method.
+- `func subtractFunds(price: Int)` — Function to return amount of currency after item is bought.
+- `func updateCurrency()`
+
+### Default Implementations
+
+#### ObservableObject Implementations
+
+### Relationships
+
+#### Conforms To
+- `Combine.ObservableObject`
+</details>
+
+## Class: GameCenterManager
+
+<details open>
+
+GameCenterManager class to integrate Game Center into the application.
+
+### Topics
+
+#### Classes
+- `class GameCenterDelegate` — GameCenterDelegate class for loading Game Center UI into game.
+
+#### Structures
+- `struct GameCenterConstants`
+
+#### Instance Properties
+- `var isAuthenticated: Bool`
+
+#### Instance Methods
+- `func authenticateLocalPlayer()` — GameCenterManager class function to authenticate.
+- `func checkAchievementCompletion(identifier: String)` — GameCenterManager class function to check if an achievement is completed.
+- `func fetchAllAchievementsProgress(completion: ([String : Double]?, Error?) -> Void)` — GameCenterManager class function that fetches all achievements and their completion percentages.
+- `func reportAchievement(challenge: Challenge)` — GameCenterManager class function to report achievement.
+- `func showGameCenterAchievements()` — GameCenterManager class function to display Game Center.
+- `func updateAchievement(identifier: String, progressToAdd: Double)` — GameCenterManager class function to update achievement progress.
+
+#### Type Properties
+- `static let shared: GameCenterManager`
+
+### Default Implementations
+
+#### ObservableObject Implementations
+
+### Relationships
+
+#### Inherits From
+- `ObjectiveC.NSObject`
+
+#### Conforms To
+- `Combine.ObservableObject`
+- `ObjectiveC.NSObjectProtocol`
+- `Swift.CVarArg`
+- `Swift.CustomDebugStringConvertible`
+- `Swift.CustomStringConvertible`
+- `Swift.Equatable`
+- `Swift.Hashable`
+</details>
+
+## Class: GameCenterManager.GameCenterDelegate
+<details open>
+  
+GameCenterDelegate class for loading and exiting Game Center.
+
+### Topics
+
+#### Instance Methods
+- `func gameCenterViewControllerDidFinish(GKGameCenterViewController)`
+
+### Relationships
+
+#### Inherits From
+- `ObjectiveC.NSObject`
+
+#### Conforms To
+- `GameKit.GKGameCenterControllerDelegate`
+- `ObjectiveC.NSObjectProtocol`
+- `Swift.CVarArg`
+- `Swift.CustomDebugStringConvertible`
+- `Swift.CustomStringConvertible`
+- `Swift.Equatable`
+- `Swift.Hashable`
+</details>
+
 
 # Structures
 
