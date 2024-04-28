@@ -721,6 +721,32 @@ Display view for the Pet Store depending on available items and prices.
 SwiftUI.View
 </details>
 
+# Structure: ItemDetailView
+
+<details open>
+ItemDetailView struct for previewing and purchasing an item.
+
+### Topics
+
+#### Initializers
+- `init(item: SellingItem, viewModel: storeViewModel, userCur: Int)`
+
+#### Instance Properties
+- `var body: some View`
+- `var item: SellingItem`
+- `let userCur: Int`
+- `var viewModel: storeViewModel`
+
+### Default Implementations
+
+#### View Implementations
+
+### Relationships
+
+#### Conforms To
+- `SwiftUI.View`
+</details>
+
 # Structure: SellingItem
 <details open>
   
@@ -830,6 +856,135 @@ Struct containing claiming functionality for achievements.
 #### Conforms To
 - `Swift.Identifiable`
 - `Swift.Sendable`
+</details>
+
+# Structure: UserAchievement
+
+<details open>
+
+UserAchievement struct for database information of achievements.
+
+### Topics
+
+#### Initializers
+- `init(recordId: CKRecord.ID?, achievement: CKRecord.Reference, currentProgress: Int64, isCompleted: Int64)`
+
+#### Instance Properties
+- `var achievement: CKRecord.Reference`
+- `var currentProgress: Int64`
+- `var isCompleted: Int64`
+- `var record: CKRecord` — Returns the CloudKit record representation of the user achievement.
+- `var recordId: CKRecord.ID?`
+
+### Relationships
+
+#### Conforms To
+- `Swift.Sendable`
+</details>
+
+# Structure: SettingsPageView
+
+<details open>
+
+SettingsPageView struct for displaying user settings.
+
+### Topics
+
+#### Initializers
+- `init()`
+- `init(workoutNotificationsEnabled: Bool, notificationFrequency: String, email: String, firstName: String, lastName: String, userID: String, viewModel: fitnessPlanViewModel)`
+
+#### Instance Properties
+- `var body: some View`
+- `let chestWidthsArray: [Int]`
+- `let daysPerWeek: [Int]`
+- `var email: String`
+- `var firstName: String`
+- `let forearmLengthsArray: [Int]`
+- `var formattedDate: String` — struct function to print date with only month/date/year and prevent the time and time zone from displaying.
+- `let frequencyOptions: [String]`
+- `let heightFeetArray: [Int]`
+- `let heightInchesArray: [Int]`
+- `var lastName: String`
+- `var notificationFrequency: String`
+- `let reps: [Int]`
+- `let sets: [Int]`
+- `let upperArmLengthsArray: [Int]`
+- `var userID: String`
+- `var viewModel: fitnessPlanViewModel`
+- `let weeks: [Int]`
+- `let weight: [Int]`
+- `let weightsArray: [Int]`
+- `var workoutNotificationsEnabled: Bool`
+
+### Default Implementations
+
+#### View Implementations
+
+### Relationships
+
+#### Conforms To
+- `SwiftUI.View`
+</details>
+
+# Structure: NotificationManager
+
+<details open>
+
+NotificationManager struct to handle user notifications.
+
+### Topics
+
+#### Initializers
+- `init()`
+
+#### Type Properties
+- `static var notificationFrequency: String`
+
+#### Type Methods
+- `static func cancelNotification()`
+- `static func createNotificationContent() -> UNMutableNotificationContent`
+- `static func requestAuthorization()`
+- `static func scheduleWorkoutReminder()`
+- `static func sendTestNotification()`
+- `static func updateLastWorkoutTime()`
+
+### Relationships
+
+#### Conforms To
+- `Swift.Sendable`
+</details>
+
+# Structure: ShareSheetView
+
+<details open>
+
+ShareSheetView struct for displaying Apple UI in sharing feature.
+
+### Topics
+
+#### Initializers
+- `init(items: [Any])`
+
+#### Instance Properties
+- `var items: [Any]`
+
+#### Instance Methods
+- `func makeUIViewController(context: Context) -> UIActivityViewController`
+- `func updateUIViewController(UIActivityViewController, context: Context)`
+
+### Default Implementations
+
+#### UIViewControllerRepresentable Implementations
+
+#### View Implementations
+
+### Relationships
+
+#### Conforms To
+- `Swift.Sendable`
+- `SwiftUI.UIViewControllerRepresentable`
+- `SwiftUI.View`
 </details>
 
 # Structure: FitnessPlanPage
