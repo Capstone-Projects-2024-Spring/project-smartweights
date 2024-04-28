@@ -331,6 +331,87 @@ GameCenterDelegate class for loading and exiting Game Center.
 - `Swift.Hashable`
 </details>
 
+## Class: MorePageViewModel
+
+<details open>
+
+ViewModel for the profile page.
+
+### Topics
+
+#### Initializers
+- `init()`
+
+#### Instance Properties
+- `var achievements: [Achievement]`
+- `var balance: Int`
+- `var screenshot: UIImage?`
+- `var showingScreenshotSavedAlert: Bool`
+- `var showingShareSheet: Bool`
+- `var userDBManager: UserDBManager`
+
+#### Instance Methods
+- `func addToBalance(amount: Int)`
+- `func claimAchievement(id: UUID)`
+- `func getBalance()`
+- `func image(UIImage, didFinishSavingWithError: Error?, contextInfo: UnsafeMutableRawPointer)`
+- `func takeScreenshot()`
+
+### Default Implementations
+
+#### ObservableObject Implementations
+
+### Relationships
+
+#### Inherits From
+- `ObjectiveC.NSObject`
+
+#### Conforms To
+- `Combine.ObservableObject`
+- `ObjectiveC.NSObjectProtocol`
+- `Swift.CVarArg`
+- `Swift.CustomDebugStringConvertible`
+- `Swift.CustomStringConvertible`
+- `Swift.Equatable`
+- `Swift.Hashable`
+</details>
+
+## Class: fitnessPlanViewModel
+
+<details open>
+  
+The fitnessPlanViewModel class contains variables for a user’s fitness goals.
+
+### Topics
+
+#### Initializers
+- `init()`
+
+#### Instance Properties
+- `var daysPerWeekGoal: Int`
+- `var fitnessPlan: FitnessPlanModel?`
+- `var fitnessPlanDBManager: FitnessPlanDBManager`
+- `var hasPlan: Bool`
+- `var notes: String`
+- `var repGoal: Int`
+- `var selectedDate: Date`
+- `var setGoal: Int`
+- `var weightGoal: Int`
+
+#### Instance Methods
+- `func clearAllInputs()` — viewModel function to reset all variables.
+- `func updateFitnessPlan(daysPerWeekGoal: Int, weightGoal: Int, setGoal: Int, repGoal: Int, notes: String, selectedDate: Date)` — viewModel function to update the fitness plan by saving the draft variables to the viewModel variables.
+
+### Default Implementations
+
+#### ObservableObject Implementations
+
+### Relationships
+
+#### Conforms To
+- `Combine.ObservableObject`
+</details>
+
 # Hardware Software
 
 ## Class: MPU6050
