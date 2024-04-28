@@ -420,7 +420,7 @@ Initialize the view model.
 <details open>
 
 View model for the all feedback page.
-  
+
 **Note:** This view model is used to get the data for the all feedback page.
 
 ### Initializers
@@ -490,3 +490,179 @@ Class to get accelerometer and gyroscope data.
 - `get_gyro_data() → tuple`: Get the gyroscope data.
 
 </details>
+
+
+# Structures
+
+# Structure: AttachSensors
+
+<details open>
+Instructions on how to attach the sensors on the dumbbell and the elbow sleeve.
+
+## Initializers
+
+### `init()`
+
+## Instance Properties
+
+- `var body: some View`
+
+</details>
+
+# Structure: OverallWorkoutData
+
+<details open>
+
+OverallWorkoutData is a view that displays the overall feedback for the workout.
+
+**Note:** This view displays the overall data for the workout.
+
+## Initializers
+
+#### `init(workoutAnalysisForSets: Binding<[[String : Double]]>, viewModel: WorkoutViewModel, totalSets: Int)`
+
+## Instance Properties
+
+- `var body: some View`: Represents the SwiftUI view of the structure.
+- `var totalSets: Int`: Represents the total number of sets in the workout.
+- `var viewModel: WorkoutViewModel`: Represents the view model associated with the workout.
+- `var workoutAnalysisForSets: [[String : Double]]`: Represents the analysis data for each set of the workout.
+
+
+</details>
+
+# Structure: PostWorkoutData
+
+<details open>
+
+PostWorkoutData is a view that displays the feedback for each set in the workout.
+
+**Note:** This view displays both the data for the set and the overall data for the workout.
+
+## Initializers
+
+### `init(viewModel: WorkoutViewModel, setIndex: Int, feedback: (String, String, String, String), workoutAnalysis: [String : Double])`
+
+Initializes the PostWorkoutData view.
+
+## Instance Properties
+
+- `var body: some View`
+- `let feedback: (String, String, String, String)`: Represents the feedback data for the set.
+- `let setIndex: Int`: Represents the index of the set.
+- `var viewModel: WorkoutViewModel`: Represents the view model associated with the workout.
+- `let workoutAnalysis: [String : Double]`: Represents the overall workout analysis data.
+- 
+</details>
+
+# Structure: RechargeSensors
+
+<details open>
+
+Instructions on how to recharge the sensors.
+
+## Initializers
+
+### `init()`
+
+Initializes the RechargeSensors view.
+
+## Instance Properties
+
+- `var body: some View`
+
+
+# Structure: WorkoutFeedback
+
+<details open>
+
+View to show all data collected from the most recent workout.
+
+**Note:** This view displays the feedback for each set in the workout and the overall data for the workout.
+
+## Initializers
+
+### `init(viewModel: WorkoutViewModel, feedbackDataForSets: Binding<[(String, String, String, String)]>, workoutAnalysisForSets: Binding<[[String : Double]]>, totalSets: Binding<Int>)`
+
+This initializer initializes the `WorkoutFeedback` view with the provided view model and feedback data for sets.
+
+## Instance Properties
+
+- `var body: some View`: Represents the SwiftUI view of the structure.
+- `var feedbackDataForSets: [(String, String, String, String)]`: Represents the feedback data for each set in the workout.
+- `var totalSets: Int`: Represents the total number of sets in the workout.
+- `var viewModel: WorkoutViewModel`: Represents the view model associated with the workout.
+- `var workoutAnalysisForSets: [[String : Double]]`: Represents the analysis data for each set of the workout.
+
+</details>
+
+# Structure: allFeedback
+
+<details open>
+
+View for the all feedback page.
+
+**Note:** This view is used to display all the feedback for the user.
+
+## Initializers
+
+### `init(coreDataManager: CoreDataManager)`
+
+Initializes the allFeedback view with the provided `CoreDataManager`.
+
+## Instance Properties
+
+- `var body: some View`: Represents the SwiftUI view of the structure.
+- `var coreDataManager: CoreDataManager`: Represents the CoreDataManager associated with the view.
+- `var viewModel: allFeedbackViewModel`: Represents the view model associated with the view.
+
+</details>
+
+# Structure: WorkoutMainPage
+
+<details open>
+
+Main structure to display the workout page with integrated UI components.
+
+## Overview
+
+This structure is responsible for displaying the workout page, including the workout tab selection, workout details input form, and the workout feedback view.
+
+## Topics
+
+### Structures
+
+- `struct CountdownView`
+- `struct LineGraph`
+- `struct WorkoutDetailsInputView`: Define a new view for the workout details input form
+
+### Initializers
+
+### `init(coreDataManager: CoreDataManager)`
+
+Initialize the workout page with the BLE central manager and form criteria.
+
+## Instance Properties
+
+- `var backgroundItemDBManager: BackgroundItemDBManager`
+- `var ble: BLEcentral`
+- `var body: some View`
+- `var clothingItemDBManager: ClothingItemDBManager`
+- `var coreDataManager: CoreDataManager`
+- `var formCriteria: FormCriteria`
+- `var petItemDBManager: PetItemDBManager`
+- `var storeModel: storeViewModel`
+- `var viewModel: WorkoutViewModel`
+- `var workoutPageViewModel: WorkoutPageViewModel`
+
+## Enumerations
+
+- `enum SetType`
+
+
+</details>
+
+
+
+
+
