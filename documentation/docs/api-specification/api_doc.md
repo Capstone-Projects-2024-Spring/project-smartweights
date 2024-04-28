@@ -386,6 +386,8 @@ Initializes the central manager and starts scanning for peripherals with the spe
 
 
 
+
+
 # Structures
 
 # Structure: AttachSensors
@@ -553,8 +555,33 @@ Initialize the workout page with the BLE central manager and form criteria.
 
 - `enum SetType`
 
-
 </details>
+
+## Structure: PetStore
+
+<details open>
+Display view for the Pet Store depending on available items and prices.
+
+### Topics
+
+### Initializers
+- `init()`
+- `init(viewModel: storeViewModel)`
+
+### Instance Properties
+- `var body: some View`
+- `var viewModel: storeViewModel`
+
+### Default Implementations
+
+#### View Implementations
+
+### Relationships
+
+#### Conforms To
+SwiftUI.View
+</details>
+
 
 
 
