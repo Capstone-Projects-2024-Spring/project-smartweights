@@ -803,9 +803,95 @@ Struct containing the sorting and fetching of Game Center achievements.
 SwiftUI.View
 </details>
 
+# Structure: Achievement
 
+<details open>
 
+Struct containing claiming functionality for achievements.
 
+### Topics
+
+#### Initializers
+- `init(id: UUID, title: String, description: String, img: String, reward: Int, isClaimed: Bool)`
+
+#### Instance Properties
+- `var description: String`
+- `var id: UUID`
+- `var img: String`
+- `var isClaimed: Bool`
+- `var reward: Int`
+- `var title: String`
+
+#### Instance Methods
+- `func claim()`
+
+### Relationships
+
+#### Conforms To
+- `Swift.Identifiable`
+- `Swift.Sendable`
+</details>
+
+# Structure: FitnessPlanPage
+
+<details open>
+  
+FitnessPlanPage struct that structures the view for a fitness planning page.
+
+### Topics
+
+#### Initializers
+- `init()`
+- `init(viewModel: fitnessPlanViewModel)`
+
+#### Instance Properties
+- `var body: some View`
+- `let characterLimit: Int`
+- `let daysPerWeek: [Int]`
+- `let reps: [Int]`
+- `let sets: [Int]`
+- `var viewModel: fitnessPlanViewModel`
+- `let weight: [Int]`
+
+#### Instance Methods
+- `func clearTemp()` — FitnessPlanPage struct function to reset temporary variables.
+
+### Default Implementations
+
+#### View Implementations
+
+### Relationships
+
+#### Conforms To
+- `SwiftUI.View`
+</details>
+
+# Structure: FitnessPlanModel
+
+<details open>
+
+FitnessPlanModel struct for database related information.
+
+### Topics
+
+#### Initializers
+- `init(recordId: CKRecord.ID?, daysPerWeekGoal: Int64, dumbbellWeightGoal: Int64, setGoal: Int64, repGoal: Int64, notes: String, selectedDate: Date)`
+
+#### Instance Properties
+- `var daysPerWeekGoal: Int64`
+- `var dumbbellWeightGoal: Int64`
+- `var notes: String`
+- `var record: CKRecord`
+- `var recordId: CKRecord.ID?`
+- `var repGoal: Int64`
+- `var selectedDate: Date`
+- `var setGoal: Int64`
+
+### Relationships
+
+#### Conforms To
+- `Swift.Sendable`
+</details>
 
 
 
