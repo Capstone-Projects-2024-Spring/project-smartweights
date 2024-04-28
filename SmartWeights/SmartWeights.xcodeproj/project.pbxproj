@@ -74,6 +74,7 @@
 		E56BD7D82BAFA2C300863D4D /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7D72BAFA2C300863D4D /* TabBar.swift */; };
 		E56BD7DB2BAFB0F400863D4D /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */; };
 		E57CE9B52BDD8552003F5D71 /* HomepageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57CE9B42BDD8552003F5D71 /* HomepageUITests.swift */; };
+		E57CE9B92BDD9004003F5D71 /* TabBarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57CE9B82BDD9004003F5D71 /* TabBarUITests.swift */; };
 		E5D5A1042BD93DFD00FDA308 /* HelpPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D5A1032BD93DFD00FDA308 /* HelpPage.swift */; };
 		E5D7FE662BCD70330097A175 /* StartWorkoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D7FE652BCD70330097A175 /* StartWorkoutButton.swift */; };
 		E5D7FE682BCD740F0097A175 /* NavigationCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D7FE672BCD740F0097A175 /* NavigationCarousel.swift */; };
@@ -171,6 +172,7 @@
 		E56BD7D72BAFA2C300863D4D /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		E56BD7DA2BAFB0F400863D4D /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		E57CE9B42BDD8552003F5D71 /* HomepageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageUITests.swift; sourceTree = "<group>"; };
+		E57CE9B82BDD9004003F5D71 /* TabBarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarUITests.swift; sourceTree = "<group>"; };
 		E5D5A1032BD93DFD00FDA308 /* HelpPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPage.swift; sourceTree = "<group>"; };
 		E5D7FE652BCD70330097A175 /* StartWorkoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutButton.swift; sourceTree = "<group>"; };
 		E5D7FE672BCD740F0097A175 /* NavigationCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCarousel.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 				322B4C072B90CB7500620F4F /* PetPageUITests.swift */,
 				912241702B90EA9F00D03638 /* WorkoutUITests.swift */,
 				E57CE9B42BDD8552003F5D71 /* HomepageUITests.swift */,
+				E57CE9B82BDD9004003F5D71 /* TabBarUITests.swift */,
 			);
 			path = SmartWeightsUITests;
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				322B4C082B90CB7500620F4F /* PetPageUITests.swift in Sources */,
 				E57CE9B52BDD8552003F5D71 /* HomepageUITests.swift in Sources */,
 				91065FA12B7A7E4900BC62E6 /* SmartWeightsUITestsLaunchTests.swift in Sources */,
+				E57CE9B92BDD9004003F5D71 /* TabBarUITests.swift in Sources */,
 				91065F9F2B7A7E4900BC62E6 /* SmartWeightsUITests.swift in Sources */,
 				912241712B90EA9F00D03638 /* WorkoutUITests.swift in Sources */,
 			);
