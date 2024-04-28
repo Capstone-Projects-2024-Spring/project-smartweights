@@ -49,11 +49,14 @@ class PetDBManager: ObservableObject {
                 print("Error fetching pet: \(error.localizedDescription)")
                 return
             }
-            // guard let pet = pet else {
-            //     print("No pet found")
-            //     return
-            // }
-            // self.pet = pet
+//            if let pet = pet {
+//                self.pet = pet
+//                self.petExists = true
+//                print("Pet found: \(pet)")
+//            } else {
+//                print("No pet found")
+//                // self.createPet()
+//            }
         }
     }
     
@@ -66,6 +69,12 @@ class PetDBManager: ObservableObject {
 
         let pet = PetModel(health: 50, level: 1, petImage: nil, totalXP: 0)
         let petRecord = pet.record
+        DispatchQueue.main.async{
+            self.pet = pet
+            self.health = pet.health
+            self.level = pet.level
+            self.totalXP = pet.totalXP
+        }
         CKManager.savePrivateItem(record: petRecord)
         petExists = true
     }
@@ -84,6 +93,7 @@ class PetDBManager: ObservableObject {
                     self.petExists = false
                     print("No pet record found")
                     completion(nil, nil)
+                   
                 }
                 return
             }
@@ -156,6 +166,9 @@ class PetDBManager: ObservableObject {
             }
         }
     }
+    func getPet() -> PetModel? {
+        return self.pet
+    }
     func updateUserXP(newXP: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
             guard let record = records?.first else {
@@ -223,7 +236,23 @@ class PetDBManager: ObservableObject {
             }
         }
     }
-
+    func updatePetHealth_2(newHealth: Int64, completion: @escaping (Error?) -> Void) {
+        CKManager.fetchPrivateRecord(recordType: "Pet") { records, error in
+            guard let record = records?.first else {
+                print("Error fetching user: \(error?.localizedDescription ?? "Unknown error")")
+                completion(error)
+                return
+            }
+            
+            let currentHealth = NSNumber(value: newHealth)
+            record[PetRecordKeys.health.rawValue] = currentHealth as CKRecordValue
+            self.CKManager.savePrivateItem(record: record)
+            DispatchQueue.main.async{
+                self.health = newHealth
+            }
+            completion(nil)
+        }
+    }
     // func getXP(completion: @escaping (Int64?, Error?) -> Void){
     //     CKManager.fetchPrivateRecord(recordType: "Pet", fieldName: "totalXP", fieldValue: nil) { records, error in
     //         guard let record = records?.first else {
