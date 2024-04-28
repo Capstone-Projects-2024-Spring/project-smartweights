@@ -50,6 +50,7 @@ class CustomizeViewModel: ObservableObject {
     ]
 }
 
+/// The view for customizing the pet's appearance.
 struct Customize_page: View {
     @Environment(\.presentationMode) var presentationMode
     var onBack: (() -> Void)?
@@ -181,6 +182,7 @@ struct Customize_page: View {
             }
         }
     }
+    
     @ViewBuilder
     private func placeholders(for count: Int) -> some View {
         ForEach(0..<max(minSquares - count, 0), id: \.self) { _ in

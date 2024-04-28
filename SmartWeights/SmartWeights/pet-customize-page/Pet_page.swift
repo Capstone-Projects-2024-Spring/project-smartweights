@@ -7,11 +7,10 @@
 
 import SwiftUI
 
-
+/// A view representing the pet page.
 struct Pet_Page: View {
     @ObservedObject var viewModel = PetPageFunction()
 
-    
     var body: some View {
         NavigationView {
             VStack {
@@ -112,8 +111,7 @@ struct Pet_Page: View {
     }
 }
 
-
-// FoodSelectionView definition
+/// A view representing the food selection view.
 struct FoodSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var foodItems: [FoodItemModel]
@@ -167,7 +165,7 @@ struct HamburgerMenu: View {
     }
 }
 
-/// Represents a customization view.
+/// A view representing a customization view.
 struct CustomizeView: View {
     var body: some View {
         Text("Customize")
@@ -175,11 +173,8 @@ struct CustomizeView: View {
     }
 }
 
-
 struct PetPage_Previews: PreviewProvider {
     static var previews: some View {
         Pet_Page()
     }
 }
-
-
