@@ -519,6 +519,62 @@ Initializes the central manager and starts scanning for peripherals with the spe
 
 </details>
 
+## Class: PetPageFunction
+<details open>
+A class that manages the functionality of the pet page.
+
+### Topics
+
+### Initializers
+- `init()`:
+
+#### Instance Properties
+- `var alertMessage: String`
+- `var alertTitle: String`
+- `var currentLevel: Int`
+- `foodItemDBManager: FoodItemDBManager`
+- `foodItems: [FoodItemModel]`
+- `healthBar: Int`
+- `var inventroyDBManager: Inventory DBManager`
+- `var pet: PetModel?`
+- `var petDBManager: PetDBManager`
+- `var selectedFoodIndex: Int`
+- `var showAlert: Bool`
+- `var showCustomize: Bool`
+- `var showFoodSelection: Bool`
+- `var showShop: Bool`
+- `var userDBManager: UserDBManager`
+- `var userTotalXP: Int`
+
+#### Initializers
+- `func AddXP(value: Int)`: Adds XP to the user's total XP.
+- `func handleFoodUse(selectedFoodIndex: Int)`: Handles the use of food items.
+- `func increaseHealth(by: Int)`: Increase the health of the pet by a specified amount.
+- `showAlert(title: String, message: String)`: Shows an alert with the specified title and message.
+- `func updateXP()`: Updates the total XP of the user
+</details>
+
+## Class: CustomizeViewModel
+<details open>
+
+### Topics
+
+### Initializers
+- `init()`:
+
+#### Instance Properties
+- `let accessories: [Accessory]`
+- `var backgroundColor: Color`
+- `let backgroundImages: [BackgroundImage]`
+- `var equippedAccessory: Accessory?`
+- `var equippedBackgroundImage: BackgroundImage?`
+- `var equippedPet: Pet_selection?`
+- `let pets: [Pet_selection]`
+</details>
+
+
+
+
 
 
 
@@ -1046,6 +1102,163 @@ FitnessPlanModel struct for database related information.
 
 #### Conforms To
 - `Swift.Sendable`
+</details>
+
+# Structure: FoodItem
+
+<details open>
+A stuct representing a food item.
+
+### Topics
+
+#### Initializers
+- `init(id: UUID, name: String, quantity: Int, imageName: String)`
+
+#### Instance Properties
+- `var id: UUID`
+- `var imageName: String`
+- `var name: Sting`
+- `var quantity: Int`
+</details>
+
+# Structure: Accessory
+
+<details open>
+
+### Topics
+
+#### Initializers
+- `init(id: UUID, name: String, imageName: String)`
+
+#### Instance Properties
+- `var id: UUID`
+- `var imageName: String`
+- `var name: String`
+
+</details>
+
+# Structure: BackgroundImage
+
+<details open>
+
+### Topics
+
+#### Initializers
+- `init(id: UUID, name: String. imageName: String)`
+
+#### Instance Properties
+- `var id: UUID`
+- `var imageName: String`
+- `var name: String`
+
+</details>
+
+# Structure: Pet_selection
+
+<details open>
+
+### Topics
+
+#### Initializers
+- `init(id: UUID, name: String, imageName: String)`
+
+#### Instance Properties
+- `var id: UUID`
+- `var imageName: String`
+- `var name: String`
+
+</details>
+
+# Structure: Customize_page
+<details open>
+The view for customizing the pet's appearance.
+
+### Topics
+
+#### Initializers
+- `init()`
+
+#### Instance Properties
+- `var body: some View`
+- `var onBack: (() -> Void)?`
+- `var presentationMode: Binding<PresentationMode>`
+- `var viewModel: CustomizeViewModel`
+
+</details>
+
+# Stucture: CustomProgressView
+<details open>
+A custom progress view that displays the progress value and label.
+
+### Topics
+
+#### Initializers
+- `init(value: Int, maxValue: Int, label: String, displayMode: CustomProgressView.DisplayMode, foregroundColor: Color, backgroundColor: Color)`
+
+#### Instance Properties
+- `var backgroundColor: Color`
+- `var body: some View`
+- `var displayMode: DisplayMode`
+- `var foregroundColor: Color`
+- `var label: String`
+- `var maxValue: Int`
+- `var value: Int`
+
+#### Enumerations
+- `enum DisplayMode`: The display mode for the progress value and health bar.
+
+</details>
+
+# Structure: FoodSelectionView
+
+<details open>
+A view representing the food selection view.
+
+### Topics
+
+#### Initializers
+- `init(presentationMode: Environment<Binding<PresentationMode>>, foodItems: Binding<[FoodItemModel]>, selectedFoodIndex: Binding<Int>)`
+
+#### Instance Properties
+- `var body: some View`
+- `var foodItems: [FoodItemModel]`
+- `var presentationMode: Binding<PresentationMode>`
+- `var selectionFoodIndex: Int`
+
+</details>
+
+# Structure: HamburgerMenu
+
+<details open>
+A view representing a hamburger menu with options to navigate to different pages.
+
+### Topics
+
+#### Initializers
+- `init(navigateToShop: () -> Void, navigateToCustomize: () -> Void)`
+
+#### Instance Properties
+- `var body: some View`
+- `var navigateToCustomize: () -> Void`
+- `var navigateToShop: () -> Void`
+
+</details>
+
+# Structure: Pet_Page
+
+<details open>
+A view representing the pet page.
+
+### Topics
+
+#### Initializers
+- `init()`
+- `init(viewModel: PetPageFunction)`
+
+#### Instance Properties
+- `var body: some View`
+- `var viewModel: PetPageFunction`
+
 </details>
 
 
