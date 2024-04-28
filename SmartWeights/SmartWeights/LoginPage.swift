@@ -68,7 +68,7 @@ struct LoginView: View {
                                 self.userID = credential.user
                                 userDBManager.createUser(firstName: firstName, lastName: lastName, email: email)
                                
-//                                petDBManager.createPet()
+                                petDBManager.createPet()
 //                                petItemDBManager.createDefaultPet()
 //                               
 //                                foodItemDBManager.createInitialFoodItems()
