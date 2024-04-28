@@ -584,6 +584,62 @@ Display view for the Pet Store depending on available items and prices.
 SwiftUI.View
 </details>
 
+## Structure: ChallengesList
+<details open>
+
+Struct containing all achievements in the application.
+
+### Topics
+
+#### Initializers
+- `init(challenges: [Challenge], fetchGameCenterProgress: () -> Void)`
+
+#### Instance Properties
+- `var body: some View`
+- `var challenges: [Challenge]`
+- `var fetchGameCenterProgress: () -> Void`
+
+#### Instance Methods
+- `func refreshList()`
+
+### Default Implementations
+
+#### View Implementations
+
+### Relationships
+
+#### Conforms To
+SwiftUI.View
+</details>
+
+## Structure: ChallengesTab
+<details open>
+
+Struct containing the sorting and fetching of Game Center achievements.
+### Topics
+
+#### Initializers
+- `init()`
+- `init(challenges: [Challenge])`
+
+#### Instance Properties
+- `var body: some View`
+- `var challenges: [Challenge]`
+
+#### Instance Methods
+- `func fetchGameCenterProgress()`
+
+### Default Implementations
+
+#### View Implementations
+
+### Relationships
+
+#### Conforms To
+SwiftUI.View
+</details>
+
+
 
 
 
