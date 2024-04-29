@@ -44,11 +44,12 @@ class FoodItemDBManager: ObservableObject{
                 print("Error fetching food items: \(error.localizedDescription)")
                 return
             }
-            // guard let foodItems = foodItems else {
-            //     print("No food items found")
-            //     return
-            // }
-            // self.foodItems = foodItems
+            guard let foodItems = foodItems else {
+                print("No food items found")
+                self.createInitialFoodItems()
+                return
+            }
+            self.foodItems = foodItems
         }
     }
     //gets all
@@ -91,7 +92,9 @@ class FoodItemDBManager: ObservableObject{
                 if let error = error {
                     print("Error creating food item: \(error.localizedDescription)")
                 }
-            
+                DispatchQueue.main.async{
+                    self.foodItems.append(foodItem)
+                }
             }
         }
     }
