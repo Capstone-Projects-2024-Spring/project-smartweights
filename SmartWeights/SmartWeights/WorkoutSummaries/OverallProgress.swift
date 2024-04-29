@@ -8,7 +8,8 @@
 import SwiftUI
 import CoreData
 
-
+/// View model for the all feedback page
+/// -Note: This view model is used to get the data for the all feedback page
 class allFeedbackViewModel: ObservableObject {
     var coreDataManager: CoreDataManager
     @Published var date = Date()
@@ -16,19 +17,24 @@ class allFeedbackViewModel: ObservableObject {
     @Published var WorkoutSets: [[String:Any]] = [[:]]
     var workoutNum: Int64 = 0
     
-    
+    /// Initialize the view model
+    /// - Parameter coreDataManager: 
+    /// - Returns: None
     init(coreDataManager: CoreDataManager) {
         self.coreDataManager = coreDataManager
         workoutSessions = coreDataManager.fetchWorkoutSessions(on: Date())
         updateData(date:Date())
     }
-    
+    /// Update the data for the page
+    /// - Parameter date: the date to get the data for
+    /// - Returns: None
     func updateData(date: Date){
         self.workoutSessions = coreDataManager.fetchWorkoutSessions(on: date)
     }
 }
 
-
+/// View for the all feedback page
+/// -Note: This view is used to display all the feedback for the user
 struct allFeedback: View {
     @ObservedObject var coreDataManager: CoreDataManager
     @ObservedObject var viewModel: allFeedbackViewModel

@@ -4,9 +4,9 @@
 //  Created by Tu Ha on 2/20/24.
 
 import SwiftUI
-///View to display data from each of the set in the workout
 //to create each of the boxes for each set
-
+/// PostWorkoutData is a view that displays the feedback for each set in the workout
+/// -Note: This view displays both the data for the set and the overall data for the workout
 
 struct PostWorkoutData: View {
     @ObservedObject var viewModel: WorkoutViewModel
@@ -16,6 +16,12 @@ struct PostWorkoutData: View {
     let feedback: (String, String, String, String)
     let workoutAnalysis: [String:Double]
     
+    /// Initializes the PostWorkoutData view
+    /// - Parameters:
+    ///   - viewModel: 
+    ///   - setIndex: 
+    ///   - feedback: 
+    ///   - workoutAnalysis: 
     init(viewModel: WorkoutViewModel, setIndex: Int, feedback: (String, String, String, String),workoutAnalysis: [String:Double]) {
         self.viewModel = viewModel
         self.setIndex = setIndex
@@ -133,6 +139,8 @@ struct PostWorkoutData: View {
     }
 }
 
+/// OverallWorkoutData is a view that displays the overall feedback for the workout
+/// -Note: This view displays the overall data for the workout
 struct OverallWorkoutData: View{
     @Binding var workoutAnalysisForSets: [[String: Double]]
     @ObservedObject var viewModel: WorkoutViewModel
@@ -239,6 +247,7 @@ struct OverallWorkoutData: View{
 
 
 ///View to show all data collected from the most recent workout
+/// -Note: This view displays the feedback for each set in the workout and the overall data for the workout
 struct WorkoutFeedback: View {
     @ObservedObject var viewModel: WorkoutViewModel
     @State private var sets: Int = 0
