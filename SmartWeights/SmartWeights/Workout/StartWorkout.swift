@@ -699,5 +699,5 @@ class WorkoutViewModel: ObservableObject {
 
 
 #Preview{
-    WorkoutMainPage(coreDataManager: CoreDataManager())
+    WorkoutMainPage(coreDataManager: CoreDataManager(container: PersistenceController.preview.container))
 }

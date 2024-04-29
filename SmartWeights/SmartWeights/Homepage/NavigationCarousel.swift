@@ -60,10 +60,10 @@ struct NavigationCarousel: View {
 }
 
 #Preview {
-    let button = CarouselButton(name: "Test", icon: "photo", link: AnyView(allFeedback(coreDataManager: CoreDataManager())))
+    let button = CarouselButton(name: "Test", icon: "photo", link: AnyView(allFeedback(coreDataManager: CoreDataManager(container: PersistenceController.preview.container))))
     let buttons: [CarouselButton] = [
         button
     ]
     
-    return NavigationCarousel(coreDataManager: CoreDataManager(), buttons: buttons, iconColor: Color.africanViolet, bgColor: Color.black, textColor: Color.black)
+    return NavigationCarousel(coreDataManager: CoreDataManager(container: PersistenceController.preview.container), buttons: buttons, iconColor: Color.africanViolet, bgColor: Color.black, textColor: Color.black)
 }
