@@ -10,7 +10,7 @@ import AuthenticationServices
 import UserNotifications
 
 struct LoginView: View {
-    @ObservedObject var coreDataManager = CoreDataManager()
+    @ObservedObject var coreDataManager = CoreDataManager(container: PersistenceController.preview.container)
     @Environment(\.colorScheme) var colorScheme
     @State private var showingAlert = false // For testing the sign in button
     @State private var alertMessage = ""

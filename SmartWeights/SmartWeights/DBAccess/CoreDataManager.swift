@@ -10,22 +10,25 @@ import CoreData
 
 class CoreDataManager: ObservableObject {
     // Use the shared managed object model defined in PersistenceController
-    let persistentContainer: NSPersistentCloudKitContainer = PersistenceController.shared.container
+    var persistentContainer: NSPersistentCloudKitContainer = PersistenceController.shared.container
     
-    init() {
+    init(container: NSPersistentCloudKitContainer, storeDescriptions: [NSPersistentStoreDescription]? = nil) {
+        self.persistentContainer = container
+        if let storeDescriptions = storeDescriptions {
+            persistentContainer.persistentStoreDescriptions = storeDescriptions
+        } else {
             let description = NSPersistentStoreDescription()
             description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
             description.setOption(true as NSNumber, forKey: NSMigratePersistentStoresAutomaticallyOption)
             description.setOption(true as NSNumber, forKey: NSInferMappingModelAutomaticallyOption)
-
-            // Add this description to your persistent container
             persistentContainer.persistentStoreDescriptions = [description]
+        }
 
-            persistentContainer.loadPersistentStores { (storeDescription, error) in
-                if let error = error {
-                    fatalError("Core Data Store failed \(error.localizedDescription)")
-                }
+        persistentContainer.loadPersistentStores { (storeDescription, error) in
+            if let error = error {
+//                fatalError("Core Data Store failed \(error.localizedDescription)")
             }
+        }
     }
     
     func createWorkoutSession(dateTime: Date, workoutNum: Int, reps: Int, weight: Double, overallCurlAcceleration: Double, overallElbowFlareLR: Double, overallElbowFlareUD: Double, overallElbowSwing: Double, overallWristStabilityLR: Double, overallWristStabilityUD: Double) -> WorkoutSession? {

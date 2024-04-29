@@ -59,5 +59,5 @@ struct TabBar: View {
 }
 
 #Preview {
-    TabBar(coreDataManager: CoreDataManager())
+    TabBar(coreDataManager: CoreDataManager(container: PersistenceController.preview.container))
 }
