@@ -44,5 +44,5 @@ struct StartWorkoutButton: View {
 }
 
 #Preview {
-    StartWorkoutButton(tabBar: TabBar(coreDataManager: CoreDataManager()))
+    StartWorkoutButton(tabBar: TabBar(coreDataManager: CoreDataManager(container: PersistenceController.preview.container)))
 }

@@ -27,8 +27,15 @@
 		6B50EDF12BC6EB810094C715 /* ClothingItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50EDF02BC6EB810094C715 /* ClothingItemManager.swift */; };
 		6B50EDF32BC700E60094C715 /* BackgroundItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50EDF22BC700E60094C715 /* BackgroundItemManager.swift */; };
 		6B59DFE22BD8159600A1668F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6B59DFE12BD8159600A1668F /* PrivacyInfo.xcprivacy */; };
+		6B84037D2BDD65140082D3B3 /* UserManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84037C2BDD65140082D3B3 /* UserManagerTests.swift */; };
+		6B84037F2BDD71190082D3B3 /* PetManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84037E2BDD71190082D3B3 /* PetManagerTests.swift */; };
+		6B8403812BDD71380082D3B3 /* PetItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8403802BDD71380082D3B3 /* PetItemManagerTests.swift */; };
+		6B8403832BDD71450082D3B3 /* FoodItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8403822BDD71450082D3B3 /* FoodItemManagerTests.swift */; };
+		6B8403852BDD71520082D3B3 /* BackgroundItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8403842BDD71520082D3B3 /* BackgroundItemManagerTests.swift */; };
+		6B8403872BDD71690082D3B3 /* FitnessPlanManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8403862BDD71690082D3B3 /* FitnessPlanManagerTests.swift */; };
+		6B84038B2BDD718F0082D3B3 /* CloudKitManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84038A2BDD718F0082D3B3 /* CloudKitManagerTests.swift */; };
+		6B84038D2BDD71B60082D3B3 /* ClothingItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84038C2BDD71B60082D3B3 /* ClothingItemManagerTests.swift */; };
 		6B8762AB2BA26891005627CE /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8762A92BA26891005627CE /* CloudKitManager.swift */; };
-		6BA2DC482B90FCF500A998FC /* CloudKitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */; };
 		6BC8E5722BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */; };
 		6BEA78552BBCE5E300239AB0 /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA78542BBCE5E300239AB0 /* Inventory.swift */; };
 		6BEA78572BBCE60400239AB0 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA78562BBCE60400239AB0 /* UserManager.swift */; };
@@ -45,6 +52,7 @@
 		6BF261DC2BD01FC7004D1A8B /* FitnessPlanPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF261DB2BD01FC7004D1A8B /* FitnessPlanPageViewModel.swift */; };
 		6BF261DE2BD01FF5004D1A8B /* FitnessPlanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF261DD2BD01FF5004D1A8B /* FitnessPlanManager.swift */; };
 		6BF261E02BD02899004D1A8B /* SettingsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF261DF2BD02899004D1A8B /* SettingsPageViewModel.swift */; };
+		776932A12BDD3BDA005318AC /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776932A02BDD3BDA005318AC /* CoreDataManagerTests.swift */; };
 		77C430C32BC080C8006E1FBE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C430C22BC080C8006E1FBE /* CoreDataManager.swift */; };
 		91065F7D2B7A7E4700BC62E6 /* SmartWeightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */; };
 		91065F7F2B7A7E4700BC62E6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91065F7E2B7A7E4700BC62E6 /* ContentView.swift */; };
@@ -122,8 +130,15 @@
 		6B50EDF02BC6EB810094C715 /* ClothingItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItemManager.swift; sourceTree = "<group>"; };
 		6B50EDF22BC700E60094C715 /* BackgroundItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundItemManager.swift; sourceTree = "<group>"; };
 		6B59DFE12BD8159600A1668F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		6B84037C2BDD65140082D3B3 /* UserManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManagerTests.swift; sourceTree = "<group>"; };
+		6B84037E2BDD71190082D3B3 /* PetManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetManagerTests.swift; sourceTree = "<group>"; };
+		6B8403802BDD71380082D3B3 /* PetItemManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetItemManagerTests.swift; sourceTree = "<group>"; };
+		6B8403822BDD71450082D3B3 /* FoodItemManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemManagerTests.swift; sourceTree = "<group>"; };
+		6B8403842BDD71520082D3B3 /* BackgroundItemManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundItemManagerTests.swift; sourceTree = "<group>"; };
+		6B8403862BDD71690082D3B3 /* FitnessPlanManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessPlanManagerTests.swift; sourceTree = "<group>"; };
+		6B84038A2BDD718F0082D3B3 /* CloudKitManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManagerTests.swift; sourceTree = "<group>"; };
+		6B84038C2BDD71B60082D3B3 /* ClothingItemManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItemManagerTests.swift; sourceTree = "<group>"; };
 		6B8762A92BA26891005627CE /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
-		6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitTest.swift; sourceTree = "<group>"; };
 		6BC8E5712BB097CA00A9CB8C /* VoiceRecognitionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecognitionViewModel.swift; sourceTree = "<group>"; };
 		6BEA78542BBCE5E300239AB0 /* Inventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inventory.swift; sourceTree = "<group>"; };
 		6BEA78562BBCE60400239AB0 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -140,6 +155,7 @@
 		6BF261DB2BD01FC7004D1A8B /* FitnessPlanPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessPlanPageViewModel.swift; sourceTree = "<group>"; };
 		6BF261DD2BD01FF5004D1A8B /* FitnessPlanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessPlanManager.swift; sourceTree = "<group>"; };
 		6BF261DF2BD02899004D1A8B /* SettingsPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewModel.swift; sourceTree = "<group>"; };
+		776932A02BDD3BDA005318AC /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 		77C430C22BC080C8006E1FBE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		91065F792B7A7E4700BC62E6 /* SmartWeights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartWeights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91065F7C2B7A7E4700BC62E6 /* SmartWeightsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWeightsApp.swift; sourceTree = "<group>"; };
@@ -257,6 +273,21 @@
 			path = WorkoutSummaries;
 			sourceTree = "<group>";
 		};
+		6B84037B2BDD64F40082D3B3 /* DBAccessTests */ = {
+			isa = PBXGroup;
+			children = (
+				6B84038C2BDD71B60082D3B3 /* ClothingItemManagerTests.swift */,
+				6B84037C2BDD65140082D3B3 /* UserManagerTests.swift */,
+				6B84037E2BDD71190082D3B3 /* PetManagerTests.swift */,
+				6B8403802BDD71380082D3B3 /* PetItemManagerTests.swift */,
+				6B8403822BDD71450082D3B3 /* FoodItemManagerTests.swift */,
+				6B8403842BDD71520082D3B3 /* BackgroundItemManagerTests.swift */,
+				6B8403862BDD71690082D3B3 /* FitnessPlanManagerTests.swift */,
+				6B84038A2BDD718F0082D3B3 /* CloudKitManagerTests.swift */,
+			);
+			path = DBAccessTests;
+			sourceTree = "<group>";
+		};
 		6B8762A82BA260C0005627CE /* DBAccess */ = {
 			isa = PBXGroup;
 			children = (
@@ -344,12 +375,13 @@
 		91065F932B7A7E4900BC62E6 /* SmartWeightsTests */ = {
 			isa = PBXGroup;
 			children = (
+				6B84037B2BDD64F40082D3B3 /* DBAccessTests */,
 				91065F942B7A7E4900BC62E6 /* SmartWeightsTests.swift */,
 				322B4C042B90CACE00620F4F /* PetPageTest.swift */,
-				6BA2DC472B90FCF500A998FC /* CloudKitTest.swift */,
 				B90397332BD831620092E467 /* PetStoreTests.swift */,
 				01C4B4BF2BDD960600FEEFEA /* ChallengesTests.swift */,
 				01C4B4C12BDD997000FEEFEA /* MorePageTests.swift */,
+				776932A02BDD3BDA005318AC /* CoreDataManagerTests.swift */,
 			);
 			path = SmartWeightsTests;
 			sourceTree = "<group>";
@@ -659,9 +691,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				322B4C052B90CACE00620F4F /* PetPageTest.swift in Sources */,
-				6BA2DC482B90FCF500A998FC /* CloudKitTest.swift in Sources */,
+				6B8403812BDD71380082D3B3 /* PetItemManagerTests.swift in Sources */,
+				6B8403852BDD71520082D3B3 /* BackgroundItemManagerTests.swift in Sources */,
+				6B8403832BDD71450082D3B3 /* FoodItemManagerTests.swift in Sources */,
+				6B84037F2BDD71190082D3B3 /* PetManagerTests.swift in Sources */,
+				6B84037D2BDD65140082D3B3 /* UserManagerTests.swift in Sources */,
+				6B84038D2BDD71B60082D3B3 /* ClothingItemManagerTests.swift in Sources */,
+				6B8403872BDD71690082D3B3 /* FitnessPlanManagerTests.swift in Sources */,
 				91065F952B7A7E4900BC62E6 /* SmartWeightsTests.swift in Sources */,
 				01C4B4C02BDD960600FEEFEA /* ChallengesTests.swift in Sources */,
+				776932A12BDD3BDA005318AC /* CoreDataManagerTests.swift in Sources */,
+				6B84038B2BDD718F0082D3B3 /* CloudKitManagerTests.swift in Sources */,
 				B90397342BD831620092E467 /* PetStoreTests.swift in Sources */,
 				01C4B4C22BDD997000FEEFEA /* MorePageTests.swift in Sources */,
 			);

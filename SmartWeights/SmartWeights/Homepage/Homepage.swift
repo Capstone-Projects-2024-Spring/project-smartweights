@@ -83,6 +83,6 @@ struct Homepage: View {
 
 struct Homepage_Previews: PreviewProvider {
     static var previews: some View {
-        Homepage(tabBar: TabBar(coreDataManager: CoreDataManager()), coreDataManager: CoreDataManager())
+        Homepage(tabBar: TabBar(coreDataManager: CoreDataManager(container: PersistenceController.preview.container)), coreDataManager: CoreDataManager(container: PersistenceController.preview.container))
     }
 }

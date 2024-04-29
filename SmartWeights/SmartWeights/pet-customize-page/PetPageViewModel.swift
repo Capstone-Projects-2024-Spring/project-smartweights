@@ -138,7 +138,7 @@ class PetPageFunction: ObservableObject {
             return
         }
         let newHealth = min(Int(currentPet.health) + amount, 100)
-        petDBManager.updatePetHealth(newHealth: Int64(newHealth)) { [weak self] error in
+        petDBManager.updatePetHealth_2(newHealth: Int64(newHealth)) { [weak self] error in
             if let error = error {
                 print("Error updating pet's health: \(error.localizedDescription)")
             } else {

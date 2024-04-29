@@ -38,18 +38,19 @@ class PetItemDBManager: ObservableObject{
     @Published var petItems: [PetItemModel] = []
     let CKManager = CloudKitManager()
     var petItemExists: Bool = false
-    @Published var activePet: String = ""
+    @Published var activePet: String = "Dog"
     init() {
         fetchPetItems { petItems, error in
             if let error = error {
                 print("Error fetching pet items: \(error.localizedDescription)")
                 return
             }
-            // guard let petItems = petItems else {
-            //     print("No pet items found")
-            //     return
-            // }
-            // self.petItems = petItems
+            guard let petItems = petItems else {
+                print("No pet items found")
+                self.createDefaultPet()
+                return
+            }
+            self.petItems = petItems
         }
     }
     func g_getActivePet() -> String {
@@ -126,6 +127,7 @@ class PetItemDBManager: ObservableObject{
                 let petItemRecord = petItem.record
                 DispatchQueue.main.async {
                     self.petItems.append(petItem)
+                    // self.activePet = petItem.imageName
                 }
                 self.CKManager.savePrivateItem(record: petItemRecord)
                 DispatchQueue.main.async {
@@ -140,6 +142,7 @@ class PetItemDBManager: ObservableObject{
                 print("Error creating default pet: \(error.localizedDescription)")
                 return
             }
+            self.activePet = "Dog"
             print("Default pet created")
         }
     }
@@ -159,7 +162,9 @@ class PetItemDBManager: ObservableObject{
                 // If the pet item does not exist, create a new one
                 let petItem = PetItemModel(recordId: nil, isActive: 1, petName: imageName, imageName: imageName)
                 let petItemRecord = petItem.record
-                self.petItems.append(petItem)
+                DispatchQueue.main.async {
+                    self.petItems.append(petItem)
+                }
                 self.CKManager.savePrivateItem(record: petItemRecord)
                 print("defaultPet Created")
             }
