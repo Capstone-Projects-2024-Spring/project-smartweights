@@ -20,7 +20,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 </details>
 
 ## Assertions
-1. After the user logins to the app, they will be routed to the Home Page
+1. After the user logins to the app, they will be routed to the Home Page.
 2. The user's information will be cached onto the phone's storage to retain login information for the next time they open the app.
 
 <br></br>
@@ -39,8 +39,8 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 </details>
 
 ## Assertions
-1. The user will be routed through multiple different tabs/pages of the app by the pet while watching the video
-2. After the tutorial is done, there will be information cached onto the phone's storage to prevent the tutorial from happening again several times
+1. The user will be routed through multiple different tabs/pages of the app by the pet while watching the video.
+2. After the tutorial is done, there will be information cached onto the phone's storage to prevent the tutorial from happening again.
 
 <br></br>
 
@@ -58,8 +58,8 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 </details>
 
 ## Assertions
-1. The user should see all setting options as well as the workout goals they created
-2. When the user edits any setting, the updated information will be saved and some of the information will transfer to the database
+1. The user should see all setting options as well as the workout goals they created.
+2. When the user edits any setting, the updated information will be saved and some of the information will transfer to the database.
 
 <br></br>
 
@@ -73,7 +73,6 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 - The user attaches the sensors to the heads of the dumbbell, locking it in securely.
 - The user puts on the elbow sleeve.
 - The user attaches the sensor to the elbow sleeve.
-- The user attaches another sensor to their chest.
 
 </details>
 
@@ -86,18 +85,16 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 <details open>
 
-<summary>A user wants to sync their SmartWeights sensor with the mobile app.</summary>
+<summary>A user wants to sync their SmartWeights sensors with the mobile app.</summary>
 
-- The user securely attaches the SmartWeight sensor to their dumbbell following the instructions provided via the mobile app.
-- The user navigates to the Devices section on the app to initiate the addition of a new sensor.
-- Within the app, the user selects the option to Add New Sensor. The app will provide instructions to ensure the sensor is on and in pairing mode.
-- The app will search for available sensors. The user selects their sensor from the list of available devices to start the pairing process.
-- Once the user selects their sensor, the app establishes a connection via Bluetooth. A confirmation message is displayed to the user indicating that the sensor is successfully synced.
+- The user securely attaches the SmartWeight sensor to their dumbbell and the elbow sensor to their elbow following the instructions provided via the mobile app.
+- The app will search for available sensors.
+- The app establishes a connection via Bluetooth and a confirmation is displayed to the user indicating that the sensor is successfully synced.
 
 </details>
 
 ## Assertions
-1. User receives a confirmation message displaying the sensor is successfully synced.
+1. User receives a confirmation displaying the sensor is successfully synced.
 
 <br></br>
 
@@ -107,7 +104,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 <summary>User wants to log the weights of dumbbells used during a workout for tracking progress over time, independent of immediate feedback on form or technique.</summary>
 
-- After selecting a workout type, the user is prompted to input the weight of the dumbbells they will use.
+- After heading to the workout page, the user is prompted to input the weight of the dumbbells they will use.
 - User enters the weights of the dumbbells into the app before starting the workout.
 
 </details>
@@ -142,7 +139,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 <summary>A user wants to complete a workout with the assistance of the virtual pet.</summary>
 
 - The user navigates to the workout section.
-- The user completes their repetitions and the SmartWeights application tracks how many reps are completed.
+- The user completes their repetitions and the SmartWeights application tracks the user's form.
 - The virtual pet notifies the user if their form is incorrect.
 - Once finished, the user ends the workout and the SmartWeights application generates a personalized report and summary of the workout for the user.
 
@@ -157,11 +154,11 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 <details open>
 
-<summary>A user wants to view feedback post-workout.</summary>
+<summary>A user wants to view their all their workout feedbacks.</summary>
 
-- After completing a workout, the user selects the post-workout feedback button in the mobile application.
+- After completing a workout, the user selects the progress button on the home page.
 - Once in, the user selects the date to receive workout feedback for that day.
-- From this page, The user will then be able to view feedback on their form and the number of reps they completed.
+- From this page, The user will then be able to view feedback on their form and the number of reps inputted.
 
 </details>
 
