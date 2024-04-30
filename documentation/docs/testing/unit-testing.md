@@ -137,16 +137,19 @@ Python unittest library is used for machine learning
 
 <details open>
 <summary> testSortItemsByPrice()</summary>  
--Test sorting items by price
+    
+- Test sorting items by price
     - Input/User action
         - Call `sortItems` with `sortByPrice: true`
      - Expected Result
         - Items should be sorted by price in ascending order
+        
 </details>
 
 
 <details open>
 <summary> testSortItemsbyName()</summary>
+    
 - Test sorting items by name
     - Input/User action 
         - Call `sortItems` with `sortByPrice: false`
@@ -157,6 +160,7 @@ Python unittest library is used for machine learning
 
 <details open>
 <summary> testSubtractFunds()</summary>   
+    
 - Test subtracting funds
     - Input/User action 
         - Subtract funds using `subtractFunds(price: 100)`
@@ -167,6 +171,7 @@ Python unittest library is used for machine learning
 
 <details open>
 <summary> testPurchaseItem()</summary> 
+    
 - Test purchasing an item
     - Input/User action
         - Purchase an item using `purchaseItem(item: item)`
@@ -178,6 +183,7 @@ Python unittest library is used for machine learning
 
 <details open>
 <summary> testAddFunds()</summary>
+    
 - Test adding funds to user currency
     - Input/User action
         - Add funds using `addFundtoUser(price: 100)`
