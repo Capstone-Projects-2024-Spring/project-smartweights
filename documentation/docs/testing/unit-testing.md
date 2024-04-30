@@ -2,8 +2,8 @@
 sidebar_position: 1
 ---
 # Unit tests
-Unit tests are done with Swift's XCTest
-Pico testing is done with MicroPython test library
+Swift unit tests are done with Swift's XCTest
+Pico-W testing is done with pytest library
 Python unittest library is used for machine learning
 
 
@@ -131,6 +131,140 @@ Python unittest library is used for machine learning
 </details>
 
 
+### FormCriteria
+
+<details open>
+<summary> getRandomGoodFormPhrase()</summary>
+
+***The user gets one of three phrases when having good form***
+- User finishes a workout and wants their feedback
+    - Input/User action
+        - User clicks 'finish set' or 'finish workout'
+    - Expected Result
+      - getRandomGoodFormPhrase() is called and the user sees one of the three phrases
+  
+</details>
+
+
+<details open>
+<summary> updateWorkoutAnalysis()</summary>
+
+***updates the workout analysis data with provided current data***
+- User completes a workout session and wants to see the results
+    - Input/User action
+        - User finishes a workout session
+    - Expected Result
+        - The workout analysis is updated with the provided data and contains the expected keys.
+</details>
+
+<details open>
+
+<summary> averageUpDownAcceleration()</summary>
+
+***Calculate of average up-down acceleration***
+- User wants to ensure accurate calculation of up-down acceleration average
+    - Input/User action
+        - User performs several sets of exercises
+    - Expected Result
+        - The calculated average up-down acceleration falls within the range of 0 to 1.
+
+</details>
+
+<details open>
+
+<summary> averageWristLeftRightRotation()</summary>
+
+***Calculates average wrist left-right rotation***
+- User wants to ensure accurate calculation of left-right wrist rotation average
+    - Input/User action
+        - User performs several sets of exercises
+    - Expected Result
+        - The calculated average wrist left-right rotation falls within the range of 0 to 1.
+
+</details>
+
+<details open>
+
+<summary> overallWorkoutUpDownAverage()</summary>
+
+***calculates overall workout up-down average***
+- User wants to ensure accurate calculation of overall workout up-down average
+    - Input/User action
+        - User completes a workout session
+    - Expected Result
+        - The calculated overall workout up-down average falls within the range of 0 to 1 and is approximately equal to the expected value.
+
+
+</details>
+
+<details open>
+
+<summary> averageElbowSwing()</summary>
+
+***calculates average elbow swing***
+- User wants to ensure accurate calculation of elbow swing average
+    - Input/User action
+        - User performs several sets of exercises
+    - Expected Result
+        - The calculated average elbow swing falls within the range of 0 to 1.
+
+</details>
+
+<details open>
+
+<summary> averageElbowFlareForwardBackward()</summary>
+
+***calculates average elbow flare forward-backward***
+- User wants to ensure accurate calculation of elbow flare forward-backward average
+    - Input/User action
+        - User performs several sets of exercises
+    - Expected Result
+        - The calculated average elbow flare forward-backward falls within the range of 0 to 1.
+
+</details>
+
+<details open>
+
+<summary> overallWorkoutElbowSwing()</summary>
+
+***calculates overall workout elbow swing***
+- User wants to ensure accurate calculation of overall workout elbow swing
+    - Input/User action
+        - User completes a workout session
+    - Expected Result
+        - The calculated overall workout elbow swing falls within the range of 0 to 1 and is approximately equal to the expected value.
+
+
+</details>
+
+<details open>
+
+<summary> dangerousForm()</summary>
+
+***Detects of dangerous form***
+- User wants to ensure accurate detection of dangerous form based on provided data
+    - Input/User action
+        - User performs exercises with varying data
+    - Expected Result
+        - The function correctly identifies whether the provided data indicates dangerous form.
+
+</details>
+
+<details open>
+
+<summary> giveFeedback()</summary>
+
+***generation of feedback***
+- User wants to ensure accurate generation of feedback based on provided data
+    - Input/User action
+        - User completes an exercise session
+    - Expected Result
+        - The feedback generated for acceleration and elbow swing is formatted correctly, and the custom text feedback for elbow is correct.
+
+
+</details>
+
+
 
 ## Backend
 
@@ -190,41 +324,8 @@ Python unittest library is used for machine learning
 
 </details>
 
-### Machine Learning
 
-<details>
 
-- testConvert()
-    - Test to see if can take data from CoreData and convert to tensors
-    - Returns true if tensor is created
-
-</details>
-
-### Hardware-Software 
-
-<details>
-
-- testBluetoothConnectionPico()
-    - Test if Pico establishes a successful connection to mobile device acting as a server
-    - Expected Result
-        - Return true if connection before time out, else return false
-- testBluetoothConnectionMobile()
-    - Test if mobile device connects to pico, acting as a client
-    - Expected Result
-        - Return true if connection before time out, else return false
-- testMultiSensorConnection()
-    - Test if Pico can connect to another Pico
-    - Expected Result 
-        - Return true if successful message received, else return false
-- testTransmitData()
-    - Test if Pico can transmit data through the socket
-    - Expected Result
-        - Return true if data was sent through socket, else return false
-- testReadData()
-    - Test if mobile device received any data from the pico 
-    - Expected Result
-        - Return true if data contained specifically integers in specified structure, else return false
-</details>
 
 
 
