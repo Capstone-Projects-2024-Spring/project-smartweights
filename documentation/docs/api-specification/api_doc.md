@@ -1410,4 +1410,29 @@ A view representing the pet page.
 </details>
 
 
+# Structure: LoginView
+<details>
+The view for the login screen of the SmartWeights app
+
+### Topics
+
+#### Initializers
+- `int()`
+- `int(coreDataManager: CoreDataManager, colorScheme: Enviroment<ColorScheme>, email: String, firstName: String, lastName: String, userID: String, userDBManager: UserDBManager, petDBManager: PetDBManager, foodItemDBManager: FoodItemDBManager, petItemDBManager: PetItemDBManager)`
+
+#### Instance Properties
+- `var body: some View`
+- `var colorScheme: ColorScheme`
+- `var coreDataManager: CoreDataManager`
+- `var email: String`
+- `var firstName: String`
+- `var foodItemDBManager: FoodItemDBManager`
+- `var lastName: String`
+- `var petDBManager: PetDBManager`
+- `var petItemDBManager: PetItemDBManager`
+- `var userDBManager: UserDBManager`
+- `var userID: String`
+</details>
+
+
 
