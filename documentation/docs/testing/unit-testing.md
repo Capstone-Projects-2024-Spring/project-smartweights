@@ -256,20 +256,147 @@ Python unittest library is used for machine learning
 </details>
 
 ### CoreData Local DB
-<details>
+<details open>
+<summary> setUpWithError() </summary>
 
-- testAccountCreatedLocal()
-    - Test to see if account credentials were created after login button pressed
-    - Expected Result 
-        - Returns true if file was created with credentials, else return false
-- testInsertSensorData()
-    - Test to see if data received from Pico can be inserted into CoreData DB
-    - Expected Result 
-        - Returns true if DB returns successful entry, else return false
-- testFetchData()
-    - Test to see if can retrieve data from DB
+***Sets up an in-memory Core Data environment for each test***
+- Ensures tests do not affect real user data by creating a mock environment
+    - Input/Setup action
+        - Core Data stack setup with in-memory store type
     - Expected Result
-        - Returns true if DB returns an object of data, else return false
+        - CoreDataManager instance is initialized without errors
+
+</details>
+
+<details open>
+<summary> tearDownWithError() </summary>
+
+***Cleans up and deallocates the in-memory Core Data stack after each test***
+- Ensures all data and instances are cleaned up properly
+    - Input/Cleanup action
+        - Removing persistent stores from the coordinator
+    - Expected Result
+        - Persistent stores are removed without errors, and CoreDataManager is deallocated
+
+</details>
+
+<details open>
+<summary> testCreateWorkoutSession() </summary>
+
+***Tests the ability to create a WorkoutSession entity***
+- Validating entity creation within the Core Data environment
+    - Input/User action
+        - Create a WorkoutSession with specified attributes
+    - Expected Result
+        - WorkoutSession entity is not nil and correctly initialized with provided values
+
+</details>
+
+<details open>
+<summary> testCreateAndFetchWorkoutSessions() </summary>
+
+***Tests integration of creating and fetching WorkoutSession entities***
+- Ensures data consistency within the created and fetched entities
+    - Input/User action
+        - Create a WorkoutSession and then fetch it
+    - Expected Result
+        - The fetched WorkoutSessions list should not be empty and contain the created session
+
+</details>
+
+<details open>
+<summary> testFetchWorkoutSessions() </summary>
+
+***Tests fetching WorkoutSession entities***
+- Validates the fetch functionality of the Core Data manager
+    - Input/User action
+        - Create and then fetch WorkoutSession entities
+    - Expected Result
+        - The fetch returns a list containing the newly created sessions
+
+</details>
+
+<details open>
+<summary> testFetchWorkoutSessionsOnDate() </summary>
+
+***Tests fetching WorkoutSession entities based on a specific date***
+- Ensures that sessions on a given date are correctly retrieved
+    - Input/User action
+        - Create a WorkoutSession for today and fetch by today's date
+    - Expected Result
+        - The fetch returns a list containing only today's sessions
+
+</details>
+
+<details open>
+<summary> testGetNextWorkoutNumber() </summary>
+
+***Tests retrieving the next workout number***
+- Ensures correct incrementation of workout numbers
+    - Input/User action
+        - Create a WorkoutSession and then retrieve the next workout number
+    - Expected Result
+        - The next workout number should be greater than the number of the last session created
+
+</details>
+
+<details open>
+<summary> testFetchExerciseSets() </summary>
+
+***Tests fetching ExerciseSet entities associated with a WorkoutSession***
+- Validates the fetch functionality for ExerciseSets tied to specific sessions
+    - Input/User action
+        - Create a WorkoutSession and an associated ExerciseSet, then fetch the sets
+    - Expected Result
+        - The fetched exercise sets list should contain the created set
+
+</details>
+
+<details open>
+<summary> testUpdateWorkoutSession() </summary>
+
+***Tests updating a WorkoutSession entity***
+- Verifies that changes to an entity are persisted correctly
+    - Input/User action
+        - Update an existing WorkoutSession's attributes
+    - Expected Result
+        - The updated WorkoutSession should reflect the new attribute values
+
+</details>
+
+<details open>
+<summary> testUpdateExerciseSet() </summary>
+
+***Tests updating an ExerciseSet entity***
+- Ensures property changes are saved correctly within the entity
+    - Input/User action
+        - Update an existing ExerciseSet's attributes
+    - Expected Result
+        - The updated ExerciseSet should reflect the new attribute values
+
+</details>
+
+<details open>
+<summary> testFetchAllExerciseSets() </summary>
+
+***Tests fetching all ExerciseSet entities***
+- Validates that multiple sets are returned when expected
+    - Input/User action
+        - Create multiple ExerciseSets and fetch all
+    - Expected Result
+        - The fetched exercise sets list should include all created sets
+
+</details>
+
+<details open>
+<summary> testFetchExerciseSetsForWorkoutNum() </summary>
+
+***Tests fetching ExerciseSet entities by workout number***
+- Ensures they are correctly retrieved based on the workout number
+    - Input/User action
+        - Create an ExerciseSet for a specific workout number and then fetch by that number
+    - Expected Result
+        - The fetched exercise sets list should contain the sets for the specific workout number
 
 </details>
 
