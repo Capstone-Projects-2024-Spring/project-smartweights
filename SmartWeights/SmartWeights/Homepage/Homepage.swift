@@ -69,6 +69,7 @@ struct Homepage: View {
                 VideoCarousel(videoCards: videos)
             }
             .background(.white)
+            .accessibility(identifier: "Homepage")
             .onAppear {
                 GameCenterManager.shared.authenticateLocalPlayer()
             }
