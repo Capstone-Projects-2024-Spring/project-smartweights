@@ -3,7 +3,9 @@ sidebar_position: 1
 ---
 # Unit tests
 Swift unit tests are done with Swift's XCTest
+
 Pico-W testing is done with pytest library
+
 Python unittest library is used for machine learning
 
 
@@ -52,62 +54,9 @@ Python unittest library is used for machine learning
 </details>
 
 ### Workout Main Page
-<details open>
-<summary> addProgress() </summary>
-
-***Workout progress is updated after starting workout***
-- Test user is starting their workout
-    - Input/User action
-        - User starts the workout
-    - Expected Result
-        - addProgress(data: Int) is called, the form and velocity progress bar changes
-</details>
-
-<details open>
-<summary> resetProgress() </summary>
-
-***Workout progress is reset after starting new workout***
-- Test user is starting a new workout
-    - Input/User action
-        - User clicks the 'new workout' button
-    - Expected Result
-        - resetProgress() is called, the form and velocity progress bar is reset to zero
-</details>
-
-<details open>
-<summary> startTimer() </summary>
-
-***Workout timer is counting after starting the workout***
-- Test user is starting the workout
-    - Input/User action
-        - User starts the working 
-    - Expected Result
-        - startTimer() is called, the workout timer starts counting
-</details>
-
-<details open>
-<summary> resetTimer() </summary>
-
-***Workout timer is reset after starting new workout***
-- Test user is starting a new workout
-    - Input/User action
-        - User clicks the 'new workout' button
-    - Expected Result
-        - resetTimer() is called, the workout timer is reset to 00:00:00
-</details>
 
 ### Workout Overall Progress Page
 
-<details open>
-<summary> updateShortDate() </summary>
-
-***The date is updated when the user uses the calendar***
-- Test user is selecting a date to obtain workout data from that day
-    - Input/User action
-        - User selects a date on the calendar
-    - Expected Result
-        - updateShortDate() is called, the date is updated and matches the format M/D/Y
-</details>
 
 
 ### Pet Store Page
