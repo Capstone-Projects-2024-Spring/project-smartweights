@@ -422,6 +422,41 @@ The fitnessPlanViewModel class contains variables for a user’s fitness goals.
   
 </details>
 
+## Class: CoreDataManager
+
+<details open>
+  Manages persistent data storage using Core Data for the SmartWeights application.
+
+  ### Topics
+  
+  #### Initializers
+  - `init(container: NSPersistentCloudKitContainer, storeDescriptions: [NSPersistentStoreDescription]?)`: Initializes the CoreDataManager with the specified persistent container and optional store configurations.
+  
+  #### Instance Properties
+  - `var persistentContainer: NSPersistentCloudKitContainer`: The shared persistent container from the PersistenceController, configured for CloudKit integration.
+  
+  #### Instance Methods
+  - `func createExerciseSet(workoutSession: WorkoutSession, setNum: Int, avgCurlAcceleration: Double, avgElbowFlareLR: Double, avgElbowFlareUD: Double, avgElbowSwing: Double, avgWristStabilityLR: Double, avgWristStabilityUD: Double) -> ExerciseSet?`: Creates and persists a new ExerciseSet entity associated with a given WorkoutSession.
+  - `func createWorkoutSession(dateTime: Date, workoutNum: Int, reps: Int, weight: Double, overallCurlAcceleration: Double, overallElbowFlareLR: Double, overallElbowFlareUD: Double, overallElbowSwing: Double, overallWristStabilityLR: Double, overallWristStabilityUD: Double) -> WorkoutSession?`: Creates and saves a new WorkoutSession entity with specified parameters.
+  - `func fetchAllExerciseSets() -> [ExerciseSet]`: Fetches all ExerciseSet entities from the persistent store.
+  - `func fetchExerciseSets(for: WorkoutSession) -> [ExerciseSet]`: Fetches ExerciseSet entities associated with a specific WorkoutSession.
+  - `func fetchExerciseSets(for: Int64) -> [[String : Any]]`: Fetches ExerciseSet entities based on a specific workout number.
+  - `func fetchWorkoutSessions() -> [WorkoutSession]`: Fetches all WorkoutSession entities from the persistent store.
+  - `func fetchWorkoutSessions(on: Date) -> [[String : Any]]`: Fetches WorkoutSession entities on a specific date from the persistent store.
+  - `func getNextWorkoutNumber() -> Int`: Retrieves the next sequential workout number to be used for a new WorkoutSession, defaulting to 1 if no sessions exist.
+  - `func updateExerciseSet(ExerciseSet, setNum: Int?, avgCurlAcceleration: Double?, avgElbowFlareLR: Double?, avgElbowFlareUD: Double?, avgElbowSwing: Double?, avgWristStabilityLR: Double?, avgWristStabilityUD: Double?)`: Updates properties of an ExerciseSet entity.
+  - `func updateWorkoutSession(WorkoutSession, dateTime: Date?, overallCurlAcceleration: Double?, overallElbowFlareLR: Double?, overallElbowFlareUD: Double?, overallElbowSwing: Double?, overallWristStabilityLR: Double?, overallWristStabilityUD: Double?)`: Updates properties of a WorkoutSession entity.
+  
+  ### Default Implementations
+  
+  #### ObservableObject Implementations
+  
+  ### Relationships
+  
+  #### Conforms To
+  - `Combine.ObservableObject`
+</details>
+  
 # Hardware Software
 
 ## Class: MPU6050
