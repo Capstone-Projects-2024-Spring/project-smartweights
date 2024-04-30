@@ -32,16 +32,14 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 <summary>A user has already created a SmartWeights account and has logged in for the first time.</summary>
 
 - The user logs into their SmartWeights account for the first time.
-- The app displays a generic virtual pet that will guide the user through the application.
-- The virtual pet highlights key features of the application.
+- The app displays a prompt the user to watch a tutorial video.
+- The virtual pet in the video highlights key features of the application.
 - The user finishes the tutorial.
-- The user is prompted to create their virtual pet.
-- The user finishes the virtual pet creation process and is returned to the main navigation screen.
  
 </details>
 
 ## Assertions
-1. The user will be routed through multiple different tabs/pages of the app while being guided by the pet
+1. The user will be routed through multiple different tabs/pages of the app by the pet while watching the video
 2. After the tutorial is done, there will be information cached onto the phone's storage to prevent the tutorial from happening again several times
 
 <br></br>
