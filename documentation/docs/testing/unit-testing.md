@@ -55,6 +55,88 @@ Python unittest library is used for machine learning
 
 ### Workout Main Page
 
+### WorkoutViewModel
+
+<details open>
+<summary> testIsInputZeroOrInvalid()</summary>
+
+***Validates whether input values are zero or invalid***
+- User inputs values for sets, reps, weights, and countdown
+    - Input/User action
+        - User enters input values
+    - Expected Result
+        - The function correctly identifies whether the input values are zero or invalid.
+</details>
+
+<details open>
+<summary> testIsValidInput()</summary>
+
+***Validates the validity of input values***
+- User inputs values for sets, reps, weights, and countdown
+    - Input/User action
+        - User enters input values
+    - Expected Result
+        - The function correctly identifies whether the input values are valid.
+</details>
+
+<details open>
+<summary> testStringToInt()</summary>
+
+***Validates the conversion of string to integer***
+- User inputs a string value
+    - Input/User action
+        - User enters a string value
+    - Expected Result
+        - The function correctly converts the string to an integer if possible; otherwise, returns nil.
+</details>
+
+<details open>
+<summary> testResetWorkoutState()</summary>
+
+***Validates the reset of workout state***
+- User resets the workout state
+    - Input/User action
+        - User initiates a new workout
+    - Expected Result
+        - The workout state variables are reset to their initial values.
+</details>
+
+<details open>
+<summary> testStartWorkout()</summary>
+
+***Validates the start of workout***
+- User starts a workout session
+    - Input/User action
+        - User initiates the start of a workout session
+    - Expected Result
+        - The workout state is updated to indicate that the workout has started.
+</details>
+
+<details open>
+<summary> testNextSet()</summary>
+
+***Validates the transition to the next set***
+- User progresses to the next set during a workout session
+    - Input/User action
+        - User initiates the transition to the next set
+    - Expected Result
+        - The workout state and relevant variables are updated accordingly for the next set.
+</details>
+
+<details open>
+<summary> testResetTimer()</summary>
+
+***Validates the reset of timer***
+- User resets the timer during a workout session
+    - Input/User action
+        - User initiates a new workout
+    - Expected Result
+        - The timer variables are reset, and the timer is deactivated.
+</details>
+
+
+
+
 ### Workout Overall Progress Page
 
 
