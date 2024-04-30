@@ -488,7 +488,7 @@ The fitnessPlanViewModel class contains variables for a user’s fitness goals.
   - `func removeFromSets(ExerciseSet)`
 
   #### Type Methods
-  - class func fetchRequest() -> NSFetchRequest<WorkoutSession>
+  - class func fetchRequest() -> `NSFetchRequest<WorkoutSession>`
 
   ### Default Implementations
 
