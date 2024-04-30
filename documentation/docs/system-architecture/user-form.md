@@ -15,14 +15,14 @@ The two tables below are used to create a threshold of what is considered good f
 
 
 
-| Dumbbell Sensor       | Z-rotation (up and down)         | X-rotation (twisting left and right)   | Y-rotation (twisting up and down)    |
+| Dumbbell Sensor       | z-axis rotation (up and down)         | x-axis rotation (twisting left and right)   | y-axis rotation (twisting up and down)    |
 |-----------------------|----------------------------------|----------------------------------------|---------------------------------------|
 | Start position        | between ±10°/s                   | between ±10°/s                        | between ±10°/s                       |
 | Doing curl (good)     | between ±200°/s                  | between ±100°/s                       | between ±100°/s                      |
 | Doing Curl (too fast) | greater/less than ±200°/s        | greater/less than ±100°/s             | greater/less than ±100°/s             |
 | Dangerous             | greater/less than ±500°/s        | greater/less than ±500°/s             | greater/less than ±500°/s             |
 
-| Elbow Sensor          | Swinging back and forth (x)      | Flaring elbow out and up (z axis)     | Flaring elbow out and forward (y axis) |
+| Elbow Sensor          | Swinging back and forth (x-axis)      | Flaring elbow out and up (z-axis)     | Flaring elbow out and forward (y-axis) |
 |-----------------------|----------------------------------|----------------------------------------|------------------------------------------|
 | Start position        | between ±10°/s                   | between ±10°/s                        | between ±10°/s                          |
 | Elbow position (stable) | between ±100°/s                 | between ±100°/s                      | between ±100°/s                         |
