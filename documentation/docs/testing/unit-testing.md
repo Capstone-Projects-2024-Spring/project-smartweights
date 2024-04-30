@@ -53,8 +53,6 @@ Python unittest library is used for machine learning
     
 </details>
 
-### Workout Main Page
-
 ### WorkoutViewModel
 
 <details open>
@@ -133,11 +131,6 @@ Python unittest library is used for machine learning
     - Expected Result
         - The timer variables are reset, and the timer is deactivated.
 </details>
-
-
-
-
-### Workout Overall Progress Page
 
 
 
