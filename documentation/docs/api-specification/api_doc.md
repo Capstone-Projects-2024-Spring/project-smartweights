@@ -130,6 +130,7 @@ Initialize the view model.
 ### Enumerations
 
 - `enum WorkoutStateEnum`: An enumeration representing the state of the workout.
+  
 </details>
 
 ## Class: allFeedbackViewModel
@@ -201,6 +202,7 @@ ViewModel for the pet store and user transactions.
 
 #### Conforms To
 - `Combine.ObservableObject`
+  
 </details>
 
 ## Class: Challenge
@@ -257,6 +259,7 @@ ViewModel for achievements.
 
 #### Conforms To
 - `Combine.ObservableObject`
+
 </details>
 
 ## Class: GameCenterManager
@@ -304,9 +307,11 @@ GameCenterManager class to integrate Game Center into the application.
 - `Swift.CustomStringConvertible`
 - `Swift.Equatable`
 - `Swift.Hashable`
+
 </details>
 
 ## Class: GameCenterManager.GameCenterDelegate
+
 <details open>
   
 GameCenterDelegate class for loading and exiting Game Center.
@@ -329,6 +334,7 @@ GameCenterDelegate class for loading and exiting Game Center.
 - `Swift.CustomStringConvertible`
 - `Swift.Equatable`
 - `Swift.Hashable`
+  
 </details>
 
 ## Class: MorePageViewModel
@@ -374,6 +380,7 @@ ViewModel for the profile page.
 - `Swift.CustomStringConvertible`
 - `Swift.Equatable`
 - `Swift.Hashable`
+- 
 </details>
 
 ## Class: fitnessPlanViewModel
@@ -410,6 +417,7 @@ The fitnessPlanViewModel class contains variables for a user’s fitness goals.
 
 #### Conforms To
 - `Combine.ObservableObject`
+  
 </details>
 
 # Hardware Software
@@ -520,7 +528,9 @@ Initializes the central manager and starts scanning for peripherals with the spe
 </details>
 
 ## Class: PetPageFunction
+
 <details open>
+
 A class that manages the functionality of the pet page.
 
 ### Topics
@@ -552,9 +562,11 @@ A class that manages the functionality of the pet page.
 - `func increaseHealth(by: Int)`: Increase the health of the pet by a specified amount.
 - `showAlert(title: String, message: String)`: Shows an alert with the specified title and message.
 - `func updateXP()`: Updates the total XP of the user
+  
 </details>
 
 ## Class: CustomizeViewModel
+
 <details open>
 
 ### Topics
@@ -661,6 +673,8 @@ Initializes the RechargeSensors view.
 ## Instance Properties
 
 - `var body: some View`
+
+</details>
 
 
 # Structure: WorkoutFeedback
