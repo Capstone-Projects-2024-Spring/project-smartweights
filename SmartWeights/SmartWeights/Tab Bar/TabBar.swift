@@ -51,6 +51,7 @@ struct TabBar: View {
                         Label(String(describing: tab).capitalized, systemImage: tab.rawValue)
                     }
                     .tag(tab)
+                    .accessibility(identifier: tab.rawValue)
             }
         }
         .tint(.africanViolet)
