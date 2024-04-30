@@ -10,7 +10,7 @@ import GameKit
 
 struct ChallengesTab: View {
     @ObservedObject var challengesViewModel = ChallengesViewModel()
-    
+    	
     var body: some View {
         NavigationView {
             ChallengesList(challenges: challengesViewModel.challenges, fetchGameCenterProgress: fetchGameCenterProgress)

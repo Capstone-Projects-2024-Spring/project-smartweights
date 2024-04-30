@@ -139,27 +139,6 @@ List of testing:
 <table>
 <tr>
     <td align="center">
-        <a href="https://github.com/ApplebaumIan">
-            <img src="https://avatars.githubusercontent.com/u/9451941?v=4" width="100;" alt="ApplebaumIan"/>
-            <br />
-            <sub><b>Ian Tyler Applebaum</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/leekd99">
-            <img src="https://avatars.githubusercontent.com/u/32583417?v=4" width="100;" alt="leekd99"/>
-            <br />
-            <sub><b>Kyle Dragon Lee</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/thanhnguyen46">
-            <img src="https://avatars.githubusercontent.com/u/60533187?v=4" width="100;" alt="thanhnguyen46"/>
-            <br />
-            <sub><b>Thanh Nguyen</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/parchea">
             <img src="https://github.com/parchea.png" width="100;" alt="parchea"/>
             <br />
