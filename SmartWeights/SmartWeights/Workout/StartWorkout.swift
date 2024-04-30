@@ -11,6 +11,13 @@ class WorkoutViewModel: ObservableObject {
     @ObservedObject var ble: BLEcentral
     @ObservedObject var formCriteria: FormCriteria
     
+
+    ///initialize the view model
+    /// - Parameters:
+    ///  - ble: the bluetooth manager
+    /// - formCriteria: the form criteria class
+    /// - coreDataManager: the core data manager
+    /// - Returns: Void
     init(ble: BLEcentral, formCriteria: FormCriteria, coreDataManager: CoreDataManager) {
         self.ble = ble
         self.formCriteria = formCriteria
@@ -91,7 +98,10 @@ class WorkoutViewModel: ObservableObject {
     
     
     
-    
+    /// Function to start the the countdown clock
+    /// returns: Void
+    /// - Note: This function resets all stored data from previous sets and starts collecting data for the current set
+
     func startCountdown() {
         guard let countdownDuration = Int(inputtedCountdown) else {
             alertMessage = "Please enter a valid number for the countdown."
@@ -144,6 +154,9 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
+
+    /// Function to start the countdown clock for between sets
+    /// returns: Void
     func simpleCountdown() {
             guard let countdownDuration = Int(inputtedCountdown) else {
                 print("Invalid countdown duration.")
@@ -175,6 +188,9 @@ class WorkoutViewModel: ObservableObject {
             }
         }
     
+
+    /// Function to check if any input is zero or invalid
+    /// - Returns: Bool
     func isInputZeroOrInvalid() -> Bool {
         let inputs = [inputtedSets, inputtedReps, inputtedWeights, inputtedCountdown]
         for input in inputs {
@@ -185,7 +201,13 @@ class WorkoutViewModel: ObservableObject {
         return false
     }
     
-    
+    /// Function to validate the user input and start the countdown
+    /// - Parameters:
+    ///   - sets: 
+    ///   - reps: 
+    ///   - weights: 
+    /// - Returns: Void
+
     func validateAndStartCountdown(sets: String, reps: String, weights: String) {
         if isInputZeroOrInvalid() {
             // Show alert if any input is zero or invalid
@@ -206,14 +228,20 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
-    
-    private func isValidInput(_ input: String) -> Bool {
+    /// Function to check if the input is valid
+    /// - Parameter input: 
+    /// - Returns: Bool
+    func isValidInput(_ input: String) -> Bool {
         guard !input.isEmpty, let _ = Int(input) else { return false }
         return true
     }
     
-    
-    private func stringToInt(_ string: String) -> Int? {
+    /// Function to convert a string to an integer
+    /// - Parameter:
+    ///  - string:
+    /// - Returns: Int?
+
+    func stringToInt(_ string: String) -> Int? {
         return Int(string)
     }
     
@@ -231,6 +259,9 @@ class WorkoutViewModel: ObservableObject {
     var inputNode: AVAudioInputNode!
     var recordingFormat: AVAudioFormat!
     
+
+    /// Function to start listening for voice commands
+    /// - Returns: Void
     func startListening() {
         self.WorkoutState = .idle
         guard !isListening else { return }
@@ -337,7 +368,8 @@ class WorkoutViewModel: ObservableObject {
     
     
     
-    
+    /// Function to finish the current set
+    /// - Returns: Void
     func finishSet(){
         WorkoutState = .paused
         currentSets += 1
@@ -361,6 +393,8 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
+    /// Function to start the next set
+    /// - Returns: Void
     func nextset(){
         simpleCountdown()
         WorkoutState = .started
@@ -375,13 +409,16 @@ class WorkoutViewModel: ObservableObject {
         self.checkDangerousFormWhileWorkingOut()
     }
     
-    
+    /// Function to start the workout
+    /// - Returns: Void
     func startWorkout() {
         WorkoutState = .started
         validateAndStartCountdown(sets: inputtedSets, reps: inputtedReps, weights: inputtedWeights)
         
     }
     
+    /// Function to finish the workout
+    /// - Returns: Void
     func finishWorkout(){
         self.WorkoutState = .final
         self.recognitionTask?.cancel()
@@ -450,7 +487,8 @@ class WorkoutViewModel: ObservableObject {
         }
         
     }
-    
+    /// Function to finish the workout
+    /// - Returns: Void
     func finalset(){
         simpleCountdown()
         WorkoutState = .final
@@ -465,7 +503,8 @@ class WorkoutViewModel: ObservableObject {
         self.checkDangerousFormWhileWorkingOut()
         
     }
-    
+    /// Function to check for dangerous form while working out
+    /// - Returns: Void
     func checkDangerousFormWhileWorkingOut() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
@@ -500,7 +539,10 @@ class WorkoutViewModel: ObservableObject {
     }
     
     
-    
+    /// Function to play the alarm sound
+    /// - Returns: Void
+    /// - Note: This function is called when the user is performing an exercise with dangerous form
+
     func playSound() {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
@@ -522,13 +564,18 @@ class WorkoutViewModel: ObservableObject {
             print("Failed to initialize audio player: \(error)")
         }
     }
+    /// Function to stop the alarm sound
+    /// - Returns: Void
+    /// - Note: This function is called to stop the audio from playing continuously
     func stopSound() {
         player?.stop()
     }
     
     var countdownPlayer: AVAudioPlayer!
     
-    
+    /// Function to play the countdown sound when the workout is about to start
+    /// - Returns: Void
+
     func countdownSound() {
         guard let url = Bundle.main.url(forResource: "beep", withExtension: "mp3") else { return }
 
@@ -537,7 +584,7 @@ class WorkoutViewModel: ObservableObject {
             try AVAudioSession.sharedInstance().setMode(.default)
             try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
 
-           
+        
             countdownPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
 
             guard let player = countdownPlayer else { return }
@@ -548,7 +595,8 @@ class WorkoutViewModel: ObservableObject {
             print(error.localizedDescription)
         }
     }
-    
+    /// Function to stop the countdown sound
+    /// - Returns: Void
     func stopCountdownSound(){
         countdownPlayer?.stop()
     }
@@ -558,6 +606,8 @@ class WorkoutViewModel: ObservableObject {
     
     
     /// Function to start the workout timer
+    /// - Returns: Void
+    /// - Note: This function is called when the workout is started
     func startTimer() {
         timerIsActive = true
         if let existingTimer = timer {
@@ -581,6 +631,7 @@ class WorkoutViewModel: ObservableObject {
     }
     
     /// Function to restart the workout  timer
+    /// - Returns: Void
     func restartTimer(){
         hours = 0
         minutes = 0
@@ -588,15 +639,18 @@ class WorkoutViewModel: ObservableObject {
     }
     
     /// Function to stop the workout  timer
+    /// - Returns: Void
     func stopTimer(){
         timer?.invalidate()
         timer = nil
     }
     /// Function to pause the workout timer
+    /// - Returns: Void
     func pauseTimer() {
         timerIsActive = false
     }
-    
+    /// Function to resume the workout timer
+    /// - Returns: Void
     func resumeTimer() {
         if !countdownActive{
             timerIsActive = true // Resume updating time
@@ -609,7 +663,9 @@ class WorkoutViewModel: ObservableObject {
             print("THE CREATE SET WORK?")
         }
     }
-    
+
+    /// Function to reset the workout state
+    /// - Returns: Void
     func resetWorkoutState() {
         countdownActive = false
         countdown = 0 // Reset to your initial countdown value
@@ -625,7 +681,8 @@ class WorkoutViewModel: ObservableObject {
         // Reset timer
         resetTimer()
     }
-    
+    /// Function to reset the workout timer
+    /// - Returns: Void
     func resetTimer() {
         stopTimer() // Ensure the current timer is stopped
         hours = 0
@@ -642,5 +699,5 @@ class WorkoutViewModel: ObservableObject {
 
 
 #Preview{
-    WorkoutMainPage(coreDataManager: CoreDataManager())
+    WorkoutMainPage(coreDataManager: CoreDataManager(container: PersistenceController.preview.container))
 }

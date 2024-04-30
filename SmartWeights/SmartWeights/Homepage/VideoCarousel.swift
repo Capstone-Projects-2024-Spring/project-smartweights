@@ -33,7 +33,10 @@ struct VideoCarousel: View {
             }
         }
         .foregroundStyle(.white)
-        Spacer()    }
+        .accessibility(identifier: "Video Carousel")
+        
+        Spacer()
+    }
 }
 
 #Preview {

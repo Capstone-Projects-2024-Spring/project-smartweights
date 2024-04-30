@@ -51,6 +51,7 @@ struct TabBar: View {
                         Label(String(describing: tab).capitalized, systemImage: tab.rawValue)
                     }
                     .tag(tab)
+                    .accessibility(identifier: tab.rawValue)
             }
         }
         .tint(.africanViolet)
@@ -59,5 +60,5 @@ struct TabBar: View {
 }
 
 #Preview {
-    TabBar(coreDataManager: CoreDataManager())
+    TabBar(coreDataManager: CoreDataManager(container: PersistenceController.preview.container))
 }

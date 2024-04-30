@@ -10,7 +10,7 @@ import AuthenticationServices
 import UserNotifications
 
 struct LoginView: View {
-    @ObservedObject var coreDataManager = CoreDataManager()
+    @ObservedObject var coreDataManager = CoreDataManager(container: PersistenceController.preview.container)
     @Environment(\.colorScheme) var colorScheme
     @State private var showingAlert = false // For testing the sign in button
     @State private var alertMessage = ""
@@ -20,13 +20,11 @@ struct LoginView: View {
     @AppStorage("userID") var userID: String = ""
     
     var userDBManager = UserDBManager()
-    var inventoryDBManager = InventoryDBManager()
-    var petDBManager = PetDBManager()
-    var userFeedbackDataDBManager = UserFeedbackDataDBManager()
-    var userFitnessDataDBManager = UserFitnessDataDBManager()
-    var userFitnessPlanDBManager = UserFitnessPlanDBManager()
-    var foodItemDBManager = FoodItemDBManager()
-    var petItemDBManager = PetItemDBManager()
+   
+    var petDBManager = PetDBManager.shared
+   
+    var foodItemDBManager = FoodItemDBManager.shared
+    var petItemDBManager = PetItemDBManager.shared
     var body: some View {
         ZStack {
             // Background gradient
@@ -69,11 +67,11 @@ struct LoginView: View {
                                 self.lastName = credential.fullName?.familyName ?? ""
                                 self.userID = credential.user
                                 userDBManager.createUser(firstName: firstName, lastName: lastName, email: email)
-                                inventoryDBManager.createInventory()
+                               
                                 petDBManager.createPet()
-                                petItemDBManager.createDefaultPet()
-                                userFitnessDataDBManager.createUserFitnessData()
-                                foodItemDBManager.createInitialFoodItems()
+//                                petItemDBManager.createDefaultPet()
+//                               
+//                                foodItemDBManager.createInitialFoodItems()
                                 NotificationManager.requestAuthorization()
                                 // CODE TO AUTHENTICATE GC
                                 GameCenterManager.shared.authenticateLocalPlayer()
