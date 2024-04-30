@@ -2,8 +2,10 @@
 sidebar_position: 1
 ---
 # Unit tests
-Unit tests are done with Swift's XCTest
-Pico testing is done with MicroPython test library
+Swift unit tests are done with Swift's XCTest
+
+Pico-W testing is done with pytest library
+
 Python unittest library is used for machine learning
 
 
@@ -51,63 +53,85 @@ Python unittest library is used for machine learning
     
 </details>
 
-### Workout Main Page
-<details open>
-<summary> addProgress() </summary>
+### WorkoutViewModel
 
-***Workout progress is updated after starting workout***
-- Test user is starting their workout
+<details open>
+<summary> testIsInputZeroOrInvalid()</summary>
+
+***Validates whether input values are zero or invalid***
+- User inputs values for sets, reps, weights, and countdown
     - Input/User action
-        - User starts the workout
+        - User enters input values
     - Expected Result
-        - addProgress(data: Int) is called, the form and velocity progress bar changes
+        - The function correctly identifies whether the input values are zero or invalid.
 </details>
 
 <details open>
-<summary> resetProgress() </summary>
+<summary> testIsValidInput()</summary>
 
-***Workout progress is reset after starting new workout***
-- Test user is starting a new workout
+***Validates the validity of input values***
+- User inputs values for sets, reps, weights, and countdown
     - Input/User action
-        - User clicks the 'new workout' button
+        - User enters input values
     - Expected Result
-        - resetProgress() is called, the form and velocity progress bar is reset to zero
+        - The function correctly identifies whether the input values are valid.
 </details>
 
 <details open>
-<summary> startTimer() </summary>
+<summary> testStringToInt()</summary>
 
-***Workout timer is counting after starting the workout***
-- Test user is starting the workout
+***Validates the conversion of string to integer***
+- User inputs a string value
     - Input/User action
-        - User starts the working 
+        - User enters a string value
     - Expected Result
-        - startTimer() is called, the workout timer starts counting
+        - The function correctly converts the string to an integer if possible; otherwise, returns nil.
 </details>
 
 <details open>
-<summary> resetTimer() </summary>
+<summary> testResetWorkoutState()</summary>
 
-***Workout timer is reset after starting new workout***
-- Test user is starting a new workout
+***Validates the reset of workout state***
+- User resets the workout state
     - Input/User action
-        - User clicks the 'new workout' button
+        - User initiates a new workout
     - Expected Result
-        - resetTimer() is called, the workout timer is reset to 00:00:00
+        - The workout state variables are reset to their initial values.
 </details>
-
-### Workout Overall Progress Page
 
 <details open>
-<summary> updateShortDate() </summary>
+<summary> testStartWorkout()</summary>
 
-***The date is updated when the user uses the calendar***
-- Test user is selecting a date to obtain workout data from that day
+***Validates the start of workout***
+- User starts a workout session
     - Input/User action
-        - User selects a date on the calendar
+        - User initiates the start of a workout session
     - Expected Result
-        - updateShortDate() is called, the date is updated and matches the format M/D/Y
+        - The workout state is updated to indicate that the workout has started.
 </details>
+
+<details open>
+<summary> testNextSet()</summary>
+
+***Validates the transition to the next set***
+- User progresses to the next set during a workout session
+    - Input/User action
+        - User initiates the transition to the next set
+    - Expected Result
+        - The workout state and relevant variables are updated accordingly for the next set.
+</details>
+
+<details open>
+<summary> testResetTimer()</summary>
+
+***Validates the reset of timer***
+- User resets the timer during a workout session
+    - Input/User action
+        - User initiates a new workout
+    - Expected Result
+        - The timer variables are reset, and the timer is deactivated.
+</details>
+
 
 
 ### Pet Store Page
@@ -128,6 +152,140 @@ Python unittest library is used for machine learning
         - User clicks sort by price
     - Expected Result
         - sortItems(sortedByPrice: true) is called, the items will be sorted by price
+</details>
+
+
+### FormCriteria
+
+<details open>
+<summary> getRandomGoodFormPhrase()</summary>
+
+***The user gets one of three phrases when having good form***
+- User finishes a workout and wants their feedback
+    - Input/User action
+        - User clicks 'finish set' or 'finish workout'
+    - Expected Result
+      - getRandomGoodFormPhrase() is called and the user sees one of the three phrases
+  
+</details>
+
+
+<details open>
+<summary> updateWorkoutAnalysis()</summary>
+
+***updates the workout analysis data with provided current data***
+- User completes a workout session and wants to see the results
+    - Input/User action
+        - User finishes a workout session
+    - Expected Result
+        - The workout analysis is updated with the provided data and contains the expected keys.
+</details>
+
+<details open>
+
+<summary> averageUpDownAcceleration()</summary>
+
+***Calculate of average up-down acceleration***
+- User wants to ensure accurate calculation of up-down acceleration average
+    - Input/User action
+        - User performs several sets of exercises
+    - Expected Result
+        - The calculated average up-down acceleration falls within the range of 0 to 1.
+
+</details>
+
+<details open>
+
+<summary> averageWristLeftRightRotation()</summary>
+
+***Calculates average wrist left-right rotation***
+- User wants to ensure accurate calculation of left-right wrist rotation average
+    - Input/User action
+        - User performs several sets of exercises
+    - Expected Result
+        - The calculated average wrist left-right rotation falls within the range of 0 to 1.
+
+</details>
+
+<details open>
+
+<summary> overallWorkoutUpDownAverage()</summary>
+
+***calculates overall workout up-down average***
+- User wants to ensure accurate calculation of overall workout up-down average
+    - Input/User action
+        - User completes a workout session
+    - Expected Result
+        - The calculated overall workout up-down average falls within the range of 0 to 1 and is approximately equal to the expected value.
+
+
+</details>
+
+<details open>
+
+<summary> averageElbowSwing()</summary>
+
+***calculates average elbow swing***
+- User wants to ensure accurate calculation of elbow swing average
+    - Input/User action
+        - User performs several sets of exercises
+    - Expected Result
+        - The calculated average elbow swing falls within the range of 0 to 1.
+
+</details>
+
+<details open>
+
+<summary> averageElbowFlareForwardBackward()</summary>
+
+***calculates average elbow flare forward-backward***
+- User wants to ensure accurate calculation of elbow flare forward-backward average
+    - Input/User action
+        - User performs several sets of exercises
+    - Expected Result
+        - The calculated average elbow flare forward-backward falls within the range of 0 to 1.
+
+</details>
+
+<details open>
+
+<summary> overallWorkoutElbowSwing()</summary>
+
+***calculates overall workout elbow swing***
+- User wants to ensure accurate calculation of overall workout elbow swing
+    - Input/User action
+        - User completes a workout session
+    - Expected Result
+        - The calculated overall workout elbow swing falls within the range of 0 to 1 and is approximately equal to the expected value.
+
+
+</details>
+
+<details open>
+
+<summary> dangerousForm()</summary>
+
+***Detects of dangerous form***
+- User wants to ensure accurate detection of dangerous form based on provided data
+    - Input/User action
+        - User performs exercises with varying data
+    - Expected Result
+        - The function correctly identifies whether the provided data indicates dangerous form.
+
+</details>
+
+<details open>
+
+<summary> giveFeedback()</summary>
+
+***generation of feedback***
+- User wants to ensure accurate generation of feedback based on provided data
+    - Input/User action
+        - User completes an exercise session
+    - Expected Result
+        - The feedback generated for acceleration and elbow swing is formatted correctly, and the custom text feedback for elbow is correct.
+
+
 </details>
 
 
@@ -173,58 +331,154 @@ Python unittest library is used for machine learning
 </details>
 
 ### CoreData Local DB
-<details>
+<details open>
+<summary> setUpWithError() </summary>
 
-- testAccountCreatedLocal()
-    - Test to see if account credentials were created after login button pressed
-    - Expected Result 
-        - Returns true if file was created with credentials, else return false
-- testInsertSensorData()
-    - Test to see if data received from Pico can be inserted into CoreData DB
-    - Expected Result 
-        - Returns true if DB returns successful entry, else return false
-- testFetchData()
-    - Test to see if can retrieve data from DB
+***Sets up an in-memory Core Data environment for each test***
+- Ensures tests do not affect real user data by creating a mock environment
+    - Input/Setup action
+        - Core Data stack setup with in-memory store type
     - Expected Result
-        - Returns true if DB returns an object of data, else return false
+        - CoreDataManager instance is initialized without errors
 
 </details>
 
-### Machine Learning
+<details open>
+<summary> tearDownWithError() </summary>
 
-<details>
-
-- testConvert()
-    - Test to see if can take data from CoreData and convert to tensors
-    - Returns true if tensor is created
+***Cleans up and deallocates the in-memory Core Data stack after each test***
+- Ensures all data and instances are cleaned up properly
+    - Input/Cleanup action
+        - Removing persistent stores from the coordinator
+    - Expected Result
+        - Persistent stores are removed without errors, and CoreDataManager is deallocated
 
 </details>
 
-### Hardware-Software 
+<details open>
+<summary> testCreateWorkoutSession() </summary>
 
-<details>
+***Tests the ability to create a WorkoutSession entity***
+- Validating entity creation within the Core Data environment
+    - Input/User action
+        - Create a WorkoutSession with specified attributes
+    - Expected Result
+        - WorkoutSession entity is not nil and correctly initialized with provided values
 
-- testBluetoothConnectionPico()
-    - Test if Pico establishes a successful connection to mobile device acting as a server
-    - Expected Result
-        - Return true if connection before time out, else return false
-- testBluetoothConnectionMobile()
-    - Test if mobile device connects to pico, acting as a client
-    - Expected Result
-        - Return true if connection before time out, else return false
-- testMultiSensorConnection()
-    - Test if Pico can connect to another Pico
-    - Expected Result 
-        - Return true if successful message received, else return false
-- testTransmitData()
-    - Test if Pico can transmit data through the socket
-    - Expected Result
-        - Return true if data was sent through socket, else return false
-- testReadData()
-    - Test if mobile device received any data from the pico 
-    - Expected Result
-        - Return true if data contained specifically integers in specified structure, else return false
 </details>
+
+<details open>
+<summary> testCreateAndFetchWorkoutSessions() </summary>
+
+***Tests integration of creating and fetching WorkoutSession entities***
+- Ensures data consistency within the created and fetched entities
+    - Input/User action
+        - Create a WorkoutSession and then fetch it
+    - Expected Result
+        - The fetched WorkoutSessions list should not be empty and contain the created session
+
+</details>
+
+<details open>
+<summary> testFetchWorkoutSessions() </summary>
+
+***Tests fetching WorkoutSession entities***
+- Validates the fetch functionality of the Core Data manager
+    - Input/User action
+        - Create and then fetch WorkoutSession entities
+    - Expected Result
+        - The fetch returns a list containing the newly created sessions
+
+</details>
+
+<details open>
+<summary> testFetchWorkoutSessionsOnDate() </summary>
+
+***Tests fetching WorkoutSession entities based on a specific date***
+- Ensures that sessions on a given date are correctly retrieved
+    - Input/User action
+        - Create a WorkoutSession for today and fetch by today's date
+    - Expected Result
+        - The fetch returns a list containing only today's sessions
+
+</details>
+
+<details open>
+<summary> testGetNextWorkoutNumber() </summary>
+
+***Tests retrieving the next workout number***
+- Ensures correct incrementation of workout numbers
+    - Input/User action
+        - Create a WorkoutSession and then retrieve the next workout number
+    - Expected Result
+        - The next workout number should be greater than the number of the last session created
+
+</details>
+
+<details open>
+<summary> testFetchExerciseSets() </summary>
+
+***Tests fetching ExerciseSet entities associated with a WorkoutSession***
+- Validates the fetch functionality for ExerciseSets tied to specific sessions
+    - Input/User action
+        - Create a WorkoutSession and an associated ExerciseSet, then fetch the sets
+    - Expected Result
+        - The fetched exercise sets list should contain the created set
+
+</details>
+
+<details open>
+<summary> testUpdateWorkoutSession() </summary>
+
+***Tests updating a WorkoutSession entity***
+- Verifies that changes to an entity are persisted correctly
+    - Input/User action
+        - Update an existing WorkoutSession's attributes
+    - Expected Result
+        - The updated WorkoutSession should reflect the new attribute values
+
+</details>
+
+<details open>
+<summary> testUpdateExerciseSet() </summary>
+
+***Tests updating an ExerciseSet entity***
+- Ensures property changes are saved correctly within the entity
+    - Input/User action
+        - Update an existing ExerciseSet's attributes
+    - Expected Result
+        - The updated ExerciseSet should reflect the new attribute values
+
+</details>
+
+<details open>
+<summary> testFetchAllExerciseSets() </summary>
+
+***Tests fetching all ExerciseSet entities***
+- Validates that multiple sets are returned when expected
+    - Input/User action
+        - Create multiple ExerciseSets and fetch all
+    - Expected Result
+        - The fetched exercise sets list should include all created sets
+
+</details>
+
+<details open>
+<summary> testFetchExerciseSetsForWorkoutNum() </summary>
+
+***Tests fetching ExerciseSet entities by workout number***
+- Ensures they are correctly retrieved based on the workout number
+    - Input/User action
+        - Create an ExerciseSet for a specific workout number and then fetch by that number
+    - Expected Result
+        - The fetched exercise sets list should contain the sets for the specific workout number
+
+</details>
+
+
+
+
+
 
 
 

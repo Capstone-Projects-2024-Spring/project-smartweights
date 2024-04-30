@@ -2,7 +2,7 @@
 
 PetStore
 =============================
-Display view for the Pet Store depending on available items and prices.
+Display view for the Pet Store, allowing users to interact and purchase a variety of items.
 
 ```swift
 struct PetStore
@@ -13,6 +13,8 @@ Topics
 **Initializers**
 ```swift
 init()
+
+init(viewModel: storeViewModel)
 ```
 
 **Instance Properties**
@@ -20,7 +22,7 @@ init()
 ```swift
 var body: some View
 
-let categories: [String]
+var viewModel: storeViewModel
 ```
 
 ---
@@ -39,7 +41,7 @@ Topics
 **Initializers**
 
 ```swift
-init(id: Int, name: String, category: String, price: String, image: Image, description: String)
+init(id: Int, name: String, category: String, price: String, image: Image, description: String, isBought: Bool)
 ```
 
 **Instance Properties**
@@ -52,6 +54,8 @@ var description: String
 var id: Int
 
 var image: Image
+
+var isBought: Bool
 
 var name: String
 
@@ -74,7 +78,7 @@ Topics
 **Initializers**
 
 ```swift
-init(item: SellingItem, userCur: Int)
+init(item: SellingItem, viewModel: storeViewModel, userCur: Int)
 ```
 
 **Instance Properties**
@@ -85,4 +89,6 @@ var body: some View
 let item: SellingItem
 
 let userCur: Int
+
+var viewModel: storeViewModel
 ```

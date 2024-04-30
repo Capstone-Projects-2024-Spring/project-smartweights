@@ -5,7 +5,7 @@ sidebar_position: 2
 
 Tests to demonstrate each use-case based on the use-case descriptions and the sequence diagrams. External input should be provided via mock objects and results verified via mock objects. Integration tests should not require manual entry of data nor require manual interpretation of results.
 
-# Use Case 1 - Account Login
+## Use Case 1 - Account Login
 
 <details open>
 
@@ -19,34 +19,32 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
-1. After the user logins to the app, they will be routed to the Home Page
+#### Assertions
+1. After the user logins to the app, they will be routed to the Home Page.
 2. The user's information will be cached onto the phone's storage to retain login information for the next time they open the app.
 
 <br></br>
 
-# Use Case 2 - Tutorial
+## Use Case 2 - Tutorial
 
 <details open>
 
 <summary>A user has already created a SmartWeights account and has logged in for the first time.</summary>
 
 - The user logs into their SmartWeights account for the first time.
-- The app displays a generic virtual pet that will guide the user through the application.
-- The virtual pet highlights key features of the application.
+- The app displays a prompt the user to watch a tutorial video.
+- The virtual pet in the video highlights key features of the application.
 - The user finishes the tutorial.
-- The user is prompted to create their virtual pet.
-- The user finishes the virtual pet creation process and is returned to the main navigation screen.
  
 </details>
 
-## Assertions
-1. The user will be routed through multiple different tabs/pages of the app while being guided by the pet
-2. After the tutorial is done, there will be information cached onto the phone's storage to prevent the tutorial from happening again several times
+#### Assertions
+1. The user will be routed through multiple different tabs/pages of the app by the pet while watching the video.
+2. After the tutorial is done, there will be information cached onto the phone's storage to prevent the tutorial from happening again.
 
 <br></br>
 
-# Use Case 3 - Profile Management
+## Use Case 3 - Profile Management
 
 <details open>
 
@@ -59,32 +57,13 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
-1. The user should see all setting options as well as the workout goals they created
-2. When the user edits any setting, the updated information will be saved and some of the information will transfer to the database
+#### Assertions
+1. The user should see all setting options as well as the workout goals they created.
+2. When the user edits any setting, the updated information will be saved and some of the information will transfer to the database.
 
 <br></br>
 
-# Use Case 4 - Importing Data From Apple Health to SmartWeight App
-
-<details open>
-
-<summary>User decides to integrate their SmartWeight app with Apple Health to import fitness and health data for a comprehensive overview of their wellness journey.</summary>
-
-- The user navigates to the settings.
-- The user selects the option to link the SmartWeight app with Apple Health.
-- iOS will prompt the user to authorize access to the required data from Apple Health.
-- The user grants permission for the SmartWeight app to access the specified data from Apple Health.
-- iOS automatically begins importing the user’s health and fitness data from Apple Health into the SmartWeight app.
-
-</details>
-
-## Assertions
-1. The Apple Health statistics/information will transfer over to the Smart Weights app
-
-<br></br>
-
-# Use Case 5 - Attaching Sensors
+## Use Case 4 - Attaching Sensors
 
 <details open>
 
@@ -94,105 +73,102 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 - The user attaches the sensors to the heads of the dumbbell, locking it in securely.
 - The user puts on the elbow sleeve.
 - The user attaches the sensor to the elbow sleeve.
-- The user attaches another sensor to their chest.
 
 </details>
 
-## Assertions
+#### Assertions
 1. User will have all sensors set up on their body and equipment
 
 <br></br>
 
-# Use Case 6 - Syncing Sensors
+## Use Case 5- Syncing Sensors
 
 <details open>
 
-<summary>A user wants to sync their SmartWeights sensor with the mobile app.</summary>
+<summary>A user wants to sync their SmartWeights sensors with the mobile app.</summary>
 
-- The user securely attaches the SmartWeight sensor to their dumbbell following the instructions provided via the mobile app.
-- The user navigates to the Devices section on the app to initiate the addition of a new sensor.
-- Within the app, the user selects the option to Add New Sensor. The app will provide instructions to ensure the sensor is on and in the pairing mode.
-- The app will search for available sensors. The user selects their sensor from the list of available devices to start the pairing process.
-- Once the user selects their sensor, the app establishes a connection via Bluetooth. A confirmation message is displayed to the user indicating that the sensor is successfully synced.
+- The user securely attaches the SmartWeight sensor to their dumbbell and the elbow sensor to their elbow following the instructions provided via the mobile app.
+- The app will search for available sensors.
+- The app establishes a connection via Bluetooth and a confirmation is displayed to the user indicating that the sensor is successfully synced.
 
 </details>
 
-## Assertions
-1. User receives a confirmation message displaying the sensor is successfully synced.
+#### Assertions
+1. User receives a confirmation displaying the sensor is successfully synced.
 
 <br></br>
 
-# Use Case 7 - Logging Dumbbell Weight
+## Use Case 7 - Logging Dumbbell Weight
 
 <details open>
 
 <summary>User wants to log the weights of dumbbells used during a workout for tracking progress over time, independent of immediate feedback on form or technique.</summary>
 
-- After selecting a workout type, the user is prompted to input the weight of the dumbbells they will use.
+- After heading to the workout page, the user is prompted to input the weight of the dumbbells they will use.
 - User enters the weights of the dumbbells into the app before starting the workout.
-- The user begins their workout session without further interaction with the app, focusing on their exercise routine.
 
 </details>
 
-## Assertions
+#### Assertions
 1. The correct dumbbell weight is displayed within the workout page's UI.
 
 <br></br>
 
-# Use Case 8 - Starting a Workout via Siri Voice Command
+## Use Case 8 - Starting a Workout via Voice Command
 
 <details open>
 
-<summary>User wants to start a workout session without manually interacting with their smartphone, using a voice command through Siri while already in position to lift weights.</summary>
+<summary>User wants to start a workout session without manually interacting with their smartphone, using a voice commands while already in position to lift weights.</summary>
 
-- User, in position to start lifting and without the need to interact with the device manually, says, “Hey Siri, Start my workout”.
-- Siri processes the command and interface with the SmartWeights app to initiate the workout session based on the user's predefined settings or default workout plan.
+- User clicks on the microphone button after inputting the required prompts, reps, sets, weight, and countdown.
+- User, in position to start lifting and without the need to interact with the device manually, says, “Start”.
+- The phone processes the command and interface with the SmartWeights app to initiate the workout session based on the user's inputs from the prompts.
 - The SmartWeights app activates the workout mode, starts recording the session, including the detection of lifting form, repetitions, and other relevant data using the attached sensors.
 
 </details>
 
-## Assertions
-1. After completing a workout, post-workout analysis is displayed to the screen.
+#### Assertions
+1. After completing a workout, post-workout analysis is displayed to the screen due to the workout starting from the user saying "Start" and other required voice commands such as "Pause", "Next", "Finish".
 
 <br></br>
 
-# Use Case 9 - Performing Workout
+## Use Case 9 - Performing Workout
 
 <details open>
 
 <summary>A user wants to complete a workout with the assistance of the virtual pet.</summary>
 
 - The user navigates to the workout section.
-- The user completes their repetitions and the SmartWeights application tracks how many reps are completed.
+- The user completes their repetitions and the SmartWeights application tracks the user's form.
 - The virtual pet notifies the user if their form is incorrect.
 - Once finished, the user ends the workout and the SmartWeights application generates a personalized report and summary of the workout for the user.
 
 </details>
 
-## Assertions
+#### Assertions
 1. A personalized report and summary of the workout is generated for the user.
 
 <br></br>
 
-# Use Case 10 - View Workout Feedback
+## Use Case 10 - View Workout Feedback
 
 <details open>
 
-<summary>A user wants to view feedback post-workout.</summary>
+<summary>A user wants to view their all their workout feedbacks.</summary>
 
-- After completing a workout, the user selects the post-workout feedback button in the mobile application.
+- After completing a workout, the user selects the progress button on the home page.
 - Once in, the user selects the date to receive workout feedback for that day.
-- From this page, The user will then be able to view feedback on their form and the number of reps they completed.
+- From this page, The user will then be able to view feedback on their form and the number of reps inputted.
 
 </details>
 
-## Assertions
+#### Assertions
 1. The user can select a date from the dropdown menu.
 2. The workout feedback for the date is displayed.
 
 <br></br>
 
-# Use Case 11 - Purchasing Pet Cosmetics
+## Use Case 11 - Purchasing Pet Cosmetics
 
 <details open>
 
@@ -206,13 +182,13 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. User is able to navigate the cosmetic menu.
 2. User has the ability to purchase cosmetics given adequate funds.
 
 <br></br>
 
-# Use Case 12: - Virtual Pet Customization
+## Use Case 12: - Virtual Pet Customization
 
 <details open>
 
@@ -225,35 +201,13 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. User is able to open and navigate their inventory when pressing the inventory button.
 2. Pet visuals are updated after user equips an accessory.
 
 <br></br>
 
-# Use Case 13 - Participating in Weekly Challenge
-
-<details open>
-
-<summary>The SmartWeight app introduces a weekly challenge feature to engage users in varied fitness activities, encouraging consistency and community interaction.</summary>
-
-- The user navigates to the challenges section within the app and opts into the weekly challenge.
-- Once opted in, the user can view detailed information about the challenge, which includes details of the challenge (e.g. total weight lifted, number of workouts completed) and potential reward (e.g. digital currency, virtual pet accessories).
-- Throughout the week, the user engages in their regular workouts, with the app automatically tracking their progress toward the challenge goals using the integrated sensors.
-- The user can check their current standings in the challenge via the app(challenge tab), which updates in real time, showing their progress.
-- At the end of the week, the app notifies the user of the challenge outcome. If they have met the challenge criteria, they receive their reward.
-
-</details>
-
-## Assertions
-1. User can opt into the weekly challenge.
-2. Visual display shows user progress in weekly challenge.
-3. User has the ability to view their current standings in the challenge tab.
-4. Notification is received at the end of the week.
-
-<br></br>
-
-# Use Case 14 - Share with Friends
+## Use Case 13 - Share with Friends
 
 <details open>
 
@@ -267,7 +221,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. JPEG of user profile appears when Share Profile button is pressed.
 2. User can choose who they want to send their profile to.
 3. User can choose how they want to send their profile.
