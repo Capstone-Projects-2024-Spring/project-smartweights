@@ -5,7 +5,7 @@ sidebar_position: 2
 
 Tests to demonstrate each use-case based on the use-case descriptions and the sequence diagrams. External input should be provided via mock objects and results verified via mock objects. Integration tests should not require manual entry of data nor require manual interpretation of results.
 
-# Use Case 1 - Account Login
+## Use Case 1 - Account Login
 
 <details open>
 
@@ -19,13 +19,13 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. After the user logins to the app, they will be routed to the Home Page.
 2. The user's information will be cached onto the phone's storage to retain login information for the next time they open the app.
 
 <br></br>
 
-# Use Case 2 - Tutorial
+## Use Case 2 - Tutorial
 
 <details open>
 
@@ -38,13 +38,13 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
  
 </details>
 
-## Assertions
+#### Assertions
 1. The user will be routed through multiple different tabs/pages of the app by the pet while watching the video.
 2. After the tutorial is done, there will be information cached onto the phone's storage to prevent the tutorial from happening again.
 
 <br></br>
 
-# Use Case 3 - Profile Management
+## Use Case 3 - Profile Management
 
 <details open>
 
@@ -57,13 +57,13 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. The user should see all setting options as well as the workout goals they created.
 2. When the user edits any setting, the updated information will be saved and some of the information will transfer to the database.
 
 <br></br>
 
-# Use Case 4 - Attaching Sensors
+## Use Case 4 - Attaching Sensors
 
 <details open>
 
@@ -76,12 +76,12 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. User will have all sensors set up on their body and equipment
 
 <br></br>
 
-# Use Case 5- Syncing Sensors
+## Use Case 5- Syncing Sensors
 
 <details open>
 
@@ -93,12 +93,12 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. User receives a confirmation displaying the sensor is successfully synced.
 
 <br></br>
 
-# Use Case 7 - Logging Dumbbell Weight
+## Use Case 7 - Logging Dumbbell Weight
 
 <details open>
 
@@ -109,12 +109,12 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. The correct dumbbell weight is displayed within the workout page's UI.
 
 <br></br>
 
-# Use Case 8 - Starting a Workout via Voice Command
+## Use Case 8 - Starting a Workout via Voice Command
 
 <details open>
 
@@ -127,12 +127,12 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. After completing a workout, post-workout analysis is displayed to the screen due to the workout starting from the user saying "Start" and other required voice commands such as "Pause", "Next", "Finish".
 
 <br></br>
 
-# Use Case 9 - Performing Workout
+## Use Case 9 - Performing Workout
 
 <details open>
 
@@ -145,12 +145,12 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. A personalized report and summary of the workout is generated for the user.
 
 <br></br>
 
-# Use Case 10 - View Workout Feedback
+## Use Case 10 - View Workout Feedback
 
 <details open>
 
@@ -162,13 +162,13 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. The user can select a date from the dropdown menu.
 2. The workout feedback for the date is displayed.
 
 <br></br>
 
-# Use Case 11 - Purchasing Pet Cosmetics
+## Use Case 11 - Purchasing Pet Cosmetics
 
 <details open>
 
@@ -182,13 +182,13 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. User is able to navigate the cosmetic menu.
 2. User has the ability to purchase cosmetics given adequate funds.
 
 <br></br>
 
-# Use Case 12: - Virtual Pet Customization
+## Use Case 12: - Virtual Pet Customization
 
 <details open>
 
@@ -201,13 +201,13 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. User is able to open and navigate their inventory when pressing the inventory button.
 2. Pet visuals are updated after user equips an accessory.
 
 <br></br>
 
-# Use Case 13 - Share with Friends
+## Use Case 13 - Share with Friends
 
 <details open>
 
@@ -221,7 +221,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 </details>
 
-## Assertions
+#### Assertions
 1. JPEG of user profile appears when Share Profile button is pressed.
 2. User can choose who they want to send their profile to.
 3. User can choose how they want to send their profile.
