@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+///Instructions on how to recharge the sensors
 struct RechargeSensors: View {
     var body: some View {
         ScrollView {

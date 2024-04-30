@@ -65,6 +65,10 @@ _GYRO_SENSE_SERVICE = (
 
 class BLEAcceleration:
     def __init__(self, ble, id):
+        """ Initialize with the BLE object and the device ID.
+        :param ble: BLE object
+        :param id: device ID
+        """
         self._mpu6050 = mpuData("MPU6050-1")
         #change ID depending on the device
         self._ble = ble
@@ -79,6 +83,10 @@ class BLEAcceleration:
         self._advertise()
         
     def _irq(self, event, data):
+        """ Track connections so we can send notifications.
+        :param int event: Bluetooth event
+        :param data: Event data
+        """
         # Track connections so we can send notifications.
         if event == _IRQ_CENTRAL_CONNECT:
             conn_handle, _, _ = data
@@ -92,6 +100,10 @@ class BLEAcceleration:
             conn_handle, value_handle, status = data
             
     def update_acceleration(self, notify=False, indicate=False):
+        """ Update acceleration values.
+        :param bool notify: True to notify connected centrals.
+        :param bool indicate: True to indicate connected centrals.
+        """
         mpu6050 = self._mpu6050
         accelData = mpu6050.get_accel_data()
         gyroData = mpu6050.get_gyro_data()
@@ -138,9 +150,13 @@ class BLEAcceleration:
                 
     
     def _advertise(self, interval_us=500000):
+        """ Start advertising.
+        :param int interval_us: Advertising interval in microseconds
+        """
         self._ble.gap_advertise(interval_us, adv_data=self._payload)
         
 def demo():
+    """ Start the BLE demo."""
     ble = bluetooth.BLE()
     accel = BLEAcceleration(ble, id="MPU6050-1")
     #change ID depending on the device

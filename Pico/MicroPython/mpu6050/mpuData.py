@@ -6,6 +6,9 @@ import machine
 i2c = machine.I2C(0, sda=Pin(0), scl=Pin(1), freq=400000)
 
 class mpuData:
+    """ MPU6050 class to get accelerometer and gyroscope data.
+    :param str id: The ID of the MPU6050 sensor.
+    """
     def __init__(self, id) -> None:
         
         self.id = id
@@ -22,6 +25,8 @@ class mpuData:
     to get the acceleration in g's. For example, if the raw data is 16384, the acceleration would be 16384 / 16384.0 = 1g.y.
     '''
     def get_accel_data(self) -> tuple:
+        """ Get the accelerometer data.
+        :return: Accelerometer data (x, y, z)."""
         accel = self.mpu.read_accel_data()
         return accel #(x, y, z)
         #unit of measurement is g's
@@ -40,11 +45,14 @@ class mpuData:
     When you read the raw data from the gyroscope, you divide it by 131 to get the angular velocity in degrees per second.'''
     
     def get_gyro_data(self) -> tuple:
+        """ Get the gyroscope data.
+        :return: Gyroscope data (x, y, z)."""
         gyro = self.mpu.read_gyro_data()
         return gyro #(x, y, z)
         #unit of measurement is degrees per second
 
 def demo():
+    """ Start the demo."""
     mpu6050 = mpuData("id")
     while True:
         print(mpu6050.get_accel_data())
