@@ -307,8 +307,6 @@ Python unittest library is used for machine learning
 </details>
 
 ### CoreData Local DB
-<details>
-
 <details open>
 <summary> setUpWithError() </summary>
 
@@ -450,8 +448,6 @@ Python unittest library is used for machine learning
         - Create an ExerciseSet for a specific workout number and then fetch by that number
     - Expected Result
         - The fetched exercise sets list should contain the sets for the specific workout number
-
-</details>
 
 </details>
 
