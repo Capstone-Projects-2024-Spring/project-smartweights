@@ -456,6 +456,103 @@ The fitnessPlanViewModel class contains variables for a user’s fitness goals.
   #### Conforms To
   - `Combine.ObservableObject`
 </details>
+
+## Class: WorkoutSession
+
+<details open>
+  
+  ```
+    @objc(WorkoutSession)
+    class WorkoutSession
+  ```
+
+  ### Topics
+  
+  #### Instance Properties
+  - `var dateTime: Date?`
+  - `var overallCurlAcceleration: Double`
+  - `var overallElbowFlareLeftRight: Double`
+  - `var overallElbowFlareUpDown: Double`
+  - `var overallElbowSwing: Double`
+  - `var overallWristStabilityLeftRight: Double`
+  - `var overallWristStabilityUpDown: Double`
+  - `var reps: Int64`
+  - `var sets: NSSet?`
+  - `var weight: Double`
+  - `var workoutNum: Int64`
+
+  #### Instance Methods
+  - `func addToSets(NSSet)`
+  - `func addToSets(ExerciseSet)`
+  - `func removeFromSets(NSSet)`
+  - `func removeFromSets(ExerciseSet)`
+
+  #### Type Methods
+  - class func fetchRequest() -> NSFetchRequest<WorkoutSession>
+
+  ### Default Implementations
+
+  #### Identifiable Implementations
+
+  ### Relationships
+
+  #### Inherits From
+  - CoreData.NSManagedObject
+
+  #### Inherited By
+  - ExerciseSet
+
+  #### Conforms To
+  - Combine.ObservableObject
+  - CoreData.NSFetchRequestResult
+  - ObjectiveC.NSObjectProtocol
+  - Swift.CVarArg
+  - Swift.CustomDebugStringConvertible
+  - Swift.CustomStringConvertible
+  - Swift.Equatable
+  - Swift.Hashable
+  - Swift.Identifiable
+</details>
+
+## Class: ExerciseSet
+<details open>
+
+  ```
+  @objc(ExerciseSet)
+  class ExerciseSet
+  ```
+  
+  ### Topics
+  
+  #### Instance Properties
+  - `var avgCurlAcceleration: Double`
+  - `var avgElbowFlareLeftRight: Double`
+  - `var avgElbowFlareUpDown: Double`
+  - `var avgElbowSwing: Double`
+  - `var avgWristStabilityLeftRight: Double`
+  - `var avgWristStabilityUpDown: Double`
+  - `var setNum: Int64`
+  - `var workoutSession: WorkoutSession?`
+
+  #### Type Methods
+  - `class func fetchRequest() -> NSFetchRequest<ExerciseSet>`
+    
+  ### Relationships
+  
+  #### Inherits From
+  - WorkoutSession
+    
+  #### Conforms To
+  - Combine.ObservableObject
+  - CoreData.NSFetchRequestResult
+  - ObjectiveC.NSObjectProtocol
+  - Swift.CVarArg
+  - Swift.CustomDebugStringConvertible
+  - Swift.CustomStringConvertible
+  - Swift.Equatable
+  - Swift.Hashable
+  - Swift.Identifiable
+</details>
   
 # Hardware Software
 
