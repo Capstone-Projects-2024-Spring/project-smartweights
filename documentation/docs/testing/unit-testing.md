@@ -133,25 +133,56 @@ Python unittest library is used for machine learning
 </details>
 
 
-
 ### Pet Store Page
 
 <details open>
-<summary> sortItems() </summary>
-
-***The shop is sorted by name A-Z***
-- Test user clicks sort by name to get the items in alphabetical order
+<summary> testSortItemsByPrice()</summary>  
+-Test sorting items by price
     - Input/User action
-        - User clicks sort by name
-    - Expected Result
-        - sortItems(sortByPrice: false) is called, the items will be sorted in alphabetical order 
+        - Call `sortItems` with `sortByPrice: true`
+     - Expected Result
+        - Items should be sorted by price in ascending order
+</details>
 
-***The shop is sorted by price lowest-highest***
-- Test user clicks sort by price to get the items from lowest to highest cost
-    - Input/User action
-        - User clicks sort by price
+
+<details open>
+<summary> testSortItemsbyName()</summary>
+- Test sorting items by name
+    - Input/User action 
+        - Call `sortItems` with `sortByPrice: false`
     - Expected Result
-        - sortItems(sortedByPrice: true) is called, the items will be sorted by price
+        - Items should be sorted by name in alphabetical order
+</details>
+
+
+<details open>
+<summary> testSubtractFunds()</summary>   
+- Test subtracting funds
+    - Input/User action 
+        - Subtract funds using `subtractFunds(price: 100)`
+    - Expected Result
+        - `viewModel.userCur` should decrease by `100`
+</details>
+
+
+<details open>
+<summary> testPurchaseItem()</summary> 
+- Test purchasing an item
+    - Input/User action
+        - Purchase an item using `purchaseItem(item: item)`
+    - Expected Result
+        - The item should be marked as bought
+        - `viewModel.userCur` should decrease by the item's price
+</details>
+
+
+<details open>
+<summary> testAddFunds()</summary>
+- Test adding funds to user currency
+    - Input/User action
+        - Add funds using `addFundtoUser(price: 100)`
+    - Expected Result
+        - `viewModel.userCur` should increase by `100`
 </details>
 
 
