@@ -16,7 +16,7 @@ SmartWeights removes the need for a personal trainer through the integration of 
 
 SmartWeights will consist of attachable/wearable sensors sending data to an iOS application through Bluetooth; the MPU6050 IMU sensors combine Raspberry Pi Pico W  microcontrollers. These devices are then placed on the dumbbells and the user’s body depending on the exercise to track changes in position during a workout. Using the built-in Bluetooth shield on the Pico, we can then relay the sensors’ information to the paired iOS app.
 
-Designed with Swift using SwiftUI, the app will process the data and display feedback on the user’s weightlifting form. Users will be required to log in with their Apple accounts using Apple’s Sign-In SDK and OAuth. User accounts will be tracked and stored with Apple’s CloudKit service. Users can start their workouts using a voice recognition feature or through a button on the application. SmartWeights is only available on iOS.
+Designed with Swift using SwiftUI, the app will process the data and display feedback on the user’s weightlifting form. Users will be required to log in with their Apple accounts using Apple’s Sign-In Authentication service. User's data will be tracked and stored with Apple’s CloudKit service. Users can start their workouts using a voice recognition feature or through a button on the application. SmartWeights is only available on iOS.
 
 
 

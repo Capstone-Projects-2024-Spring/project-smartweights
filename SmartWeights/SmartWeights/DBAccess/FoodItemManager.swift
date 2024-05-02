@@ -8,6 +8,7 @@
 import Foundation
 import CloudKit
 
+/// Keys used for accessing the fields in the CloudKit record for a food item.
 enum FoodItemRecordKeys: String {
     case type = "FoodItem"
     case name
@@ -15,6 +16,7 @@ enum FoodItemRecordKeys: String {
     case imageName
 }
 
+/// Model representing a food item.
 struct FoodItemModel {
     var recordId: CKRecord.ID?
     var name: String
@@ -23,6 +25,7 @@ struct FoodItemModel {
 }
 
 extension FoodItemModel {
+    /// Converts the food item model to a CloudKit record.
     var record: CKRecord {
         let record = CKRecord(recordType: FoodItemRecordKeys.type.rawValue)
         record[FoodItemRecordKeys.name.rawValue] = name
@@ -32,12 +35,13 @@ extension FoodItemModel {
     }
 }
 
+/// Manager class for handling food item database operations.
 class FoodItemDBManager: ObservableObject{
     @Published var foodItems: [FoodItemModel] = []
     let CKManager = CloudKitManager()
     var foodItemExists: Bool = false
     
-    
+    /// Initializes the FoodItemDBManager and fetches the food items from the database.
     init() {
         fetchFoodItems { foodItems, error in
             if let error = error {
@@ -51,7 +55,8 @@ class FoodItemDBManager: ObservableObject{
             // self.foodItems = foodItems
         }
     }
-    //gets all
+    
+    /// Fetches all food items from the database.
     func fetchFoodItems(completion: @escaping ([FoodItemModel]?, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue) { records, error in
             if let error = error {
@@ -73,6 +78,8 @@ class FoodItemDBManager: ObservableObject{
             self.foodItemExists = true
         }
     }
+    
+    /// Creates initial food items in the database.
     func createInitialFoodItems(){
         let foodItems = [
             FoodItemModel(recordId: nil, name: "Apple", quantity: 0, imageName: "Apple"),
@@ -84,6 +91,8 @@ class FoodItemDBManager: ObservableObject{
             self.CKManager.savePrivateItem(record: foodItemRecord)
         }
     }
+    
+    /// Creates a new food item in the database.
     func createFoodItem(name: String, quantity: Int64, completion: @escaping (Error?) -> Void) {
         fetchSpecificFoodItem(name: name) { foodItem, error in
             if let error = error {
@@ -103,11 +112,9 @@ class FoodItemDBManager: ObservableObject{
                 self.CKManager.savePrivateItem(record: foodItemRecord)
             }
         }
-        
-        
     }
     
-    
+    /// Fetches a specific food item from the database based on its name.
     func fetchSpecificFoodItem(name: String, completion: @escaping (FoodItemModel?, Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue, fieldName: "name", fieldValue: name) { records, error in
             guard let record = records?.first else {
@@ -119,6 +126,8 @@ class FoodItemDBManager: ObservableObject{
             completion(foodItem, nil)
         }
     }
+    
+    /// Fetches the quantity of a specific food item from the database.
     func fetchQuantity(name: String, completion: @escaping (Int64?, Error?) -> Void) {
         fetchSpecificFoodItem(name: name) { foodItem, error in
             if let error = error {
@@ -129,8 +138,8 @@ class FoodItemDBManager: ObservableObject{
             print("food quantity: \(String(describing: foodItem?.quantity))")
         }
     }
-    /// Updates the quantity of the food item. Updates by adding the quantity to the existing quantity.
-    // TODO: make it call fetchSpecificFoodItem maybe
+    
+    /// Updates the quantity of the food item by adding the specified quantity to the existing quantity.
     func updateQuantity_add(name: String, quantity: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: "FoodItem",fieldName:"name", fieldValue: name) { records, error in
             if let error = error {
@@ -155,7 +164,8 @@ class FoodItemDBManager: ObservableObject{
             completion(nil)
         }
     }
-    // Updates the quantity of the food item, directly replacing the existing quantity.
+    
+    /// Updates the quantity of the food item by replacing the existing quantity with the specified new quantity.
     func updateQuantity(name: String, newQuantity: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue, fieldName: "name", fieldValue: name) { records, error in
              if let error = error {
@@ -176,6 +186,8 @@ class FoodItemDBManager: ObservableObject{
             completion(nil)
         }
     }
+    
+    /// Updates the quantity of the specified food item by replacing the existing quantity with the specified new quantity.
     func updateQuantity(foodItem: FoodItemModel, newQuantity: Int64, completion: @escaping (Error?) -> Void) {
         CKManager.fetchPrivateRecord(recordType: FoodItemRecordKeys.type.rawValue) { records, error in
             guard let record = records?.first else {

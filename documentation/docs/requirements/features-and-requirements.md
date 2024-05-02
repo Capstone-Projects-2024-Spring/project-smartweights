@@ -17,7 +17,6 @@ sidebar_position: 4
     - The tutorial will be demonstrated by SmartWeights' generic pet.
     - The user will select and name their first pet.
     - The user will be able to revisit the tutorial prompt.
-
 8. The user must be able to create a workout plan that can be tracked from a fitness plan page.
 9. During the process of the user workout, it will provide feedback after each set on the user's action such as correcting their form.
 10. The app will award the users with digital currency based on their workouts and achievements.

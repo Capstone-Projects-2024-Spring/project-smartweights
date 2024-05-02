@@ -20,53 +20,47 @@ CloudKit offers two databases:
 
 The portions of the public database are all of the asset related entities. The public database's data is never manipulated by users, only read. These entities being:
 - Achievement
-- PetImage
-- PetClothing
-- Food
-- Background
 
 The user is able to manipulate data in their "private cloud database." These specific entities being:
 
+- User
 - Pet
-- Inventory
-- FitnessData
+- PetItem
+- ClothingItem
+- FoodItem
+- BackgroundItem
 - FitnessPlan
-- Achievement
+- UserAchievement
 
 ```mermaid
 ---
-title: NoSQL ERD (Cloud base, User)
+title: ERD (Cloud base, User)
 ---
 erDiagram
 
     %% User ||--||Achievement_List: has
    
-    User ||--||Fitness_data: contains
-    User ||--||Inventory: has
     User ||--||Pet: has
-    Pet ||--|| PetImage: has
-    Inventory ||--|{ PetImage: has
-    Inventory ||--o{ PetClothing: has
- 
-    Inventory ||--o{ Food: has
-    Inventory ||--o{ Background: has
-    Fitness_data||--||fitness_plan: has
+    User ||--|{PetItem: has
+    User ||--o{BackgroundItem: has
+    User ||--o{ClothingItem: has
+    User ||--o{FoodItem: has
 
-   User ||--o{User_Achievements:has
+    User ||--||fitness_plan: has
+
+     User ||--o{User_Achievements:has
     Achievement ||--|{ User_Achievements: has
 
 
-    Fitness_data{
-        int age
-        int height
-        int weight
-
-    }
-
+   
     fitness_plan{
 
-        int weight_goal
-        int num_days_to_workout
+        int daysPerWeekGoal
+        int dumbbellWeightGoal
+        int setGoal
+        int repGoal
+        string notes
+        date selectedDate
     }
     User {
         string first_name
@@ -80,44 +74,33 @@ erDiagram
         int health
         int total_xp
     }
-    PetImage{
-        int price
-        string petName
-        string PetImage_url
+    PetItem{
+        int isActive
+        string pet_name
+        string pet_image_url
     }
-    Inventory{
-        List Background
-        List Food
-        List PetClothing
-        List Pets
-        Reference activeBackground
-        Reference activePetClothing
-
-    }
-    Food{
-        int price
+    FoodItem{
+        int quantity
         string food_name
         string food_image_url
     }
-    Background{
-        int price
+    BackgroundItem{
+        int isActive
         string background_name
         string background_image_url
     }
-    PetClothing{
-        int price
-        string Name
-        string Pet_Clothing_image
+    ClothingItem{
+        int isActive
+        string clothing_name
+        string clothing_image_url
     }
    Achievement{
         int Achievement
         string achievement_name
         int total_progress
-        string reward
     }
     User_Achievements{
-
-         bool is_completed
+        bool is_completed
         int progress_percentage
 
     }
@@ -125,11 +108,6 @@ erDiagram
 ```
 
 The activeBackground and activePetClothing attributes act as references directly to their specific assets. The lists in inventory is an array of references to their specific assets. This is so an inventory can contain multiple of references, such as an inventory containing more than one type of background asset.
-
-## CloudKit Database Design, Shop
-
-The application's shop page retrieves the images from the database, stores, and displays them. The user does not manipulate this relevant data. It is used for the application to retrieve assets needed for the shop and to make loading assets with relevant values easier for development. 
-
 
 
 ## CoreData Database Design
