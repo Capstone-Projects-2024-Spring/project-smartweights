@@ -7,7 +7,8 @@
 <details>
 <summary>
 Manages the CloudKit container and databases, providing methods to interact with CloudKit.
-</summary><summary></summary>
+</summary>
+Acts as the main entry point to CloudKit for any of the classes that will interact with records. This class provides the base methods for CRUD operations.
 
 ### Properties
 - `static let shared = CloudKitManager()`: The shared singleton instance of `CloudKitManager`.
