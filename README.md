@@ -94,7 +94,7 @@ In order to install and build this project you must have (at the time of this be
 - a MacOS machine
 - MacOS Sonoma 14.4 as the minimum version
 - XCode 15 minimum (XCode can be downloaded from the App Store)
-- iPhone Simulator with iOS 17.2 minimum (XCode will download this for you), or iPhone with iOS 17.2 minimum
+- iPhone Simulator with iOS 17.0 minimum (XCode will download this for you), or iPhone with iOS 17.0 minimum
     - if using a physical iPhone, it can be connected via cable with the Mac machine.
 - A valid iCloud Account
     - iCloud Account should also have at 10kb of free storage remaining.
