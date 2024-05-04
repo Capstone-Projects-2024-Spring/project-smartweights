@@ -1439,20 +1439,14 @@ The view for the login screen of the SmartWeights app
 <details>
 Contains parameters for the additional page carousel buttons, which are used in the NavigationCarousel struct.
 
-## Topics
-
 ### Initializers
-```swift
-init(name: String, icon: String, link: AnyView)
-```
+- `init(name: String, icon: String, link: AnyView)`
 
 ### Instance Properties
-```swift
-let icon: String
-var id: String
-let link: AnyView
-let name: String
-```
+- `let icon: String`
+- `var id: String`
+- `let link: AnyView`
+- `let name: String`
 </details>
 
 
@@ -1460,20 +1454,14 @@ let name: String
 <details>
 The homepage of the SmartWeights app.
 
-## Topics
-
 ### Initializers
-```swift
-init(tabBar: TabBar, coreDataManager: CoreDataManager)
-```
+- `init(tabBar: TabBar, coreDataManager: CoreDataManager)`
 
 ### Instance Properties
-```swift
-var body: some View
-var coreDataManager: CoreDataManager
-var showTutorial: Bool
-let tabBar: TabBar
-```
+- `var body: some View`
+- `var coreDataManager: CoreDataManager`
+- `var showTutorial: Bool`
+- `let tabBar: TabBar`
 </details>
 
 
@@ -1481,22 +1469,16 @@ let tabBar: TabBar
 <details>
 Creates the additional button carousel.
 
-## Topics
-
 ### Initializers
-```swift
-init(coreDataManager: CoreDataManager, buttons: [CarouselButton], iconColor: Color, bgColor: Color, textColor: Color)
-```
+- `init(coreDataManager: CoreDataManager, buttons: [CarouselButton], iconColor: Color, bgColor: Color, textColor: Color)`
 
 ### Instance Properties
-```swift
-let bgColor: Color
-var body: some View
-let buttons: [CarouselButton]
-var coreDataManager: CoreDataManager
-let iconColor: Color
-let textColor: Color
-```
+- `let bgColor: Color`
+- `var body: some View`
+- `let buttons: [CarouselButton]`
+- `var coreDataManager: CoreDataManager`
+- `let iconColor: Color`
+- `let textColor: Color`
 </details>
 
 
@@ -1504,18 +1486,12 @@ let textColor: Color
 <details>
 The start workout button, located on the home page.
 
-## Topics
-
 ### Initializers
-```swift
-init(tabBar: TabBar)
-```
+- `init(tabBar: TabBar)`
 
 ### Instance Properties
-```swift
-var body: some View
-var tabBar: TabBar
-```
+- `var body: some View`
+- `var tabBar: TabBar`
 </details>
 
 
@@ -1523,23 +1499,15 @@ var tabBar: TabBar
 <details>
 Struct TabBar implements the Tab enumeration and TabView to create a navigable tab bar.
 
-## Topics
-
 ### Initializers
-```swift
-init(coreDataManager: CoreDataManager)
-```
+- `init(coreDataManager: CoreDataManager)`
 
 ### Instance Properties
-```swift
-var body: some View
-var coreDataManager: CoreDataManager
-```
+- `var body: some View`
+- `var coreDataManager: CoreDataManager`
 
 ### Instance Methods
-```swift
-func changeTab(to: Tab)
-```
+- `func changeTab(to: Tab)`
 </details>
 
 
@@ -1547,19 +1515,13 @@ func changeTab(to: Tab)
 <details>
 Tutorial pop up for new users.
 
-## Topics
-
 ### Initializers
-```swift
-init(show: Binding<Bool>, showTutorial: Bool)
-```
+- `init(show: Binding<Bool>, showTutorial: Bool)`
 
 ### Instance Properties
-```swift
-var body: some View
-var show: Bool
-var showTutorial: Bool
-```
+- `var body: some View`
+- `var show: Bool`
+- `var showTutorial: Bool`
 </details>
 
 
@@ -1567,21 +1529,15 @@ var showTutorial: Bool
 <details>
 Video card used in the VideoCarousel struct.
 
-## Topics
-
 ### Initializers
-```swift
-init(videoId: String, title: String, description: String)
-```
+- `init(videoId: String, title: String, description: String)`
 
 ### Instance Properties
-```swift
-var body: some View
-var description: String
-var id: String
-var title: String
-var videoId: String
-```
+- `var body: some View`
+- `var description: String`
+- `var id: String`
+- `var title: String`
+- `var videoId: String`
 </details>
 
 
@@ -1589,18 +1545,12 @@ var videoId: String
 <details>
 Carousel of VideoCard objects
 
-## Topics
-
 ### Initializers
-```swift
-init(videoCards: [VideoCard])
-```
+- `init(videoCards: [VideoCard])`
 
 ### Instance Properties
-```swift
-var body: some View
-var videoCards: [VideoCard]
-```
+- `var body: some View`
+- `var videoCards: [VideoCard]`
 </details>
 
 
@@ -1608,21 +1558,13 @@ var videoCards: [VideoCard]
 <details>
 Embedded YouTube videos via WebKit library and UIViewRepresentable protocol.
 
-## Topics
-
 ### Initializers
-```swift
-init(videoId: String)
-```
+- `init(videoId: String)`
 
 ### Instance Properties
-```swift
-let videoId: String
-```
+- `let videoId: String`
 
 ### Instance Methods
-```swift
-func makeUIView(context: Context) -> WKWebView
-func updateUIView(WKWebView, context: Context)
-```
+- `func makeUIView(context: Context) -> WKWebView`
+- `func updateUIView(WKWebView, context: Context)`
 </details>
