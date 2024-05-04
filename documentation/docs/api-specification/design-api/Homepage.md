@@ -1,7 +1,7 @@
 `structure`
 
 # Homepage
-The homepage view of the SmartWeights app.
+The homepage of the SmartWeights app.
 
 ```swift
 struct Homepage
@@ -9,10 +9,13 @@ struct Homepage
 
 ### Initializers
 ```swift
-init()
+init(tabBar: TabBar, coreDataManager: CoreDataManager)
 ```
 
 ### Instance Properties
 ```swift
 var body: some View
+var coreDataManager: CoreDataManager
+var showTutorial: Bool
+let tabBar: TabBar
 ```
