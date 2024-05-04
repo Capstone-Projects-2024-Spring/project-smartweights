@@ -1435,4 +1435,194 @@ The view for the login screen of the SmartWeights app
 </details>
 
 
+# Structure: CarouselButton
+<details>
+Contains parameters for the additional page carousel buttons, which are used in the NavigationCarousel struct.
 
+## Topics
+
+### Initializers
+```swift
+init(name: String, icon: String, link: AnyView)
+```
+
+### Instance Properties
+```swift
+let icon: String
+var id: String
+let link: AnyView
+let name: String
+```
+</details>
+
+
+# Structure: Homepage
+<details>
+The homepage of the SmartWeights app.
+
+## Topics
+
+### Initializers
+```swift
+init(tabBar: TabBar, coreDataManager: CoreDataManager)
+```
+
+### Instance Properties
+```swift
+var body: some View
+var coreDataManager: CoreDataManager
+var showTutorial: Bool
+let tabBar: TabBar
+```
+</details>
+
+
+# Structure: NavigationCarousel
+<details>
+Creates the additional button carousel.
+
+## Topics
+
+### Initializers
+```swift
+init(coreDataManager: CoreDataManager, buttons: [CarouselButton], iconColor: Color, bgColor: Color, textColor: Color)
+```
+
+### Instance Properties
+```swift
+let bgColor: Color
+var body: some View
+let buttons: [CarouselButton]
+var coreDataManager: CoreDataManager
+let iconColor: Color
+let textColor: Color
+```
+</details>
+
+
+# Structure: StartWorkoutButton
+<details>
+The start workout button, located on the home page.
+
+## Topics
+
+### Initializers
+```swift
+init(tabBar: TabBar)
+```
+
+### Instance Properties
+```swift
+var body: some View
+var tabBar: TabBar
+```
+</details>
+
+
+# Structure: TabBar
+<details>
+Struct TabBar implements the Tab enumeration and TabView to create a navigable tab bar.
+
+## Topics
+
+### Initializers
+```swift
+init(coreDataManager: CoreDataManager)
+```
+
+### Instance Properties
+```swift
+var body: some View
+var coreDataManager: CoreDataManager
+```
+
+### Instance Methods
+```swift
+func changeTab(to: Tab)
+```
+</details>
+
+
+# Structure: TutorialPopup
+<details>
+Tutorial pop up for new users.
+
+## Topics
+
+### Initializers
+```swift
+init(show: Binding<Bool>, showTutorial: Bool)
+```
+
+### Instance Properties
+```swift
+var body: some View
+var show: Bool
+var showTutorial: Bool
+```
+</details>
+
+
+# Structure: VideoCard
+<details>
+Video card used in the VideoCarousel struct.
+
+## Topics
+
+### Initializers
+```swift
+init(videoId: String, title: String, description: String)
+```
+
+### Instance Properties
+```swift
+var body: some View
+var description: String
+var id: String
+var title: String
+var videoId: String
+```
+</details>
+
+
+# Structure: VideoCarousel
+<details>
+Carousel of VideoCard objects
+
+## Topics
+
+### Initializers
+```swift
+init(videoCards: [VideoCard])
+```
+
+### Instance Properties
+```swift
+var body: some View
+var videoCards: [VideoCard]
+```
+</details>
+
+
+# Structure: VideoView
+<details>
+Embedded YouTube videos via WebKit library and UIViewRepresentable protocol.
+
+## Topics
+
+### Initializers
+```swift
+init(videoId: String)
+```
+
+### Instance Properties
+```swift
+let videoId: String
+```
+
+### Instance Methods
+```swift
+func makeUIView(context: Context) -> WKWebView
+func updateUIView(WKWebView, context: Context)
+```
+</details>
