@@ -12,6 +12,8 @@ class [WorkoutViewModel](./WorkoutViewModel.md)
 
 Structure [calendar](./Calendar.md)
 
+Structure [CarouselButton](./CarouselButton.md)
+
 Structure [Challenge](./Challenge.md)
 
 Structure [ChallengeRow](./ChallengeRow.md)
@@ -32,6 +34,8 @@ Structure [Local-Core_Data](./local-coredata-database.md)
 
 Structure [Login](./Login-view.md)
 
+Structure [NavigationCarousel](./NavigationCarousel.md)
+
 Structure [openAPI](./openapi-spec.md)
 
 Structure [PetPage](./Pet-page.md)
@@ -43,6 +47,18 @@ Structure [PostWorkout](./PostWorkout.md)
 Structure [PostWorkoutData](./PostWorkoutData.md)
 
 Structure [StartWorkout](./StartWorkout.md)
+
+Structure [StartWorkoutButton](./StartWorkoutButton.md)
+
+Structure [TabBar](./TabBar.md)
+
+Structure [TutorialPopup](./TutorialPopup.md)
+
+Structure [VideoCard](./VideoCard.md)
+
+Structure [VideoCarousel](./VideoCarousel.md)
+
+Structure [VideoView](./VideoView.md)
 
 Structure [Workout](./Workout.md)
 
