@@ -1,6 +1,6 @@
 `structure`
 
-# Homepage
+# NavigationCarousel
 Creates the additional button carousel.
 
 ```swift
