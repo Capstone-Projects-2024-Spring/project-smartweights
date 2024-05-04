@@ -32,10 +32,6 @@ Structure [Local-Core_Data](./local-coredata-database.md)
 
 Structure [Login](./Login-view.md)
 
-Structure [Navbar](./Navbar.md)
-
-Structure [NavController](./NavController.md)
-
 Structure [openAPI](./openapi-spec.md)
 
 Structure [PetPage](./Pet-page.md)
