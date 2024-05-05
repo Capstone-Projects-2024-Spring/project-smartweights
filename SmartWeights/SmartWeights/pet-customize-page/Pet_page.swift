@@ -10,15 +10,26 @@ import SwiftUI
 
 struct Pet_Page: View {
     @ObservedObject var viewModel = PetPageFunction()
-
-    
+    //    @ObservedObject var backgroundItemDBManager = BackgroundItemDBManager()
+    //    @ObservedObject var clothingItemDBManager = ClothingItemDBManager()
+    //@ObservedObject var petItemDBManager = PetItemDBManager()
+    @State var activePet: String = ""
+    @State private var viewID = UUID()
     var body: some View {
         NavigationView {
+            
             VStack {
-                Text("Pet Name")
-                    .font(.system(size: 45))
-                    .bold()
-                    .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
+                /*
+                 Text("Pet Name")
+                 .font(.system(size: 45))
+                 .bold()
+                 .frame(maxWidth: .infinity, minHeight: 40, alignment: .center)
+                 
+                 Button("testing XP"){
+                 viewModel.AddXP(value: 75)
+                 }
+                 */
+                
                 
                 HStack {
                     HamburgerMenu(
@@ -39,6 +50,7 @@ struct Pet_Page: View {
                         }
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
+                        .foregroundStyle(Color.africanViolet)
                     }
                     .accessibilityIdentifier("ChangeFoodButton")
                     .sheet(isPresented: $viewModel.showFoodSelection) {
@@ -49,6 +61,10 @@ struct Pet_Page: View {
                         let selectedFood = viewModel.foodItems[viewModel.selectedFoodIndex]
                         Button(action: {
                             viewModel.handleFoodUse(selectedFoodIndex: viewModel.selectedFoodIndex)
+                            
+                            // CODE TO UPDATE Dinner Time ACHIEVEMENT
+                            GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.DinnerTime", progressToAdd: 2.0)
+                            
                         }) {
                             VStack {
                                 Image(selectedFood.imageName)
@@ -58,7 +74,7 @@ struct Pet_Page: View {
                                 Text("\(selectedFood.quantity)")
                                     .font(.system(size: 25))
                                     .bold()
-                                    .foregroundColor(.blue)
+                                    .foregroundStyle(.black)
                                     .minimumScaleFactor(0.50)
                                     .padding(.top, -15)
                                     .frame(width: 75,height: 25)
@@ -69,34 +85,54 @@ struct Pet_Page: View {
                     
                 }
                 .padding(.horizontal, 25)
-                
-                Image("Dog")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 500, height: 400, alignment: .center)
-                    .padding(.bottom, 0)
-                
+                ZStack{
+                    Image(viewModel.activeBackground)
+                        .resizable()
+                        .frame(width: 475, height: 450)
+                    
+                    Image(viewModel.activePet)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 475, height: 450)
+                    Image(viewModel.activeClothing)
+                        .resizable()
+                        .scaledToFit()
+                    
+                }
                 VStack {
                     CustomProgressView(value: viewModel.healthBar, maxValue: 100, label: "Health", displayMode: .percentage, foregroundColor: .green, backgroundColor: .gray)
                         .frame(height: 20)
                         .padding()
                     
-                    /*
-                    // Display Current Level
-                    Text("Level \(viewModel.currentLevel)")
-                        .font(.system(size: 20))
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 10)
-                     */
-                    CustomProgressView(value: viewModel.userTotalXP, maxValue: 100, label: "Level", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray)
-                        .frame(height: 20)
-                        .padding()
-                    
+                    //                    // Display Current Level
+                    //                    Text("Level \(viewModel.currentLevel)")
+                    //                        .font(.system(size: 20))
+                    //                        .bold()
+                    //                        .frame(maxWidth: .infinity, alignment: .center)
+                    //                        .padding(.top, 10)
+                    if viewModel.isLoading{
+                        ProgressView()
+                    } else{
+                        CustomProgressView(value: viewModel.userTotalXP % 100, maxValue: 100, label: "XP: ", displayMode: .rawValue, foregroundColor: .blue, backgroundColor: .gray, level: viewModel.currentLevel)
+                            .frame(height: 20)
+                            .padding()
+                    }
+                } .onAppear {
+                    // This will only call once when the view appears
+                    if viewModel.currentLevel == 2 {
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.NewBestFriends", progressToAdd: 100.0)
+                    } else if viewModel.currentLevel == 10 {
+                        GameCenterManager.shared.updateAchievement(identifier: "SmartWeights.Achievement.DynamicDuo", progressToAdd: 100.0)
+                    }
                 }
                 .padding(.top, -20)
                 Spacer()
             }
+            
+            // .onAppear {
+            //     viewModel.refreshData()
+            // }
+            .background(.white)
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(
                     title: Text(viewModel.alertTitle),
@@ -108,6 +144,12 @@ struct Pet_Page: View {
             .navigationBarTitleDisplayMode(.inline)
             .background(NavigationLink(destination: PetStore(), isActive: $viewModel.showShop) { EmptyView() })
             .background(NavigationLink(destination: Customize_page(), isActive: $viewModel.showCustomize) { EmptyView() })
+            .id(viewID) // add this line
+            .onAppear {
+                viewID = UUID() // change the viewID every time this view appears
+                viewModel.getActiveAll()
+                viewModel.getPetStats()
+            }
         }
     }
 }
@@ -152,17 +194,14 @@ struct HamburgerMenu: View {
             Button("Customize", action: navigateToCustomize)
                 .accessibilityIdentifier("Customize")
         } label: {
-            Label {
-                Text("")
-            } icon: {
-                Image(systemName: "line.horizontal.3")
-                    .foregroundColor(.blue)
-                    .font(.title)
-                    .padding()
-                    .background(Circle().fill(Color.gray))
-                    .shadow(radius: 5)
-            }
-            .accessibilityIdentifier("HamburgerMenuButton")
+            Label { }
+        icon: {
+            Image(systemName: "line.horizontal.3")
+                .foregroundColor(.africanViolet)
+                .font(.title)
+                .padding()
+        }
+        .accessibilityIdentifier("HamburgerMenuButton")
         }
     }
 }
@@ -181,5 +220,4 @@ struct PetPage_Previews: PreviewProvider {
         Pet_Page()
     }
 }
-
 

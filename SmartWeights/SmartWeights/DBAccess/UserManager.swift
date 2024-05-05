@@ -16,7 +16,7 @@ enum UserRecordKeys: String {
     case latestLogin
     case currency
     case email
-    case Users
+    // case Users
 }
 
 /// Struct representing a User.
@@ -27,7 +27,7 @@ struct User {
     var latestLogin: Date
     var currency: Int64
     var email: String
-    var Users: CKRecord.Reference
+    // var Users: CKRecord.Reference
 }
 
 extension User {
@@ -39,7 +39,7 @@ extension User {
         record[UserRecordKeys.latestLogin.rawValue] = latestLogin
         record[UserRecordKeys.currency.rawValue] = currency
         record[UserRecordKeys.email.rawValue] = email
-        record[UserRecordKeys.Users.rawValue] = Users
+        // record[UserRecordKeys.Users.rawValue] = Users
         return record
     }
 }
@@ -87,7 +87,7 @@ class UserDBManager: ObservableObject {
             return
         }
         
-        let user = User(recordId: nil, firstName: firstName ?? "", lastName: lastName ?? "", latestLogin: Date(), currency: 0, email: email ?? "", Users: userRecord!)
+        let user = User(recordId: nil, firstName: firstName ?? "", lastName: lastName ?? "", latestLogin: Date(), currency: 0, email: email ?? "")
         let userRecord = user.record
         CKManager.savePrivateItem(record: userRecord)
         userExists = true
@@ -117,9 +117,9 @@ class UserDBManager: ObservableObject {
             let latestLogin = record[UserRecordKeys.latestLogin.rawValue] as? Date ?? Date()
             let currency = record[UserRecordKeys.currency.rawValue] as? Int64 ?? 0
             let email = record[UserRecordKeys.email.rawValue] as? String ?? ""
-            let users = record[UserRecordKeys.Users.rawValue] as? CKRecord.Reference ?? CKRecord.Reference(recordID: CKRecord.ID(recordName: ""), action: .none)
+            // let users = record[UserRecordKeys.Users.rawValue] as? CKRecord.Reference ?? CKRecord.Reference(recordID: CKRecord.ID(recordName: ""), action: .none)
             
-            self.user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, email: email, Users: users)
+            self.user = User(recordId: record.recordID, firstName: firstName, lastName: lastName, latestLogin: latestLogin, currency: currency, email: email)
             completion(self.user, nil)
             self.userExists = true
         }
@@ -194,27 +194,27 @@ class UserDBManager: ObservableObject {
     }
     
     /// Checks if the user record exists in the "Users" record type.
-    func userRecordExistsInUsers(completion: @escaping (Bool, Error?) -> Void) {
-        guard let userRecord = userRecord else {
-            completion(false, nil) // userRecord not fetched yet
-            return
-        }
-        
-        let database = CKContainer.default().publicCloudDatabase
-        let predicate = NSPredicate(format: "Users == %@", userRecord)
-        let query = CKQuery(recordType: "User", predicate: predicate)
-        
-        database.perform(query, inZoneWith: nil) { (records, error) in
-            if let error = error {
-                completion(false, error)
-            } else if let records = records, !records.isEmpty {
-                completion(true, nil) // userRecord exists in Users record type
-                print("exists")
-                print("ExistsRecord: \(records)")
-            } else {
-                completion(false, nil) // userRecord does not exist in Users record type
-                print("does not exist")
-            }
-        }
-    }
+//    func userRecordExistsInUsers(completion: @escaping (Bool, Error?) -> Void) {
+//        guard let userRecord = userRecord else {
+//            completion(false, nil) // userRecord not fetched yet
+//            return
+//        }
+//        
+//        let database = CKContainer.default().publicCloudDatabase
+//        let predicate = NSPredicate(format: "Users == %@", userRecord)
+//        let query = CKQuery(recordType: "User", predicate: predicate)
+//        
+//        database.perform(query, inZoneWith: nil) { (records, error) in
+//            if let error = error {
+//                completion(false, error)
+//            } else if let records = records, !records.isEmpty {
+//                completion(true, nil) // userRecord exists in Users record type
+//                print("exists")
+//                print("ExistsRecord: \(records)")
+//            } else {
+//                completion(false, nil) // userRecord does not exist in Users record type
+//                print("does not exist")
+//            }
+//        }
+//    }
 }

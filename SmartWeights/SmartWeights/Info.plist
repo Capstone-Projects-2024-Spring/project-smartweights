@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
@@ -9,10 +11,12 @@
 	<key>CFBundleIconName</key>
 	<string>AppIcon</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string></string>
+	<string>Bluetooth Access is needed for connecting to a SmartWeights sensor.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need access to your microphone to enable hands-free voice recognition for starting workouts.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>We need access to speech recognition to enable hands-free voice recognition for starting workouts.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to your photo library to save screenshots.</string>
 </dict>
 </plist>

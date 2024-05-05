@@ -6,15 +6,54 @@
 //
 
 import SwiftUI
+import CoreData
+
+// AppDelegate class
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        #if DEBUG
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
+            // Code to skip when running unit tests
+            return true
+        }
+        #endif
+        return true
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        saveContext()
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        saveContext()
+    }
+
+    func saveContext() {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
+
+    lazy var persistentContainer: NSPersistentContainer = PersistenceController.shared.container
+}
 
 @main
 struct SmartWeightsApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
-            LoginView()
+          LoginView()
                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-
+               .preferredColorScheme(.light)
+//            testview()
         }
+        
     }
 }

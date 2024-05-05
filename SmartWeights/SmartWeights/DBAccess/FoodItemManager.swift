@@ -40,19 +40,22 @@ class FoodItemDBManager: ObservableObject{
     @Published var foodItems: [FoodItemModel] = []
     let CKManager = CloudKitManager()
     var foodItemExists: Bool = false
-    
+
     /// Initializes the FoodItemDBManager and fetches the food items from the database.
+    static let shared = FoodItemDBManager()
+
     init() {
         fetchFoodItems { foodItems, error in
             if let error = error {
                 print("Error fetching food items: \(error.localizedDescription)")
                 return
             }
-            // guard let foodItems = foodItems else {
-            //     print("No food items found")
-            //     return
-            // }
-            // self.foodItems = foodItems
+            guard let foodItems = foodItems else {
+                print("No food items found")
+                self.createInitialFoodItems()
+                return
+            }
+            self.foodItems = foodItems
         }
     }
     
@@ -64,9 +67,11 @@ class FoodItemDBManager: ObservableObject{
                 return
             }
             guard let records = records else {
-                self.foodItemExists = false
-                print("No food items found.")
-                completion(nil, nil)
+                DispatchQueue.main.async{
+                    self.foodItemExists = false
+                    print("No food items found.")
+                    completion(nil, nil)
+                }
                 return
             }
             var foodItems: [FoodItemModel] = []
@@ -74,8 +79,12 @@ class FoodItemDBManager: ObservableObject{
                 let foodItem = FoodItemModel(recordId: record.recordID, name: record[FoodItemRecordKeys.name.rawValue] as? String ?? "", quantity: record[FoodItemRecordKeys.quantity.rawValue] as? Int64 ?? 0, imageName: record[FoodItemRecordKeys.imageName.rawValue] as? String ?? "")
                 foodItems.append(foodItem)
             }
-            completion(foodItems, nil)
-            self.foodItemExists = true
+            DispatchQueue.main.async {
+                self.foodItems = foodItems
+                completion(foodItems, nil)
+                self.foodItemExists = true
+            }
+          
         }
     }
     
@@ -87,8 +96,15 @@ class FoodItemDBManager: ObservableObject{
             FoodItemModel(recordId: nil, name: "Juice", quantity: 0, imageName: "Juice"),
         ]
         for foodItem in foodItems {
-            let foodItemRecord = foodItem.record
-            self.CKManager.savePrivateItem(record: foodItemRecord)
+            createFoodItem(name: foodItem.name, quantity: 0){
+                error in
+                if let error = error {
+                    print("Error creating food item: \(error.localizedDescription)")
+                }
+                DispatchQueue.main.async{
+                    self.foodItems.append(foodItem)
+                }
+            }
         }
     }
     
@@ -108,7 +124,9 @@ class FoodItemDBManager: ObservableObject{
                 // If the food item does not exist, create a new one
                 let foodItem = FoodItemModel(recordId: nil, name: name, quantity: quantity, imageName: name)
                 let foodItemRecord = foodItem.record
-                self.foodItems.append(foodItem)
+                DispatchQueue.main.async{
+                    self.foodItems.append(foodItem)
+                }
                 self.CKManager.savePrivateItem(record: foodItemRecord)
             }
         }
@@ -135,6 +153,7 @@ class FoodItemDBManager: ObservableObject{
                 return
             }
             completion(foodItem?.quantity, nil)
+            
             print("food quantity: \(String(describing: foodItem?.quantity))")
         }
     }
@@ -159,7 +178,17 @@ class FoodItemDBManager: ObservableObject{
             let existingQuantity = record["quantity"] as? Int64 ?? 0
             let newQuantity = existingQuantity + quantity
             record["quantity"] = NSNumber(value: newQuantity) as CKRecordValue
-            
+            DispatchQueue.main.async{
+                // Update the quantity of the food item in the local array
+                self.foodItems = self.foodItems.map { foodItem in
+                    if foodItem.name == name {
+                        var newFoodItem = foodItem
+                        newFoodItem.quantity = newQuantity
+                        return newFoodItem
+                    }
+                    return foodItem
+                }
+            }
             self.CKManager.savePrivateItem(record: record)
             completion(nil)
         }
@@ -182,6 +211,16 @@ class FoodItemDBManager: ObservableObject{
                 record["imageName"] = name as CKRecordValue
             }
             record[FoodItemRecordKeys.quantity.rawValue] = NSNumber(value: newQuantity)
+            DispatchQueue.main.async{
+                self.foodItems = self.foodItems.map { foodItem in
+                    if foodItem.name == name {
+                        var newFoodItem = foodItem
+                        newFoodItem.quantity = newQuantity
+                        return newFoodItem
+                    }
+                    return foodItem
+                }
+            }
             self.CKManager.savePrivateItem(record: record)
             completion(nil)
         }
@@ -199,5 +238,9 @@ class FoodItemDBManager: ObservableObject{
             self.CKManager.savePrivateItem(record: record)
             completion(nil)
         }
+    }
+
+    func getFoodItems() -> [FoodItemModel] {
+        return self.foodItems
     }
 }

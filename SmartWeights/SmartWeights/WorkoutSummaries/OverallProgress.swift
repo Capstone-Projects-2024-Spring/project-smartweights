@@ -6,262 +6,292 @@
 //
 
 import SwiftUI
+import CoreData
 
-
-struct DateDataPoints: Identifiable {
-    
-    
-    var id = UUID().uuidString
-    var date: String
-    var form: Int
-    var velocity: Int
-    var achievement: Int
-    var currency: Int
-}
-
-class OverallProgressViewModel: ObservableObject{
-    
+/// View model for the all feedback page
+/// -Note: This view model is used to get the data for the all feedback page
+class allFeedbackViewModel: ObservableObject {
+    var coreDataManager: CoreDataManager
     @Published var date = Date()
-    @Published var shortDate: String = "" // Store short date string
+    @Published var workoutSessions: [[String:Any]] = [[:]]
+    @Published var WorkoutSets: [[String:Any]] = [[:]]
+    var workoutNum: Int64 = 0
     
-    func updateShortDate() {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        self.shortDate = formatter.string(from: date)
+    /// Initialize the view model
+    /// - Parameter coreDataManager: 
+    /// - Returns: None
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
+        workoutSessions = coreDataManager.fetchWorkoutSessions(on: Date())
+        updateData(date:Date())
     }
-    
-    init(){
-        updateShortDate()
+    /// Update the data for the page
+    /// - Parameter date: the date to get the data for
+    /// - Returns: None
+    func updateData(date: Date){
+        self.workoutSessions = coreDataManager.fetchWorkoutSessions(on: date)
     }
 }
 
-
-
-struct moreFeedbackSheetView: View {
+/// View for the all feedback page
+/// -Note: This view is used to display all the feedback for the user
+struct allFeedback: View {
+    @ObservedObject var coreDataManager: CoreDataManager
+    @ObservedObject var viewModel: allFeedbackViewModel
+    init(coreDataManager: CoreDataManager){
+        self.coreDataManager = coreDataManager
+        self.viewModel = allFeedbackViewModel(coreDataManager:coreDataManager)
+    }
     
     var body: some View {
-        Image("dinosaur")
-            .resizable()
-            .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/,height: 100)
-        Text("data data data data data data data")
-        Text("data data data data data data data")
-        Text("data data data data data data data")
-        Text("data data data data data data data")
-        Text("data data data data data data data")
-        Text("data data data data data data data")
         
-    }
-}
-    
-struct SelectedDateData: View {
-    @ObservedObject var viewModel: OverallProgressViewModel
-    @State var isSheetPresented: Bool = false
-    
-    var data = [
-        DateDataPoints(date: "2/26/24", form: 20, velocity: 50, achievement: 4, currency: 500),
-        DateDataPoints(date: "2/27/24", form: 60, velocity: 10, achievement: 4, currency: 500),
-        DateDataPoints(date: "2/28/24", form: 30, velocity: 70, achievement: 54, currency: 5020),
-        DateDataPoints(date: "2/29/24", form: 30, velocity: 70, achievement: 54, currency: 5020),
-        DateDataPoints(date: "3/1/24", form: 30, velocity: 720, achievement: 54, currency: 5020)
-        
-    ]
-    
-    var body: some View{
-        
-        
-        Button(action: {
-            isSheetPresented.toggle()
-            
-        })
-        {
-            ZStack(alignment: .leading){
-                Rectangle()
-                    .frame(width:350,height: 200)
-                    .cornerRadius(40)
-                    .foregroundColor(.gray)
-                    .shadow(color: Color.green.opacity(0.5), radius: 10, x: 0, y: 5)
-                
-                
-                VStack(alignment: .leading){
-                    
-                    ForEach(data){ d in
-                        if d.date == viewModel.shortDate{
-                            HStack {
-                                Text("Form - \(d.form)%")
-                                Image(systemName: "figure.strengthtraining.traditional")
-                                    .foregroundColor(.green)
-                                    
-                            }
-                            .padding(.bottom, 20)
-                            HStack {
-                                Text("Velocity - \(d.velocity)%")
-                                Image(systemName: "speedometer")
-                                    .foregroundColor(.white)
-                                    
-                            }
-                            .padding(.bottom,20)
-                            HStack {
-                                Text("Achivements earned - \(d.achievement)")
-                                    
-                                Image(systemName: "medal")
-                                    .foregroundColor(.yellow)
-                                    
-                            }
-                            .padding(.bottom, 10)
-                            HStack {
-                                Text("Currency Earned - \(d.currency)")
-                                Image("petcoin")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    
-                            }
-                            
-                        }
-                    }
-                    
-                }
-                .accessibilityLabel("ExpandWorkoutDataButton")
-                .multilineTextAlignment(.center)
-                .foregroundColor(.black)
-                .bold()
-                .frame(minHeight: 200)
-                .padding(.leading, 20)
-                .sheet(isPresented: $isSheetPresented) {
-                    // Content of the sheet
-                    moreFeedbackSheetView()
-                        .background(Color.black)
-                       
-                    
-                }
-                
+        VStack{
+            //Title of the page
+            HStack(alignment: .firstTextBaseline){
+                Text("All Feedback")
+                    .font(.title)
+                    .bold()
+                    .fontDesign(.monospaced)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.africanViolet)
             }
+            //calendar
+            DatePicker("Select a date", selection: $viewModel.date, displayedComponents: .date)
+                .padding()
+                .labelsHidden() // Hide the DatePicker label
+                .onChange(of: viewModel.date) { newValue in
+                    viewModel.updateData(date: newValue)
+                }
+                .onAppear {
+                    viewModel.updateData(date: viewModel.date)
+                }
             
-        }
-        
-    }
-    
-    
-}
-
-struct PostWorkout: View {
-    
-    @ObservedObject var viewModel =  OverallProgressViewModel()
-    @State var isFormGraph: Bool = true
-    @State var isVelocityGraph: Bool = false
-    
-    
-    var body: some View {
-        
-        
-        ScrollView {
-            ZStack{
-                VStack{
-                    //Title of the page
-                    HStack(alignment: .firstTextBaseline){
-                        
-                        Text("Workout Progress")
-                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                            .bold()
-                            .fontDesign(.monospaced)
-                            .multilineTextAlignment(.center)
-                        
-                        
-                    }
-                    
-                    //calender component
-                    //need to export date to get data the correct day
-                    
-                    CalendarView(viewModel: viewModel)
-                    SelectedDateData(viewModel: viewModel)
-                    
-                    //display data for that day
-                    
+            //data
+            ScrollView{
+                //get data for each workout
+                ForEach(0..<viewModel.workoutSessions.count, id: \.self) { index in
                     VStack{
-                        Button(action: {
-                            // Action to perform when the button is tapped
-                        }) {
-                            ZStack {
-                                Menu("Graphs") {
-                                    Button(action: {
-                                        isFormGraph = true
-                                        isVelocityGraph = false
-                                        
-                                    }, label: {
-                                        Text("Form")
-                                    })
-                                    Button(action: {
-                                        isFormGraph = false
-                                        isVelocityGraph = true
-                                        
-                                    }, label: {
-                                        Text("Velocity")
-                                    })
+                        let workoutSession = viewModel.workoutSessions[index]
+                        Text("Overall Workout Session \(index+1)")
+                            .font(.title2)
+                            .bold()
+                            .padding(.top, 30)
+                            .foregroundColor(.white)
+                            .underline()
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Weights Used - \(String(format: "%.2f", workoutSession["weight"] as? Double ?? 1.0)) lbs")
+                            .bold()
+                            Text("Repetitions per set - \(workoutSession["reps"] as? Int64 ?? 0)")
+                            .bold()
+                            HStack{
+                                Text("Curl Acceleration - \(Int(workoutSession["overallCurlAcceleration"] as? Double ?? 0.0))%")
+                                if workoutSession["overallCurlAcceleration"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
                                 }
-                                .font(.title2)
-                                .bold()
-                                
-                                Image(systemName: "cursorarrow.click")
-                                    .padding(.leading, 100)
                             }
-                        }
-                        .accessibilityLabel("SelectGraphButton")
-                        
-                        VStack{
-                            if isFormGraph{
-                                
-                                Text("Form Progress")
-                                    .font(.title2)
-                                    .bold()
-                                WorkoutGraphForm()
-                            }
-                            else if isVelocityGraph{
-                                
-                                Text("Velocity Progress")
-                                    .font(.title2)
-                                    .bold()
-                                WorkoutGraphVelocity()
+                            
+                            HStack{
+                                Text("Wrist Stability (Left Right) - \(Int(workoutSession["overallWristStabilityLeftRight"] as? Double ?? 0.0))%")
+                                if workoutSession["overallWristStabilityLeftRight"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
                                 
                             }
-                        }
-                        .shadow(color: Color.blue.opacity(0.5), radius: 10, x: 0, y: 5)
-                        
-                        
-                    }
-                    VStack {
-                        HStack{
-                            VStack(alignment: .leading){
-                                Text("Overall Form - 80%")
-                                Text("Overall Velocity - 70%")
+                            
+                            HStack {
+                                Text("Wrist Stability (Up Down) - \(Int(workoutSession["overallWristStabilityUpDown"] as? Double ?? 0.0))%")
+                                if workoutSession["overallWristStabilityUpDown"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
                             }
-                            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                            .padding(.leading,20)
-                            Spacer()
-                            Image("dinosaur")
-                                .resizable()
-                                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/,height: 100)
-                                .cornerRadius(50)
-                                .padding(.trailing, 20)
+                            
+                            
+                            HStack {
+                                Text("Elbow Swing - \(Int(workoutSession["overallElbowSwing"] as? Double ?? 0.0))%")
+                                if workoutSession["overallElbowSwing"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
+                            }
+                            
+                            
+                            HStack {
+                                Text("Elbow Flare (Left Right) - \(Int(workoutSession["overallElbowFlareLeftRight"] as? Double ?? 0.0))%")
+                                if workoutSession["overallElbowFlareLeftRight"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
+                            }
+                            
+                            
+                            HStack {
+                                Text("Elbow Flare (Up Down) - \(Int(workoutSession["overallElbowFlareUpDown"] as? Double ?? 0.0))%")
+                                if workoutSession["overallElbowFlareUpDown"] as? Double ?? 0.0 < 70 {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .bold()
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.green)
+                                        .bold()
+                                }
+                            }
+                            
+                            
                             
                         }
-                        Spacer()
+                        .foregroundColor(.white)
+                        //get data for each set in the workout
+                        let exerciseSets = viewModel.coreDataManager.fetchExerciseSets(for:workoutSession["workoutNum"] as? Int64 ?? 0)
+                        ForEach(0..<exerciseSets.count, id: \.self) { index in
+                            let exerciseSet = exerciseSets[index]
+                            DisclosureGroup(content: {
+                                VStack(alignment: .leading, spacing: 10) {
+                                    HStack {
+                                        Text("Curl Acceleration - \(Int(exerciseSet["avgCurlAcceleration"] as? Double ?? 0))%")
+                                        if exerciseSet["avgCurlAcceleration"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        Text("Wrist Stability (Left Right) - \(Int(exerciseSet["avgWristStabilityLeftRight"] as? Double ?? 0))%")
+                                        if exerciseSet["avgWristStabilityLeftRight"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        Text("Wrist Stability (Up Down) - \(Int(exerciseSet["avgWristStabilityUpDown"] as? Double ?? 0))%")
+                                        if exerciseSet["avgWristStabilityUpDown"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        Text("Elbow Swing - \(Int(exerciseSet["avgElbowSwing"] as? Double ?? 0))%")
+                                        if exerciseSet["avgElbowSwing"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        Text("Elbow Flare (Left Right) - \(Int(exerciseSet["avgElbowFlareLeftRight"] as? Double ?? 0))%")
+                                        if exerciseSet["avgElbowFlareLeftRight"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        Text("Elbow Flare (Up Down) - \(Int(exerciseSet["avgElbowFlareUpDown"] as? Double ?? 0))%")
+                                        if exerciseSet["avgElbowFlareUpDown"] as? Double ?? 0 < 70 {
+                                            Image(systemName: "xmark")
+                                                .foregroundColor(.red)
+                                                .bold()
+                                        } else {
+                                            Image(systemName: "checkmark")
+                                                .foregroundColor(.green)
+                                                .bold()
+                                        }
+                                    }
+                                    
+                                    
+                                }
+                                .padding(.horizontal)
+                                .foregroundColor(.white)
+                                .font(.callout)
+                                .padding(.bottom, 10)
+                            }, label: {
+                                HStack {
+                                    Text(" Set \(index+1)")
+                                        .font(.title3)
+                                        .foregroundColor(.white)
+                                        .bold()
+                                        .underline()
+                                }
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            })
+                        }
+                        
                     }
-                    .frame(height: 150)
-                    
-                    
-                    
-                    
-                    
+                    .padding(.horizontal)
+                    .frame(width: 350)
+                    .background(Color.africanViolet)
+                    .cornerRadius(20)
                 }
             }
+            
+            
         }
-        .background(Color.black)
-        .foregroundColor(.white)
-        
-        
     }
 }
+
 
 
 #Preview {
-    PostWorkout(viewModel: OverallProgressViewModel())
+    allFeedback(coreDataManager: CoreDataManager(container: PersistenceController.preview.container))
 }
+

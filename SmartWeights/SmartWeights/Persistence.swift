@@ -38,16 +38,22 @@ struct PersistenceController {
 
     /// The persistent container for the application. This implementation creates and returns a container, having loaded the store for the application to it.
     let container: NSPersistentCloudKitContainer
+    
+    static let sharedManagedObjectModel: NSManagedObjectModel = {
+            let modelURL = Bundle.main.url(forResource: "SmartWeights", withExtension: "momd")!
+            return NSManagedObjectModel(contentsOf: modelURL)!
+        }()
 
     /// Initializes a new PersistenceController.
     /// The inMemory flag determines whether the persistent store is stored in memory or on disk.
     init(inMemory: Bool = false) {
-        container = NSPersistentCloudKitContainer(name: "SmartWeights")
-        
-        // Configures the persistent store for in-memory use if specified. This is useful for unit tests or preview functionality.
-        if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
-        }
+            container = NSPersistentCloudKitContainer(name: "SmartWeights", managedObjectModel: PersistenceController.sharedManagedObjectModel)
+            
+            if inMemory {
+                let description = NSPersistentStoreDescription()
+                description.type = NSInMemoryStoreType
+                container.persistentStoreDescriptions = [description]
+            }
         
         // Loads the persistent stores and handles any errors.
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -67,7 +73,28 @@ struct PersistenceController {
             }
         })
         
+        if inMemory {
+//            If in-memory store, disable cloudkit integration
+            container.viewContext.automaticallyMergesChangesFromParent = false
+            container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            container.persistentStoreDescriptions.forEach({ $0.setOption(false as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)})
+        }
+        
         // Ensures that the viewContext automatically merges changes saved in any context that is a child of the main context.
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+}
+
+extension PersistenceController {
+    func saveContext() {
+        let context = container.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
     }
 }

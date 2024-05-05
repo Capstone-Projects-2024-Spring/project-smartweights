@@ -6,92 +6,133 @@
 //
 
 import SwiftUI
+import GameKit
 
 struct ChallengesTab: View {
-    let challenges = [
-        Challenge(title: "1st Sign In", description: "Sign in for the first time.", currentProgress: 0, progressGoal: 1, reward: "+ 1000 XP", image: Image("C-1stLogin")),
-        Challenge(title: "1st Workout", description: "Complete your first workout.", currentProgress: 0, progressGoal: 1, reward: "+ 200 SP", image: Image("C-1stWorkout")),
-        Challenge(title: "New Shopper", description: "Purchase your first item.", currentProgress: 0, progressGoal: 1, reward: "+ 100 XP", image: Image("C-1stItemBought")),
-        Challenge(title: "Outfit Change", description: "Customize your pet's outfit and background for the first time.", currentProgress: 1, progressGoal: 2, reward: "+ 500 XP", image: Image("C-1stOutfitChange"))
-        /*Challenge(title: "Challenge 5", description: "Description for Challenge 5.", currentProgress: 8, progressGoal: 10, reward: "+ 500 SP"),
-        Challenge(title: "Challenge 6", description: "Description for Challenge 6.", currentProgress: 1, progressGoal: 10, reward: "+ 100 XP") */
-    ]
-    
+    @ObservedObject var challengesViewModel = ChallengesViewModel()
+    	
     var body: some View {
         NavigationView {
-            ChallengesList(challenges: challenges)
+            ChallengesList(challenges: challengesViewModel.challenges, fetchGameCenterProgress: fetchGameCenterProgress)
                 .navigationBarTitle("Achievements", displayMode: .inline)
+                .preferredColorScheme(.light) // force light mode
+        }
+    }
+    
+    func fetchGameCenterProgress() {
+        GameCenterManager.shared.fetchAllAchievementsProgress { progressDict, error in
+            if let error = error {
+                print("Error fetching achievements: \(error.localizedDescription)")
+            } else if let progressDict = progressDict {
+                DispatchQueue.main.async {
+                    for i in self.challengesViewModel.challenges.indices {
+                        if let percentComplete = progressDict[self.challengesViewModel.challenges[i].achievementIdentifier] {
+                            // Update the current progress with the fetched percent complete directly
+                            self.challengesViewModel.challenges[i].currentProgress = Int(percentComplete)
+                            // Determine if the challenge is completed based on whether the percent complete is 100
+                            self.challengesViewModel.challenges[i].isCompleted = percentComplete == 100.0
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
-struct Challenge: Identifiable {
+class Challenge: Identifiable, ObservableObject {
     var id = UUID()
     var title: String
     var description: String
-    var currentProgress: Int
-    var progressGoal: Int
-    var reward: String
     var image: Image // added for custom images
+    var achievementIdentifier: String
+    @Published var currentProgress: Int
+    @Published var isCompleted: Bool
     
-    var progressPercent: Double {
-        return Double(currentProgress) / Double(progressGoal)
-    }
-}
-
-struct ChallengeRow: View {
-    var challenge: Challenge
-    
-    var body: some View {
-        VStack {
-            HStack {
-                challenge.image // display image for each challenge
-                    .resizable()
-                    .frame(width: 60, height: 60) // can change size if needed
-                //Image(systemName: "figure.strengthtraining.traditional")
-                    .foregroundColor(.yellow)
-                    .padding(.trailing, 8)
-                VStack(alignment: .leading) {
-                    Text(challenge.title)
-                        .font(.headline)
-                    Text(challenge.description)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-                Spacer()
-                VStack(alignment: .trailing) {
-                    Text("\(challenge.currentProgress)/\(challenge.progressGoal)")
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
-                    Text(challenge.reward)
-                        .font(.subheadline)
-                        .foregroundColor(.green)
-                }
-            }
-            ProgressView(value: challenge.progressPercent)
-                .progressViewStyle(LinearProgressViewStyle())
-        }
+    init(title: String, description: String, image: Image, achievementIdentifier: String, currentProgress: Int, isCompleted: Bool) {
+        self.title = title
+        self.description = description
+        self.image = image
+        self.achievementIdentifier = achievementIdentifier
+        self.currentProgress = currentProgress
+        self.isCompleted = isCompleted
     }
 }
 
 struct ChallengesList: View {
     @State private var selectedTab = 0
     var challenges: [Challenge]
-    
+    var fetchGameCenterProgress: () -> Void
+    @State private var updateListKey = false // Added state to force update
+
     var body: some View {
         VStack {
-            Picker(selection: $selectedTab, label: Text("Select a tab")) {
-                Text("In Progress").tag(0)
-                Text("Completed").tag(1)
+            HStack {
+                Spacer()
+                Picker(selection: $selectedTab, label: Text("Select a tab")) {
+                    Text("In Progress").tag(0)
+                    Text("Completed").tag(1)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                Spacer()
+                
+                Button(action: refreshList) {
+                    Image(systemName: "arrow.clockwise")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(.blue)
+                }
+                .padding(.trailing, 5)  // Provide some spacing between buttons
+                
+                Button(action: {
+                    GameCenterManager.shared.showGameCenterAchievements()
+                }) {
+                    Image("GameCenterIcon")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.blue)
+                        .padding(1)
+                        .background(Color.white)
+                }
+                Spacer()
             }
-            .pickerStyle(SegmentedPickerStyle())
-            List(challenges) { challenge in
-                ChallengeRow(challenge: challenge)
+            .padding(.horizontal)
+
+            List(challenges.filter { selectedTab == 0 ? !$0.isCompleted : $0.isCompleted }) { challenge in
+                VStack {
+                    HStack {
+                        challenge.image // display image for each challenge
+                            .resizable()
+                            .frame(width: 60, height: 60) // can change size if needed
+                            .foregroundColor(.yellow)
+                            .padding(.trailing, 8)
+                        VStack(alignment: .leading) {
+                            Text(challenge.title)
+                                .font(.headline)
+                            Text(challenge.description)
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                    }
+                    ProgressView(value: Double(challenge.currentProgress), total: 100)
+                        .progressViewStyle(LinearProgressViewStyle())
+                        .accentColor(.blue) // Customizing the color of the progress bar
+                }
             }
+            .id(updateListKey) // Use the state key to force the list to re-render
         }
+        .onAppear(perform: refreshList)
+    }
+    
+    func refreshList() {
+        fetchGameCenterProgress()
+        updateListKey.toggle() // Toggle the key to force the list to update
     }
 }
 
 #Preview {
     ChallengesTab()
 }
+
