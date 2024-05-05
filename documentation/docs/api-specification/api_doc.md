@@ -1,5 +1,114 @@
 # Design API
 
+
+# Hardware Software
+
+## Class: MPU6050
+Class for reading gyro rates and acceleration data from an MPU-6050 module via I2C.
+
+<details>
+
+
+
+- `read_accel_data() → tuple[float, float, float]`: Read the accelerometer data, in a (x, y, z) tuple.
+- `read_accel_range() → int`: Reads the accelerometer range setting.
+- `read_gyro_data() → tuple[float, float, float]`: Read the gyroscope data, in a (x, y, z) tuple.
+- `read_gyro_range() → int`: Reads the gyroscope range setting.
+- `read_temperature() → float`: Reads the temperature, in Celsius, of the onboard temperature sensor.
+- `sleep() → None`: Places MPU-6050 in sleep mode (low power consumption).
+- `wake() → None`: Wake up the MPU-6050.
+- `who_am_i() → int`: Returns the address of the MPU-6050.
+- `write_accel_range(range: int) → None`: Sets the accelerometer range setting.
+- `write_gyro_range(range: int) → None`: Sets the gyroscope range setting.
+- `write_lpf_range(range: int) → None`: Sets low pass filter range.
+
+</details>
+
+
+## Class: main
+A class that is responsible for advertising data via Bluetooth
+
+
+<details>
+
+
+
+- `advertising_payload(limited_disc=False, br_edr=False, name=None, services=None, appearance=0)`: Generate a payload for advertising.
+- `decode_field(payload, adv_type)`: Decode a field from an advertising payload.
+- `decode_name(payload)`: Decode the local name from an advertising payload.
+- `decode_services(payload)`: Decode a list of UUIDs from an advertising payload.
+- `demo()`: Run a demonstration.
+  
+</details>
+
+## Class: MPU Data
+
+<details>
+
+Class to get accelerometer and gyroscope data.
+
+- `__init__(id: str)`: The ID of the MPU6050 sensor.
+- `get_accel_data() → tuple`: Get the accelerometer data.
+- `get_gyro_data() → tuple`: Get the gyroscope data.
+
+</details>
+
+## Class: BLEcentral
+
+BLEcentral is a class that manages a central role in a Bluetooth Low Energy (BLE) connection. It conforms to `NSObject`, `CBCentralManagerDelegate`, `CBPeripheralDelegate`, and `ObservableObject`.
+
+
+<details>
+
+
+
+### Overview
+
+This class is responsible for scanning for, connecting to, and disconnecting from peripherals.
+
+**Note:** This class specifically looks for peripherals named “MPU6050-1” and “MPU6050-2”.
+
+### Initializers
+
+ `init()`
+Initializes the central manager and starts scanning for peripherals with the specified service UUIDs.
+
+### Instance Properties
+
+- `MPU6050_1Accelerations: [[Int]]`
+- `MPU6050_1Gyros: [[Int]]`
+- `MPU6050_1_Accel: [Int]`
+- `MPU6050_1_All_Accelerations: [[Int]]`
+- `MPU6050_1_All_Gyros: [[Int]]`
+- `MPU6050_1_Gyro: [Int]`
+- `MPU6050_2Accelerations: [[Int]]`
+- `MPU6050_2Gyros: [[Int]]`
+- `MPU6050_2_Accel: [Int]`
+- `MPU6050_2_All_Accelerations: [[Int]]`
+- `MPU6050_2_All_Gyros: [[Int]]`
+- `MPU6050_2_Gyro: [Int]`
+- `MPU_1_Connected: Bool`: A boolean that indicates whether MPU6050-1 is connected.
+- `MPU_2_Connected: Bool`: A boolean that indicates whether MPU6050-2 is connected.
+- `collectDataToggle: Bool`: A boolean that toggles whether the app should collect data from the peripherals.
+- `isConnected: Bool`
+- `listOfPeripherals: [Any]`
+- `peripheralData: [AnyHashable : Any]`
+
+### Instance Methods
+
+- `func centralManager(CBCentralManager, didConnect: CBPeripheral)`: Discovers services on the peripheral.
+- `func centralManager(CBCentralManager, didDisconnectPeripheral: CBPeripheral, error: Error?)`: Scans for peripherals with the specified service UUIDs.
+- `func centralManager(CBCentralManager, didDiscover: CBPeripheral, advertisementData: [String : Any], rssi: NSNumber)`: Connects to the peripheral with the specified service UUID.
+- `func centralManager(CBCentralManager, didFailToConnect: CBPeripheral, error: Error?)`: Discovers the characteristics of the service on the peripheral.
+- `func centralManagerDidUpdateState(CBCentralManager)`: Scans for devices with the AccelServiceUUID.
+- `func peripheral(CBPeripheral, didDiscoverCharacteristicsFor: CBService, error: Error?)`: Discovers the characteristics of the service on the peripheral.
+- `func peripheral(CBPeripheral, didDiscoverServices: Error?)`: Discovers the characteristics of the service on the peripheral.
+- `func peripheral(CBPeripheral, didUpdateValueFor: CBCharacteristic, error: Error?)`: Gets the updated data from the characteristic.
+
+
+</details>
+
+
 # Classes
 
 ## Class: FormCriteria
@@ -54,7 +163,7 @@ View model to handle the workout data.
 
 ### Initializers
 
-#### `init(ble: BLEcentral, formCriteria: FormCriteria, coreDataManager: CoreDataManager)`
+`init(ble: BLEcentral, formCriteria: FormCriteria, coreDataManager: CoreDataManager)`
 
 Initialize the view model.
 
@@ -422,115 +531,6 @@ The fitnessPlanViewModel class contains variables for a user’s fitness goals.
   
 </details>
 
-
-  
-# Hardware Software
-
-## Class: MPU6050
-Class for reading gyro rates and acceleration data from an MPU-6050 module via I2C.
-
-<details>
-
-
-
-- `read_accel_data() → tuple[float, float, float]`: Read the accelerometer data, in a (x, y, z) tuple.
-- `read_accel_range() → int`: Reads the accelerometer range setting.
-- `read_gyro_data() → tuple[float, float, float]`: Read the gyroscope data, in a (x, y, z) tuple.
-- `read_gyro_range() → int`: Reads the gyroscope range setting.
-- `read_temperature() → float`: Reads the temperature, in Celsius, of the onboard temperature sensor.
-- `sleep() → None`: Places MPU-6050 in sleep mode (low power consumption).
-- `wake() → None`: Wake up the MPU-6050.
-- `who_am_i() → int`: Returns the address of the MPU-6050.
-- `write_accel_range(range: int) → None`: Sets the accelerometer range setting.
-- `write_gyro_range(range: int) → None`: Sets the gyroscope range setting.
-- `write_lpf_range(range: int) → None`: Sets low pass filter range.
-
-</details>
-
-
-## Class: main
-A class that is responsible for advertising data via Bluetooth
-
-
-<details>
-
-
-
-- `advertising_payload(limited_disc=False, br_edr=False, name=None, services=None, appearance=0)`: Generate a payload for advertising.
-- `decode_field(payload, adv_type)`: Decode a field from an advertising payload.
-- `decode_name(payload)`: Decode the local name from an advertising payload.
-- `decode_services(payload)`: Decode a list of UUIDs from an advertising payload.
-- `demo()`: Run a demonstration.
-  
-</details>
-
-## Class: MPU Data
-
-<details>
-
-Class to get accelerometer and gyroscope data.
-
-- `__init__(id: str)`: The ID of the MPU6050 sensor.
-- `get_accel_data() → tuple`: Get the accelerometer data.
-- `get_gyro_data() → tuple`: Get the gyroscope data.
-
-</details>
-
-## Class: BLEcentral
-
-BLEcentral is a class that manages a central role in a Bluetooth Low Energy (BLE) connection. It conforms to `NSObject`, `CBCentralManagerDelegate`, `CBPeripheralDelegate`, and `ObservableObject`.
-
-
-<details>
-
-
-
-### Overview
-
-This class is responsible for scanning for, connecting to, and disconnecting from peripherals.
-
-**Note:** This class specifically looks for peripherals named “MPU6050-1” and “MPU6050-2”.
-
-### Initializers
-
-### `init()`
-Initializes the central manager and starts scanning for peripherals with the specified service UUIDs.
-
-### Instance Properties
-
-- `MPU6050_1Accelerations: [[Int]]`
-- `MPU6050_1Gyros: [[Int]]`
-- `MPU6050_1_Accel: [Int]`
-- `MPU6050_1_All_Accelerations: [[Int]]`
-- `MPU6050_1_All_Gyros: [[Int]]`
-- `MPU6050_1_Gyro: [Int]`
-- `MPU6050_2Accelerations: [[Int]]`
-- `MPU6050_2Gyros: [[Int]]`
-- `MPU6050_2_Accel: [Int]`
-- `MPU6050_2_All_Accelerations: [[Int]]`
-- `MPU6050_2_All_Gyros: [[Int]]`
-- `MPU6050_2_Gyro: [Int]`
-- `MPU_1_Connected: Bool`: A boolean that indicates whether MPU6050-1 is connected.
-- `MPU_2_Connected: Bool`: A boolean that indicates whether MPU6050-2 is connected.
-- `collectDataToggle: Bool`: A boolean that toggles whether the app should collect data from the peripherals.
-- `isConnected: Bool`
-- `listOfPeripherals: [Any]`
-- `peripheralData: [AnyHashable : Any]`
-
-### Instance Methods
-
-- `func centralManager(CBCentralManager, didConnect: CBPeripheral)`: Discovers services on the peripheral.
-- `func centralManager(CBCentralManager, didDisconnectPeripheral: CBPeripheral, error: Error?)`: Scans for peripherals with the specified service UUIDs.
-- `func centralManager(CBCentralManager, didDiscover: CBPeripheral, advertisementData: [String : Any], rssi: NSNumber)`: Connects to the peripheral with the specified service UUID.
-- `func centralManager(CBCentralManager, didFailToConnect: CBPeripheral, error: Error?)`: Discovers the characteristics of the service on the peripheral.
-- `func centralManagerDidUpdateState(CBCentralManager)`: Scans for devices with the AccelServiceUUID.
-- `func peripheral(CBPeripheral, didDiscoverCharacteristicsFor: CBService, error: Error?)`: Discovers the characteristics of the service on the peripheral.
-- `func peripheral(CBPeripheral, didDiscoverServices: Error?)`: Discovers the characteristics of the service on the peripheral.
-- `func peripheral(CBPeripheral, didUpdateValueFor: CBCharacteristic, error: Error?)`: Gets the updated data from the characteristic.
-
-
-</details>
-
 ## Class: PetPageFunction
 
 <details>
@@ -606,11 +606,11 @@ A class that manages the functionality of the pet page.
 <details>
 Instructions on how to attach the sensors on the dumbbell and the elbow sleeve.
 
-## Initializers
+### Initializers
 
-### `init()`
+#### `init()`
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`
 
@@ -624,11 +624,11 @@ OverallWorkoutData is a view that displays the overall feedback for the workout.
 
 **Note:** This view displays the overall data for the workout.
 
-## Initializers
+### Initializers
 
 #### `init(workoutAnalysisForSets: Binding<[[String : Double]]>, viewModel: WorkoutViewModel, totalSets: Int)`
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`: Represents the SwiftUI view of the structure.
 - `var totalSets: Int`: Represents the total number of sets in the workout.
@@ -638,7 +638,7 @@ OverallWorkoutData is a view that displays the overall feedback for the workout.
 
 </details>
 
-# Structure: PostWorkoutData
+## Structure: PostWorkoutData
 
 <details>
 
@@ -646,13 +646,13 @@ PostWorkoutData is a view that displays the feedback for each set in the workout
 
 **Note:** This view displays both the data for the set and the overall data for the workout.
 
-## Initializers
+### Initializers
 
-### `init(viewModel: WorkoutViewModel, setIndex: Int, feedback: (String, String, String, String), workoutAnalysis: [String : Double])`
+#### `init(viewModel: WorkoutViewModel, setIndex: Int, feedback: (String, String, String, String), workoutAnalysis: [String : Double])`
 
 Initializes the PostWorkoutData view.
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`
 - `let feedback: (String, String, String, String)`: Represents the feedback data for the set.
@@ -662,26 +662,26 @@ Initializes the PostWorkoutData view.
 - 
 </details>
 
-# Structure: RechargeSensors
+## Structure: RechargeSensors
 
 <details>
 
 Instructions on how to recharge the sensors.
 
-## Initializers
+### Initializers
 
-### `init()`
+#### `init()`
 
 Initializes the RechargeSensors view.
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`
 
 </details>
 
 
-# Structure: WorkoutFeedback
+## Structure: WorkoutFeedback
 
 <details>
 
@@ -689,13 +689,13 @@ View to show all data collected from the most recent workout.
 
 **Note:** This view displays the feedback for each set in the workout and the overall data for the workout.
 
-## Initializers
+### Initializers
 
-### `init(viewModel: WorkoutViewModel, feedbackDataForSets: Binding<[(String, String, String, String)]>, workoutAnalysisForSets: Binding<[[String : Double]]>, totalSets: Binding<Int>)`
+#### `init(viewModel: WorkoutViewModel, feedbackDataForSets: Binding<[(String, String, String, String)]>, workoutAnalysisForSets: Binding<[[String : Double]]>, totalSets: Binding<Int>)`
 
 This initializer initializes the `WorkoutFeedback` view with the provided view model and feedback data for sets.
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`: Represents the SwiftUI view of the structure.
 - `var feedbackDataForSets: [(String, String, String, String)]`: Represents the feedback data for each set in the workout.
@@ -705,7 +705,7 @@ This initializer initializes the `WorkoutFeedback` view with the provided view m
 
 </details>
 
-# Structure: allFeedback
+## Structure: allFeedback
 
 <details>
 
@@ -713,13 +713,13 @@ View for the all feedback page.
 
 **Note:** This view is used to display all the feedback for the user.
 
-## Initializers
+### Initializers
 
-### `init(coreDataManager: CoreDataManager)`
+#### `init(coreDataManager: CoreDataManager)`
 
 Initializes the allFeedback view with the provided `CoreDataManager`.
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`: Represents the SwiftUI view of the structure.
 - `var coreDataManager: CoreDataManager`: Represents the CoreDataManager associated with the view.
@@ -727,17 +727,17 @@ Initializes the allFeedback view with the provided `CoreDataManager`.
 
 </details>
 
-# Structure: WorkoutMainPage
+## Structure: WorkoutMainPage
 
 <details>
 
 Main structure to display the workout page with integrated UI components.
 
-## Overview
+### Overview
 
 This structure is responsible for displaying the workout page, including the workout tab selection, workout details input form, and the workout feedback view.
 
-## Topics
+### Topics
 
 ### Structures
 
@@ -747,11 +747,11 @@ This structure is responsible for displaying the workout page, including the wor
 
 ### Initializers
 
-### `init(coreDataManager: CoreDataManager)`
+ `init(coreDataManager: CoreDataManager)`
 
 Initialize the workout page with the BLE central manager and form criteria.
 
-## Instance Properties
+### Instance Properties
 
 - `var backgroundItemDBManager: BackgroundItemDBManager`
 - `var ble: BLEcentral`
@@ -764,13 +764,13 @@ Initialize the workout page with the BLE central manager and form criteria.
 - `var viewModel: WorkoutViewModel`
 - `var workoutPageViewModel: WorkoutPageViewModel`
 
-## Enumerations
+### Enumerations
 
 - `enum SetType`
 
 </details>
 
-# Structure: PetStore
+## Structure: PetStore
 
 <details>
 Display view for the Pet Store depending on available items and prices.
@@ -795,7 +795,7 @@ Display view for the Pet Store depending on available items and prices.
 SwiftUI.View
 </details>
 
-# Structure: ItemDetailView
+## Structure: ItemDetailView
 
 <details>
 ItemDetailView struct for previewing and purchasing an item.
@@ -821,7 +821,7 @@ ItemDetailView struct for previewing and purchasing an item.
 - `SwiftUI.View`
 </details>
 
-# Structure: SellingItem
+## Structure: SellingItem
 <details>
   
 SellingItem struct that contains essential item attributes.
@@ -848,7 +848,7 @@ SellingItem struct that contains essential item attributes.
 </details>
 
 
-# Structure: ChallengesList
+## Structure: ChallengesList
 <details>
 
 Struct containing all achievements in the application.
@@ -876,7 +876,7 @@ Struct containing all achievements in the application.
 SwiftUI.View
 </details>
 
-# Structure: ChallengesTab
+## Structure: ChallengesTab
 <details>
 
 Struct containing the sorting and fetching of Game Center achievements.
@@ -903,7 +903,7 @@ Struct containing the sorting and fetching of Game Center achievements.
 SwiftUI.View
 </details>
 
-# Structure: Achievement
+## Structure: Achievement
 
 <details>
 
@@ -932,7 +932,7 @@ Struct containing claiming functionality for achievements.
 - `Swift.Sendable`
 </details>
 
-# Structure: UserAchievement
+## Structure: UserAchievement
 
 <details>
 
@@ -956,7 +956,7 @@ UserAchievement struct for database information of achievements.
 - `Swift.Sendable`
 </details>
 
-# Structure: SettingsPageView
+## Structure: SettingsPageView
 
 <details>
 
@@ -1001,7 +1001,7 @@ SettingsPageView struct for displaying user settings.
 - `SwiftUI.View`
 </details>
 
-# Structure: NotificationManager
+## Structure: NotificationManager
 
 <details>
 
@@ -1029,7 +1029,7 @@ NotificationManager struct to handle user notifications.
 - `Swift.Sendable`
 </details>
 
-# Structure: ShareSheetView
+## Structure: ShareSheetView
 
 <details>
 
@@ -1061,7 +1061,7 @@ ShareSheetView struct for displaying Apple UI in sharing feature.
 - `SwiftUI.View`
 </details>
 
-# Structure: FitnessPlanPage
+## Structure: FitnessPlanPage
 
 <details>
   
@@ -1095,7 +1095,7 @@ FitnessPlanPage struct that structures the view for a fitness planning page.
 - `SwiftUI.View`
 </details>
 
-# Structure: FitnessPlanModel
+## Structure: FitnessPlanModel
 
 <details>
 
@@ -1122,7 +1122,7 @@ FitnessPlanModel struct for database related information.
 - `Swift.Sendable`
 </details>
 
-# Structure: FoodItem
+## Structure: FoodItem
 
 <details>
 A stuct representing a food item.
@@ -1139,7 +1139,7 @@ A stuct representing a food item.
 - `var quantity: Int`
 </details>
 
-# Structure: Accessory
+## Structure: Accessory
 
 <details>
 
@@ -1155,7 +1155,7 @@ A stuct representing a food item.
 
 </details>
 
-# Structure: BackgroundImage
+## Structure: BackgroundImage
 
 <details>
 
@@ -1171,7 +1171,7 @@ A stuct representing a food item.
 
 </details>
 
-# Structure: Pet_selection
+## Structure: Pet_selection
 
 <details>
 
@@ -1187,7 +1187,7 @@ A stuct representing a food item.
 
 </details>
 
-# Structure: Customize_page
+## Structure: Customize_page
 <details>
 The view for customizing the pet's appearance.
 
@@ -1227,7 +1227,7 @@ A custom progress view that displays the progress value and label.
 
 </details>
 
-# Structure: FoodSelectionView
+## Structure: FoodSelectionView
 
 <details>
 A view representing the food selection view.
@@ -1245,7 +1245,7 @@ A view representing the food selection view.
 
 </details>
 
-# Structure: HamburgerMenu
+## Structure: HamburgerMenu
 
 <details>
 A view representing a hamburger menu with options to navigate to different pages.
@@ -1262,7 +1262,7 @@ A view representing a hamburger menu with options to navigate to different pages
 
 </details>
 
-# Structure: Pet_Page
+## Structure: Pet_Page
 
 <details>
 A view representing the pet page.
@@ -1280,7 +1280,7 @@ A view representing the pet page.
 </details>
 
 
-# Structure: LoginView
+## Structure: LoginView
 <details>
 The view for the login screen of the SmartWeights app
 
@@ -1305,7 +1305,7 @@ The view for the login screen of the SmartWeights app
 </details>
 
 
-# Structure: CarouselButton
+## Structure: CarouselButton
 <details>
 Contains parameters for the additional page carousel buttons, which are used in the NavigationCarousel struct.
 
@@ -1320,7 +1320,7 @@ Contains parameters for the additional page carousel buttons, which are used in 
 </details>
 
 
-# Structure: Homepage
+## Structure: Homepage
 <details>
 The homepage of the SmartWeights app.
 
@@ -1335,7 +1335,7 @@ The homepage of the SmartWeights app.
 </details>
 
 
-# Structure: NavigationCarousel
+## Structure: NavigationCarousel
 <details>
 Creates the additional button carousel.
 
@@ -1352,7 +1352,7 @@ Creates the additional button carousel.
 </details>
 
 
-# Structure: StartWorkoutButton
+## Structure: StartWorkoutButton
 <details>
 The start workout button, located on the home page.
 
@@ -1365,7 +1365,7 @@ The start workout button, located on the home page.
 </details>
 
 
-# Structure: TabBar
+## Structure: TabBar
 <details>
 Struct TabBar implements the Tab enumeration and TabView to create a navigable tab bar.
 
@@ -1381,7 +1381,7 @@ Struct TabBar implements the Tab enumeration and TabView to create a navigable t
 </details>
 
 
-# Structure: TutorialPopup
+## Structure: TutorialPopup
 <details>
 Tutorial pop up for new users.
 
@@ -1395,7 +1395,7 @@ Tutorial pop up for new users.
 </details>
 
 
-# Structure: VideoCard
+## Structure: VideoCard
 <details>
 Video card used in the VideoCarousel struct.
 
@@ -1411,7 +1411,7 @@ Video card used in the VideoCarousel struct.
 </details>
 
 
-# Structure: VideoCarousel
+## Structure: VideoCarousel
 <details>
 Carousel of VideoCard objects
 
@@ -1424,7 +1424,7 @@ Carousel of VideoCard objects
 </details>
 
 
-# Structure: VideoView
+## Structure: VideoView
 <details>
 Embedded YouTube videos via WebKit library and UIViewRepresentable protocol.
 
