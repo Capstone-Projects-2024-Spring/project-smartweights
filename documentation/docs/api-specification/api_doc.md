@@ -1,10 +1,119 @@
 # Design API
 
+
+# Hardware Software
+
+## Class: MPU6050
+Class for reading gyro rates and acceleration data from an MPU-6050 module via I2C.
+
+<details>
+
+
+
+- `read_accel_data() → tuple[float, float, float]`: Read the accelerometer data, in a (x, y, z) tuple.
+- `read_accel_range() → int`: Reads the accelerometer range setting.
+- `read_gyro_data() → tuple[float, float, float]`: Read the gyroscope data, in a (x, y, z) tuple.
+- `read_gyro_range() → int`: Reads the gyroscope range setting.
+- `read_temperature() → float`: Reads the temperature, in Celsius, of the onboard temperature sensor.
+- `sleep() → None`: Places MPU-6050 in sleep mode (low power consumption).
+- `wake() → None`: Wake up the MPU-6050.
+- `who_am_i() → int`: Returns the address of the MPU-6050.
+- `write_accel_range(range: int) → None`: Sets the accelerometer range setting.
+- `write_gyro_range(range: int) → None`: Sets the gyroscope range setting.
+- `write_lpf_range(range: int) → None`: Sets low pass filter range.
+
+</details>
+
+
+## Class: main
+A class that is responsible for advertising data via Bluetooth
+
+
+<details>
+
+
+
+- `advertising_payload(limited_disc=False, br_edr=False, name=None, services=None, appearance=0)`: Generate a payload for advertising.
+- `decode_field(payload, adv_type)`: Decode a field from an advertising payload.
+- `decode_name(payload)`: Decode the local name from an advertising payload.
+- `decode_services(payload)`: Decode a list of UUIDs from an advertising payload.
+- `demo()`: Run a demonstration.
+  
+</details>
+
+## Class: MPU Data
+
+<details>
+
+Class to get accelerometer and gyroscope data.
+
+- `__init__(id: str)`: The ID of the MPU6050 sensor.
+- `get_accel_data() → tuple`: Get the accelerometer data.
+- `get_gyro_data() → tuple`: Get the gyroscope data.
+
+</details>
+
+## Class: BLEcentral
+
+BLEcentral is a class that manages a central role in a Bluetooth Low Energy (BLE) connection. It conforms to `NSObject`, `CBCentralManagerDelegate`, `CBPeripheralDelegate`, and `ObservableObject`.
+
+
+<details>
+
+
+
+### Overview
+
+This class is responsible for scanning for, connecting to, and disconnecting from peripherals.
+
+**Note:** This class specifically looks for peripherals named “MPU6050-1” and “MPU6050-2”.
+
+### Initializers
+
+ `init()`
+Initializes the central manager and starts scanning for peripherals with the specified service UUIDs.
+
+### Instance Properties
+
+- `MPU6050_1Accelerations: [[Int]]`
+- `MPU6050_1Gyros: [[Int]]`
+- `MPU6050_1_Accel: [Int]`
+- `MPU6050_1_All_Accelerations: [[Int]]`
+- `MPU6050_1_All_Gyros: [[Int]]`
+- `MPU6050_1_Gyro: [Int]`
+- `MPU6050_2Accelerations: [[Int]]`
+- `MPU6050_2Gyros: [[Int]]`
+- `MPU6050_2_Accel: [Int]`
+- `MPU6050_2_All_Accelerations: [[Int]]`
+- `MPU6050_2_All_Gyros: [[Int]]`
+- `MPU6050_2_Gyro: [Int]`
+- `MPU_1_Connected: Bool`: A boolean that indicates whether MPU6050-1 is connected.
+- `MPU_2_Connected: Bool`: A boolean that indicates whether MPU6050-2 is connected.
+- `collectDataToggle: Bool`: A boolean that toggles whether the app should collect data from the peripherals.
+- `isConnected: Bool`
+- `listOfPeripherals: [Any]`
+- `peripheralData: [AnyHashable : Any]`
+
+### Instance Methods
+
+- `func centralManager(CBCentralManager, didConnect: CBPeripheral)`: Discovers services on the peripheral.
+- `func centralManager(CBCentralManager, didDisconnectPeripheral: CBPeripheral, error: Error?)`: Scans for peripherals with the specified service UUIDs.
+- `func centralManager(CBCentralManager, didDiscover: CBPeripheral, advertisementData: [String : Any], rssi: NSNumber)`: Connects to the peripheral with the specified service UUID.
+- `func centralManager(CBCentralManager, didFailToConnect: CBPeripheral, error: Error?)`: Discovers the characteristics of the service on the peripheral.
+- `func centralManagerDidUpdateState(CBCentralManager)`: Scans for devices with the AccelServiceUUID.
+- `func peripheral(CBPeripheral, didDiscoverCharacteristicsFor: CBService, error: Error?)`: Discovers the characteristics of the service on the peripheral.
+- `func peripheral(CBPeripheral, didDiscoverServices: Error?)`: Discovers the characteristics of the service on the peripheral.
+- `func peripheral(CBPeripheral, didUpdateValueFor: CBCharacteristic, error: Error?)`: Gets the updated data from the characteristic.
+
+
+</details>
+
+
 # Classes
 
 ## Class: FormCriteria
 
-<details open>
+<details>
 
 `FormCriteria` is a class that contains the criteria for determining the form of the user during a workout.
 
@@ -48,13 +157,13 @@
 
 ## Class: WorkoutViewModel
 
-<details open>
+<details>
 
 View model to handle the workout data.
 
 ### Initializers
 
-#### `init(ble: BLEcentral, formCriteria: FormCriteria, coreDataManager: CoreDataManager)`
+`init(ble: BLEcentral, formCriteria: FormCriteria, coreDataManager: CoreDataManager)`
 
 Initialize the view model.
 
@@ -137,7 +246,7 @@ Initialize the view model.
 
 ## Class: allFeedbackViewModel
 
-<details open>
+<details>
 
 View model for the all feedback page.
 
@@ -165,7 +274,7 @@ Initialize the view model.
 
 ## Class: storeViewModel
 
-<details open>
+<details>
 
 ViewModel for the pet store and user transactions.
 
@@ -209,7 +318,7 @@ ViewModel for the pet store and user transactions.
 
 ## Class: Challenge
 
-<details open>
+<details>
 
 Challenge class containing information regarding achievements.
 
@@ -241,7 +350,7 @@ Challenge class containing information regarding achievements.
 
 ## Class: ChallengesViewModel
 
-<details open>
+<details>
 
 ViewModel for achievements.
 
@@ -266,7 +375,7 @@ ViewModel for achievements.
 
 ## Class: GameCenterManager
 
-<details open>
+<details>
 
 GameCenterManager class to integrate Game Center into the application.
 
@@ -314,7 +423,7 @@ GameCenterManager class to integrate Game Center into the application.
 
 ## Class: GameCenterManager.GameCenterDelegate
 
-<details open>
+<details>
   
 GameCenterDelegate class for loading and exiting Game Center.
 
@@ -341,7 +450,7 @@ GameCenterDelegate class for loading and exiting Game Center.
 
 ## Class: MorePageViewModel
 
-<details open>
+<details>
 
 ViewModel for the profile page.
 
@@ -387,7 +496,7 @@ ViewModel for the profile page.
 
 ## Class: fitnessPlanViewModel
 
-<details open>
+<details>
   
 The fitnessPlanViewModel class contains variables for a user’s fitness goals.
 
@@ -422,248 +531,9 @@ The fitnessPlanViewModel class contains variables for a user’s fitness goals.
   
 </details>
 
-## Class: CoreDataManager
-
-<details open>
-  Manages persistent data storage using Core Data for the SmartWeights application.
-
-  ### Topics
-  
-  #### Initializers
-  - `init(container: NSPersistentCloudKitContainer, storeDescriptions: [NSPersistentStoreDescription]?)`: Initializes the CoreDataManager with the specified persistent container and optional store configurations.
-  
-  #### Instance Properties
-  - `var persistentContainer: NSPersistentCloudKitContainer`: The shared persistent container from the PersistenceController, configured for CloudKit integration.
-  
-  #### Instance Methods
-  - `func createExerciseSet(workoutSession: WorkoutSession, setNum: Int, avgCurlAcceleration: Double, avgElbowFlareLR: Double, avgElbowFlareUD: Double, avgElbowSwing: Double, avgWristStabilityLR: Double, avgWristStabilityUD: Double) -> ExerciseSet?`: Creates and persists a new ExerciseSet entity associated with a given WorkoutSession.
-  - `func createWorkoutSession(dateTime: Date, workoutNum: Int, reps: Int, weight: Double, overallCurlAcceleration: Double, overallElbowFlareLR: Double, overallElbowFlareUD: Double, overallElbowSwing: Double, overallWristStabilityLR: Double, overallWristStabilityUD: Double) -> WorkoutSession?`: Creates and saves a new WorkoutSession entity with specified parameters.
-  - `func fetchAllExerciseSets() -> [ExerciseSet]`: Fetches all ExerciseSet entities from the persistent store.
-  - `func fetchExerciseSets(for: WorkoutSession) -> [ExerciseSet]`: Fetches ExerciseSet entities associated with a specific WorkoutSession.
-  - `func fetchExerciseSets(for: Int64) -> [[String : Any]]`: Fetches ExerciseSet entities based on a specific workout number.
-  - `func fetchWorkoutSessions() -> [WorkoutSession]`: Fetches all WorkoutSession entities from the persistent store.
-  - `func fetchWorkoutSessions(on: Date) -> [[String : Any]]`: Fetches WorkoutSession entities on a specific date from the persistent store.
-  - `func getNextWorkoutNumber() -> Int`: Retrieves the next sequential workout number to be used for a new WorkoutSession, defaulting to 1 if no sessions exist.
-  - `func updateExerciseSet(ExerciseSet, setNum: Int?, avgCurlAcceleration: Double?, avgElbowFlareLR: Double?, avgElbowFlareUD: Double?, avgElbowSwing: Double?, avgWristStabilityLR: Double?, avgWristStabilityUD: Double?)`: Updates properties of an ExerciseSet entity.
-  - `func updateWorkoutSession(WorkoutSession, dateTime: Date?, overallCurlAcceleration: Double?, overallElbowFlareLR: Double?, overallElbowFlareUD: Double?, overallElbowSwing: Double?, overallWristStabilityLR: Double?, overallWristStabilityUD: Double?)`: Updates properties of a WorkoutSession entity.
-  
-  ### Default Implementations
-  
-  #### ObservableObject Implementations
-  
-  ### Relationships
-  
-  #### Conforms To
-  - `Combine.ObservableObject`
-</details>
-
-## Class: WorkoutSession
-
-<details open>
-  
-  ```
-    @objc(WorkoutSession)
-    class WorkoutSession
-  ```
-
-  ### Topics
-  
-  #### Instance Properties
-  - `var dateTime: Date?`
-  - `var overallCurlAcceleration: Double`
-  - `var overallElbowFlareLeftRight: Double`
-  - `var overallElbowFlareUpDown: Double`
-  - `var overallElbowSwing: Double`
-  - `var overallWristStabilityLeftRight: Double`
-  - `var overallWristStabilityUpDown: Double`
-  - `var reps: Int64`
-  - `var sets: NSSet?`
-  - `var weight: Double`
-  - `var workoutNum: Int64`
-
-  #### Instance Methods
-  - `func addToSets(NSSet)`
-  - `func addToSets(ExerciseSet)`
-  - `func removeFromSets(NSSet)`
-  - `func removeFromSets(ExerciseSet)`
-
-  #### Type Methods
-  - class func fetchRequest() -> `NSFetchRequest<WorkoutSession>`
-
-  ### Default Implementations
-
-  #### Identifiable Implementations
-
-  ### Relationships
-
-  #### Inherits From
-  - CoreData.NSManagedObject
-
-  #### Inherited By
-  - ExerciseSet
-
-  #### Conforms To
-  - Combine.ObservableObject
-  - CoreData.NSFetchRequestResult
-  - ObjectiveC.NSObjectProtocol
-  - Swift.CVarArg
-  - Swift.CustomDebugStringConvertible
-  - Swift.CustomStringConvertible
-  - Swift.Equatable
-  - Swift.Hashable
-  - Swift.Identifiable
-</details>
-
-## Class: ExerciseSet
-<details open>
-
-  ```
-  @objc(ExerciseSet)
-  class ExerciseSet
-  ```
-  
-  ### Topics
-  
-  #### Instance Properties
-  - `var avgCurlAcceleration: Double`
-  - `var avgElbowFlareLeftRight: Double`
-  - `var avgElbowFlareUpDown: Double`
-  - `var avgElbowSwing: Double`
-  - `var avgWristStabilityLeftRight: Double`
-  - `var avgWristStabilityUpDown: Double`
-  - `var setNum: Int64`
-  - `var workoutSession: WorkoutSession?`
-
-  #### Type Methods
-  - `class func fetchRequest() -> NSFetchRequest<ExerciseSet>`
-    
-  ### Relationships
-  
-  #### Inherits From
-  - WorkoutSession
-    
-  #### Conforms To
-  - Combine.ObservableObject
-  - CoreData.NSFetchRequestResult
-  - ObjectiveC.NSObjectProtocol
-  - Swift.CVarArg
-  - Swift.CustomDebugStringConvertible
-  - Swift.CustomStringConvertible
-  - Swift.Equatable
-  - Swift.Hashable
-  - Swift.Identifiable
-</details>
-  
-# Hardware Software
-
-## Class: MPU6050
-Class for reading gyro rates and acceleration data from an MPU-6050 module via I2C.
-
-<details open>
-
-
-
-- `read_accel_data() → tuple[float, float, float]`: Read the accelerometer data, in a (x, y, z) tuple.
-- `read_accel_range() → int`: Reads the accelerometer range setting.
-- `read_gyro_data() → tuple[float, float, float]`: Read the gyroscope data, in a (x, y, z) tuple.
-- `read_gyro_range() → int`: Reads the gyroscope range setting.
-- `read_temperature() → float`: Reads the temperature, in Celsius, of the onboard temperature sensor.
-- `sleep() → None`: Places MPU-6050 in sleep mode (low power consumption).
-- `wake() → None`: Wake up the MPU-6050.
-- `who_am_i() → int`: Returns the address of the MPU-6050.
-- `write_accel_range(range: int) → None`: Sets the accelerometer range setting.
-- `write_gyro_range(range: int) → None`: Sets the gyroscope range setting.
-- `write_lpf_range(range: int) → None`: Sets low pass filter range.
-
-</details>
-
-
-## Class: main
-A class that is responsible for advertising data via Bluetooth
-
-
-<details open>
-
-
-
-- `advertising_payload(limited_disc=False, br_edr=False, name=None, services=None, appearance=0)`: Generate a payload for advertising.
-- `decode_field(payload, adv_type)`: Decode a field from an advertising payload.
-- `decode_name(payload)`: Decode the local name from an advertising payload.
-- `decode_services(payload)`: Decode a list of UUIDs from an advertising payload.
-- `demo()`: Run a demonstration.
-  
-</details>
-
-## Class: MPU Data
-
-<details open>
-
-Class to get accelerometer and gyroscope data.
-
-- `__init__(id: str)`: The ID of the MPU6050 sensor.
-- `get_accel_data() → tuple`: Get the accelerometer data.
-- `get_gyro_data() → tuple`: Get the gyroscope data.
-
-</details>
-
-## Class: BLEcentral
-
-BLEcentral is a class that manages a central role in a Bluetooth Low Energy (BLE) connection. It conforms to `NSObject`, `CBCentralManagerDelegate`, `CBPeripheralDelegate`, and `ObservableObject`.
-
-
-<details open>
-
-
-
-### Overview
-
-This class is responsible for scanning for, connecting to, and disconnecting from peripherals.
-
-**Note:** This class specifically looks for peripherals named “MPU6050-1” and “MPU6050-2”.
-
-### Initializers
-
-### `init()`
-Initializes the central manager and starts scanning for peripherals with the specified service UUIDs.
-
-### Instance Properties
-
-- `MPU6050_1Accelerations: [[Int]]`
-- `MPU6050_1Gyros: [[Int]]`
-- `MPU6050_1_Accel: [Int]`
-- `MPU6050_1_All_Accelerations: [[Int]]`
-- `MPU6050_1_All_Gyros: [[Int]]`
-- `MPU6050_1_Gyro: [Int]`
-- `MPU6050_2Accelerations: [[Int]]`
-- `MPU6050_2Gyros: [[Int]]`
-- `MPU6050_2_Accel: [Int]`
-- `MPU6050_2_All_Accelerations: [[Int]]`
-- `MPU6050_2_All_Gyros: [[Int]]`
-- `MPU6050_2_Gyro: [Int]`
-- `MPU_1_Connected: Bool`: A boolean that indicates whether MPU6050-1 is connected.
-- `MPU_2_Connected: Bool`: A boolean that indicates whether MPU6050-2 is connected.
-- `collectDataToggle: Bool`: A boolean that toggles whether the app should collect data from the peripherals.
-- `isConnected: Bool`
-- `listOfPeripherals: [Any]`
-- `peripheralData: [AnyHashable : Any]`
-
-### Instance Methods
-
-- `func centralManager(CBCentralManager, didConnect: CBPeripheral)`: Discovers services on the peripheral.
-- `func centralManager(CBCentralManager, didDisconnectPeripheral: CBPeripheral, error: Error?)`: Scans for peripherals with the specified service UUIDs.
-- `func centralManager(CBCentralManager, didDiscover: CBPeripheral, advertisementData: [String : Any], rssi: NSNumber)`: Connects to the peripheral with the specified service UUID.
-- `func centralManager(CBCentralManager, didFailToConnect: CBPeripheral, error: Error?)`: Discovers the characteristics of the service on the peripheral.
-- `func centralManagerDidUpdateState(CBCentralManager)`: Scans for devices with the AccelServiceUUID.
-- `func peripheral(CBPeripheral, didDiscoverCharacteristicsFor: CBService, error: Error?)`: Discovers the characteristics of the service on the peripheral.
-- `func peripheral(CBPeripheral, didDiscoverServices: Error?)`: Discovers the characteristics of the service on the peripheral.
-- `func peripheral(CBPeripheral, didUpdateValueFor: CBCharacteristic, error: Error?)`: Gets the updated data from the characteristic.
-
-
-</details>
-
 ## Class: PetPageFunction
 
-<details open>
+<details>
 
 A class that manages the functionality of the pet page.
 
@@ -701,7 +571,7 @@ A class that manages the functionality of the pet page.
 
 ## Class: CustomizeViewModel
 
-<details open>
+<details>
 
 ### Topics
 
@@ -731,34 +601,34 @@ A class that manages the functionality of the pet page.
 
 # Structures
 
-# Structure: AttachSensors
+## Structure: AttachSensors
 
-<details open>
+<details>
 Instructions on how to attach the sensors on the dumbbell and the elbow sleeve.
 
-## Initializers
+### Initializers
 
-### `init()`
+#### `init()`
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`
 
 </details>
 
-# Structure: OverallWorkoutData
+## Structure: OverallWorkoutData
 
-<details open>
+<details>
 
 OverallWorkoutData is a view that displays the overall feedback for the workout.
 
 **Note:** This view displays the overall data for the workout.
 
-## Initializers
+### Initializers
 
 #### `init(workoutAnalysisForSets: Binding<[[String : Double]]>, viewModel: WorkoutViewModel, totalSets: Int)`
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`: Represents the SwiftUI view of the structure.
 - `var totalSets: Int`: Represents the total number of sets in the workout.
@@ -768,21 +638,21 @@ OverallWorkoutData is a view that displays the overall feedback for the workout.
 
 </details>
 
-# Structure: PostWorkoutData
+## Structure: PostWorkoutData
 
-<details open>
+<details>
 
 PostWorkoutData is a view that displays the feedback for each set in the workout.
 
 **Note:** This view displays both the data for the set and the overall data for the workout.
 
-## Initializers
+### Initializers
 
-### `init(viewModel: WorkoutViewModel, setIndex: Int, feedback: (String, String, String, String), workoutAnalysis: [String : Double])`
+#### `init(viewModel: WorkoutViewModel, setIndex: Int, feedback: (String, String, String, String), workoutAnalysis: [String : Double])`
 
 Initializes the PostWorkoutData view.
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`
 - `let feedback: (String, String, String, String)`: Represents the feedback data for the set.
@@ -792,40 +662,40 @@ Initializes the PostWorkoutData view.
 - 
 </details>
 
-# Structure: RechargeSensors
+## Structure: RechargeSensors
 
-<details open>
+<details>
 
 Instructions on how to recharge the sensors.
 
-## Initializers
+### Initializers
 
-### `init()`
+#### `init()`
 
 Initializes the RechargeSensors view.
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`
 
 </details>
 
 
-# Structure: WorkoutFeedback
+## Structure: WorkoutFeedback
 
-<details open>
+<details>
 
 View to show all data collected from the most recent workout.
 
 **Note:** This view displays the feedback for each set in the workout and the overall data for the workout.
 
-## Initializers
+### Initializers
 
-### `init(viewModel: WorkoutViewModel, feedbackDataForSets: Binding<[(String, String, String, String)]>, workoutAnalysisForSets: Binding<[[String : Double]]>, totalSets: Binding<Int>)`
+#### `init(viewModel: WorkoutViewModel, feedbackDataForSets: Binding<[(String, String, String, String)]>, workoutAnalysisForSets: Binding<[[String : Double]]>, totalSets: Binding<Int>)`
 
 This initializer initializes the `WorkoutFeedback` view with the provided view model and feedback data for sets.
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`: Represents the SwiftUI view of the structure.
 - `var feedbackDataForSets: [(String, String, String, String)]`: Represents the feedback data for each set in the workout.
@@ -835,21 +705,21 @@ This initializer initializes the `WorkoutFeedback` view with the provided view m
 
 </details>
 
-# Structure: allFeedback
+## Structure: allFeedback
 
-<details open>
+<details>
 
 View for the all feedback page.
 
 **Note:** This view is used to display all the feedback for the user.
 
-## Initializers
+### Initializers
 
-### `init(coreDataManager: CoreDataManager)`
+#### `init(coreDataManager: CoreDataManager)`
 
 Initializes the allFeedback view with the provided `CoreDataManager`.
 
-## Instance Properties
+### Instance Properties
 
 - `var body: some View`: Represents the SwiftUI view of the structure.
 - `var coreDataManager: CoreDataManager`: Represents the CoreDataManager associated with the view.
@@ -857,17 +727,17 @@ Initializes the allFeedback view with the provided `CoreDataManager`.
 
 </details>
 
-# Structure: WorkoutMainPage
+## Structure: WorkoutMainPage
 
-<details open>
+<details>
 
 Main structure to display the workout page with integrated UI components.
 
-## Overview
+### Overview
 
 This structure is responsible for displaying the workout page, including the workout tab selection, workout details input form, and the workout feedback view.
 
-## Topics
+### Topics
 
 ### Structures
 
@@ -877,11 +747,11 @@ This structure is responsible for displaying the workout page, including the wor
 
 ### Initializers
 
-### `init(coreDataManager: CoreDataManager)`
+ `init(coreDataManager: CoreDataManager)`
 
 Initialize the workout page with the BLE central manager and form criteria.
 
-## Instance Properties
+### Instance Properties
 
 - `var backgroundItemDBManager: BackgroundItemDBManager`
 - `var ble: BLEcentral`
@@ -894,15 +764,15 @@ Initialize the workout page with the BLE central manager and form criteria.
 - `var viewModel: WorkoutViewModel`
 - `var workoutPageViewModel: WorkoutPageViewModel`
 
-## Enumerations
+### Enumerations
 
 - `enum SetType`
 
 </details>
 
-# Structure: PetStore
+## Structure: PetStore
 
-<details open>
+<details>
 Display view for the Pet Store depending on available items and prices.
 
 ### Topics
@@ -925,9 +795,9 @@ Display view for the Pet Store depending on available items and prices.
 SwiftUI.View
 </details>
 
-# Structure: ItemDetailView
+## Structure: ItemDetailView
 
-<details open>
+<details>
 ItemDetailView struct for previewing and purchasing an item.
 
 ### Topics
@@ -951,8 +821,8 @@ ItemDetailView struct for previewing and purchasing an item.
 - `SwiftUI.View`
 </details>
 
-# Structure: SellingItem
-<details open>
+## Structure: SellingItem
+<details>
   
 SellingItem struct that contains essential item attributes.
 
@@ -978,8 +848,8 @@ SellingItem struct that contains essential item attributes.
 </details>
 
 
-# Structure: ChallengesList
-<details open>
+## Structure: ChallengesList
+<details>
 
 Struct containing all achievements in the application.
 
@@ -1006,8 +876,8 @@ Struct containing all achievements in the application.
 SwiftUI.View
 </details>
 
-# Structure: ChallengesTab
-<details open>
+## Structure: ChallengesTab
+<details>
 
 Struct containing the sorting and fetching of Game Center achievements.
 ### Topics
@@ -1033,9 +903,9 @@ Struct containing the sorting and fetching of Game Center achievements.
 SwiftUI.View
 </details>
 
-# Structure: Achievement
+## Structure: Achievement
 
-<details open>
+<details>
 
 Struct containing claiming functionality for achievements.
 
@@ -1062,9 +932,9 @@ Struct containing claiming functionality for achievements.
 - `Swift.Sendable`
 </details>
 
-# Structure: UserAchievement
+## Structure: UserAchievement
 
-<details open>
+<details>
 
 UserAchievement struct for database information of achievements.
 
@@ -1086,9 +956,9 @@ UserAchievement struct for database information of achievements.
 - `Swift.Sendable`
 </details>
 
-# Structure: SettingsPageView
+## Structure: SettingsPageView
 
-<details open>
+<details>
 
 SettingsPageView struct for displaying user settings.
 
@@ -1131,9 +1001,9 @@ SettingsPageView struct for displaying user settings.
 - `SwiftUI.View`
 </details>
 
-# Structure: NotificationManager
+## Structure: NotificationManager
 
-<details open>
+<details>
 
 NotificationManager struct to handle user notifications.
 
@@ -1159,9 +1029,9 @@ NotificationManager struct to handle user notifications.
 - `Swift.Sendable`
 </details>
 
-# Structure: ShareSheetView
+## Structure: ShareSheetView
 
-<details open>
+<details>
 
 ShareSheetView struct for displaying Apple UI in sharing feature.
 
@@ -1191,9 +1061,9 @@ ShareSheetView struct for displaying Apple UI in sharing feature.
 - `SwiftUI.View`
 </details>
 
-# Structure: FitnessPlanPage
+## Structure: FitnessPlanPage
 
-<details open>
+<details>
   
 FitnessPlanPage struct that structures the view for a fitness planning page.
 
@@ -1225,9 +1095,9 @@ FitnessPlanPage struct that structures the view for a fitness planning page.
 - `SwiftUI.View`
 </details>
 
-# Structure: FitnessPlanModel
+## Structure: FitnessPlanModel
 
-<details open>
+<details>
 
 FitnessPlanModel struct for database related information.
 
@@ -1252,9 +1122,9 @@ FitnessPlanModel struct for database related information.
 - `Swift.Sendable`
 </details>
 
-# Structure: FoodItem
+## Structure: FoodItem
 
-<details open>
+<details>
 A stuct representing a food item.
 
 ### Topics
@@ -1269,9 +1139,9 @@ A stuct representing a food item.
 - `var quantity: Int`
 </details>
 
-# Structure: Accessory
+## Structure: Accessory
 
-<details open>
+<details>
 
 ### Topics
 
@@ -1285,9 +1155,9 @@ A stuct representing a food item.
 
 </details>
 
-# Structure: BackgroundImage
+## Structure: BackgroundImage
 
-<details open>
+<details>
 
 ### Topics
 
@@ -1301,9 +1171,9 @@ A stuct representing a food item.
 
 </details>
 
-# Structure: Pet_selection
+## Structure: Pet_selection
 
-<details open>
+<details>
 
 ### Topics
 
@@ -1317,8 +1187,8 @@ A stuct representing a food item.
 
 </details>
 
-# Structure: Customize_page
-<details open>
+## Structure: Customize_page
+<details>
 The view for customizing the pet's appearance.
 
 ### Topics
@@ -1335,7 +1205,7 @@ The view for customizing the pet's appearance.
 </details>
 
 # Stucture: CustomProgressView
-<details open>
+<details>
 A custom progress view that displays the progress value and label.
 
 ### Topics
@@ -1357,9 +1227,9 @@ A custom progress view that displays the progress value and label.
 
 </details>
 
-# Structure: FoodSelectionView
+## Structure: FoodSelectionView
 
-<details open>
+<details>
 A view representing the food selection view.
 
 ### Topics
@@ -1375,9 +1245,9 @@ A view representing the food selection view.
 
 </details>
 
-# Structure: HamburgerMenu
+## Structure: HamburgerMenu
 
-<details open>
+<details>
 A view representing a hamburger menu with options to navigate to different pages.
 
 ### Topics
@@ -1392,9 +1262,9 @@ A view representing a hamburger menu with options to navigate to different pages
 
 </details>
 
-# Structure: Pet_Page
+## Structure: Pet_Page
 
-<details open>
+<details>
 A view representing the pet page.
 
 ### Topics
@@ -1410,7 +1280,7 @@ A view representing the pet page.
 </details>
 
 
-# Structure: LoginView
+## Structure: LoginView
 <details>
 The view for the login screen of the SmartWeights app
 
@@ -1435,4 +1305,136 @@ The view for the login screen of the SmartWeights app
 </details>
 
 
+## Structure: CarouselButton
+<details>
+Contains parameters for the additional page carousel buttons, which are used in the NavigationCarousel struct.
 
+### Initializers
+- `init(name: String, icon: String, link: AnyView)`
+
+### Instance Properties
+- `let icon: String`
+- `var id: String`
+- `let link: AnyView`
+- `let name: String`
+</details>
+
+
+## Structure: Homepage
+<details>
+The homepage of the SmartWeights app.
+
+### Initializers
+- `init(tabBar: TabBar, coreDataManager: CoreDataManager)`
+
+### Instance Properties
+- `var body: some View`
+- `var coreDataManager: CoreDataManager`
+- `var showTutorial: Bool`
+- `let tabBar: TabBar`
+</details>
+
+
+## Structure: NavigationCarousel
+<details>
+Creates the additional button carousel.
+
+### Initializers
+- `init(coreDataManager: CoreDataManager, buttons: [CarouselButton], iconColor: Color, bgColor: Color, textColor: Color)`
+
+### Instance Properties
+- `let bgColor: Color`
+- `var body: some View`
+- `let buttons: [CarouselButton]`
+- `var coreDataManager: CoreDataManager`
+- `let iconColor: Color`
+- `let textColor: Color`
+</details>
+
+
+## Structure: StartWorkoutButton
+<details>
+The start workout button, located on the home page.
+
+### Initializers
+- `init(tabBar: TabBar)`
+
+### Instance Properties
+- `var body: some View`
+- `var tabBar: TabBar`
+</details>
+
+
+## Structure: TabBar
+<details>
+Struct TabBar implements the Tab enumeration and TabView to create a navigable tab bar.
+
+### Initializers
+- `init(coreDataManager: CoreDataManager)`
+
+### Instance Properties
+- `var body: some View`
+- `var coreDataManager: CoreDataManager`
+
+### Instance Methods
+- `func changeTab(to: Tab)`
+</details>
+
+
+## Structure: TutorialPopup
+<details>
+Tutorial pop up for new users.
+
+### Initializers
+- `init(show: Binding<Bool>, showTutorial: Bool)`
+
+### Instance Properties
+- `var body: some View`
+- `var show: Bool`
+- `var showTutorial: Bool`
+</details>
+
+
+## Structure: VideoCard
+<details>
+Video card used in the VideoCarousel struct.
+
+### Initializers
+- `init(videoId: String, title: String, description: String)`
+
+### Instance Properties
+- `var body: some View`
+- `var description: String`
+- `var id: String`
+- `var title: String`
+- `var videoId: String`
+</details>
+
+
+## Structure: VideoCarousel
+<details>
+Carousel of VideoCard objects
+
+### Initializers
+- `init(videoCards: [VideoCard])`
+
+### Instance Properties
+- `var body: some View`
+- `var videoCards: [VideoCard]`
+</details>
+
+
+## Structure: VideoView
+<details>
+Embedded YouTube videos via WebKit library and UIViewRepresentable protocol.
+
+### Initializers
+- `init(videoId: String)`
+
+### Instance Properties
+- `let videoId: String`
+
+### Instance Methods
+- `func makeUIView(context: Context) -> WKWebView`
+- `func updateUIView(WKWebView, context: Context)`
+</details>

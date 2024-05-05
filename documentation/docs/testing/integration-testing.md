@@ -32,10 +32,10 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 <summary>A user has already created a SmartWeights account and has logged in for the first time.</summary>
 
 - The user logs into their SmartWeights account for the first time.
-- The app displays a prompt the user to watch a tutorial video.
-- The virtual pet in the video highlights key features of the application.
-- The user finishes the tutorial.
- 
+- The app displays a prompt for the user to watch a tutorial video.
+3. The virtual pet highlights key features of the application.
+4. The user finishes the tutorial and returns to the main navigation screen.
+
 </details>
 
 #### Assertions
@@ -52,74 +52,47 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 - The user selects the Profile tab.
 - From there, the user can see all their settings and workout goals.
-- The user selects the pencil icon next to the setting.
+- The user selects the notifcations setting.
 - The user edits the desired setting.
+
 
 </details>
 
 #### Assertions
 1. The user should see all setting options as well as the workout goals they created.
-2. When the user edits any setting, the updated information will be saved and some of the information will transfer to the database.
+2. When the user edits any setting, the updated setting will be saved.
 
 <br></br>
 
-## Use Case 4 - Attaching Sensors
+## Use Case 4 - Connecting Sensors
 
 <details open>
 
-<summary>A user wants to prepare for a workout by attaching sensors appropriately.</summary>
+<summary>A user wants to connect their SmartWeights sensors with the mobile app.</summary>
 
-- The user gets the dumbbells and elbow sleeve they want to use.
-- The user attaches the sensors to the heads of the dumbbell, locking it in securely.
-- The user puts on the elbow sleeve.
-- The user attaches the sensor to the elbow sleeve.
+- The user securely attaches the SmartWeight sensor to their dumbbell following the instructions provided via the mobile app.
+- The user turns on all the sensors.
+- Upon navigating the to workout page, the app will ask the user to allow bluetooth.
+- After enabling bluetooth, the app will automatically connect to the sensors.
+- The user will be notified that the sensors are connected.
 
 </details>
 
 #### Assertions
 1. User will have all sensors set up on their body and equipment
+2. User will see the indicators in the application that the sensors are connected.
+
 
 <br></br>
 
-## Use Case 5- Syncing Sensors
-
-<details open>
-
-<summary>A user wants to sync their SmartWeights sensors with the mobile app.</summary>
-
-- The user securely attaches the SmartWeight sensor to their dumbbell and the elbow sensor to their elbow following the instructions provided via the mobile app.
-- The app will search for available sensors.
-- The app establishes a connection via Bluetooth and a confirmation is displayed to the user indicating that the sensor is successfully synced.
-
-</details>
-
-#### Assertions
-1. User receives a confirmation displaying the sensor is successfully synced.
-
-<br></br>
-
-## Use Case 7 - Logging Dumbbell Weight
-
-<details open>
-
-<summary>User wants to log the weights of dumbbells used during a workout for tracking progress over time, independent of immediate feedback on form or technique.</summary>
-
-- After heading to the workout page, the user is prompted to input the weight of the dumbbells they will use.
-- User enters the weights of the dumbbells into the app before starting the workout.
-
-</details>
-
-#### Assertions
-1. The correct dumbbell weight is displayed within the workout page's UI.
-
-<br></br>
-
-## Use Case 8 - Starting a Workout via Voice Command
+## Use Case 5 - Starting a Workout via Voice Command
 
 <details open>
 
 <summary>User wants to start a workout session without manually interacting with their smartphone, using a voice commands while already in position to lift weights.</summary>
 
+- After heading to the workout page, the user is prompted to input the weight of the dumbbells they will use.
+- User enters the weights of the dumbbells into the app before starting the workout.
 - User clicks on the microphone button after inputting the required prompts, reps, sets, weight, and countdown.
 - User, in position to start lifting and without the need to interact with the device manually, says, “Start”.
 - The phone processes the command and interface with the SmartWeights app to initiate the workout session based on the user's inputs from the prompts.
@@ -128,11 +101,12 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 </details>
 
 #### Assertions
-1. After completing a workout, post-workout analysis is displayed to the screen due to the workout starting from the user saying "Start" and other required voice commands such as "Pause", "Next", "Finish".
+1. The correct dumbbell weight is displayed within the workout page's UI.
+2. After completing a workout, post-workout analysis is displayed to the screen due to the workout starting from the user saying "Start" and other required voice commands such as "Pause", "Next", "Finish".
 
 <br></br>
 
-## Use Case 9 - Performing Workout
+## Use Case 6 - Performing Workout
 
 <details open>
 
@@ -150,7 +124,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 <br></br>
 
-## Use Case 10 - View Workout Feedback
+## Use Case 7 - View Workout Feedback History
 
 <details open>
 
@@ -168,7 +142,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 <br></br>
 
-## Use Case 11 - Purchasing Pet Cosmetics
+## Use Case 8 - Purchasing Pet Cosmetics
 
 <details open>
 
@@ -177,7 +151,7 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 - The user navigates to the virtual pet store.
 - The app displays cosmetics by category for the user to inspect.
 - The user sees each cosmetic’s price and clicks the buy button on the desired cosmetic.
-- The user has enough currency for the transaction, so the cosmetic is removed from the store and placed into the user’s virtual pet inventory.
+- The user has enough currency for the transaction, so the cosmetic is no longer purchaseable and placed into the user’s virtual pet inventory.
 - The price of the cosmetic is deducted from the user’s total currency.
 
 </details>
@@ -188,16 +162,16 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 <br></br>
 
-## Use Case 12: - Virtual Pet Customization
+## Use Case 9 - Virtual Pet Customization
 
 <details open>
 
 <summary>A user wants to customize their virtual pet.</summary>
 
-- The user taps on the Virtual Pet button.
+- The user taps on the Customize button found on the pet page.
 - The user can tap an inventory button to look at what they currently have equipped/own.
-- The user will then select any costume/accessory they want to equip for their pet.
-- The user will see their pet change according to the costumes/accessories they picked.
+- The user will then select any items they want to equip for their pet.
+- The user will see their pet change according to the items they picked.
 
 </details>
 
@@ -207,17 +181,34 @@ Tests to demonstrate each use-case based on the use-case descriptions and the se
 
 <br></br>
 
-## Use Case 13 - Share with Friends
+## Use Case 10 - Completing an achievement
+<details open>
+<summary>A user wants to complete an achievement</summary>
+
+
+- The user navigates to the achievements section within the app and views the list of achievements.
+- The user then views detailed information about the achievement, which includes details of the achievement completion requirement (e.g. total weight lifted, number of workouts completed).
+- The user can check their current standings in the achievement via the app(achievement tab), which updates in real time, showing their progress.
+- Once the completion requirement has been fully met, the app updates their list of completed achievements.
+
+</details>
+
+#### Assertions
+1. User is able to view both completed and in progress achievements.
+2. User is able to monitor progress of an achievement.
+
+## Use Case 11 - Share with Friends
 
 <details open>
 
 <summary>A user wants to share their pet/achievements with their friends.</summary>
 
-- The user selects the Virtual Pet tab.
-- Within the Virtual Pet screen, the user will select the Share Profile button.
-- A jpeg of their profile will appear on the screen.
+- The user selects the Profile tab.
+- Within the Profile screen, the user will select the Share Profile button.
+- A pop-up appears of options to share the image.
 - User selects who/how they want to share.
 - Profile is sent.
+
 
 </details>
 

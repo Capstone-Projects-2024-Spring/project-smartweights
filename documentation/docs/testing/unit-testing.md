@@ -6,13 +6,12 @@ Swift unit tests are done with Swift's XCTest
 
 Pico-W testing is done with pytest library
 
-Python unittest library is used for machine learning
 
 
 ## Front End
 
 ### Pet Page
-<details open>
+<details >
 <summary> HandleFoodUse() </summary>
 
 ***Health increases after eating food***
@@ -55,7 +54,7 @@ Python unittest library is used for machine learning
 
 ### WorkoutViewModel
 
-<details open>
+<details >
 <summary> testIsInputZeroOrInvalid()</summary>
 
 ***Validates whether input values are zero or invalid***
@@ -66,7 +65,7 @@ Python unittest library is used for machine learning
         - The function correctly identifies whether the input values are zero or invalid.
 </details>
 
-<details open>
+<details >
 <summary> testIsValidInput()</summary>
 
 ***Validates the validity of input values***
@@ -77,7 +76,7 @@ Python unittest library is used for machine learning
         - The function correctly identifies whether the input values are valid.
 </details>
 
-<details open>
+<details >
 <summary> testStringToInt()</summary>
 
 ***Validates the conversion of string to integer***
@@ -88,7 +87,7 @@ Python unittest library is used for machine learning
         - The function correctly converts the string to an integer if possible; otherwise, returns nil.
 </details>
 
-<details open>
+<details >
 <summary> testResetWorkoutState()</summary>
 
 ***Validates the reset of workout state***
@@ -99,7 +98,7 @@ Python unittest library is used for machine learning
         - The workout state variables are reset to their initial values.
 </details>
 
-<details open>
+<details >
 <summary> testStartWorkout()</summary>
 
 ***Validates the start of workout***
@@ -110,7 +109,7 @@ Python unittest library is used for machine learning
         - The workout state is updated to indicate that the workout has started.
 </details>
 
-<details open>
+<details >
 <summary> testNextSet()</summary>
 
 ***Validates the transition to the next set***
@@ -121,7 +120,7 @@ Python unittest library is used for machine learning
         - The workout state and relevant variables are updated accordingly for the next set.
 </details>
 
-<details open>
+<details >
 <summary> testResetTimer()</summary>
 
 ***Validates the reset of timer***
@@ -133,31 +132,68 @@ Python unittest library is used for machine learning
 </details>
 
 
-
 ### Pet Store Page
 
-<details open>
-<summary> sortItems() </summary>
-
-***The shop is sorted by name A-Z***
-- Test user clicks sort by name to get the items in alphabetical order
+<details >
+<summary> testSortItemsByPrice()</summary>  
+    
+- Test sorting items by price
     - Input/User action
-        - User clicks sort by name
-    - Expected Result
-        - sortItems(sortByPrice: false) is called, the items will be sorted in alphabetical order 
+        - Call `sortItems` with `sortByPrice: true`
+     - Expected Result
+        - Items should be sorted by price in ascending order
+        
+</details>
 
-***The shop is sorted by price lowest-highest***
-- Test user clicks sort by price to get the items from lowest to highest cost
-    - Input/User action
-        - User clicks sort by price
+
+<details >
+<summary> testSortItemsbyName()</summary>
+    
+- Test sorting items by name
+    - Input/User action 
+        - Call `sortItems` with `sortByPrice: false`
     - Expected Result
-        - sortItems(sortedByPrice: true) is called, the items will be sorted by price
+        - Items should be sorted by name in alphabetical order
+</details>
+
+
+<details >
+<summary> testSubtractFunds()</summary>   
+    
+- Test subtracting funds
+    - Input/User action 
+        - Subtract funds using `subtractFunds(price: 100)`
+    - Expected Result
+        - `viewModel.userCur` should decrease by `100`
+</details>
+
+
+<details >
+<summary> testPurchaseItem()</summary> 
+    
+- Test purchasing an item
+    - Input/User action
+        - Purchase an item using `purchaseItem(item: item)`
+    - Expected Result
+        - The item should be marked as bought
+        - `viewModel.userCur` should decrease by the item's price
+</details>
+
+
+<details >
+<summary> testAddFunds()</summary>
+    
+- Test adding funds to user currency
+    - Input/User action
+        - Add funds using `addFundtoUser(price: 100)`
+    - Expected Result
+        - `viewModel.userCur` should increase by `100`
 </details>
 
 
 ### FormCriteria
 
-<details open>
+<details >
 <summary> getRandomGoodFormPhrase()</summary>
 
 ***The user gets one of three phrases when having good form***
@@ -170,7 +206,7 @@ Python unittest library is used for machine learning
 </details>
 
 
-<details open>
+<details >
 <summary> updateWorkoutAnalysis()</summary>
 
 ***updates the workout analysis data with provided current data***
@@ -181,7 +217,7 @@ Python unittest library is used for machine learning
         - The workout analysis is updated with the provided data and contains the expected keys.
 </details>
 
-<details open>
+<details >
 
 <summary> averageUpDownAcceleration()</summary>
 
@@ -194,7 +230,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 
 <summary> averageWristLeftRightRotation()</summary>
 
@@ -207,7 +243,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 
 <summary> overallWorkoutUpDownAverage()</summary>
 
@@ -221,7 +257,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 
 <summary> averageElbowSwing()</summary>
 
@@ -234,7 +270,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 
 <summary> averageElbowFlareForwardBackward()</summary>
 
@@ -247,7 +283,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 
 <summary> overallWorkoutElbowSwing()</summary>
 
@@ -261,7 +297,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 
 <summary> dangerousForm()</summary>
 
@@ -274,7 +310,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 
 <summary> giveFeedback()</summary>
 
@@ -288,50 +324,247 @@ Python unittest library is used for machine learning
 
 </details>
 
+## Database Integration
 
+### CloudKit DB Tests
 
-## Backend
+#### CloudKitManager Tests
 
-### CloudKit DB 
 <details>
+<summary>Unit Tests for the CloudKitManager class</summary>
+- testCreateUser()
+    - Tests the creation of a new user in the database.
+    - Expected Result:
+        - `userExists` should be `true` after creating a user successfully.
 
-- testConnectToCloudKit()
-    - Test to see if the application can connect to CloudKit DB and find the correct container
-    - Expected Result
-        - Returns true if successful connection, else return false
+- testFetchUser()
+    - Tests the fetching of user data from the database.
+    - Expected Result:
+        - The fetched user data (`user`) should not be `nil`, and there should be no `error`.
 
-- testFetchRecord()
-    - Test to see if given input parameters can query the CloudKit DB and return a record
-    - Expected Result
-        - Returns true if record is not nil, else return false
-- testFetchRecordAndCheckCurrency()
-    - Test to see if given user record has a specified field value
-    - Expected Result
-        - Returns values of the record for the parameters match, else return false for no record returned or incorrect record
-- testGetReference()
-    - Test to see if given a reference value can query the CloudKit DB and return a referenced record  
-    - Expected Result
-        - Returns values of the record for the parameters, else return false for no record returned or incorrect record
-- testAccountCreatedCloud()
-    - Test to see if account credentials were stored after login button pressed
-    - Expected Result 
-        - Returns true if record return with correct ID, else return false
+- testGetCurrency()
+    - Tests the retrieval of the currency value associated with the user.
+    - Expected Result:
+        - The retrieved currency value (`currency`) should not be `nil`, and there should be no `error`.
+
 - testUpdateCurrency()
-    - Test to see if after button press, updates the user's total currency after transaction and updates the DB
-    - Expected Result
-        - Returns the same currency as currently stored on local model from the DB, else return false if different value or no value returned
-- testUploadImage()
-    - Test to see if a CKAsset was successfully uploaded to CloudKit DB 
-    - Expected Result 
-        - Returns a successful entry, else false
-- testFetchImage()
-    - Test to see if can fetch a CKAsset from CloudKit DB
-    - Expected Result
-        - Returns a binary CKAsset, else false
+    - Tests the updating of the currency value associated with the user.
+    - Expected Result:
+        - There should be no `error` after updating the currency value.
+
+- testGetName()
+    - Tests the retrieval of the full name of the user.
+    - Expected Result:
+        - The retrieved name (`name`) should not be `nil`, and there should be no `error`.
+
+- testUpdateName()
+    - Tests the updating of the first name and/or last name of the user.
+    - Expected Result:
+        - There should be no `error` after updating the name.
 </details>
 
+#### BackgroundItemDBManager Tests
+
+<details>
+<summary>Unit Tests for the BackgroundItemDBManager class</summary>
+- testFetchBackgroundItems()
+    - Tests the fetching of background items from the database.
+    - Expected Result:
+        - There should be no error while fetching background items.
+        - Background items should not be nil.
+
+- testFetchSpecificBackgroundItem()
+    - Tests the fetching of a specific background item from the database.
+    - Expected Result:
+        - There should be no error while fetching the specific background item.
+        - The fetched background item should not be nil.
+        - The image name of the fetched background item should match the provided image name.
+
+- testCreateBackgroundItem()
+    - Tests the creation of a new background item in the database.
+    - Expected Result:
+        - There should be no error while creating the background item.
+
+- testSetUnactiveAllBackgroundItems()
+    - Tests the deactivation of all background items in the database.
+    - Expected Result:
+        - There should be no error while deactivating all background items.
+
+- testGetActiveBackground()
+    - Tests the retrieval of the active background item.
+    - Expected Result:
+        - The active background item should be an empty string, indicating no active background.
+
+</details>
+
+#### UserDBManager Tests
+
+<details>
+<summary>Unit Tests for the UserDBManager class</summary>
+
+- testCreateUser()
+    - Tests the creation of a new user in the database.
+    - Expected Result:
+        - `userExists` should be `true` after creating a user successfully.
+
+- testFetchUser()
+    - Tests the fetching of user data from the database.
+    - Expected Result:
+        - The fetched user data (`user`) should not be `nil`, and there should be no `error`.
+
+- testGetCurrency()
+    - Tests the retrieval of the currency value associated with the user.
+    - Expected Result:
+        - The retrieved currency value (`currency`) should not be `nil`, and there should be no `error`.
+
+- testUpdateCurrency()
+    - Tests the updating of the currency value associated with the user.
+    - Expected Result:
+        - There should be no `error` after updating the currency value.
+
+- testGetName()
+    - Tests the retrieval of the full name of the user.
+    - Expected Result:
+        - The retrieved name (`name`) should not be `nil`, and there should be no `error`.
+
+- testUpdateName()
+    - Tests the updating of the first name and/or last name of the user.
+    - Expected Result:
+        - There should be no `error` after updating the name.
+
+
+</details>
+
+#### FoodItemDBManager Tests
+<details>
+<summary>Unit Tests for the FoodItemDBManager class</summary>
+- testFetchFoodItems()
+    - Tests the fetching of food items.
+    - Expected Result:
+        - There should be no error while fetching food items.
+        - The fetched food items should not be nil.
+        - The number of fetched food items should match the expected count.
+
+- testCreateFoodItem()
+    - Tests the creation of a food item.
+    - Expected Result:
+        - There should be no error while creating the food item.
+
+- testUpdateQuantity()
+    - Tests the update of a food item's quantity.
+    - Expected Result:
+        - There should be no error while updating the quantity.
+        - The updated food item should be found in the food items list.
+
+- testFetchQuantity()
+    - Tests the fetching of a food item's quantity.
+    - Expected Result:
+        - There should be no error while fetching the quantity.
+        - The fetched quantity should not be nil.
+
+- testUpdateQuantity_add()
+    - Tests the addition of quantity to a food item.
+    - Expected Result:
+        - There should be no error while updating the quantity.
+        - The updated food item should be found in the food items list.
+
+</details>
+
+#### PetItemDBManager Tests
+<details>
+<summary>Unit Tests for the PetItemDBManager class</summary>
+- testFetchPetItems()
+    - Tests the fetching of pet items.
+    - Expected Result:
+        - There should be no error while fetching pet items.
+        - The fetched pet items should not be nil.
+
+- testFetchSpecificPetItem()
+    - Tests the fetching of a specific pet item.
+    - Expected Result:
+        - There should be no error while fetching the specific pet item.
+        - The fetched pet item should not be nil.
+        - The fetched pet item should match the expected image name.
+
+- testCreatePetItem()
+    - Tests the creation of a pet item.
+    - Expected Result:
+        - There should be no error while creating the pet item.
+        - The created pet item should be found in the pet items list.
+
+- testSetActivePetItem()
+    - Tests the setting of an active pet item.
+    - Expected Result:
+        - There should be no error while setting the active pet item.
+        - The active pet item should match the expected image name.
+
+- testGetActivePet()
+    - Tests the retrieval of the active pet.
+    - Expected Result:
+        - There should be no error while retrieving the active pet.
+        - The retrieved active pet should match the expected image name.
+
+</details>
+
+#### PetDBManager Tests
+
+<details>
+<summary>Unit Tests for the PetDBManager class</summary>
+- testCreatePet()
+    - Tests the creation of a pet.
+    - Expected Result:
+        - The pet should exist after creation.
+        - The initial existence status of the pet should not match the existence status after creation.
+
+- testFetchPet()
+    - Tests the fetching of a pet.
+    - Expected Result:
+        - There should be no error while fetching the pet.
+        - The fetched pet should not be nil.
+
+- testGetXP()
+    - Tests the retrieval of XP.
+    - Expected Result:
+        - There should be no error while retrieving XP.
+
+- testGetLevel()
+    - Tests the retrieval of the level.
+    - Expected Result:
+        - There should be no error while retrieving the level.
+        - The retrieved level should not be nil.
+
+- testUpdateUserXP()
+    - Tests the updating of user XP.
+    - Expected Result:
+        - There should be no error while updating user XP.
+        - The total XP should match the new XP value.
+
+- testUpdateUserLevel()
+    - Tests the updating of user level.
+    - Expected Result:
+        - There should be no error while updating user level.
+        - The level should match the new level value.
+
+</details>
+
+#### FitnessPlanDBManager Tests
+<details>
+<summary>Unit Tests for the FitnessPlanDBManager class</summary>
+- testCreateFitnessPlan()
+    - Tests the creation of a fitness plan.
+    - Expected Result:
+        - The fitness plan should not be nil after creation.
+        - The days per week goal of the created fitness plan should match the provided value.
+        - The dumbbell weight goal of the created fitness plan should match the provided value.
+        - The set goal of the created fitness plan should match the provided value.
+        - The rep goal of the created fitness plan should match the provided value.
+        - The notes of the created fitness plan should match the provided value.
+</details>
+
+
+
 ### CoreData Local DB
-<details open>
+<details >
 <summary> setUpWithError() </summary>
 
 ***Sets up an in-memory Core Data environment for each test***
@@ -343,7 +576,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> tearDownWithError() </summary>
 
 ***Cleans up and deallocates the in-memory Core Data stack after each test***
@@ -355,7 +588,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> testCreateWorkoutSession() </summary>
 
 ***Tests the ability to create a WorkoutSession entity***
@@ -367,7 +600,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> testCreateAndFetchWorkoutSessions() </summary>
 
 ***Tests integration of creating and fetching WorkoutSession entities***
@@ -379,7 +612,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> testFetchWorkoutSessions() </summary>
 
 ***Tests fetching WorkoutSession entities***
@@ -391,7 +624,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> testFetchWorkoutSessionsOnDate() </summary>
 
 ***Tests fetching WorkoutSession entities based on a specific date***
@@ -403,7 +636,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> testGetNextWorkoutNumber() </summary>
 
 ***Tests retrieving the next workout number***
@@ -415,7 +648,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> testFetchExerciseSets() </summary>
 
 ***Tests fetching ExerciseSet entities associated with a WorkoutSession***
@@ -427,7 +660,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> testUpdateWorkoutSession() </summary>
 
 ***Tests updating a WorkoutSession entity***
@@ -439,7 +672,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> testUpdateExerciseSet() </summary>
 
 ***Tests updating an ExerciseSet entity***
@@ -451,7 +684,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> testFetchAllExerciseSets() </summary>
 
 ***Tests fetching all ExerciseSet entities***
@@ -463,7 +696,7 @@ Python unittest library is used for machine learning
 
 </details>
 
-<details open>
+<details >
 <summary> testFetchExerciseSetsForWorkoutNum() </summary>
 
 ***Tests fetching ExerciseSet entities by workout number***

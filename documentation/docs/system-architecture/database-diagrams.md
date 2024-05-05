@@ -20,53 +20,47 @@ CloudKit offers two databases:
 
 The portions of the public database are all of the asset related entities. The public database's data is never manipulated by users, only read. These entities being:
 - Achievement
-- PetImage
-- PetClothing
-- Food
-- Background
 
 The user is able to manipulate data in their "private cloud database." These specific entities being:
 
+- User
 - Pet
-- Inventory
-- FitnessData
+- PetItem
+- ClothingItem
+- FoodItem
+- BackgroundItem
 - FitnessPlan
-- Achievement
+- UserAchievement
 
 ```mermaid
 ---
-title: NoSQL ERD (Cloud base, User)
+title: ERD (Cloud base, User)
 ---
 erDiagram
 
     %% User ||--||Achievement_List: has
    
-    User ||--||Fitness_data: contains
-    User ||--||Inventory: has
     User ||--||Pet: has
-    Pet ||--|| PetImage: has
-    Inventory ||--|{ PetImage: has
-    Inventory ||--o{ PetClothing: has
- 
-    Inventory ||--o{ Food: has
-    Inventory ||--o{ Background: has
-    Fitness_data||--||fitness_plan: has
+    User ||--|{PetItem: has
+    User ||--o{BackgroundItem: has
+    User ||--o{ClothingItem: has
+    User ||--o{FoodItem: has
 
-   User ||--o{User_Achievements:has
+    User ||--||fitness_plan: has
+
+     User ||--o{User_Achievements:has
     Achievement ||--|{ User_Achievements: has
 
 
-    Fitness_data{
-        int age
-        int height
-        int weight
-
-    }
-
+   
     fitness_plan{
 
-        int weight_goal
-        int num_days_to_workout
+        int daysPerWeekGoal
+        int dumbbellWeightGoal
+        int setGoal
+        int repGoal
+        string notes
+        date selectedDate
     }
     User {
         string first_name
@@ -80,44 +74,33 @@ erDiagram
         int health
         int total_xp
     }
-    PetImage{
-        int price
-        string petName
-        string PetImage_url
+    PetItem{
+        int isActive
+        string pet_name
+        string pet_image_url
     }
-    Inventory{
-        List Background
-        List Food
-        List PetClothing
-        List Pets
-        Reference activeBackground
-        Reference activePetClothing
-
-    }
-    Food{
-        int price
+    FoodItem{
+        int quantity
         string food_name
         string food_image_url
     }
-    Background{
-        int price
+    BackgroundItem{
+        int isActive
         string background_name
         string background_image_url
     }
-    PetClothing{
-        int price
-        string Name
-        string Pet_Clothing_image
+    ClothingItem{
+        int isActive
+        string clothing_name
+        string clothing_image_url
     }
    Achievement{
         int Achievement
         string achievement_name
         int total_progress
-        string reward
     }
     User_Achievements{
-
-         bool is_completed
+        bool is_completed
         int progress_percentage
 
     }
@@ -126,17 +109,12 @@ erDiagram
 
 The activeBackground and activePetClothing attributes act as references directly to their specific assets. The lists in inventory is an array of references to their specific assets. This is so an inventory can contain multiple of references, such as an inventory containing more than one type of background asset.
 
-## CloudKit Database Design, Shop
-
-The application's shop page retrieves the images from the database, stores, and displays them. The user does not manipulate this relevant data. It is used for the application to retrieve assets needed for the shop and to make loading assets with relevant values easier for development. 
-
-
 
 ## CoreData Database Design
 
 The purpose of the CoreData database design is to be lightweight and to contain the information that will be received from the multiple sensors attached to the user and dumbbells. This will help provide relevant feedback for the user's workout once the data has been processed through an algorithm. There will also be a history with each feedback to allow users to revisit and see their past feedback.
 
-There will be a form with as many workouts depending on how many sets the user is doing. The form will take all the data from several Workouts and process it through an algorithm to detect whether or not the user had good or bad form through a scoring system ( 1 to 100, 1 being worst to 100 being perfect). There will also be feedback correlated with the score and will consist of suggestions on how to fix up their form.
+There will be a Workout Session with as many sets depending on how many sets the user is doing. The workout session will take all the data from several sets and process it through an algorithm to detect whether or not the user had good or bad form through a scoring system ( 1 to 100, 1 being worst to 100 being perfect). There will also be feedback correlated with the score and will consist of suggestions on how to fix up their form.
 
 ```mermaid
 ---
@@ -144,25 +122,30 @@ title: CoreData Structure
 ---
 
 erDiagram
-    Workout {
-        workout_id INT
-        user_id INT
-        speed FLOAT
-        velocity FLOAT
-        angle FLOAT
-        dateTime DATETIME
-        xCoord FLOAT
-        yCoord FLOAT
-        zCoord FLOAT
+    Set {
+       avgCurlAcceleration DOUBLE
+        avgElbowFlareLeftRight DOUBLE
+        avgElbowFlareUpDown DOUBLE
+        avgElbowSwing DOUBLE
+        avgWristStabilityLeftRight DOUBLE
+        avgWristStabilityUpDown DOUBLE 
+        setNum INT
     }
-    Form {
-        form_id INT
-        score INT
-        feedback STRING
+    WorkoutSession {
+        
         dateTime DATETIME
+        overallCurlAcceleration DOUBLE 
+        overallElbowFlareLeftRight DOUBLE
+        overallElbowFlareUpDown DOUBLE
+        overallElbowSwing DOUBLE
+        overallWristStabilityLeftRight DOUBLE
+        overallWristStabilityUpDown DOUBLE
+        reps INT
+        weight DOUBLE
+        workoutNum INT 
     }
 
-    Workout }|--|| Form : has
+    WorkoutSession ||--|{ Set : has
 
 
 
