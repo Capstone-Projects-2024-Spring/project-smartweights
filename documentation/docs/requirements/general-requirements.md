@@ -4,8 +4,10 @@ sidebar_position: 3
 
 # General Requirements
 - iPhone with iOS 17
+    - AppleID 
+    - GameCenter Account
 - Dumbbells
-- Sensors (IMUs, Barometers)
+- Sensors (IMUs)
 - Raspberry Pi Pico W
 - Mobile Application Development Environment
 - IDE/Text Editor

@@ -4,7 +4,7 @@
 
 ## Class: FormCriteria
 
-<details open>
+<details>
 
 `FormCriteria` is a class that contains the criteria for determining the form of the user during a workout.
 
@@ -48,7 +48,7 @@
 
 ## Class: WorkoutViewModel
 
-<details open>
+<details>
 
 View model to handle the workout data.
 
@@ -137,7 +137,7 @@ Initialize the view model.
 
 ## Class: allFeedbackViewModel
 
-<details open>
+<details>
 
 View model for the all feedback page.
 
@@ -165,7 +165,7 @@ Initialize the view model.
 
 ## Class: storeViewModel
 
-<details open>
+<details>
 
 ViewModel for the pet store and user transactions.
 
@@ -209,7 +209,7 @@ ViewModel for the pet store and user transactions.
 
 ## Class: Challenge
 
-<details open>
+<details>
 
 Challenge class containing information regarding achievements.
 
@@ -241,7 +241,7 @@ Challenge class containing information regarding achievements.
 
 ## Class: ChallengesViewModel
 
-<details open>
+<details>
 
 ViewModel for achievements.
 
@@ -266,7 +266,7 @@ ViewModel for achievements.
 
 ## Class: GameCenterManager
 
-<details open>
+<details>
 
 GameCenterManager class to integrate Game Center into the application.
 
@@ -314,7 +314,7 @@ GameCenterManager class to integrate Game Center into the application.
 
 ## Class: GameCenterManager.GameCenterDelegate
 
-<details open>
+<details>
   
 GameCenterDelegate class for loading and exiting Game Center.
 
@@ -341,7 +341,7 @@ GameCenterDelegate class for loading and exiting Game Center.
 
 ## Class: MorePageViewModel
 
-<details open>
+<details>
 
 ViewModel for the profile page.
 
@@ -387,7 +387,7 @@ ViewModel for the profile page.
 
 ## Class: fitnessPlanViewModel
 
-<details open>
+<details>
   
 The fitnessPlanViewModel class contains variables for a user’s fitness goals.
 
@@ -424,7 +424,7 @@ The fitnessPlanViewModel class contains variables for a user’s fitness goals.
 
 ## Class: CoreDataManager
 
-<details open>
+<details>
   Manages persistent data storage using Core Data for the SmartWeights application.
 
   ### Topics
@@ -459,7 +459,7 @@ The fitnessPlanViewModel class contains variables for a user’s fitness goals.
 
 ## Class: WorkoutSession
 
-<details open>
+<details>
   
   ```
     @objc(WorkoutSession)
@@ -515,7 +515,7 @@ The fitnessPlanViewModel class contains variables for a user’s fitness goals.
 </details>
 
 ## Class: ExerciseSet
-<details open>
+<details>
 
   ```
   @objc(ExerciseSet)
@@ -559,7 +559,7 @@ The fitnessPlanViewModel class contains variables for a user’s fitness goals.
 ## Class: MPU6050
 Class for reading gyro rates and acceleration data from an MPU-6050 module via I2C.
 
-<details open>
+<details>
 
 
 
@@ -582,7 +582,7 @@ Class for reading gyro rates and acceleration data from an MPU-6050 module via I
 A class that is responsible for advertising data via Bluetooth
 
 
-<details open>
+<details>
 
 
 
@@ -596,7 +596,7 @@ A class that is responsible for advertising data via Bluetooth
 
 ## Class: MPU Data
 
-<details open>
+<details>
 
 Class to get accelerometer and gyroscope data.
 
@@ -611,7 +611,7 @@ Class to get accelerometer and gyroscope data.
 BLEcentral is a class that manages a central role in a Bluetooth Low Energy (BLE) connection. It conforms to `NSObject`, `CBCentralManagerDelegate`, `CBPeripheralDelegate`, and `ObservableObject`.
 
 
-<details open>
+<details>
 
 
 
@@ -663,7 +663,7 @@ Initializes the central manager and starts scanning for peripherals with the spe
 
 ## Class: PetPageFunction
 
-<details open>
+<details>
 
 A class that manages the functionality of the pet page.
 
@@ -701,7 +701,7 @@ A class that manages the functionality of the pet page.
 
 ## Class: CustomizeViewModel
 
-<details open>
+<details>
 
 ### Topics
 
@@ -733,7 +733,7 @@ A class that manages the functionality of the pet page.
 
 # Structure: AttachSensors
 
-<details open>
+<details>
 Instructions on how to attach the sensors on the dumbbell and the elbow sleeve.
 
 ## Initializers
@@ -748,7 +748,7 @@ Instructions on how to attach the sensors on the dumbbell and the elbow sleeve.
 
 # Structure: OverallWorkoutData
 
-<details open>
+<details>
 
 OverallWorkoutData is a view that displays the overall feedback for the workout.
 
@@ -770,7 +770,7 @@ OverallWorkoutData is a view that displays the overall feedback for the workout.
 
 # Structure: PostWorkoutData
 
-<details open>
+<details>
 
 PostWorkoutData is a view that displays the feedback for each set in the workout.
 
@@ -794,7 +794,7 @@ Initializes the PostWorkoutData view.
 
 # Structure: RechargeSensors
 
-<details open>
+<details>
 
 Instructions on how to recharge the sensors.
 
@@ -813,7 +813,7 @@ Initializes the RechargeSensors view.
 
 # Structure: WorkoutFeedback
 
-<details open>
+<details>
 
 View to show all data collected from the most recent workout.
 
@@ -837,7 +837,7 @@ This initializer initializes the `WorkoutFeedback` view with the provided view m
 
 # Structure: allFeedback
 
-<details open>
+<details>
 
 View for the all feedback page.
 
@@ -859,7 +859,7 @@ Initializes the allFeedback view with the provided `CoreDataManager`.
 
 # Structure: WorkoutMainPage
 
-<details open>
+<details>
 
 Main structure to display the workout page with integrated UI components.
 
@@ -902,7 +902,7 @@ Initialize the workout page with the BLE central manager and form criteria.
 
 # Structure: PetStore
 
-<details open>
+<details>
 Display view for the Pet Store depending on available items and prices.
 
 ### Topics
@@ -927,7 +927,7 @@ SwiftUI.View
 
 # Structure: ItemDetailView
 
-<details open>
+<details>
 ItemDetailView struct for previewing and purchasing an item.
 
 ### Topics
@@ -952,7 +952,7 @@ ItemDetailView struct for previewing and purchasing an item.
 </details>
 
 # Structure: SellingItem
-<details open>
+<details>
   
 SellingItem struct that contains essential item attributes.
 
@@ -979,7 +979,7 @@ SellingItem struct that contains essential item attributes.
 
 
 # Structure: ChallengesList
-<details open>
+<details>
 
 Struct containing all achievements in the application.
 
@@ -1007,7 +1007,7 @@ SwiftUI.View
 </details>
 
 # Structure: ChallengesTab
-<details open>
+<details>
 
 Struct containing the sorting and fetching of Game Center achievements.
 ### Topics
@@ -1035,7 +1035,7 @@ SwiftUI.View
 
 # Structure: Achievement
 
-<details open>
+<details>
 
 Struct containing claiming functionality for achievements.
 
@@ -1064,7 +1064,7 @@ Struct containing claiming functionality for achievements.
 
 # Structure: UserAchievement
 
-<details open>
+<details>
 
 UserAchievement struct for database information of achievements.
 
@@ -1088,7 +1088,7 @@ UserAchievement struct for database information of achievements.
 
 # Structure: SettingsPageView
 
-<details open>
+<details>
 
 SettingsPageView struct for displaying user settings.
 
@@ -1133,7 +1133,7 @@ SettingsPageView struct for displaying user settings.
 
 # Structure: NotificationManager
 
-<details open>
+<details>
 
 NotificationManager struct to handle user notifications.
 
@@ -1161,7 +1161,7 @@ NotificationManager struct to handle user notifications.
 
 # Structure: ShareSheetView
 
-<details open>
+<details>
 
 ShareSheetView struct for displaying Apple UI in sharing feature.
 
@@ -1193,7 +1193,7 @@ ShareSheetView struct for displaying Apple UI in sharing feature.
 
 # Structure: FitnessPlanPage
 
-<details open>
+<details>
   
 FitnessPlanPage struct that structures the view for a fitness planning page.
 
@@ -1227,7 +1227,7 @@ FitnessPlanPage struct that structures the view for a fitness planning page.
 
 # Structure: FitnessPlanModel
 
-<details open>
+<details>
 
 FitnessPlanModel struct for database related information.
 
@@ -1254,7 +1254,7 @@ FitnessPlanModel struct for database related information.
 
 # Structure: FoodItem
 
-<details open>
+<details>
 A stuct representing a food item.
 
 ### Topics
@@ -1271,7 +1271,7 @@ A stuct representing a food item.
 
 # Structure: Accessory
 
-<details open>
+<details>
 
 ### Topics
 
@@ -1287,7 +1287,7 @@ A stuct representing a food item.
 
 # Structure: BackgroundImage
 
-<details open>
+<details>
 
 ### Topics
 
@@ -1303,7 +1303,7 @@ A stuct representing a food item.
 
 # Structure: Pet_selection
 
-<details open>
+<details>
 
 ### Topics
 
@@ -1318,7 +1318,7 @@ A stuct representing a food item.
 </details>
 
 # Structure: Customize_page
-<details open>
+<details>
 The view for customizing the pet's appearance.
 
 ### Topics
@@ -1335,7 +1335,7 @@ The view for customizing the pet's appearance.
 </details>
 
 # Stucture: CustomProgressView
-<details open>
+<details>
 A custom progress view that displays the progress value and label.
 
 ### Topics
@@ -1359,7 +1359,7 @@ A custom progress view that displays the progress value and label.
 
 # Structure: FoodSelectionView
 
-<details open>
+<details>
 A view representing the food selection view.
 
 ### Topics
@@ -1377,7 +1377,7 @@ A view representing the food selection view.
 
 # Structure: HamburgerMenu
 
-<details open>
+<details>
 A view representing a hamburger menu with options to navigate to different pages.
 
 ### Topics
@@ -1394,7 +1394,7 @@ A view representing a hamburger menu with options to navigate to different pages
 
 # Structure: Pet_Page
 
-<details open>
+<details>
 A view representing the pet page.
 
 ### Topics

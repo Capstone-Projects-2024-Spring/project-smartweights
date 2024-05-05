@@ -29,14 +29,13 @@ SmartWeights removes the need for a personal trainer through the integration of 
 3. SmartWeights will require registration using an Apple Account.
 4. The user must be able to enter the amount of sets, reps, and the weight of their dumbbell before performing a workout.
 5. The user must be able to connect the sensors by pressing a button in the application.
-6. The user must be able to calibrate their start position and inform the application through voice commands.
+6. The user must be able to start workouts through voice commands.
 7. The home page will be displayed after user login, and a tutorial prompt will appear for newly registered users.
-    - The tutorial will be demonstrated by SmartWeights' generic pet.
-    - The user will select and name their first pet.
+    - The tutorial will be a video demonstrated by SmartWeights' generic pet.
     - The user will be able to revisit the tutorial prompt.
 8. The user must be able to create a workout plan that can be tracked from a fitness plan page.
 9. During the process of the user workout, it will provide feedback after each set on the user's action such as correcting their form.
-10. The app will award the users with digital currency based on their workouts and achievements.
+10. The app will award the users with digital currency and experience points based on their workouts.
     - There will be a pet store tab dedicated to buying items for your virtual pet with digital currency.
 11. The pet will have a level-up system and a health system.
     - Users can use digital currency to buy food for their pet in the pet store tab to keep the pet healthy.
@@ -63,7 +62,7 @@ SmartWeights removes the need for a personal trainer through the integration of 
 
 SmartWeights will consist of attachable/wearable sensors sending data to an iOS application through Bluetooth; the MPU6050 IMU sensors combine Raspberry Pi Pico W microcontrollers. These devices are then placed on the dumbbells and the user’s body depending on the exercise to track changes in position during a workout. Using the built-in Bluetooth shield on the Pico, we can then relay the sensors’ information to the paired iOS app.
 
-Designed with Swift using SwiftUI, the app will process the data and display feedback on the user’s weightlifting form. Users will be required to log in with their Apple accounts using Apple’s Sign-In SDK and OAuth. User accounts will be tracked and stored with Apple’s CloudKit service. Users can start their workouts using a voice recognition feature or through a button on the application. SmartWeights is only available on iOS.
+Designed with Swift using SwiftUI, the app will process the data and display feedback on the user’s weightlifting form. Users will be required to log in with their Apple accounts using Apple’s Sign-In Authentication service. User accounts will be tracked and stored with Apple’s CloudKit service. User's achievements progression will be tracked and stored using Apple's GameCenter. Users can start their workouts using a voice recognition feature or through a button on the application. SmartWeights is only available on iOS.
 
 ## Background
 
@@ -72,8 +71,10 @@ SmartWeights is a combination of two project proposals, “SmartWeights” and �
 ## Required Resources
 
 - iPhone with iOS 17
+    - AppleID 
+    - GameCenter Account
 - Dumbbells
-- Sensors (IMUs, Barometers)
+- Sensors (IMUs)
 - Raspberry Pi Pico W
 - Mobile Application Development Environment
 - IDE/Text Editor

@@ -41,12 +41,9 @@ sequenceDiagram
 A user has successfully logged in for the first time.
 
 1. The user logs into their SmartWeights account for the first time.
-2. The app displays a generic virtual pet that will guide the user through the application.
+2. The app displays a prompt for the user to watch a tutorial video.
 3. The virtual pet highlights key features of the application.
-4. The user finishes the tutorial.
-5. The user is prompted to select their first virtual pet.
-6. The user finishes the virtual pet selection process and is returned to the main navigation screen.
-
+4. The user finishes the tutorial and returns to the main navigation screen.
 
 ```mermaid 
 sequenceDiagram
@@ -67,12 +64,7 @@ sequenceDiagram
     end
     User->>App: Finish tutorial
 
-    App-->>User: Prompt to select first virtual pet
-    User->>App: Start virtual pet selection process
-    App->>App: Initialize virtual pet selection
-    User->>App: Select first virtual pet
-    App->>App: Set virtual pet details
-    App-->>User: Virtual pet selected successfully
+   
     User->>App: Return to main navigation screen
 
     deactivate User
@@ -84,10 +76,9 @@ sequenceDiagram
 A user wants to change their profile settings and workout goals.
 
 1. The user selects the Profile tab.
-2. From there, the user can see all their settings and workout goals.
-3. The user selects the pencil icon next to the setting.
+2. From there, the user can see all their settings and workout goals through settings wheel icon.
+3. The user selects the notifcations setting.
 4. The user edits the desired setting.
-
 
 ```mermaid 
 sequenceDiagram
@@ -104,7 +95,7 @@ sequenceDiagram
     Server-->>App: User profile information retrieved
     deactivate Server
     App-->>User: Display user settings and workout goals
-    User->>App: Select pencil icon next to setting
+    User->>App: Select settings wheel icon next to setting
     App-->>User: Display settings tab
     User->>App: Edit desired setting
     App->>Server: Send updated setting to server
@@ -152,39 +143,15 @@ sequenceDiagram
     deactivate Sensors
 ```
 
-### Use Case 5 - Logging Dumbbell Weight
-User wants to log the weights of dumbbells used during a workout for tracking progress over time.
-
-1. On the workout page, the user is prompted to enter their dumbbell weight for the workout.
-2. The user inputs the dumbbell weight for the workout.
-3. The user begins their workout session without further interaction with the app, focusing on their exercise routine.
-4. The dumbbell weight gets logged into their workout history. 
-
-
-```mermaid 
-sequenceDiagram
-    participant User
-    participant App
-
-    activate User
-    activate App
-    App-->>User: Prompt to input dumbbell weight
-    User->>App: Enter dumbbell weight
-    App-->>User: confirmed weight input
-    User->>App: Start workout session
-    App->>App: Log dumbbell weight into workout history
-
-    deactivate User
-    deactivate App
-    
-```
-### Use Case 6 - Starting a Workout via voice command
+### Use Case 5 - Starting a Workout via voice command
 User wants to start a workout session without manually interacting with their smartphone, using a voice command through SmartWeights while already in position to lift weights.
-1. The user clicks the microphone button to have SmartWeights listen to voice commands.
-2. The user, in position to start lifting and without the need to interact with the device manually, says, “Start workout”.
-3. The app processes the command and initiate the workout session.
-4. The SmartWeights app activates the workout mode, starts recording the session, including the detection of lifting form, and other relevant data using the attached sensors.
 
+1. On the workout page, the user is prompted to enter their dumbbell weight, number of sets, number of reps, and countdown timer for the workout.
+2. The user inputs the information for the workout.
+3. The user clicks the microphone button to have SmartWeights listen to voice commands.
+4. The user, in position to start lifting and without the need to interact with the device manually, says, “Start workout”.
+5. The app processes the command and initiate the workout session.
+6. The SmartWeights app activates the workout mode, starts recording the session, including the detection of lifting form, and other relevant data using the attached sensors.
 
 
 ```mermaid 
@@ -195,6 +162,12 @@ sequenceDiagram
     activate User
     activate App
     activate Sensors
+    App-->>User: Prompt to input dumbbell weight
+    User->>App: Enter dumbbell weight
+    App-->>User: confirmed weight input
+    User->>App: Start workout session
+    App->>App: Log dumbbell weight into workout history
+
     User->>App: Clicks microphone button
     App-->> User: Listens for voice commands
     User->>App: "Start workout"
@@ -209,7 +182,7 @@ sequenceDiagram
 
 ```
 
-### Use Case 7 - Performing Workout
+### Use Case 6 - Performing Workout
 A user wants to complete a workout with the assistance of the virtual pet. 
 
 1. The user navigates to the workout page.
@@ -240,7 +213,7 @@ sequenceDiagram
     
 ```
 
-### Use Case 8 - View Workout Feedback History
+### Use Case 7 - View Workout Feedback History
 A user wants to view their workout history.
 
 1. After completing a workout, the user selects the Workout Feedback History button in the mobile application.
@@ -269,13 +242,13 @@ sequenceDiagram
 
     
 ```
-### Use Case 9 - Purchasing Pet Cosmetics
+### Use Case 8 - Purchasing Pet Cosmetics
 A user wants to purchase cosmetics for their virtual pet.
 
 1. The user navigates to the virtual pet store.
 2. The app displays cosmetics by category for the user to inspect.
 3. The user sees each cosmetic’s price and clicks the buy button on the desired cosmetic.
-4. The user has enough currency for the transaction, so the cosmetic is removed from the store and placed into the user’s virtual pet inventory.
+4. The user has enough currency for the transaction, so the cosmetic is no longer purchaseable and placed into the user’s virtual pet inventory.
 5. The price of the cosmetic is deducted from the user’s total currency.
 
 
@@ -304,10 +277,10 @@ sequenceDiagram
 
 ```
 
-### Use Case 10: - Virtual Pet Customization
+### Use Case 9: - Virtual Pet Customization
 A user wants to customize their virtual pet.
 
-1. The user taps on the Virtual Pet button.
+1. The user taps on the Customize button found on the pet page.
 2. The user can tap an inventory button to look at what they currently have equipped/own.
 3. The user will then select any costume/accessory they want to equip for their pet.
 4. The user will see their pet change according to the costumes/accessories they picked.
@@ -333,16 +306,13 @@ sequenceDiagram
 
 ```
 
-### Use Case 11 - Participating in Weekly Challenge
-The SmartWeight app introduces a weekly challenge feature to engage users in varied fitness activities, encouraging consistency and community interaction.
+## Use Case 10 - Completing an achievement
+The SmartWeight app contains an achievement feature to engage users in varied fitness activities, and virtual pet interaction.
 
-1. The user navigates to the challenges section within the app and opts into the weekly challenge.
-2. Once opted in, the user can view detailed information about the challenge, which includes details of the challenge (e.g. total weight lifted, number of workouts completed) and potential reward (e.g. digital currency, virtual pet accessories).
-3. Throughout the week, the user engages in their regular workouts, with the app automatically tracking their progress toward the challenge goals using the integrated sensors.
-4. The user can check their current standings in the challenge via the app(challenge tab), which updates in real time, showing their progress.
-5. At the end of the week, the app notifies the user of the challenge outcome. If they have met the challenge criteria, they receive their reward.
-
-
+1. The user navigates to the achievements section within the app and views the list of achievements.
+2. The user then views detailed information about the achievement, which includes details of the achievement completion requirement (e.g. total weight lifted, number of workouts completed).
+3. The user can check their current standings in the achievement via the app(achievement tab), which updates in real time, showing their progress.
+4. Once the completion requirement has been fully met, the app updates their list of completed achievements.
 
 
 
@@ -352,19 +322,16 @@ sequenceDiagram
     participant App
     activate User
     activate App
-    User->>App: Navigate to challenges section
-    App-->>User: Display list of available challenges
-    User->>App: Opt into weekly challenge
-    App-->>User: Display details of the challenge
+    User->>App: Navigate to achievements section
+    App-->>User: Display list of available achievement
     User->>App: Engage in regular workouts
     App->>App: Track user's progress
     loop Throughout the week
        
-        App-->>User: Display current standings
+        App-->>User: Display current progression
     end
-    App->>App: Check challenge completion status
-    App-->>User: Challenge completed
-    User->>App: Claim reward if challenge criteria met
+    App->>App: Check achievement completion status
+    App-->>User: Achievement completed
 
     deactivate User
     deactivate App
@@ -372,15 +339,14 @@ sequenceDiagram
 
 ```
 
-### Use Case 12 - Share with Friends
+## Use Case 11 - Share with Friends
 A user wants to share their pet/achievements with their friends.
 
 1. The user selects the Profile tab.
 2. Within the Profile screen, the user will select the Share Profile button.
-3. A jpeg of their profile will appear on the screen.
+3. A pop-up appears of options to share the image.
 4. User selects who/how they want to share.
 5. Profile is sent.
-
 
 
 
