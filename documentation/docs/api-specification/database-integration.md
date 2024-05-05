@@ -421,3 +421,136 @@ This class conforms to the `ObservableObject` protocol.
 </details>
 
 
+# Local CoreData Database
+
+## Class: CoreDataManager
+
+<details>
+  Manages persistent data storage using Core Data for the SmartWeights application.
+
+  ### Topics
+  
+  #### Initializers
+  - `init(container: NSPersistentCloudKitContainer, storeDescriptions: [NSPersistentStoreDescription]?)`: Initializes the CoreDataManager with the specified persistent container and optional store configurations.
+  
+  #### Instance Properties
+  - `var persistentContainer: NSPersistentCloudKitContainer`: The shared persistent container from the PersistenceController, configured for CloudKit integration.
+  
+  #### Instance Methods
+  - `func createExerciseSet(workoutSession: WorkoutSession, setNum: Int, avgCurlAcceleration: Double, avgElbowFlareLR: Double, avgElbowFlareUD: Double, avgElbowSwing: Double, avgWristStabilityLR: Double, avgWristStabilityUD: Double) -> ExerciseSet?`: Creates and persists a new ExerciseSet entity associated with a given WorkoutSession.
+  - `func createWorkoutSession(dateTime: Date, workoutNum: Int, reps: Int, weight: Double, overallCurlAcceleration: Double, overallElbowFlareLR: Double, overallElbowFlareUD: Double, overallElbowSwing: Double, overallWristStabilityLR: Double, overallWristStabilityUD: Double) -> WorkoutSession?`: Creates and saves a new WorkoutSession entity with specified parameters.
+  - `func fetchAllExerciseSets() -> [ExerciseSet]`: Fetches all ExerciseSet entities from the persistent store.
+  - `func fetchExerciseSets(for: WorkoutSession) -> [ExerciseSet]`: Fetches ExerciseSet entities associated with a specific WorkoutSession.
+  - `func fetchExerciseSets(for: Int64) -> [[String : Any]]`: Fetches ExerciseSet entities based on a specific workout number.
+  - `func fetchWorkoutSessions() -> [WorkoutSession]`: Fetches all WorkoutSession entities from the persistent store.
+  - `func fetchWorkoutSessions(on: Date) -> [[String : Any]]`: Fetches WorkoutSession entities on a specific date from the persistent store.
+  - `func getNextWorkoutNumber() -> Int`: Retrieves the next sequential workout number to be used for a new WorkoutSession, defaulting to 1 if no sessions exist.
+  - `func updateExerciseSet(ExerciseSet, setNum: Int?, avgCurlAcceleration: Double?, avgElbowFlareLR: Double?, avgElbowFlareUD: Double?, avgElbowSwing: Double?, avgWristStabilityLR: Double?, avgWristStabilityUD: Double?)`: Updates properties of an ExerciseSet entity.
+  - `func updateWorkoutSession(WorkoutSession, dateTime: Date?, overallCurlAcceleration: Double?, overallElbowFlareLR: Double?, overallElbowFlareUD: Double?, overallElbowSwing: Double?, overallWristStabilityLR: Double?, overallWristStabilityUD: Double?)`: Updates properties of a WorkoutSession entity.
+  
+  ### Default Implementations
+  
+  #### ObservableObject Implementations
+  
+  ### Relationships
+  
+  #### Conforms To
+  - `Combine.ObservableObject`
+</details>
+
+## Class: WorkoutSession
+
+<details>
+  
+  ```
+    @objc(WorkoutSession)
+    class WorkoutSession
+  ```
+
+  ### Topics
+  
+  #### Instance Properties
+  - `var dateTime: Date?`
+  - `var overallCurlAcceleration: Double`
+  - `var overallElbowFlareLeftRight: Double`
+  - `var overallElbowFlareUpDown: Double`
+  - `var overallElbowSwing: Double`
+  - `var overallWristStabilityLeftRight: Double`
+  - `var overallWristStabilityUpDown: Double`
+  - `var reps: Int64`
+  - `var sets: NSSet?`
+  - `var weight: Double`
+  - `var workoutNum: Int64`
+
+  #### Instance Methods
+  - `func addToSets(NSSet)`
+  - `func addToSets(ExerciseSet)`
+  - `func removeFromSets(NSSet)`
+  - `func removeFromSets(ExerciseSet)`
+
+  #### Type Methods
+  - class func fetchRequest() -> `NSFetchRequest<WorkoutSession>`
+
+  ### Default Implementations
+
+  #### Identifiable Implementations
+
+  ### Relationships
+
+  #### Inherits From
+  - CoreData.NSManagedObject
+
+  #### Inherited By
+  - ExerciseSet
+
+  #### Conforms To
+  - Combine.ObservableObject
+  - CoreData.NSFetchRequestResult
+  - ObjectiveC.NSObjectProtocol
+  - Swift.CVarArg
+  - Swift.CustomDebugStringConvertible
+  - Swift.CustomStringConvertible
+  - Swift.Equatable
+  - Swift.Hashable
+  - Swift.Identifiable
+</details>
+
+## Class: ExerciseSet
+<details>
+
+  ```
+  @objc(ExerciseSet)
+  class ExerciseSet
+  ```
+  
+  ### Topics
+  
+  #### Instance Properties
+  - `var avgCurlAcceleration: Double`
+  - `var avgElbowFlareLeftRight: Double`
+  - `var avgElbowFlareUpDown: Double`
+  - `var avgElbowSwing: Double`
+  - `var avgWristStabilityLeftRight: Double`
+  - `var avgWristStabilityUpDown: Double`
+  - `var setNum: Int64`
+  - `var workoutSession: WorkoutSession?`
+
+  #### Type Methods
+  - `class func fetchRequest() -> NSFetchRequest<ExerciseSet>`
+    
+  ### Relationships
+  
+  #### Inherits From
+  - WorkoutSession
+    
+  #### Conforms To
+  - Combine.ObservableObject
+  - CoreData.NSFetchRequestResult
+  - ObjectiveC.NSObjectProtocol
+  - Swift.CVarArg
+  - Swift.CustomDebugStringConvertible
+  - Swift.CustomStringConvertible
+  - Swift.Equatable
+  - Swift.Hashable
+  - Swift.Identifiable
+</details>
