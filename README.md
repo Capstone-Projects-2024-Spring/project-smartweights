@@ -174,8 +174,8 @@ List of testing:
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/tun38646">
-            <img src="https://github.com/tun38646.png" width="100;" alt="tun38646"/>
+        <a href="https://github.com/tdotbui">
+            <img src="https://github.com/tdotbui.png" width="100;" alt="tdotbui"/>
             <br />
             <sub><b>Timothy Bui</b></sub>
         </a>
